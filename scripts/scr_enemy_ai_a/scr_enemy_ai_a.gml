@@ -3,32 +3,36 @@ function scr_enemy_ai_a() {
 	system_garrison = [];
 	system_sabatours = [];
 	// guardsmen hop from planet to planet
-	if (p_guardsmen[1]+p_guardsmen[2]+p_guardsmen[3]+p_guardsmen[4]>0) and (present_fleet[2]>0){
-	    var o=0,mx=0,cr=0,tr=0;
+	if (system_guard_total()>0) and (present_fleet[eFaction.Imperium]){
+	    var cur_planet=0,most_enemies_found=0,current_guard_planet=0,most_enemies_planet=0;
+
 	    repeat(planets){
-	    	o+=1;
-	    	if (p_guardsmen[o]>0) and (cr=0) then cr=o;
+	    	cur_planet+=1;
+	    	if (p_guardsmen[cur_planet]>0) and (current_guard_planet=0) then current_guard_planet=cur_planet;
 	    }
-	    o=0;
+	    cur_planet=0;
+	    var imperium_enemies;
 	    repeat(planets){
-	    	o+=1;
-	        if (p_orks[o]+p_tau[o]+p_chaos[o]+p_traitors[o]+p_tyranids[o]+p_necrons[o]>mx){
-	            mx=p_orks[o]+p_tau[o]+p_chaos[o]+p_traitors[o]+p_tyranids[o]+p_necrons[o];
-	            tr=o;
+	    	cur_planet+=1;
+	    	imperium_enemies=planet_imperial_base_enemies(cur_planet);
+	        if (imperium_enemies>most_enemies_found){
+	            most_enemies_found=imperium_enemies;
+	            most_enemies_planet=cur_planet;
 	        }
 	    }
-	    if (p_orks[cr]+p_tau[cr]+p_chaos[cr]+p_traitors[cr]+p_tyranids[cr]+p_necrons[cr]=0) and (tr!=cr){
-	        p_guardsmen[tr]=p_guardsmen[cr];p_guardsmen[cr]=0;
+	    if (planet_imperial_base_enemies(current_guard_planet)==0) and (most_enemies_planet!=current_guard_planet){
+	        p_guardsmen[most_enemies_planet]=p_guardsmen[current_guard_planet];
+	        p_guardsmen[current_guard_planet]=0;
 	    }
 	}
 
 	if (obj_controller.faction_defeated[10]>0) and (obj_controller.faction_gender[10]=2){
-	    var o=0;
+	    var cur_planet=0;
 	    repeat(planets){
-	    	o+=1;
-	        if (array_length(p_feature[o])!=0){
-	            if (planet_feature_bool(p_feature[o], P_features.World_Eaters)==1) and (p_chaos[o]<=0){
-	                delete_features(p_feature[o],P_features.World_Eaters);
+	    	cur_planet+=1;
+	        if (array_length(p_feature[cur_planet])!=0){
+	            if (planet_feature_bool(p_feature[cur_planet], P_features.World_Eaters)==1) and (p_chaos[cur_planet]<=0){
+	                delete_features(p_feature[cur_planet],P_features.World_Eaters);
 	            }
 	        }
 	    }
@@ -36,7 +40,7 @@ function scr_enemy_ai_a() {
 
 	// checking for inquisition dead world inspections here
 	if (present_fleet[eFACTION.Player]>=0) and (present_fleet[eFACTION.Inquisition]==0){
-	    var chapter_asset_discovery,o=0,yep=0,stop=false,shitty=false;
+	    var chapter_asset_discovery,cur_planet=0,yep=0,stop=false,shitty=false;
     
 	    chapter_asset_discovery=floor(random(200))+1;
 
@@ -51,14 +55,14 @@ function scr_enemy_ai_a() {
     
 	    // 137 ; chapter_asset_discovery=floor(random(20))+1;
     
-	    o=0;
+	    cur_planet=0;
 	    if (chapter_asset_discovery<=5){
 		    repeat(planets){
-		    	o+=1;
-		        if (p_first[o]=1) and (p_owner[o]=2) then p_owner[o]=1;
-		        if (p_type[o]=="Dead") and (array_length(p_upgrades[o])>0){
-		            if (planet_feature_bool(p_feature[o], [P_features.Secret_Base,P_features.Arsenal,P_features.Gene_Vault])==0) /*and (string_count(".0|",p_upgrades[o])>0)*/{
-		                yep=o;
+		    	cur_planet+=1;
+		        if (p_first[cur_planet]=1) and (p_owner[cur_planet]=2) then p_owner[cur_planet]=1;
+		        if (p_type[cur_planet]=="Dead") and (array_length(p_upgrades[cur_planet])>0){
+		            if (planet_feature_bool(p_feature[cur_planet], [P_features.Secret_Base,P_features.Arsenal,P_features.Gene_Vault])==0) /*and (string_count(".0|",p_upgrades[cur_planet])>0)*/{
+		                yep=cur_planet;
 		            }
 		        }
 		    }
@@ -112,69 +116,38 @@ function scr_enemy_ai_a() {
 		array_push(system_sabatours, sabatours);
 
 		stop=0;
-	    if (p_eldar[run]<0) then p_eldar[run]=0;
-	    if (p_orks[run]<0) then p_orks[run]=0;
-	    if (p_tau[run]<0) then p_tau[run]=0;
-	    if (p_traitors[run]<0) then p_traitors[run]=0;
-	    if (p_tyranids[run]<0) then p_tyranids[run]=0;
-	    if (p_necrons[run]<0) then p_necrons[run]=0;
-	    if (p_player[run]<0) then p_player[run]=0;
-	    if (p_sisters[run]<0) then p_sisters[run]=0;
-	    var planet_forces = {
-	     	"guard":p_guardsmen[run],
-			"pdf":p_pdf[run],
-			"traitors":p_traitors[run],
-			"tau":p_tau[run],
-			"tyranids":p_tyranids[run],
-			"player":p_player[run],
-			"necron":p_necrons[run],
-			"sisters":p_sisters[run],
-			"orks":p_orks[run],
-			"chaos":p_chaos[run],
-			"elder":p_eldar[run]
-	     };
-	     var faction_key = {
-	     	"imperium":2,
-	     	"orks":7,
-	     	"tau":8,
-	     	"traitors":10,
-	     	"chaos":10,
-	     	"necrons":13,
-	     	"elder":6
-	     }
+	    ensure_no_planet_negatives(run);
 
-    	if (planet_forces[$ "tyranids"] < 4){
-    		planet_forces[$ "tyranids"] = 0;
+	    planet_forces = planet_forces_array(run);
+
+    	if (planet_forces[eFaction.Tyranids] < 4){
+    		planet_forces[eFaction.Tyranids] = 0;
     	}
-    	var force_names = struct_get_names(planet_forces);
-    	var total_forces = 0;
+
     	var present_forces = [];
-    	for (var i=0;i<array_length(force_names);i++){
-    		total_forces+=planet_forces[$ force_names[i]];
-    		if (planet_forces[$ force_names[i]]>0){
-    			array_push(present_forces, force_names[i]);
+    	for (var i=0;i<array_length(planet_forces);i++){
+    		if (planet_forces[i]>0){
+    			array_push(present_forces, i);
     		}
     	}
+
     	if (array_length(present_forces) == 1){// if there is only one faction with present forces the planet belongs ot that faction
-    		if (struct_exists(faction_key, present_forces[0])){
-    			p_owner[run] = faction_key[$ present_forces[0]];
-    			stop=1;
-    		}
-    	} else if (planet_forces[$ "player"]<=0) and (planet_forces[$ "orks"]>0){//orks prevail  over other factions
+    		p_owner[run] = present_forces[0];
+    		stop=1;
+    	} else if (planet_forces[eFaction.Player]<=0) and (planet_forces[eFaction.Ork]>0){//orks prevail  over other factions
     		if (p_owner[run]==2 or p_owner[run]==6){
-    			p_owner[run]=faction_key[$ "orks"];
+    			p_owner[run]=eFaction.Ork;
     		}
     	}
     
 
-	    var guard_score, pdf_score, ork_score, tau_score, traitors_score, csm_score, eldar_score, tyranids_score, necrons_score, sisters_score, large;
-	    large=0;guard_score=0;pdf_score=0;ork_score=0;tau_score=0;traitors_score=0;csm_score=0;eldar_score=0;tyranids_score=0;necrons_score=0;sisters_score=0;
+	    var guard_score, pdf_score,   traitors_score, csm_score, eldar_score, tyranids_score, necrons_score, sisters_score, large;
+	    large=0;guard_score=0;pdf_score=0;traitors_score=0;csm_score=0;eldar_score=0;tyranids_score=0;necrons_score=0;sisters_score=0;
     
 	    var guard_attack, pdf_attack, ork_attack, tau_attack, traitors_attack, csm_attack, eldar_attack, tyranids_attack, necrons_attack, sisters_attack;
 	    guard_attack="";pdf_attack="";ork_attack="";tau_attack="";traitors_attack="";csm_attack="";
 	    eldar_attack="";tyranids_attack="";necrons_attack="";sisters_attack="";
     
-	    ork_score=p_orks[run];tau_score=p_tau[run];
 	    traitors_score=p_traitors[run];
 	    csm_score=p_chaos[run];
 	    tyranids_score=p_tyranids[run];
@@ -235,21 +208,8 @@ function scr_enemy_ai_a() {
 			    guard_score = 0.5;
 			}
         
-	        // if (p_eldar[run]>0) and (p_owner[run]!=6) then guard_attack="eldar";
-	        if (planet_forces[$ "tau"] + planet_forces[$ "orks"] + planet_forces[$ "traitors"]+ planet_forces[$ "chaos"])
-	        if (p_tau[run]>0) then guard_attack="tau";
-	        if (p_orks[run]>0) then guard_attack="ork";
-	        if (p_traitors[run]>0) then guard_attack="traitors";
-	        if (p_chaos[run]>0) then guard_attack="csm";
-	        if (p_pdf[run]>0) and (p_owner[run]=8) then guard_attack="pdf";
-	        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[2]="War") then guard_attack="pdf";
-	        // Always goes after traitors first, unless
-	        if (p_traitors[run]<=1) and (p_tau[run]>=4) and (p_owner[run]!=8) then guard_attack="tau";
-	        if (p_pdf[run]>0) and (obj_controller.faction_status[2]="War") and (p_owner[run]=1) then guard_attack="pdf";
-	        if (p_traitors[run]<=1) and (p_orks[run]>=4) then guard_attack="ork";
-	        // if (p_tyranids[run]>0) and (guard_attack="") then guard_attack="tyranids";
-	        if (p_tyranids[run]>=4) then guard_attack="tyranids";
-        
+        	
+        	guard_attack = guard_target_matrix(run);
 	        if (guard_attack="tyranids") then tyranids_score=p_tyranids[run];
 	        // Tend to prioritize traitors > Orks > Tau
 	        // Eldar don't get into pitched battles so nyuck nyuck nyuck
@@ -279,63 +239,49 @@ function scr_enemy_ai_a() {
 	    }
     
 	    if (p_sisters[run]>0) and (stop!=1){// THEY MARCH FOR THE ECCLESIARCHY
-	        if (p_tau[run]>0) then sisters_attack="tau";
-	        if (p_orks[run]>0) then sisters_attack="ork";
-	        if (p_necrons[run]>0) then sisters_attack="necrons";
-	        if (p_pdf[run]>0) and (p_owner[run]=8) then sisters_attack="pdf";
-	        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[5]="War") then sisters_attack="pdf";
-	        if (p_traitors[run]>0) then sisters_attack="traitors";
-	        if (p_chaos[run]>0) then sisters_attack="csm";
-	        if (p_player[run]>0) and (obj_controller.faction_status[5]="War") then sisters_attack="player";
-	        // Always goes after traitors first
-	        if (sisters_attack="tyranids") then tyranids_score=p_tyranids[run];
+	    	if (p_player[run]>0) and (obj_controller.faction_status[5]="War"){
+	    		sisters_attack="player";
+	    	} else {
+		        if (p_tau[run]>0) then sisters_attack="tau";
+		        if (p_orks[run]>0) then sisters_attack="ork";
+		        if (p_necrons[run]>0) then sisters_attack="necrons";
+		        if (p_pdf[run]>0) and (p_owner[run]=8) then sisters_attack="pdf";
+		        if (p_pdf[run]>0) and (p_owner[run]=1) and (obj_controller.faction_status[5]="War") then sisters_attack="pdf";
+		        if (p_traitors[run]>0) then sisters_attack="traitors";
+		        if (p_chaos[run]>0) then sisters_attack="csm";
+		        if (p_player[run]>0) and (obj_controller.faction_status[5]="War") then sisters_attack="player";
+		        // Always goes after traitors first
+		        if (sisters_attack="tyranids") then tyranids_score=p_tyranids[run];
+	    	}
 	    }
     
 	    if (p_orks[run]>0) and (stop!=1){
 	        if (p_traitors[run]=0) and (p_tau[run]=0) and (p_eldar[run]=0) then ork_attack="imp";
 	        rand=choose(1,2,3,4,5);
 	        // if (rand=1) and (ork_attack="imp") then ork_attack="imp";
-            if (ork_attack="imp") then ork_attack="guard";
-            if (ork_attack="guard") and (p_guardsmen[run]=0) then ork_attack="pdf";
+            if (ork_attack="imp") && (p_guardsmen[run]>0) then ork_attack="guard";
+
 	        if (rand=2) and (p_tau[run]>0) then ork_attack="tau";
 	        if (rand=3) and (p_traitors[run]>0) then ork_attack="traitors";
 	        if (rand=4) and (p_chaos[run]>0) then ork_attack="csm";
 	        if (rand=5) and (p_sisters[run]>0) then ork_attack="sisters";
 	        // if (rand=5) and (p_necrons[run]>0) then ork_attack="necrons";
         
-	        if (rand=5) and (p_sisters[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=choose(1,3,4,5);if (rand=3) and (p_traitors[run]=0) then rand=choose(1,2,3,4,5);
-	        if (rand=2) and (p_tau[run]=0) then rand=1;
-	        if (rand=3) and (p_traitors[run]=0) then rand=1;
-	        if (rand=4) and (p_chaos[run]=0) then rand=choose(1,2,3,5);
-	        if (rand=5) and (p_sisters[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=choose(1,3,4,5);if (rand=3) and (p_traitors[run]=0) then rand=choose(1,2,3,4,5);
-	        if (rand=2) and (p_tau[run]=0) then rand=1;
-	        if (rand=3) and (p_traitors[run]=0) then rand=1;
-	        if (rand=5) and (p_sisters[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=1) and (p_guardsmen[run]<=0) and (p_pdf[run]<=0){
-	            rand=choose(1,2,4,5);
-	            if (p_eldar[run]=0) and (rand=4) then rand=1;
-	            if (p_tau[run]=0) and (rand=1) then rand=2;
-	            if (p_traitors[run]=0) and (rand=2) then rand=1;
-	            if (p_sisters[run]=0) and (rand=5) then rand=1;
-	        }
-        
 	        if (ork_attack="") and (p_player[run]>0) then ork_attack="player";
 	    }
     
 	    if (p_traitors[run]>0) and (stop!=1){
-	        if (ork_score=0) and (tau_score=0) then traitors_attack="imp";
-	        if (ork_score>tau_score) and (ork_score>guard_score) and (ork_score>pdf_score) then traitors_attack="orks";
-	        if (sisters_score>tau_score) and (sisters_score>ork_score) and (sisters_score>pdf_score) then traitors_attack="sisters";
-	        if (guard_score>tau_score) and (guard_score>ork_score) then traitors_attack="imp";
+	        if (planet_forces[eFaction.Orks]=0) and (planet_forces[eFaction.Tau]=0) then traitors_attack="imp";
+	        if (planet_forces[eFaction.Orks]>planet_forces[eFaction.Tau]) and (planet_forces[eFaction.Orks]>guard_score) and (planet_forces[eFaction.Orks]>pdf_score) then traitors_attack="orks";
+	        if (sisters_score>planet_forces[eFaction.Tau]) and (sisters_score>planet_forces[eFaction.Orks]) and (sisters_score>pdf_score) then traitors_attack="sisters";
+	        if (guard_score>planet_forces[eFaction.Tau]) and (guard_score>planet_forces[eFaction.Orks]) then traitors_attack="imp";
 	        if (traitors_attack="") and (p_player[run]>0) then traitors_attack="player";
 	    }
 	    if (p_chaos[run]>0) and (stop!=1){
-	        if (ork_score=0) and (tau_score=0) then csm_attack="imp";
-	        if (ork_score>tau_score) and (ork_score>guard_score) and (ork_score>pdf_score) then csm_attack="orks";
-	        if (sisters_score>tau_score) and (sisters_score>ork_score) and (sisters_score>pdf_score) then csm_attack="sisters";
-	        if (guard_score>tau_score) and (guard_score>ork_score) then csm_attack="imp";
+	        if (planet_forces[eFaction.Orks]=0) and (planet_forces[eFaction.Tau]=0) then csm_attack="imp";
+	        if (planet_forces[eFaction.Orks]>planet_forces[eFaction.Tau]) and (planet_forces[eFaction.Orks]>guard_score) and (planet_forces[eFaction.Orks]>pdf_score) then csm_attack="orks";
+	        if (sisters_score>planet_forces[eFaction.Tau]) and (sisters_score>planet_forces[eFaction.Orks]) and (sisters_score>pdf_score) then csm_attack="sisters";
+	        if (guard_score>planet_forces[eFaction.Tau]) and (guard_score>planet_forces[eFaction.Orks]) then csm_attack="imp";
 	        if (csm_attack="") and (p_player[run]>0) then csm_attack="player";
 	    }
     
@@ -345,23 +291,23 @@ function scr_enemy_ai_a() {
 	        if (guard_score>0) then tau_attack="imp";
 	        if (traitors_score>0) then tau_attack="traitors";
 	        if (csm_score>0) then tau_attack="csm";
-	        if (ork_score>0) then tau_attack="ork";
-	        if (traitors_score>=3) and (ork_score<=2) then tau_attack="traitors";
+	        if (planet_forces[eFaction.Orks]>0) then tau_attack="ork";
+	        if (traitors_score>=3) and (planet_forces[eFaction.Orks]<=2) then tau_attack="traitors";
 	        if (traitors_score>=4) then tau_attack="traitors";
-	        if (csm_score>=3) and (ork_score<=2) then tau_attack="csm";
+	        if (csm_score>=3) and (planet_forces[eFaction.Orks]<=2) then tau_attack="csm";
 	        if (csm_score>=4) then tau_attack="csm";
-	        if (ork_score>=4) then tau_attack="ork";
+	        if (planet_forces[eFaction.Orks]>=4) then tau_attack="ork";
 	        if (tau_attack="") and (p_sisters[run]>0) then tau_attack="sisters";
 	        if (tau_attack="") and (obj_controller.faction_status[8]="War") and (p_player[run]>0) then tau_attack="player";
 	    }
 	    if (p_tau[run]>0) and (stop!=1) and (p_owner[run]=8){// They own the planet
 	        // if (eldar_score>0) then tau_attack="eldar";
 	        if (traitors_score>0) then tau_attack="traitors";
-	        if (ork_score>0) then tau_attack="ork";
+	        if (planet_forces[eFaction.Orks]>0) then tau_attack="ork";
 	        if (guard_score>0) then tau_attack="imp";
 	        if (traitors_score>=4) then tau_attack="traitors";
 	        if (csm_score>=4) then tau_attack="csm";
-	        if (ork_score>=4) then tau_attack="ork";
+	        if (planet_forces[eFaction.Orks]>=4) then tau_attack="ork";
 	        if (tau_attack="") and (p_sisters[run]>0) then tau_attack="sisters";
 	        if (tau_attack="") and (obj_controller.faction_status[8]="War") and (p_player[run]>0) then tau_attack="player";
 	    }
@@ -377,20 +323,6 @@ function scr_enemy_ai_a() {
 	        if (rand=5) and (p_chaos[run]>0) then tyranids_attack="csm";
 	        if (rand=6) and (p_sisters[run]>0) then tyranids_attack="sisters";
         
-	        if (rand=6) and (p_sisters[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=5) and (p_chaos[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=choose(1,3,4);if (rand=3) and (p_traitors[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=1;if (rand=3) and (p_traitors[run]=0) then rand=1;
-	        if (rand=4) and (p_orks[run]=0) then rand=choose(1,2,3);
-	        if (rand=2) and (p_tau[run]=0) then rand=choose(1,3,4);if (rand=3) and (p_traitors[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=1;if (rand=3) and (p_traitors[run]=0) then rand=1;
-	        if (rand=1) and (p_guardsmen[run]<=0) and (p_pdf[run]<=0){
-	            rand=choose(1,2,4);
-	            if (p_orks[run]=0) and (rand=4) then rand=1;
-	            if (p_tau[run]=0) and (rand=1) then rand=2;
-	            if (p_traitors[run]=0) and (rand=2) then rand=1;
-	        }
-        
 	        if (tyranids_attack="") and (p_player[run]>0) then tyranids_attack="player";
 	    }
     
@@ -405,25 +337,6 @@ function scr_enemy_ai_a() {
 	        if (rand=5) and (p_chaos[run]>0) then necrons_attack="csm";
 	        if (rand=6) and (p_sisters[run]>0) then necrons_attack="sisters";
         
-	        if (rand=6) and (p_sisters[run]=0) then rand=choose(1,2,3,4,5);
-	        if (rand=5) and (p_chaos[run]=0) then rand=choose(1,2,3,4,6);
-	        if (rand=2) and (p_tau[run]=0) then rand=choose(1,3,4,6);
-	        if (rand=3) and (p_traitors[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=1;
-	        if (rand=3) and (p_traitors[run]=0) then rand=1;
-	        if (rand=4) and (p_orks[run]=0) then rand=choose(1,2,3,6);
-	        if (rand=6) and (p_sisters[run]=0) then rand=choose(1,2,3,4,5);
-	        if (rand=2) and (p_tau[run]=0) then rand=choose(1,3,4);
-	        if (rand=3) and (p_traitors[run]=0) then rand=choose(1,2,3,4);
-	        if (rand=2) and (p_tau[run]=0) then rand=1;
-	        if (rand=3) and (p_traitors[run]=0) then rand=1;
-	        if (rand=1) and (p_guardsmen[run]<=0) and (p_pdf[run]<=0){
-	            rand=choose(1,2,4);
-	            if (p_orks[run]=0) and (rand=4) then rand=1;
-	            if (p_tau[run]=0) and (rand=1) then rand=2;
-	            if (p_traitors[run]=0) and (rand=2) then rand=1;
-	        }
-        
 	        if (necrons_attack="") and (p_player[run]>0) then necrons_attack="player";
 	    }
     
@@ -432,25 +345,25 @@ function scr_enemy_ai_a() {
     
     
 	    if (stop=0){// Start stop
+
+	    default_imperium_attack = guard_score>0 && !((guard_score<=0.5) && (pdf_score>1)) ?"guard":"pdf";
     
-	    if (ork_attack="imp") and (guard_score>0){
-	    	ork_attack="guard";
-	    }else if (ork_attack="imp") and (guard_score<=0) then ork_attack="pdf";
-	    if (tau_attack="imp") and (guard_score>0) then tau_attack="guard";// if (tau_attack="imp") and (guard_score<=0) then tau_attack="pdf";
-	    if (traitors_attack="imp") and (guard_score>0) then traitors_attack="guard";
-	    if (traitors_attack="imp") and (guard_score<=0) then traitors_attack="pdf";
-	    if (csm_attack="imp") and (guard_score>0) then csm_attack="guard";
-	    if (csm_attack="imp") and (guard_score<=0) then csm_attack="pdf";
-	    if (necrons_attack="imp") and (guard_score>0) then necrons_attack="guard";
-	    if (necrons_attack="imp") and (guard_score<=0) then necrons_attack="pdf";
-	    if (sisters_attack="imp") and (pdf_score>0) then sisters_attack="pdf";
+	    if (ork_attack=="imp")  then ork_attack = default_imperium_attack;
+
+	    if (traitors_attack=="imp") then traitors_attack = default_imperium_attack;
+
+	    if (csm_attack=="imp") then csm_attack = default_imperium_attack;
+
+	    if (necrons_attack=="imp") then necrons_attack = default_imperium_attack;   
+
+
+	    if (tau_attack=="imp") then tau_attack=default_imperium_attack// if (tau_attack="imp") and (guard_score<=0) then tau_attack="pdf";
+
+	    if (sisters_attack=="imp") and (pdf_score>0) then sisters_attack="pdf";
+
 	    // if (eldar_attack="imp") and (guard_score>0) then eldar_attack="guard";if (eldar_attack="imp") and (guard_score<=0) then eldar_attack="pdf";
     	
-	    if (ork_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then ork_attack="pdf";
-	    if (tau_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then tau_attack="pdf";
-	    if (traitors_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then traitors_attack="pdf";
-	    if (csm_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then csm_attack="pdf";
-	    if (necrons_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then necrons_attack="pdf";
+
 	    // if (eldar_attack="guard") and ((guard_score<=0.5) and (pdf_score>1)) then eldar_attack="pdf";
     
 	    // if ((traitors_attack="guard") or (traitors_attack="pdf")) and (traitors_score>=3){obj_controller.x=self.x;obj_controller.y=self.y;}
@@ -458,8 +371,8 @@ function scr_enemy_ai_a() {
 	    var after_combat_guard=guard_score;
 	    var after_combat_guard_count=p_guardsmen[run];
 	    var after_combat_pdf=pdf_score;
-	    var after_combat_ork_force=ork_score;
-	    var after_combat_tau=tau_score;
+	    var after_combat_ork_force=planet_forces[eFaction.Orks];
+	    var after_combat_tau=planet_forces[eFaction.Tau];
 	    var after_combat_traitor=traitors_score;
 	    var after_combat_csm=csm_score;
 	    if (csm_score=6.1) then csm_score=8;
@@ -471,16 +384,16 @@ function scr_enemy_ai_a() {
 	    // Guard attack
 	    if (guard_score>0) and (guard_attack!="") and (guard_score>0.5){
         
-	        if (guard_attack="ork") then tempor=choose(1,2,3,4,5,6)*ork_score;
-	        if (guard_attack="tau") then tempor=choose(1,2,3,4,5,6)*tau_score;
+	        if (guard_attack="ork") then tempor=choose(1,2,3,4,5,6)*planet_forces[eFaction.Orks];
+	        if (guard_attack="tau") then tempor=choose(1,2,3,4,5,6)*planet_forces[eFaction.Tau];
 	        if (guard_attack="traitors") then tempor=choose(1,2,3,4,5,6)*traitors_score;
 	        if (guard_attack="csm") then tempor=choose(2,3,4,5,6,7)*csm_score;
 	        if (guard_attack="tyranids") then tempor=choose(2,3,4,5,6,7)*tyranids_score;
         
 	        rand1=choose(1,2,3,4,5)*guard_score;
         
-	        if (guard_attack="ork") and (ork_score>guard_score) then rand1=0;
-	        if (guard_attack="tau") and (tau_score>guard_score) then rand1=0;
+	        if (guard_attack="ork") and (planet_forces[eFaction.Orks]>guard_score) then rand1=0;
+	        if (guard_attack="tau") and (planet_forces[eFaction.Tau]>guard_score) then rand1=0;
 	        if (guard_attack="traitors") and (traitors_score>guard_score) then rand1=0;
 	        if (guard_attack="csm") and (csm_score>guard_score) then rand1=0;
 	        if (guard_attack="tyranids") and (tyranids_score>guard_score) then rand1=0;
@@ -520,8 +433,8 @@ function scr_enemy_ai_a() {
     
 	    // PDF attack
 	    if ((pdf_score>0) and (pdf_attack!="")) or ((pdf_score>1) and (guard_score<0.5)){
-	        if (pdf_attack="ork") then tempor=ork_score;
-	        if (pdf_attack="tau") then tempor=tau_score;
+	        if (pdf_attack="ork") then tempor=planet_forces[eFaction.Orks];
+	        if (pdf_attack="tau") then tempor=planet_forces[eFaction.Tau];
 	        if (pdf_attack="traitors") then tempor=traitors_score;
 	        if (pdf_attack="csm") then tempor=csm_score;
 	        if (pdf_attack="guard") then tempor=guard_score;
@@ -531,7 +444,7 @@ function scr_enemy_ai_a() {
 	        rand1=floor(random(pdf_score+tempor+2))
 
 	        rand2=choose(1,1,2);
-	        if (pdf_attack=="ork") and (ork_score>=3) and (pdf_score<=2) then rand2=1;
+	        if (pdf_attack=="ork") and (planet_forces[eFaction.Orks]>=3) and (pdf_score<=2) then rand2=1;
 	        if (pdf_attack=="traitors") and (traitors_score>=6) then rand2=1;
 	        if (pdf_attack=="csm") and (csm_score>=3) then rand2=1;
 	        if (pdf_attack=="tyranids") and (tyranids_score>=pdf_score) then rand2=1;
@@ -563,10 +476,10 @@ function scr_enemy_ai_a() {
 	        rand1=choose(2,3,4,5,6)*sisters_score;
         
 	        if (sisters_attack="tau"){
-	            rand2=(choose(2,3,4,5)*tau_score)*choose(1,1.25);
+	            rand2=(choose(2,3,4,5)*planet_forces[eFaction.Tau])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_tau-=1;
 	        }else  if(sisters_attack="ork"){
-	            rand2=(choose(2,3,4,5)*ork_score)*choose(1,1.25);
+	            rand2=(choose(2,3,4,5)*planet_forces[eFaction.Orks])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }else  if(sisters_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5)*traitors_score)*choose(1,1.25);
@@ -597,11 +510,11 @@ function scr_enemy_ai_a() {
 	    }
     
 	    // Tau attack
-	    if (tau_score>0) and (tau_attack!="") and (tau_attack!="player"){
-	        rand1=choose(1,2,3,4,5,6)*tau_score;
+	    if (planet_forces[eFaction.Tau]>0) and (tau_attack!="") and (tau_attack!="player"){
+	        rand1=choose(1,2,3,4,5,6)*planet_forces[eFaction.Tau];
         
 	        if (tau_attack="ork"){
-	            rand2=(choose(1,2,3,4,5,6)*ork_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5,6)*planet_forces[eFaction.Orks])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }else if (tau_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5,6)*traitors_score)*choose(1,1.25);
@@ -613,14 +526,14 @@ function scr_enemy_ai_a() {
 	        }else if (tau_attack="guard"){
 	            rand2=(choose(1,2,3,4,5,6)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
-	                if (tau_score<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.7);
-	                if (tau_score>=4) then p_guardsmen[run]=floor(p_guardsmen[run]*0.6);
+	                if (planet_forces[eFaction.Tau]<=3) then p_guardsmen[run]=floor(p_guardsmen[run]*0.7);
+	                if (planet_forces[eFaction.Tau]>=4) then p_guardsmen[run]=floor(p_guardsmen[run]*0.6);
 	            }
 	        }else if (tau_attack="pdf"){
 	            rand2=(choose(1,2,3,4,5,6)*pdf_score)*choose(1,1.25);
 	            if (rand1>rand2){
-	                if (tau_score<=3) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
-	                if (tau_score>=4) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));
+	                if (planet_forces[eFaction.Tau]<=3) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
+	                if (planet_forces[eFaction.Tau]>=4) then p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));
 	            }
 	        }else if (tau_attack="sisters"){
 	            rand2=(choose(1,2,3,4,5,6)*sisters_score)*choose(1,1.25);
@@ -629,11 +542,11 @@ function scr_enemy_ai_a() {
 	    }
     
 	    // ork attack
-	    if (ork_score>0) and (ork_attack!="") and (ork_attack!="player"){
-	        rand1=choose(1,2,3,4,5,6)*ork_score;
+	    if (planet_forces[eFaction.Orks]>0) and (ork_attack!="") and (ork_attack!="player"){
+	        rand1=choose(1,2,3,4,5,6)*planet_forces[eFaction.Orks];
 
 	        if (ork_attack="tau"){
-	            rand2=(choose(1,2,3,4,5,6)*tau_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5,6)*planet_forces[eFaction.Tau])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_tau-=1;
 	        }else if (ork_attack="traitors"){
 	            rand2=(choose(1,2,3,4,5,6,7)*traitors_score)*choose(1,1.25);
@@ -644,24 +557,24 @@ function scr_enemy_ai_a() {
 	        }else if (ork_attack="guard"){var onc=0;
 	            rand2=(choose(1,2,3,4,5,6)*guard_score)*choose(1,1.25);
 	            if (rand1>rand2){
-	                if (ork_score<=3) and (onc=0){p_guardsmen[run]=floor(p_guardsmen[run]*(min(0.95, 0.7+pdf_loss_reduction)));onc=1;}
-	                if (ork_score>=4) and (onc=0){p_guardsmen[run]=floor(p_guardsmen[run]*(min(0.95, 0.55+pdf_loss_reduction)));onc=1;}
-	                if (ork_score>=4) and (p_guardsmen[run]<15000) and (onc=0){p_guardsmen[run]=0;onc=1;}
-	                if (ork_score>=3) and (p_guardsmen[run]<5000) and (onc=0){p_guardsmen[run]=0;onc=1;}
+	                if (planet_forces[eFaction.Orks]<=3) and (onc=0){p_guardsmen[run]=floor(p_guardsmen[run]*(min(0.95, 0.7+pdf_loss_reduction)));onc=1;}
+	                if (planet_forces[eFaction.Orks]>=4) and (onc=0){p_guardsmen[run]=floor(p_guardsmen[run]*(min(0.95, 0.55+pdf_loss_reduction)));onc=1;}
+	                if (planet_forces[eFaction.Orks]>=4) and (p_guardsmen[run]<15000) and (onc=0){p_guardsmen[run]=0;onc=1;}
+	                if (planet_forces[eFaction.Orks]>=3) and (p_guardsmen[run]<5000) and (onc=0){p_guardsmen[run]=0;onc=1;}
 	            }
 	        }else if (ork_attack="pdf"){
 	        	var pdf_random = choose(1,2,3,4,5,6);
 	            rand2=(pdf_random*pdf_score);
 	            var active_garrison = pdf_with_player && garrison.viable_garrison>0;
 	            if (rand1>rand2){
-	                if (ork_score>=4) and (p_pdf[run]>=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
-	                else if (ork_score>=4 && p_pdf[run]<30000 && p_pdf[run]>=10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
-	                else if (ork_score>=3) and (p_pdf[run]<10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
-	                else if (ork_score<3 && p_pdf[run]>30000){
+	                if (planet_forces[eFaction.Orks]>=4) and (p_pdf[run]>=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
+	                else if (planet_forces[eFaction.Orks]>=4 && p_pdf[run]<30000 && p_pdf[run]>=10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
+	                else if (planet_forces[eFaction.Orks]>=3) and (p_pdf[run]<10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
+	                else if (planet_forces[eFaction.Orks]<3 && p_pdf[run]>30000){
 	                	p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
 	                }
-	                else if (ork_score>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
-	                else if (ork_score>=1) and (p_pdf[run]<200){ p_pdf[run]=0;}
+	                else if (planet_forces[eFaction.Orks]>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
+	                else if (planet_forces[eFaction.Orks]>=1) and (p_pdf[run]<200){ p_pdf[run]=0;}
 
 	                if (active_garrison){
 	                	var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} were unable to secure PDF victory chapter support requested";
@@ -722,10 +635,10 @@ function scr_enemy_ai_a() {
 	        else if (traitors_score=7){ rand1=999;}
         
 	        if (traitors_attack="tau"){
-	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Tau])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_tau-=1;
 	        }else if (traitors_attack="ork"){
-	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Orks])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }
 	        /*if (traitors_attack="eldar"){
@@ -768,10 +681,10 @@ function scr_enemy_ai_a() {
 	        if (csm_score>=5) then rand1=choose(30,36);
         
 	        if (csm_attack="tau"){
-	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Tau])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_tau-=1;
 	        }else if (csm_attack="ork"){
-	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Orks])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }else if (csm_attack="guard"){
 	            rand2=(choose(1,2,3,4,5)*guard_score)*choose(1,1.25);
@@ -809,10 +722,10 @@ function scr_enemy_ai_a() {
 	        if (tyranids_score>=6) then rand1=choose(30,36);
         
 	        if (tyranids_attack="tau"){
-	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Tau])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_tau-=1;
 	        }else if (tyranids_attack="ork"){
-	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Orks])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }else if (tyranids_attack="csm"){
 	            rand2=(choose(1,2,3,4,5)*csm_score)*choose(1,1.25);
@@ -862,10 +775,10 @@ function scr_enemy_ai_a() {
 	        if (necrons_score>=6) then rand1=choose(30,36);
         
 	        if (necrons_attack="tau"){
-	            rand2=(choose(1,2,3,4,5)*tau_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Tau])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_tau-=1;
 	        }else if (necrons_attack="ork"){
-	            rand2=(choose(1,2,3,4,5)*ork_score)*choose(1,1.25);
+	            rand2=(choose(1,2,3,4,5)*planet_forces[eFaction.Orks])*choose(1,1.25);
 	            if (rand1>rand2) then after_combat_ork_force-=1;
 	        }else if (necrons_attack="csm"){
 	            rand2=(choose(1,2,3,4,5)*csm_score)*choose(1,1.25);
