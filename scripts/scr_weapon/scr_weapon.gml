@@ -168,6 +168,7 @@ global.weapons={
         "range": 1,
         "spli": 2,
         "arp": 0
+	"tags":["sword"],
     },
     "Chainsword": {
         "abbreviation": "ChSwrd",
@@ -294,17 +295,17 @@ global.weapons={
     "Chainfist": {
      "abbreviation": "ChFst",
         "attack": {
-            "standard": 300,
-            "master_crafted": 325,
-            "artifact": 350
+           "standard": 550,
+            "master_crafted": 600,
+            "artifact": 700
         },
         "description": "Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.",
         "melee_hands": 1.25,
         "ranged_hands": 1,
         "range": 1,
-        "spli": 1,
+        "spli": 2,
         "arp": 1,
-        "tags":["power", "chain", "fist", "siege"],
+        "tags":["power", "chain", "fist", "dual", "siege"],
     },
     "Lascutter": {
        "abbreviation": "Lasct",
@@ -423,14 +424,14 @@ global.weapons={
         "range": 1,
         "spli": 2,
         "arp": 1,
-        "tags":["power","fist"],
+        "tags":["power", "dual", "fist"],
     },
     "Lightning Claw": {
     "abbreviation": "LghtClw",             
         "attack": {
-            "standard": 130,
-            "master_crafted": 160,
-            "artifact": 190
+            "standard": 450,
+            "master_crafted": 500,
+            "artifact": 600
         },
         "description": "Lightning claws are specialized close combat weapons with built-in disruptor fields. These lethal claws rip into infantry like butter, bringing terror to the foe.",
         "melee_hands": 1.1,
@@ -439,7 +440,7 @@ global.weapons={
         "range": 1,
         "spli": 5,
         "arp": 1,
-        "tags":["power","dual","fist"],
+        "tags":["power", "dual", "fist"],
     },
     "Dreadnought Lightning Claw": {
     "abbreviation": "LghtClw",             
@@ -707,7 +708,7 @@ global.weapons={
         "range": 1,
         "spli": 10,
         "arp": 1,
-        "tags":["dreadnought","fist"]
+        "tags":["dreadnought", "flame", "fist"]
     },       
     "Inferno Cannon": {
         "abbreviation": "InfCann",               
@@ -723,7 +724,7 @@ global.weapons={
         "range": 3.1,
         "spli": 20,
         "arp": -1,
-        "tags":["vehicle","flame","dreadnought"]
+        "tags":["vehicle", "flame", "dreadnought"]
     },
     "Meltagun": {
         "abbreviation": "Mltgn",
@@ -755,7 +756,7 @@ global.weapons={
         "range": 4.1,
         "spli": 1,
         "arp": 1,
-        "tags":["melta","heavy_ranged", "dreadnought"]
+        "tags":["melta", "heavy_ranged", "dreadnought"]
     },
     "Plasma Pistol": {
         "abbreviation": "PlsmPstl",
@@ -771,7 +772,7 @@ global.weapons={
         "range": 3.1,
         "spli": 1,
         "arp": 1,
-        "tags":["plasma","pistol"]
+        "tags":["plasma", "pistol"]
     },
     "Infernus Pistol": {
       "abbreviation": "InfPstl" ,
@@ -787,7 +788,7 @@ global.weapons={
         "range": 2.1,
         "spli": 3,
         "arp": 1,
-        "tags":["flame","pistol"]
+        "tags":["flame", "pistol"]
     },
     "Plasma Gun": {
         "abbreviation": "PlsmGn",
@@ -835,7 +836,7 @@ global.weapons={
         "range": 18,
         "spli": 1,
         "arp": 0,
-        "tags":["precision"]
+        "tags":["precision", "rifle"]
     },
     "Assault Cannon": {
         "abbreviation": "AssCann",       
@@ -851,7 +852,7 @@ global.weapons={
         "range": 12,
         "spli": 20,
         "arp": 1,
-        "tags":["heavy_ranged","dreadnought"]
+        "tags":["heavy_ranged", "dreadnought"]
     },
     "Autocannon": {
         "abbreviation": "Autocnn",       
@@ -867,7 +868,7 @@ global.weapons={
         "range": 18,
         "spli": 15,
         "arp": 1,
-        "tags":["heavy_ranged","dreadnought"]
+        "tags":["heavy_ranged", "dreadnought"]
     },
     "Missile Launcher": {
       "abbreviation": "MsslLnch",          
@@ -883,7 +884,7 @@ global.weapons={
         "range": 24,
         "spli": 3,
         "arp": 0,
-        "tags":["heavy_ranged","dreadnought"]
+        "tags":["heavy_ranged", "dreadnought"]
     },
     "Lascannon": {
        "abbreviation": "Lascnn",           
@@ -899,7 +900,7 @@ global.weapons={
         "range": 24,
         "spli": 1,
         "arp": 1,
-         "tags":["heavy_ranged"]
+         "tags":["heavy_ranged", "las"]
     },
     "Conversion Beam Projector": {
         "abbreviation": "CnvBmPrj",            
@@ -915,6 +916,7 @@ global.weapons={
         "range": 20,
         "spli": 3,
         "arp": 1
+        "tags":["heavy_ranged", "ancient"]
     },
     "Integrated Bolters": {
         "abbreviation": "IntgBltr", 
@@ -952,7 +954,7 @@ global.weapons={
         "spli": 3,
         "arp": 1,
         "second_profiles":["Integrated Bolters"],
-        "tags":["power","fist"],
+        "tags":["power", "fist", "bolt"],
     },    
     "Power Fists": {
         "abbreviation": "PwrFists", 
@@ -966,8 +968,8 @@ global.weapons={
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
-        "spli": 3,
-        "arp": 0
+        "spli": 2,
+        "arp": 1
     },
     "Twin Linked Heavy Bolter": {
         "abbreviation": "TwnHvyBltr", 
@@ -983,7 +985,7 @@ global.weapons={
         "range": 16,
         "spli": 9,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","dreadnought"]
+        "tags":["bolt", "heavy_ranged", "vehicle", "dreadnought"]
     },
     "Twin Linked Lascannon": {
         "abbreviation": "TwnLascnn", 
@@ -999,7 +1001,7 @@ global.weapons={
         "range": 24,
         "spli": 2,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","dreadnought"]
+        "tags":["las", "heavy_ranged", "vehicle", "dreadnought"]
     },
     "Lascannons": {
          "abbreviation": "DblLascnn", 
@@ -1015,7 +1017,7 @@ global.weapons={
         "range": 20,
         "spli": 2,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","dreadnought"]
+        "tags":["las", "heavy_ranged", "vehicle", "dreadnought"]
     },
     "Heavy Bolter": {
         "abbreviation": "HvyBltr", 
@@ -1031,7 +1033,7 @@ global.weapons={
         "range": 16,
         "spli": 6,
         "arp": 1,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged", "bolt"]
     },
     "Whirlwind Missiles": {
         "attack": {
@@ -1047,10 +1049,12 @@ global.weapons={
         "range": 20,
         "spli": 25,
         "arp": 1
+        "tags":["vehicle", "indirect"]
     },
     "HK Missile": {
         "abbreviation": "HKMssl", 
         "description": "A single shot hunter killer	missile that serves as a powerful anti armour/aircraft deterent.",
+        "tags":["HK"]
     },  
     "Twin Linked Heavy Bolter Mount": {
         "attack": {
@@ -1065,7 +1069,8 @@ global.weapons={
         "ammo": 20,
         "range": 16,
         "spli": 3,
-        "arp": 0
+        "arp": 1
+       "tags":["vehicle", "dreadnought", "heavy_ranged", "bolt"]
     },
     "Twin Linked Lascannon Mount": {
         "attack": {
@@ -1081,6 +1086,7 @@ global.weapons={
         "range": 20,
         "spli": 3,
         "arp": 1
+       "tags":["las", "vehicle", "heavy_ranged", "dreadnought"]
     },
     "Twin Linked Assault Cannon Mount": {
         "attack": {
@@ -1096,7 +1102,7 @@ global.weapons={
         "range": 12,
         "spli": 30,
         "arp": 1,
-        "tags":["vehicle","pintle","dreadnought"]
+        "tags":["vehicle", "pintle", "dreadnought"]
     },
     "Reaper Autocannon Mount": {
         "attack": {
@@ -1112,7 +1118,7 @@ global.weapons={
         "range": 15,
         "spli": 6,
         "arp": 1,
-        "tags":["vehicle","pintle"]
+        "tags":["vehicle", "pintle"]
     },
     "Quad Linked Heavy Bolter Sponsons": {
         "attack": {
@@ -1128,7 +1134,7 @@ global.weapons={
         "range": 16,
         "spli": 5,
         "arp": 1,
-        "tags":["bolt", "vehicle","sponson"]
+        "tags":["bolt", "vehicle", "sponson"]
     },
     "Twin Linked Lascannon Sponsons": {
         "attack": {
@@ -1144,7 +1150,7 @@ global.weapons={
         "range": 20,
         "spli": 3,
         "arp": 1,
-        "tags":["las", "vehicle","sponson", "twin_linked"]
+        "tags":["las", "vehicle", "sponson", "twin_linked"]
     },
     "Lascannon Sponsons": {
         "attack": {
@@ -1160,7 +1166,7 @@ global.weapons={
         "range": 20,
         "spli": 1,
         "arp": 1,
-        "tags":["las", "vehicle","sponson"]
+        "tags":["las", "vehicle", "sponson"]
     },    
     "Hurricane Bolter Sponsons": {
         "attack": {
@@ -1176,7 +1182,7 @@ global.weapons={
         "range": 10,
         "spli": 60,
         "arp": 0,
-        "tags":["bolt", "vehicle","sponson"]
+        "tags":["bolt", "vehicle", "sponson"]
     },
     "Flamestorm Cannon Sponsons": {
         "attack": {
@@ -1192,7 +1198,7 @@ global.weapons={
         "range": 2,
         "spli": 3,
         "arp": 1,
-        "tags":["flame", "vehicle","sponson"]
+        "tags":["flame", "vehicle", "sponson"]
     },
     "Twin Linked Heavy Flamer Sponsons": {
         "attack": {
@@ -1208,7 +1214,7 @@ global.weapons={
         "range": 2.1,
         "spli": 8,
         "arp": -1,
-        "tags":["flame", "vehicle","sponson"]
+        "tags":["flame", "vehicle", "dreadnought", "sponson"]
     },
 "Twin Linked Bolters": {
         "attack": {
@@ -1223,6 +1229,8 @@ global.weapons={
         "ammo": 30,
         "range": 12,
         "spli": 6,
+        "arp": 0,
+        "tags":["bolt", "vehicle"]
     },        
     "Twin Linked Multi-Melta Sponsons": {
         "abbreviation": "TwnMltMelts", 
@@ -1254,7 +1262,7 @@ global.weapons={
         "range": 18,
         "spli": 9,
         "arp": 0,
-        "tags":["vehicle", "Sponson", "volkite"]
+        "tags":["vehicle", "Sponson", "volkite", "ancient"]
     },
     "Heavy Bolter Sponsons": {
         "abbreviation": "HvyBltrs", 
@@ -1270,7 +1278,7 @@ global.weapons={
         "range": 16,
         "spli": 4,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","sponson"]
+        "tags":["heavy_ranged", "vehicle", "sponson", "bolt"]
     },  
     "Heavy Flamer Sponsons": {
         "abbreviation": "HvyFlmrs", 
@@ -1287,7 +1295,7 @@ global.weapons={
         "range": 2.1,
         "spli": 4,
         "arp": -1,
-        "tags":["flame", "vehicle","sponson"]
+        "tags":["flame", "vehicle", "sponson"]
     },  
     "Volkite Culverin Sponsons": {
         "abbreviation": "VlkClvs", 
@@ -1303,7 +1311,7 @@ global.weapons={
         "range": 18,
         "spli": 5,
         "arp": 1,
-        "tags":["vehicle", "Sponson", "volkite"]
+        "tags":["vehicle", "Sponson", "volkite", "ancient"]
     },  
     "Autocannon Turret": {
         "abbreviation": "Autocnn", 
@@ -1372,7 +1380,7 @@ global.weapons={
         "range": 2.1,
         "spli": 3,
         "arp": 0,
-        "tags":["flame"]
+        "tags":["flame", "attached"]
     },
     "Combiflamer": {
         "abbreviation": "CmbFlmr", 
@@ -1500,7 +1508,7 @@ global.weapons={
         "range": 12,
         "spli": 30,
         "arp": 1,
-        "tags":["heavy_ranged","twin_linked", "vehicle","turret"]
+        "tags":["heavy_ranged", "twin_linked", "vehicle", "turret"]
     },  
     "Flamestorm Cannon Turret": {
         "abbreviation": "FlmstCnn", 
@@ -1516,7 +1524,7 @@ global.weapons={
         "range": 2,
         "spli": 3,
         "arp": 1,
-        "tags":["flame", "vehicle","turret"]
+        "tags":["flame", "vehicle", "turret"]
     },  
     "Magna-Melta Turret": {
         "abbreviation": "MgnMlt", 
@@ -1564,7 +1572,7 @@ global.weapons={
         "range": 20,
         "spli": 1,
         "arp": 1,
-        "tags":["vehicle", "dreadnought", "turret"]
+        "tags":["vehicle", "dreadnought", "turret", ancient"]
     },  
     "Neutron Blaster Turret": {
         "abbreviation": "NtrnBlstr", 
@@ -1596,7 +1604,7 @@ global.weapons={
         "range": 18,
         "spli": 30,
         "arp": 0,
-        "tags":["vehicle", "turret", "volkite"]
+        "tags":["vehicle", "turret", "volkite", "ancient"]
     },
 				
 }
@@ -1937,7 +1945,7 @@ global.gear = {
             "master_crafted": 24, 
             "artifact": 28 
         }, 
-        "tags":["vehicle","armour"],              
+        "tags":["vehicle", "armour"],              
     },
     "Heavy Armour":{
         "abbreviation": "HvyArm",
@@ -1947,7 +1955,7 @@ global.gear = {
             "master_crafted": 12, 
             "artifact": 14 
         }, 
-        "tags":["vehicle","armour"],              
+        "tags":["vehicle", "armour"],              
     },
     "Void Shield":{
         "abbreviation": "V Shld",
@@ -1962,7 +1970,7 @@ global.gear = {
         "master_crafted": 35,
         "artifact": 40
       },
-        "tags":["vehicle","armour"],              
+        "tags":["vehicle", "armour", "voidshield"],              
     },
     "Lucifer Pattern Engine":{
         "abbreviation": "Luc Eng",
@@ -1977,7 +1985,7 @@ global.gear = {
         "master_crafted": 15,
         "artifact": 20
       },
-        "tags":["vehicle","armour"],              
+        "tags":["vehicle", "armour", "Upgrade"],              
     },
     "Artificer Hull":{
         "abbreviation": "ArtHll",
@@ -1992,7 +2000,7 @@ global.gear = {
         "master_crafted": 20,
         "artifact": 25
       },
-        "tags":["vehicle","Upgrade"],              
+        "tags":["vehicle", "Upgrade"],              
     }                
 } , 
   "gear": {
@@ -2081,7 +2089,7 @@ global.gear = {
         "master_crafted": 10,
         "artifact": 15
       },
-      "tags":["smoke","conceal", "vehicle"]
+      "tags":["smoke", "conceal", "vehicle", "dreadnought"]
     },
     "Dozer Blades": {
       "description": "An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ",
@@ -2105,7 +2113,7 @@ global.gear = {
         "master_crafted": 10,
         "artifact": 15
       },
-       "tags":["vehicle"],              
+       "tags":["vehicle", "dreadnought"],              
     },
     "Frag Assault Launchers": {
         "abbreviation": "FrgAssLnchrs", 
