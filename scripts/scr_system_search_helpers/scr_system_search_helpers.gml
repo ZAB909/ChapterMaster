@@ -11,6 +11,7 @@ function scr_get_planet_with_feature(star, feature){
 	return -1;
 }
 
+//TODO make an adaptive allies system
 function NSystemSearchHelpers() constructor{
 	static default_allies = [
 		eFACTION.Player,

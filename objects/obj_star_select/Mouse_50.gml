@@ -74,7 +74,7 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
     // x3=xx+46;y3=yy+252;
     x3=xx+49;y3=yy+441;
     
-    var combating;combating=0;
+    var combating=0;
     
     repeat(7){i+=1;
         if (en_fleet[i]>0) and (mouse_x>=x3-24) and (mouse_y>=y3-24) and (mouse_x<x3+48) and (mouse_y<y3+48) and (obj_controller.cooldown<=0){
