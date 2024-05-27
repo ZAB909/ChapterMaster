@@ -282,7 +282,7 @@ function scr_enemy_ai_b() {
 		            	p_heresy[i] = 80;
 		            }
 
-		            tixt = "Daemonic incursion on {planet_numeral_name(i)}!";
+		            tixt = $"Daemonic incursion on {planet_numeral_name(i)}!";
 		        } // Oh god what
 
 		        if ((rando >= 41) and (!notixt) && tixt!="") {
@@ -323,9 +323,9 @@ function scr_enemy_ai_b() {
 		    if (p_influence[i][eFACTION.Tyranids]>55){
 		    	p_owner[i] = eFACTION.Tyranids;
 		    }
-		} else {
+		} else if (p_influence[i][eFACTION.Tyranids]>5){
 			adjust_influence(eFACTION.Tyranids, -1, i);
-			if ((irandom(200)+p_influence[i][eFACTION.Tyranids]/10) > 10){
+			if ((irandom(200)+(p_influence[i][eFACTION.Tyranids]/10)) > 195){
 				array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
 			}
 		}
