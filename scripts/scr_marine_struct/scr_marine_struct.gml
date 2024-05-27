@@ -2246,7 +2246,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		return [points,reasons];
 	}
 
-	static roll_history_armour = function(){
+	static marine_assembling = function(){
 		var old_guard = irandom(100);
 
 		var bionic_count = choose(0,0,0,0,1,2,3);
