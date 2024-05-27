@@ -90,6 +90,7 @@ function scr_wep_abbreviate(argument0) {
 	if (we="Armoured Ceramite") then we2="Cera";
 	if (we="Artificer Hull") then we2="Art Hull";
 	if (we="Heavy Armour") then we2="Hvy Arm";
+	if (we="Void Shield") then we2="V Shld";
 	if (we="Lucifer Pattern Engine") then we2="Luc Eng";
 
 	if (we="Dozer Blades") then we2="Doz Blad";
