@@ -270,7 +270,6 @@ function scr_company_struct(comp) constructor{
 			for (var i=0;i<array_length(current_squad.members);i++){
 				member = fetch_unit(current_squad.members[i]);
 				if (!array_equals(squad_draw_surfaces[i][0], current_squad.members[i])){
-					show_debug_message("non equal arrays {0}, {1}",squad_draw_surfaces[i][0], current_squad.members[i]);
 					squad_draw_surfaces[i][0] = [member.company, member.marine_number];
 					squad_draw_surfaces[i][1] = member.draw_unit_image();
 				}

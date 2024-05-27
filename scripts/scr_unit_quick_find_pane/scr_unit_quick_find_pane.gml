@@ -693,3 +693,214 @@ function setup_planet_mission_group(){
 }
 
 
+function planet_selection_action(){
+	var garrison_assignment = (obj_controller.managing>0 && obj_controller.view_squad && loading);
+	var xx=__view_get( e__VW.XView, 0 )+0;
+	var yy=__view_get( e__VW.YView, 0 )+0;
+	if (instance_exists(target)){
+		if (loading){
+			obj_controller.selecting_planet = 0;
+		}
+	    for (var i = 0;i<target.planets;i++){
+	    	var planet_draw = c_white;
+	        if (point_distance(xx+159+(i*41),yy+287,mouse_x,mouse_y)<=22){
+	            obj_controller.selecting_planet=i+1;
+	            var sel_plan = obj_controller.selecting_planet;
+	            var planet_is_allies = scr_is_planet_owned_by_allies(target, sel_plan);
+	            if (mouse_check_button_pressed(mb_left)){
+	                if (garrison_assignment){
+	                	if (planet_is_allies){
+		                    var company_data = obj_controller.company_data;
+		                    var squad_index = company_data.company_squads[company_data.cur_squad];
+		                    var current_squad=obj_ini.squads[squad_index];
+		                    current_squad.set_location(loading_name,0,sel_plan);
+		                    current_squad.assignment={
+		                        type:mission,
+		                        location:target.name,
+		                        ident:sel_plan,
+		                    };
+		                    var operation_data = {
+		                        type:"squad", 
+		                        reference:squad_index,
+		                        job:mission,
+		                        task_time : 0
+		                    };
+		                    array_push(target.p_operatives[sel_plan],operation_data);
+		                    instance_destroy();
+		                } else {
+		                	planet_draw = c_red;
+		                	tooltip_draw("Can't garrison on non-friendly planet");
+		                }
+	                } else if (!loading){
+	                    garrison = new garrison_force(target.p_operatives[sel_plan]);
+	                    feature="";
+	                    buttons_selected=false;                 
+	                } else if (loading){ 
+					    if (sel_plan>0){
+					        obj_controller.cooldown=8000;
+					        obj_controller.unload=sel_plan;
+					        obj_controller.return_object=target;
+					        obj_controller.return_size=obj_controller.man_size;
+					       with(obj_controller.return_object){// This marks that there are forces upon this planet
+					            p_player[obj_controller.unload]+=obj_controller.man_size;
+					        }
+					        
+					        // 135 ; SPECIAL PLANET CRAP HERE
+					        
+					        // Recon Stuff
+					        var recon=0;
+					        if (has_problem_planet(sel_plan, "recon",target)) then recon=1;
+
+					        if (recon==1){
+					            var arti=instance_create(target.x,target.y,obj_temp7);// Unloading / artifact crap
+					            arti.num=sel_plan;
+					            arti.alarm[0]=1;
+					            arti.loc=obj_controller.selecting_location;
+					            arti.managing=obj_controller.managing;
+					            arti.type="recon";
+					            // Right here should pass the man_sel variables
+					            // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
+					            var i=-1;
+					            with (arti){
+					                setup_planet_mission_group()
+					            }
+					        }else if (planet_feature_bool(target.p_feature[sel_plan], P_features.Artifact) == 1) and (recon=0){
+						
+					            var artifact=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
+					            artifact.num=sel_plan;
+					            artifact.alarm[0]=1;
+					            artifact.loc=obj_controller.selecting_location;
+					            artifact.managing=obj_controller.managing;
+
+					            with (artifact){
+					                setup_planet_mission_group();
+					            }
+					        }
+					        
+					        // STC Grab
+					        if (planet_feature_bool(target.p_feature[sel_plan], P_features.STC_Fragment) == 1) and (recon=0){
+					            var i,tch,mch;i=0;tch=0;mch=0;
+					            for (var i=0;i<array_length(obj_controller.display_unit);i++){
+					                if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]==1){
+					                    if (obj_controller.ma_role[i]=obj_ini.role[100][16]) or ((obj_controller.ma_role[i]="Forge Master")){
+					                        tch+=1;
+					                    }
+					                    if (obj_controller.ma_role[i]="Techpriest"){
+					                        mch+=1;
+					                    }
+					                }
+					            }
+					            if (tch+mch>0){
+					                var arti;arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
+					                arti.num=sel_plan;
+					                arti.alarm[0]=1;
+					                arti.loc=obj_controller.selecting_location;
+					                arti.managing=obj_controller.managing;
+					                arti.tch=tch;
+					                arti.mch=mch;
+					                // Right here should pass the man_sel variables
+					                // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
+					                with (arti){
+					                    setup_planet_mission_group();
+					                }
+					            }
+					        }
+					        
+					        // Ancient Ruins
+							var _planet = target.p_feature[sel_plan]
+							var _ruins_list =  search_planet_features( _planet, P_features.Ancient_Ruins)
+							var _explore_ruins;
+					        if (array_length(_ruins_list) > 0){
+								for (var _ruin= 0; _ruin < array_length(_ruins_list); _ruin++){
+									if ( _planet[_ruins_list[_ruin]].exploration_complete == false){
+										 _explore_ruins = _planet[_ruins_list[_ruin]];
+										break;
+									}else{ _explore_ruins=0;}
+								}
+								if ( _explore_ruins!= 0){
+									obj_controller.current_planet_feature =_explore_ruins;
+									obj_controller.current_planet_feature.star = target;
+									obj_controller.current_planet_feature.planet = sel_plan;
+					                var arti;
+					                var pip=instance_create(0,0,obj_popup);
+					                pip.title="Ancient Ruins";
+					    			var ruins_size =obj_controller.current_planet_feature.ruins_size
+					                
+					                var nu=planet_numeral_name(sel_plan,target);
+
+					    			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
+					    				 pip.text="Located upon "+string(nu)+$" is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
+					    				switch (ruins_size){
+					    					case "tiny":pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
+					    					break;
+					    					case "small":pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
+					    					break;
+					    					case "medium":pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
+					    					break;
+					    					case "large":pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
+					    					break;
+					    					case "sprawling":pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
+					    					break;
+					    				}
+					    				pip.text += ". What is thy will?"
+					    			}
+					                pip.option1="Explore the ruins.";
+					                pip.option2="Do nothing.";
+					                pip.option3="Return your marines to the ship.";
+					                pip.image="ancient_ruins";
+					                
+					                arti=instance_create(target.x,target.y,obj_temp4);
+					                arti.num=sel_plan;
+					                arti.alarm[0]=1;
+					                arti.loc=obj_controller.selecting_location;
+					                arti.battle_loc=target.name;
+					                arti.manag=obj_controller.managing;
+					                arti.obj=target;
+
+					                with (arti){
+					                    setup_planet_mission_group();
+					                }
+
+					                arti.ship_id=obj_controller.ma_lid[1];
+					    			obj_controller.current_planet_feature.battle = arti;
+								}
+					        }
+
+					        instance_destroy();
+						}	                	
+	                }                
+	            }
+	        } 
+	        xxx=159+(i*41);
+	        if (target.craftworld=0) and (target.space_hulk=0){
+	        	var sel_plan = i+1;
+	        	var temp1=0;
+	            with (target){
+	                if (p_type[sel_plan]="Lava") then temp1=0;
+	                if (p_type[sel_plan]="Desert") then temp1=2;
+	                if (p_type[sel_plan]="Dead") then temp1=12;
+	                if (p_type[sel_plan]="Hive") then temp1=4;
+	                if (p_type[sel_plan]="Temperate") or (p_type[sel_plan]="Feudal") then temp1=8;
+	                if (p_type[sel_plan]="Agri") then temp1=6;
+	                if (p_type[sel_plan]="Death") then temp1=5;
+	                if (p_type[sel_plan]="Ice") then temp1=10;
+	                if (p_type[sel_plan]="Forge") then temp1=3;
+	                if (p_type[sel_plan]="Daemon") then temp1=14;
+	                if (p_type[sel_plan]="Shrine") then temp1=15;
+	            }
+	            draw_sprite_ext(spr_planets,temp1,xx+xxx, yy+287, 1, 1, 0, planet_draw, 0.9)
+	            
+	            draw_set_color(global.star_name_colors[target.p_owner[sel_plan]]);
+
+	            draw_text(xx+xxx,yy+255,scr_roman(sel_plan));
+	            
+	        }	                   
+	    }
+	    if (target.craftworld=1) then obj_controller.selecting_planet=1;
+	    if (target.space_hulk=1) then obj_controller.selecting_planet=1;
+	    x=target.x;
+	    y=target.y;	    
+	}	
+}
+
+
