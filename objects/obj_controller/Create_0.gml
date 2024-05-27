@@ -795,12 +795,14 @@ recruits=0;
 recruiting_worlds="";
 recruit_trial="Blood Duel";
 recruit_last=0;
+
+recruit_name[0]="";
+recruit_corruption[0]=0;
+recruit_distance[0]=0;
+recruit_training[0]=0;
+recruit_exp[0]=0;
+
 for(var i=0; i<501; i++){
-    recruit_name[i]="";
-    recruit_corruption[i]=0;
-    recruit_distance[i]=0;
-    recruit_training[i]=0;
-    recruit_exp[i]=0;
     
     // For loyalty penalties
     if (i<=50){

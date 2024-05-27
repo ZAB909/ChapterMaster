@@ -222,13 +222,15 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Controller","command"+string(g),obj_controller.command_set[g]);
 	    }
 	    ini_write_real("Controller","blandify",obj_controller.blandify);
-	    g=-1;repeat(201){g+=1;
-	        ini_write_string("Recruit","rcr"+string(g),obj_controller.recruit_name[g]);
-	        ini_write_real("Recruit","rcr_cr"+string(g),obj_controller.recruit_corruption[g]);
-	        ini_write_real("Recruit","rcr_ds"+string(g),obj_controller.recruit_distance[g]);
-	        ini_write_real("Recruit","rcr_tr"+string(g),obj_controller.recruit_training[g]);
-	        ini_write_real("Recruit","rcr_ex"+string(g),obj_controller.recruit_exp[g]);
-	    }
+
+	    ini_encode_and_json("Recruit", "data",{
+	    	names :obj_controller.recruit_name,
+	    	corruption :obj_controller.recruit_corruption,
+	    	distance :obj_controller.recruit_distance,
+	    	experience :obj_controller.recruit_exp,
+	    	training :obj_controller.recruit_training,
+
+	    });
 	    g=-1;repeat(30){g+=1;
 	        ini_write_string("Controller","lyl"+string(g),obj_controller.loyal[g]);
 	        ini_write_real("Controller","lyl_nm"+string(g),obj_controller.loyal_num[g]);
