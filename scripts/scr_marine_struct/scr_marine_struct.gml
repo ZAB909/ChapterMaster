@@ -2359,13 +2359,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case  obj_ini.role[100][3]: //veterans
 				if ((old_guard>=80)and (old_guard>=95)){
 					update_armour(choose("MK4 Maximus","MK8 Errant"),false,false);
-					add_exp(choose(50, 75));					
 				} else if (old_guard>95){
 					update_armour(choose("MK4 Maximus","MK3 Iron Armour"),false,false);
-					add_exp(choose(125, 100));
 				} else if (old_guard<35){
 					update_armour(choose("MK4 Maximus","MK3 Iron Armour"),false,false);
-					add_exp(choose(25, 50));					
 				}
 				if (global.chapter_name=="Ultramarines"){
 					if (choose(true,false)){
@@ -2377,15 +2374,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100][16]: //techmarines
 				if ((old_guard >= 90 && company > 0 && company < 6) || company == 1){
 					update_armour(choose("Artificer Armour"),false,false)
-					add_exp(100);	
 					bionic_count = choose(1,2,3,4,5)
 				} else if (company > 0 && company < 6){
 					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant", "Artificer Armour"),false,false);
-					add_exp(50);
 					bionic_count = choose(1,1,2,3,4)
 				} else {
 					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
-					add_exp(25);
 					bionic_count = choose(1,1,1,2,3)
 				}
 				if ((global.chapter_name == "Iron Hands" || obj_ini.progenitor = 6 || array_contains(obj_ini.dis, "Tech-Heresy"))) {
@@ -2438,16 +2432,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				if company > 0 {
 					if(old_guard>=80 || company == 1){
 						update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
-						add_exp(100);	
 						bionic_count = choose(0,0,1,2,3)
 					} else {
 						update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
-						add_exp(50);
 						bionic_count = choose(0,0,0,1,2)
 					}
 				} else {
 					update_armour(choose("MK7 Aquila"),false,false);
-					add_exp(25);
 					bionic_count = choose(0,0,0,0,1)
 				}
 				if (piety<35){
@@ -2466,26 +2457,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100][Role.LIBRARIAN]:
 				if ((old_guard >= 90 && company > 0 && company < 6) || company == 1){
 					update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
-					add_exp(100);	
 					bionic_count = choose(0,0,1,2,3)
 				} else if (company > 0 && company < 6){
 					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
-					add_exp(50);
 					bionic_count = choose(0,0,0,1,2)
 				} else {
 					update_armour(choose("MK6 Corvus", "MK7 Aquila"),false,false);
-					add_exp(25);
 					bionic_count = choose(0,0,0,0,1)
 				}
 				break;	
 			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
 				if(old_guard>=80 || company == 1){
 					update_armour(choose("MK3 Iron Armour","MK4 Maximus", "MK5 Heresy"),false,false)
-					add_exp(choose(100,75));	
 					bionic_count = choose(0,0,1,2,3)
 				} else{
 					update_armour(choose("MK6 Corvus","MK7 Aquila","MK8 Errant"),false,false);
-					add_exp(50);
 					bionic_count = choose(0,0,0,1,2)
 				}
 				break;
@@ -2558,6 +2544,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 
 		switch(role()){
+			// HQ
 			case "Chapter Master":
 				role_age = 300;
 				break;
@@ -2570,20 +2557,42 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100][Role.HONOR_GUARD]:
 				role_age = 140;
 				break;
+			case "Codiciery":
+				role_age = 40;
+				break;
+			case "Lexicanum":
+				role_age = 30;
+				break;
+			// 1st company only
 			case obj_ini.role[100][Role.VETERAN]:
 				role_age = 30;
 				break;
 			case obj_ini.role[100][Role.TERMINATOR]:
-				role_age = 30;
+				role_age = 32;
 				break;
+			case obj_ini.role[100][Role.VETERAN_SERGEANT]:
+				role_age = 36;
+				break;
+			// Command Squads
 			case obj_ini.role[100][Role.CAPTAIN]:
 				role_age = 40;
 				break;
-			case obj_ini.role[100][Role.DREADNOUGHT]:
-				role_age = 500;
-				break;
 			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
 				role_age = 30;
+				break;
+			case obj_ini.role[100][Role.ANCIENT]:
+				role_age = 80;
+				break;
+			// Command Squads and HQ
+			case obj_ini.role[100][Role.CHAPLAIN]:
+			case obj_ini.role[100][Role.APOTHECARY]:
+			case obj_ini.role[100][Role.TECHMARINE]:
+			case obj_ini.role[100][Role.LIBRARIAN]:
+				role_age = 50;
+				break;
+			// Company marines
+			case obj_ini.role[100][Role.DREADNOUGHT]:
+				role_age = 500;
 				break;
 			case obj_ini.role[100][Role.SCOUT]:
 			case obj_ini.role[100][Role.TACTICAL]:
@@ -2591,26 +2600,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100][Role.ASSAULT]:
 				role_age = 18;
 				break;
-			case obj_ini.role[100][Role.ANCIENT]:
-				role_age = 80;
-				break;
-			case obj_ini.role[100][Role.CHAPLAIN]:
-			case obj_ini.role[100][Role.APOTHECARY]:
-			case obj_ini.role[100][Role.TECHMARINE]:
-			case obj_ini.role[100][Role.LIBRARIAN]:
-				role_age = 50;
-				break;
-			case "Codiciery":
-				role_age = 40;
-				break;
-			case "Lexicanum":
-				role_age = 30;
-				break;
 			case obj_ini.role[100][Role.SERGEANT]:
-				role_age = 25;
-				break;
-			case obj_ini.role[100][Role.VETERAN_SERGEANT]:
-				role_age = 30;
+				role_age = 24;
 				break;
 		}
 
@@ -2621,6 +2612,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		}
 
 		update_age(round(age));
+		assign_reactionary_traits();
 	}
 
 	static roll_exp = function() {
@@ -2633,11 +2625,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static assign_reactionary_traits = function() {
 		var _age = age();
 	
-		if (age > 120){
+		if (_age > 160){
 			add_trait("ancient");
-		} else if (age > 80){
+		} else if (_age > 110){
 			add_trait("old_guard");
-		} else if (age > 40){
+		} else if (_age > 60){
 			add_trait("seasoned");
 		}
 	}
