@@ -1572,7 +1572,7 @@ global.weapons={
         "range": 20,
         "spli": 1,
         "arp": 1,
-        "tags":["vehicle", "dreadnought", "turret", ancient"]
+        "tags":["vehicle", "dreadnought", "turret", "ancient"]
     },  
     "Neutron Blaster Turret": {
         "abbreviation": "NtrnBlstr", 
