@@ -1,6 +1,7 @@
 
 function scr_enemy_ai_a() {
 	system_garrison = [];
+	system_sabatours = [];
 	// guardsmen hop from planet to planet
 	if (p_guardsmen[1]+p_guardsmen[2]+p_guardsmen[3]+p_guardsmen[4]>0) and (present_fleet[2]>0){
 	    var o=0,mx=0,cr=0,tr=0;
@@ -101,12 +102,14 @@ function scr_enemy_ai_a() {
 	var run=0, stop;
 	var rand=0;
     var garrison_force=false, total_garrison=0;
-	for (run =1;run<5;run++){
+	for (run =1;run<=planets;run++){
 		garrison_force=false;
-		if (run>planets){break;}
-	     garrison = new garrison_force(p_operatives[run], true);
-	     garrison_force = garrison.garrison_force;
-	     array_push(system_garrison, garrison);
+		var garrison = new garrison_force(p_operatives[run], true);
+		var sabatours = new garrison_force(p_operatives[run], true, "sabotage");
+
+		garrison_force = garrison.garrison_force;
+		array_push(system_garrison, garrison);
+		array_push(system_sabatours, sabatours);
 
 		stop=0;
 	    if (p_eldar[run]<0) then p_eldar[run]=0;

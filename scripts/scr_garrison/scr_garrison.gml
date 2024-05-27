@@ -18,7 +18,8 @@ function disposition_description_chart(dispo){
 	}
 }
 
-function garrison_force(planet_operatives, turn_end=false)constructor{
+
+function garrison_force(planet_operatives, turn_end=false, type="garrison")constructor{
 	garrison_squads=[];
 	total_garrison = 0;
 	garrison_leader=false;
@@ -29,7 +30,7 @@ function garrison_force(planet_operatives, turn_end=false)constructor{
 	var operative, unit, member;
 	 for (var ops=0;ops<array_length(planet_operatives);ops++){
       	if(planet_operatives[ops].type=="squad"){
-      		if (planet_operatives[ops].job == "garrison"){//marine garrison on planet
+      		if (planet_operatives[ops].job == type){//marine garrison on planet
       			if (array_length(obj_ini.squads[planet_operatives[ops].reference].members)>0){
       				operative = obj_ini.squads[planet_operatives[ops].reference];
 	      			array_push(garrison_squads, operative)
@@ -131,7 +132,7 @@ function garrison_force(planet_operatives, turn_end=false)constructor{
 		for (var s=0;s<array_length(garrison_squads);s++){
 			squad = garrison_squads[s];
 			for (mem=0; mem<array_length(squad.members);mem++){
-				unit = obj_ini.TTRPG[squad.members[mem][0]][squad.members[mem][1]];
+				unit = fetch_unit(squad.members[mem]);
 			}
 		}
 	}
@@ -160,7 +161,7 @@ function garrison_force(planet_operatives, turn_end=false)constructor{
 
 	static garrison_disposition_change = function(star, planet, up_or_down = false){
 		dispo_change = 0;
-		if (array_contains(obj_controller.imperial_factions, star.p_owner[planet]) && star.disp0[planet]>-1){
+		if (array_contains(obj_controller.imperial_factions, star.p_owner[planet]) && star.dispo[planet]>-1){
 			planet_disposition = star.dispo[planet];
 
 			var disposition_modifier = planet_disposition<=50 ? (planet_disposition/10) :((planet_disposition-50)/10)%5;
