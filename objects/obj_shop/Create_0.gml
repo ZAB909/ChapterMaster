@@ -168,7 +168,7 @@ if (shop = "equipment") {
     i += 1;
     item[i] = "Lightning Claw";
     item_stocked[i] = scr_item_count(item[i]);
-    item_cost[i] = 50;
+    item_cost[i] = 90;
     if (research.power_fields[0]>1){
         forge_cost[i] = 150;
     }
