@@ -707,9 +707,10 @@ function planet_selection_action(){
 	            obj_controller.selecting_planet=i+1;
 	            var sel_plan = obj_controller.selecting_planet;
 	            var planet_is_allies = scr_is_planet_owned_by_allies(target, sel_plan);
+	            var garrison_issue = (!planet_is_allies && target.p_pdf[sel_plan]<100);
 	            if (mouse_check_button_pressed(mb_left)){
 	                if (garrison_assignment){
-	                	if (planet_is_allies){
+	                	if ((garrison_issue && mission=="garrison")){
 		                    var company_data = obj_controller.company_data;
 		                    var squad_index = company_data.company_squads[company_data.cur_squad];
 		                    var current_squad=obj_ini.squads[squad_index];
@@ -729,7 +730,7 @@ function planet_selection_action(){
 		                    instance_destroy();
 		                } else {
 		                	planet_draw = c_red;
-		                	tooltip_draw("Can't garrison on non-friendly planet");
+		                	tooltip_draw("Can't garrison on non-friendly planet with no PDF");
 		                }
 	                } else if (!loading){
 	                    garrison = new garrison_force(target.p_operatives[sel_plan]);

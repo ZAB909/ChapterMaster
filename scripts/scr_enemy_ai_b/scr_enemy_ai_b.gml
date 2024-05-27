@@ -288,10 +288,10 @@ function scr_enemy_ai_b() {
 		            	p_heresy[i] = 80;
 		            }
 
-		            tixt = "Daemonic incursion on " + string(name) + " " + string(i) + "!";
+		            tixt = "Daemonic incursion on {planet_numeral_name(i)}!";
 		        } // Oh god what
 
-		        if (rando >= 41) and (!notixt) {
+		        if ((rando >= 41) and (!notixt) && tixt!="") {
 		            scr_alert("red", "owner", tixt, x, y);
 		            scr_event_log("purple", tixt, name);
 		        }
@@ -308,9 +308,9 @@ function scr_enemy_ai_b() {
 				if (p_influence[i][eFACTION.Tyranids]>50){
 					if(irandom(50)<1){
 						hiding=false;
-	                    scr_popup("System Lost",$"A hidden Genesteaer Cult in {name} Has suddenly burst forth from hiding!","Genestealer Cult","");
+	                    scr_popup("System Lost",$"A hidden Genestealer Cult in {name} Has suddenly burst forth from hiding!","Genestealer Cult","");
 	                    owner = eFACTION.Tyranids;
-	                    scr_event_log("red",$"A hidden Genesteaer Cult in {name} {i} has Started a revolt.", name);		
+	                    scr_event_log("red",$"A hidden Genestealer Cult in {name} {i} has Started a revolt.", name);		
 	                    p_tyranids[i]+=1;				
 					}
 				}
@@ -329,6 +329,11 @@ function scr_enemy_ai_b() {
 		    if (p_influence[i][eFACTION.Tyranids]>55){
 		    	p_owner[i] = eFACTION.Tyranids;
 		    }
+		} else {
+			adjust_influence(eFACTION.Tyranids, -1, i);
+			if ((irandom(200)+p_influence[i][eFACTION.Tyranids]/10) > 10){
+				array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
+			}
 		}
 
 // Spread influence on controlled sector

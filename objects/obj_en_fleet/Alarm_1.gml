@@ -1769,7 +1769,7 @@ if (action="move") and (action_eta<5000){
                 with (stue){
                     if (p_type[tau_influence_planet]!="Dead"){
                     
-                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name()}.",sta.x,sta.y);
+                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name(tau_influence_planet)}.",sta.x,sta.y);
                         tau_influence = p_influence[tau_influence_planet][eFACTION.Tau]
                     
                         if (tau_influence_chance<=70) and (tau_influence<70){
