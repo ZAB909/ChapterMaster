@@ -80,24 +80,6 @@ function get_largest_player_fleet(){
 	return chosen_fleet;
 }
 
-function get_nearest_player_fleet(nearest_x, nearest_y){
-	var chosen_fleet = "none";
-	if instance_exists(obj_p_fleet){
-		with(obj_p_fleet){
-			if (point_in_rectangle(x, y, 0, 0, room_width, room_height)){
-				if (chosen_fleet=="none"){
-					chosen_fleet=self;
-					continue;
-				}
-				if (point_distance(nearest_x, nearest_y,x,y) < point_distance(nearest_x, nearest_y,chosen_fleet.x,chosen_fleet.y)){
-					chosen_fleet=self;
-				}
-			}
-		}
-	}
-	return chosen_fleet;	
-}
-
 function set_fleet_movement(){
 	if (action!=""){
 	    var sys, sys_dist, mine, connected, fleet, cont;

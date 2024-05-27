@@ -23,7 +23,23 @@ var yy=__view_get( e__VW.YView, 0 )+0;
 if (loading=1){
     xx=xx;
     yy=yy;
+} else if (loading==1){
+    var xx, yy, temp1, dist;
+    xx=__view_get( e__VW.XView, 0 )+0;
+    yy=__view_get( e__VW.YView, 0 )+0;
+    dist=999;
+    
+    obj_controller.selecting_planet=0;
+    button1="";
+    button2="";
+    button3="";
+    button4="";
+
+    if (instance_exists(target)){
+        if (target.space_hulk=1) then exit;
+    }
 }
+
 if (mouse_check_button(mb_left)){
     if (obj_controller.menu=0) and (obj_controller.zoomed=0) and (!instance_exists(obj_bomb_select)) and (!instance_exists(obj_drop_select)) and (obj_controller.cooldown<=0){
         var closes=0,sta1=0,sta2=0;
@@ -132,36 +148,10 @@ if (loading!=0){
 }
 
 
-
+//the draw and click on planets logic
+planet_selection_action();
 draw_set_font(fnt_40k_14b);
 
-var pt,xxx;pt=0;
-repeat(4){
-    pt+=1;xxx=159-41+(pt*41);
-    if (target.planets>=pt) and (target.craftworld=0) and (target.space_hulk=0){
-        if (target.p_type[pt]="Lava") then temp1=0;if (target.p_type[pt]="Desert") then temp1=2;
-        if (target.p_type[pt]="Dead") then temp1=12;if (target.p_type[pt]="Hive") then temp1=4;
-        if (target.p_type[pt]="Temperate") or (target.p_type[pt]="Feudal") then temp1=8;
-        if (target.p_type[pt]="Agri") then temp1=6;
-        if (target.p_type[pt]="Death") then temp1=5;if (target.p_type[pt]="Ice") then temp1=10;
-        if (target.p_type[pt]="Forge") then temp1=3;if (target.p_type[pt]="Daemon") then temp1=14;
-        if (target.p_type[pt]="Shrine") then temp1=15;draw_sprite(spr_planets,temp1,xx+xxx,yy+287);
-        
-        if (target.p_owner[pt]=1) then draw_set_color(c_blue);if (target.p_owner[pt]=2) then draw_set_color(c_gray);
-        if (target.p_owner[pt]=3) then draw_set_color(16512);if (target.p_owner[pt]=5) then draw_set_color(c_white);
-        if (target.p_owner[pt]=7) then draw_set_color(38144);if (target.p_owner[pt]=8) then draw_set_color(117758);
-        if (target.p_owner[pt]=10) then draw_set_color(c_purple);
-        
-        if (pt=1) then draw_text(xx+xxx,yy+255,string_hash_to_newline("I"));if (pt=2) then draw_text(xx+xxx,yy+255,string_hash_to_newline("II"));
-        if (pt=3) then draw_text(xx+xxx,yy+255,string_hash_to_newline("III"));if (pt=4) then draw_text(xx+xxx,yy+255,string_hash_to_newline("IV"));
-    }
-}
-if (instance_exists(target)){
-    if (target.craftworld=1) then obj_controller.selecting_planet=1;
-    if (target.space_hulk=1) then obj_controller.selecting_planet=1;
-    x=target.x;
-    y=target.y;
-}
 if (obj_controller.selecting_planet!=0){
 // Buttons that are available
     if (!buttons_selected){
@@ -282,8 +272,8 @@ if (obj_controller.selecting_planet!=0){
             if (target.dispo[current_planet]>=0) and (target.p_first[current_planet]<=5) and (target.p_owner[current_planet]<=5) and (target.p_population[current_planet]>0) then draw_text(xx+534,yy+176,string_hash_to_newline("Disposition: "+string(min(100,target.dispo[current_planet]))+"/100"));
             if (target.dispo[current_planet]>-30) and (target.dispo[current_planet]<0) and (target.p_owner[current_planet]<=5) and (target.p_population[current_planet]>0) then draw_text(xx+534,yy+176,string_hash_to_newline("Disposition: ???/100"));
             if ((target.dispo[current_planet]>=0) and (target.p_first[current_planet]<=5) and (target.p_owner[current_planet]>5)) or (target.p_population[current_planet]<=0) then draw_text(xx+534,yy+176,string_hash_to_newline("-------------"));
-            if (target.dispo[current_planet]<=-3000) then draw_text(xx+534,yy+176,string_hash_to_newline("Disposition: N/A"));
-        }else  if (succession=1) then draw_text(xx+534,yy+176,string_hash_to_newline("War of Succession"));
+            if (target.dispo[current_planet]<=-3000) then draw_text(xx+534,yy+176,"Disposition: N/A");
+        }else  if (succession=1) then draw_text(xx+534,yy+176,"War of Succession");
         draw_set_color(c_gray);
         // End draw disposition
         draw_set_color(c_gray);
@@ -657,11 +647,9 @@ if (obj_controller.selecting_planet!=0){
                     obj_controller.recruiting_worlds_bought-=1;
                     array_push(target.p_feature[obj_controller.selecting_planet] ,new new_planet_feature(P_features.Recruiting_World))
                     
-                    if (obj_controller.selecting_planet=1) then obj_controller.recruiting_worlds+=string(target.name)+" I|";
-                    if (obj_controller.selecting_planet=2) then obj_controller.recruiting_worlds+=string(target.name)+" II|";
-                    if (obj_controller.selecting_planet=3) then obj_controller.recruiting_worlds+=string(target.name)+" III|";
-                    if (obj_controller.selecting_planet=4) then obj_controller.recruiting_worlds+=string(target.name)+" IV|";
-                    
+                    if (obj_controller.selecting_planet){
+                         obj_controller.recruiting_worlds+=planet_numeral_name(obj_controller.selecting_planet,target);
+                    }
                     obj_controller.income_recruiting=(obj_controller.recruiting*-2)*string_count("|",obj_controller.recruiting_worlds);
                     if (obj_controller.recruiting_worlds_bought=0){
                         if (button1=="+Recruiting") then button1="";

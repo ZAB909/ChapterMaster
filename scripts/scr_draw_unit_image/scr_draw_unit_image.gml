@@ -1002,7 +1002,7 @@ function scr_draw_unit_image(_background=false){
                             helm_pat=helm_pattern;
                             recolour_helm=true;
                         }
-                    }else if(role()==obj_ini.role[100][Role.VETERAN]){
+                    }else if(role()==obj_ini.role[100][Role.VETERAN] || (role()==obj_ini.role[100][Role.TERMINATOR] && company = 1)){
                         with (obj_ini.complex_livery_data.veteran){
                             prime=helm_primary;
                             sec=helm_secondary;
