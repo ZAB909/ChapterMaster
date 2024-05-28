@@ -731,10 +731,12 @@ function planet_selection_action(){
 		                        task_time : 0
 		                    };
 		                    array_push(target.p_operatives[sel_plan],operation_data);
+		                    target.garrison = true;
 		                    instance_destroy();
 		                }
 	                } else if (!loading){
 	                    garrison = new garrison_force(target.p_operatives[sel_plan]);
+	                    target.garrison = garrison.garrison_force;
 	                    feature="";
 	                    buttons_selected=false;                 
 	                } else if (loading){ 
@@ -760,9 +762,7 @@ function planet_selection_action(){
 					            arti.loc=obj_controller.selecting_location;
 					            arti.managing=obj_controller.managing;
 					            arti.type="recon";
-					            // Right here should pass the man_sel variables
-					            // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
-					            var i=-1;
+
 					            with (arti){
 					                setup_planet_mission_group()
 					            }
@@ -781,13 +781,13 @@ function planet_selection_action(){
 					        
 					        // STC Grab
 					        if (planet_feature_bool(target.p_feature[sel_plan], P_features.STC_Fragment) == 1) and (recon=0){
-					            var i,tch,mch;i=0;tch=0;mch=0;
-					            for (var i=0;i<array_length(obj_controller.display_unit);i++){
-					                if (obj_controller.man[i]!="") and (obj_controller.man_sel[i]==1){
-					                    if (obj_controller.ma_role[i]=obj_ini.role[100][16]) or ((obj_controller.ma_role[i]="Forge Master")){
+					            var frag,tch,mch;frag=0;tch=0;mch=0;
+					            for (var frag=0;frag<array_length(obj_controller.display_unit);frag++){
+					                if (obj_controller.man[frag]!="") and (obj_controller.man_sel[frag]==1){
+					                    if (obj_controller.ma_role[frag]=obj_ini.role[100][16]) or ((obj_controller.ma_role[frag]="Forge Master")){
 					                        tch+=1;
 					                    }
-					                    if (obj_controller.ma_role[i]="Techpriest"){
+					                    if (obj_controller.ma_role[frag]="Techpriest"){
 					                        mch+=1;
 					                    }
 					                }
@@ -801,7 +801,7 @@ function planet_selection_action(){
 					                arti.tch=tch;
 					                arti.mch=mch;
 					                // Right here should pass the man_sel variables
-					                // var i;i=-1;repeat(150){i+=1;arti.man_sel[i]=obj_controller.man_sel[i];}
+					                // var frag;frag=-1;repeat(150){frag+=1;arti.man_sel[frag]=obj_controller.man_sel[frag];}
 					                with (arti){
 					                    setup_planet_mission_group();
 					                }

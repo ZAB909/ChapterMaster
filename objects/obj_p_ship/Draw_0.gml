@@ -58,12 +58,12 @@ if (boarders>0){
 draw_set_color(38144);
 
 
-if if (maxhp!=0){
+if (maxhp!=0){
     var zoom_modifier = zoomed?2:1;
     if (shields<=0){
         var hp_percent = $"{(hp/maxhp)*100}%"
         
-        draw_text_transformed(x,y-sprite_height,hp_percent),zoom_modifier,zoom_modifier,0);
+        draw_text_transformed(x,y-sprite_height,hp_percent,zoom_modifier,zoom_modifier,0);
     }
 
     if (shields>0){

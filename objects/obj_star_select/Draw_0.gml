@@ -546,6 +546,9 @@ if (obj_controller.selecting_planet!=0){
             feature.draw_planet_features(xx+344+main_data_slate.width-4,yy+165)
             if (feature.remove){
                 feature="";
+            }else if (feature.destroy){
+                instance_destroy();
+                exit;
             }
         }
     }else if (garrison!=""){
