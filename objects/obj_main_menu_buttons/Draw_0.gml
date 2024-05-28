@@ -1,19 +1,5 @@
 
-
-
-if (room_get_name(room)="Creation"){
-    var yy,i;yy=y;i=1;
-    if (glowing[i]=1) and (hover[i]=1){glow[i]+=1;if (glow[i]>=40) then glowing[i]=-1;}
-    if (glowing[i]=-1) and (hover[i]=1){glow[i]-=1;if (glow[i]<=0) then glowing[i]=1;}
-    draw_set_alpha((glow[i]/80)+0.2);
-    draw_sprite(spr_mm_glow,4,x,yy);
-    if (hover[i]=0) and (glow[i]>0) then glow[i]-=4;
-    draw_set_alpha((50-obj_creation.fade_in)/50);
-    draw_sprite(spr_mm_butts,4,x,yy);
-    draw_set_alpha(1);
-}
-
-
+/*
 if (instance_exists(obj_main_menu)) and ((instance_exists(obj_saveload))) and (!instance_exists(obj_ingame_menu)){
     var yy,i;yy=830;i=6;
     if (glowing[i]=1) and (hover[i]=1){glow[i]+=1;if (glow[i]>=40) then glowing[i]=-1;}
@@ -35,8 +21,26 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_ingame_menu)){
         draw_set_alpha(1);
         draw_sprite(spr_mm_butts,4,687,yy);
     }
-}
+}*/
 
+if (room_get_name(room)="Creation"){
+    shader_set(light_dark_shader);
+    var yy=y+25,i=1;
+    var height = (20*2);
+    var width = (198*2);
+    shader_set_uniform_f(shader_get_uniform(light_dark_shader, "highlight"), 1+hover[0]/10);
+    draw_sprite_ext(spr_mm_butts, 4, x,yy, 2, 2, 0, c_white, 1);
+    if (scr_hit(x,yy, x+width, yy+height)){
+        if (hover[0]<20){
+            hover[0]++;
+        }
+    } else {
+        if (hover[0]>0){
+            hover[0]--;
+        }
+    }
+    shader_reset();
+}
 
 if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!instance_exists(obj_credits)){
     if (obj_main_menu.tim4>0){
@@ -56,27 +60,74 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
     }
 
 
+    shader_set(light_dark_shader);
+    //draw_sprite(sprite_index, 0, x, y);
+
+
     if (obj_main_menu.tim4>0) and (obj_main_menu.menu!=3){
-        var yy,i;yy=784;i=0;
-        repeat(4){i+=1;
-            if ((obj_main_menu.tim4/50)>=1){
-                if (glowing[i]=1) and (hover[i]=1){glow[i]+=1;if (glow[i]>=40) then glowing[i]=-1;}
-                if (glowing[i]=-1) and (hover[i]=1){glow[i]-=1;if (glow[i]<=0) then glowing[i]=1;}
-                draw_set_alpha((glow[i]/80)+0.2);
-                if (i=1) then draw_sprite(spr_mm_glow,0,126,yy);
-                if (i=2) then draw_sprite(spr_mm_glow,1,550,yy);
-                if (i=3) then draw_sprite(spr_mm_glow,2,968,yy);
-                if (i=4) then draw_sprite(spr_mm_glow,3,1280,yy);
-            }
-            if (hover[i]=0) and (glow[i]>0) then glow[i]-=4;
-        }
         // location of sprites 
         draw_set_alpha(obj_main_menu.tim4/50);
-        draw_sprite(spr_mm_butts,0,700,500);
-        draw_sprite(spr_mm_butts,1,700,520);
-        draw_sprite(spr_mm_butts,2,700,540);
-        draw_sprite(spr_mm_butts,3,700,580);
-        draw_set_alpha(1);
+        var height = (20*2.2);
+        var width = (198*2.2);
+        for (var i=0;i<4;i++){
+            var y_start = 500+((20*2.2)*i);
+            shader_set_uniform_f(shader_get_uniform(light_dark_shader, "highlight"), 1+hover[i]/10);
+            draw_sprite_ext(spr_mm_butts, i, 580,y_start, 2.2, 2.2, 0, c_white, 1);
+            if (scr_hit(580,y_start, 580+width, y_start+height)){
+                if (hover[i]<20){
+                    hover[i]++;
+                }
+            } else {
+                if (hover[i]>0){
+                    hover[i]--;
+                }
+            }
+            if (point_and_click([580,y_start, 580+width, y_start+height])){
+                switch(i){
+                    case 0:
+                        ini_open("saves.ini");
+                        var skap=0;
+                        skap = ini_read_real("Data", "tutorial", 0);
+                        ini_close();
+                        cooldown=9999;
+                        button=1;
+                        
+                        if (skap=1){
+                            obj_main_menu_buttons.fading=1;
+                            obj_main_menu_buttons.crap=2;
+                            obj_main_menu_buttons.cooldown=9999;
+                        }
+                        if (skap=0){
+                            var pop;
+                            pop=instance_create(0,0,obj_popup);
+                            pop.size=1;pop.title="Tutorial";
+                            pop.text="Would you like to play the tutorial?  It is strongly advisable for those new to Chapter Master.";
+                            pop.option1="Play the tutorial.";
+                            pop.option2="Skip the tutorial.";pop.option3="Skip and never ask again.";
+                        }                    
+                        break;
+                    case 1:
+                        instance_create(0,0,obj_saveload);
+                        obj_saveload.menu=2;
+                        fading=0;
+                        fade=0;
+                        button=0;   
+                        break;                                             
+                    case 2:
+                        instance_create(0,0,obj_credits);
+                        obj_main_menu.menu=3;
+                        fading=0;
+                        fade=0;
+                        button=0;                        
+                        break;
+                    case 3:
+                        with(obj_cursor){instance_destroy();}
+                        game_end();                       
+                        break;                        
+                }
+            }
+        }
+        shader_reset();
     }
     
     

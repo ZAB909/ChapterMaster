@@ -3,7 +3,9 @@
 
 var i;i=-1;
 repeat(8){i+=1;
-    hover[i]=0;glow[i]=0;glowing[i]=1;
+    hover[i]=0;
+    glow[i]=0;
+    glowing[i]=1;
 }
 cooldown=0;
 button=0;
@@ -15,6 +17,12 @@ oth=0;
 
 mouse_left=0;
 
+/**function main_menu_buttons(Button, Frame) constructor(){
+    button = Button;
+    frame = Frame;
+    stat draw = function(){
 
+    }
+}
 
-
+new*/

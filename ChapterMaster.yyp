@@ -93,7 +93,6 @@
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
-    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"title_splash.png","CopyToMask":-1,"filePath":"datafiles/images",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"creation_icons.png","CopyToMask":-1,"filePath":"datafiles/images/creation",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"existing1.png","CopyToMask":-1,"filePath":"datafiles/images/creation",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"existing2.png","CopyToMask":-1,"filePath":"datafiles/images/creation",},
@@ -224,6 +223,7 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"popup7.png","CopyToMask":-1,"filePath":"datafiles/images/popup",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"popup8.png","CopyToMask":-1,"filePath":"datafiles/images/popup",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"popup9.png","CopyToMask":-1,"filePath":"datafiles/images/popup",},
+    {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"title_splash.png","CopyToMask":-1,"filePath":"datafiles/images",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"attacked1.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"attacked2.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"commander1.png","CopyToMask":-1,"filePath":"datafiles/images/ui",},
@@ -690,6 +690,7 @@
     {"id":{"name":"spr_fleet_civilian","path":"sprites/spr_fleet_civilian/spr_fleet_civilian.yy",},},
     {"id":{"name":"spr_ih_mk5_helm","path":"sprites/spr_ih_mk5_helm/spr_ih_mk5_helm.yy",},},
     {"id":{"name":"spr_fleet_imperial","path":"sprites/spr_fleet_imperial/spr_fleet_imperial.yy",},},
+    {"id":{"name":"light_dark_shader","path":"shaders/light_dark_shader/light_dark_shader.yy",},},
     {"id":{"name":"spr_fleet_mechanicus","path":"sprites/spr_fleet_mechanicus/spr_fleet_mechanicus.yy",},},
     {"id":{"name":"spr_mm_glow","path":"sprites/spr_mm_glow/spr_mm_glow.yy",},},
     {"id":{"name":"spr_fleet_inquisition","path":"sprites/spr_fleet_inquisition/spr_fleet_inquisition.yy",},},
