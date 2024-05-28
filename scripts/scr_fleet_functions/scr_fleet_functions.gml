@@ -18,13 +18,13 @@ function fleets_next_location(fleet="none"){
 	var targ_location ="none";
 	if (fleet=="none"){
 		if (action!=""){
-	        var goal_x=fleet.action_x;
-	        var goal_y=fleet.action_y;
+	        var goal_x=action_x;
+	        var goal_y=action_y;
 	        targ_location=instance_nearest(goal_x,goal_y,obj_star);
 		} else {
-			targ_location=instance_nearest(fleet.x,fleet.y,obj_star);
+			targ_location=instance_nearest(x,y,obj_star);
 		}		
-	} else {
+	} else if (instance_exists(fleet)){
 		with (fleet){
 			targ_location = fleets_next_location();
 		}
@@ -78,24 +78,6 @@ function get_largest_player_fleet(){
 		}
 	}
 	return chosen_fleet;
-}
-
-function get_nearest_player_fleet(nearest_x, nearest_y){
-	var chosen_fleet = "none";
-	if instance_exists(obj_p_fleet){
-		with(obj_p_fleet){
-			if (point_in_rectangle(x, y, 0, 0, room_width, room_height)){
-				if (chosen_fleet=="none"){
-					chosen_fleet=self;
-					continue;
-				}
-				if (point_distance(nearest_x, nearest_y,x,y) < point_distance(nearest_x, nearest_y,chosen_fleet.x,chosen_fleet.y)){
-					chosen_fleet=self;
-				}
-			}
-		}
-	}
-	return chosen_fleet;	
 }
 
 function set_fleet_movement(){
@@ -215,3 +197,136 @@ function load_unit_to_fleet(fleet, unit){
 	}
 	return loaded;
 }
+function calculate_fleet_eta(xx,yy,xxx,yyy, fleet_speed,star1=true, star2=true){
+	var warp_lane = false;
+	eta = 0;
+		//Some duke unfinished webway stuff copied here for reference
+		/*for (var w = 1;w<5;w++){
+			if (planet_feature_bool(mine.p_feature[w], P_features.Webway)==1) then web1=1;
+			if (planet_feature_bool(sys.p_feature[w], P_features.Webway)==1) then web2=1;
+		}*/
+	if (star1 && star2){
+		star1 = instance_nearest(xx,yy, obj_star);
+		star2 = instance_nearest(xxx,yyy, obj_star);
+		warp_lane = (star1.buddy==star2 || star2.buddy == star1);
+	} else if (star1){
+		star1 = instance_nearest(xx,yy, obj_star);
+	}
+	eta=floor(point_distance(xx,yy,xxx,yyy)/fleet_speed)+1;
+	if (!warp_lane) then eta*=2;
+	if (instance_exists(star2)){
+		if (star2.storm){
+			eta += 10000;
+		}
+	}
+	return eta;
+}
+function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_star=false) constructor{
+	var star_number = instance_number(obj_star);
+	target = instance_nearest(xx,yy,obj_star);
+	self.ship_speed = ship_speed;
+	worst_case = (floor(point_distance(start_x,start_y, xx,yy)/ship_speed+2))*2;
+	start_star = instance_nearest(start_x,start_y,obj_star).id;
+	unvisited_stars = [
+		[start_star,-1, [], false],
+		[target,-1, [], false],
+	];
+
+	for (var i = 0; i < star_number; i++){
+		if (instance_find(obj_star,i).id == start_star.id) then continue;
+		if (instance_find(obj_star,i).id == target.id) then continue;
+		var i_star = instance_find(obj_star,i);
+		for (var s=1;s<array_length(unvisited_stars);s++){
+			var s_star = unvisited_stars[s][0];
+			if (point_distance(i_star.x,i_star.y, start_star.x,start_star.y)<point_distance(s_star.x,s_star.y, start_star.x,start_star.y)){
+				array_insert(unvisited_stars, s, [i_star,-1, [], false]);
+				break;
+			}
+		}
+	};
+
+	function find_star_travel_distances(cur_star_id){
+		var current_star = unvisited_stars[cur_star_id][0];
+		var cur_travel = unvisited_stars[cur_star_id][1];
+		var eta;
+		var warp_lane = false;
+		for (var s=cur_star_id+1; s<array_length(unvisited_stars);s++){
+			var visit_data = unvisited_stars[s];
+			if (visit_data[3]) then continue;
+			visit_star = unvisited_stars[s][0];
+			eta = calculate_fleet_eta(current_star.x,current_star.y,visit_star.x,visit_star.y, ship_speed, true, true);
+			if (eta){
+				if (eta+cur_travel<visit_data[1]
+					|| visit_data[1]==-1 ){
+					visit_data[1] = eta+cur_travel;
+					visit_data[2] =[];
+					for (var c=0;c<array_length(unvisited_stars[cur_star_id][2]);c++){
+						array_push(visit_data[2], unvisited_stars[cur_star_id][2][c]);
+					}
+					if (!array_contains(visit_data[2], current_star.id)){
+						array_push(visit_data[2], current_star.id);
+					};
+				}
+			} else {
+				visit_data[3] = true;
+			}
+			/*if (cur_star_id==0){
+				if (eta>worst_case){
+					visit_data[3] = true;
+				}
+			}*/
+			unvisited_stars[s] = visit_data;
+		}
+		unvisited_stars[cur_star_id][3] = true;
+	}
+
+	for (var i=0;i<array_length(unvisited_stars);i++){
+		if (!unvisited_stars[i][3]){
+			find_star_travel_distances(i);
+		}
+	}
+
+	final_route_info = unvisited_stars[array_length(unvisited_stars)-1];
+	static draw_route = function(){
+	    draw_set_color(c_blue);
+        draw_set_alpha(1);            
+        var cur_star = start_star;
+        for (var i=0;i<array_length(final_route_info[2]);i++){
+             draw_line_dashed(cur_star.x,cur_star.y,final_route_info[2][i].x,final_route_info[2][i].y,16,0.5);
+             cur_star = final_route_info[2][i];
+        }
+        draw_line_dashed(cur_star.x,cur_star.y,final_route_info[0].x,final_route_info[0].y,16,0.5);
+        var eta = $"ETA {final_route_info[1]+1}";
+        if (obj_controller.zoomed=0) then draw_text_transformed(cur_star.x+16,cur_star.y+15,eta,1,1,0);
+        if (obj_controller.zoomed=1) then draw_text_transformed(cur_star.x+24,cur_star.y+40,eta,5,5,0);             
+	}
+	static final_array_path = function(){
+		var final_path = final_route_info[2];
+		array_push(final_path, final_route_info[0]);
+		return final_path;
+	}
+}
+
+
+
+function calculate_action_speed(capitals=true, frigates=true, escorts=true){
+	var fleet_speed=128;
+	if (capitals>0){
+	    fleet_speed=100;
+	} else if (frigates>0){
+	    fleet_speed=128;
+	}else if (escorts>0){
+	    fleet_speed=174;
+	}
+	if (obj_controller.stc_ships>=6) and (fleet_speed>=100) then fleet_speed*=0.8;
+	return fleet_speed;
+}
+
+
+
+
+
+
+
+
+

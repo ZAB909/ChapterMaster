@@ -203,8 +203,8 @@ function scr_company_order(company) {
 	}
 
 	//comand squads only get built to a max of one and are specialist so sit outside of general squad creation
-	if (struct_exists(squadless,role[100,5])) && (struct_exists(squadless,role[100,7])) && (struct_exists(squadless,role[100,15])) && (struct_exists(squadless,"Standard Bearer")){
-		if (array_length(squadless[$role[100,5]])>0) && (array_length(squadless[$role[100,7]])>0) && (array_length(squadless[$role[100,15]])>0) && (array_length(squadless[$"Standard Bearer"])>0){
+	if (struct_exists(squadless,role[100,5])) && (struct_exists(squadless,role[100,7])) && (struct_exists(squadless,role[100,15])) && (struct_exists(squadless,role[100][11])){
+		if (array_length(squadless[$role[100,5]])>0) && (array_length(squadless[$role[100,7]])>0) && (array_length(squadless[$role[100,15]])>0) && (array_length(squadless[$role[100][11]])>0){
 			new_squad_index=false;
 			if (array_length(empty_squads)>0){
 				new_squad_index = empty_squads[0];
@@ -336,7 +336,7 @@ function role_hierarchy(){
 			"Codiciery",
 			"Lexicanum",
 			string("{0} Aspirant",obj_ini.role[100,17]),
-			"Standard Bearer",
+			obj_ini.role[100][11],
 			obj_ini.role[100][7],
 			"Death Company",
 			obj_ini.role[100][19],

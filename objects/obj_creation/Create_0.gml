@@ -318,9 +318,9 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		
 		for(var i=0;i<=22;i++){
     role_21[i]= ini_read_string("Save","role_21"+string(i),"Tactical");
-	wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Chainsword");
+	wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Combat Knife");
 	wep2_21[i]=ini_read_string("Save","wep2_21"+string(i),"Bolter")
-	armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armor");
+	armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armour");
 	 gear_21[i]= ini_read_string("Save","gear_21"+string(i),"");
 	mobi_21[i]= ini_read_string("Save","mobi_21"+string(i),"");
 }
@@ -447,7 +447,7 @@ color_to_pauldron21="Red";
 	
     race_21[i,5]=1;
     role_21[i,5]="Captain";
-    wep1_21[i,5]="Power Fist";
+    wep1_21[i,5]="Power Sword";
     wep2_21[i,5]="Bolt Pistol";
     armour_21[i,5]="Power Armour";
 	gear_21[i,5]="Iron Halo";
@@ -465,26 +465,26 @@ color_to_pauldron21="Red";
     race_21[i,7]=1;
     role_21[i,7]="Company Champion";
     wep1_21[i,7]="Power Sword";
-    wep2_21[i,7]="Storm Shield";
+    wep2_21[i,7]="Bolt Pistol";
     armour_21[i,7]="Power Armour";
-	gear_21[i,7]=""
+	gear_21[i,7]="Combat Shield"
 	mobi_21[i,7]="";
 
     race_21[i,8]=1;
     role_21[i,8]="Tactical Marine";
     wep1_21[i,8]="Bolter";
-    wep2_21[i,8]="Chainsword";
+    wep2_21[i,8]="Combat Knife";
     armour_21[i,8]="Power Armour";
 	gear_21[i,8]=""
 	mobi_21[i,8]="";
 
     race_21[i,9]=1;
     role_21[i,9]="Devastator Marine";
-    wep1_21[i,9]="Heavy Ranged";
+    wep1_21[i,9]="";
     wep2_21[i,9]="Combat Knife";
     armour_21[i,9]="Power Armour";
 	gear_21[i,9]=""
-    mobi_21[i,9]="Heavy Weapons Pack";
+    mobi_21[i,9]="";
 
     race_21[i,10]=1;
     role_21[i,10]="Assault Marine";
@@ -494,6 +494,14 @@ color_to_pauldron21="Red";
 	gear_21[i,10]=""
     mobi_21[i,10]="Jump Pack";
 
+    race_21[i,11]=1;
+    role_21[i,11]="Ancient";
+    wep1_21[i,11]="Company Standard";
+    wep2_21[i,11]="Power Sword";
+    armour_21[i,11]="Power Armour";
+	gear_21[i,11]=""
+	mobi_21[i,11]="";
+
     race_21[i,12]=1;
     role_21[i,12]="Scout";
     wep1_21[i,12]="Sniper Rifle";
@@ -501,7 +509,6 @@ color_to_pauldron21="Red";
     armour_21[i,12]="Scout Armour";
 	gear_21[i,12]=""
 	mobi_21[i,12]="";
-
 
     race_21[i,14]=1;
     role_21[i,14]="Chaplain";
@@ -512,7 +519,7 @@ color_to_pauldron21="Red";
 
     race_21[i,15]=1;
     role_21[i,15]="Apothecary";
-    wep1_21[i,15]="Power Sword";
+    wep1_21[i,15]="Chainsword";
     wep2_21[i,15]="Bolt Pistol";
     armour_21[i,15]="Power Armour";
     gear_21[i,15]="Narthecium";
@@ -521,7 +528,7 @@ color_to_pauldron21="Red";
     role_21[i,16]="Techmarine";
     wep1_21[i,16]="Power Axe";
     wep2_21[i,16]="Storm Bolter";
-    armour_21[i,16]="Power Armour";
+    armour_21[i,16]="Artificer Armour";
     gear_21[i,16]="Servo Arms";
 
     race_21[i,17]=1;
@@ -698,7 +705,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 
     race[i,5]=1;
     role[i,5]="Captain";
-    wep1[i,5]="Power Fist";
+    wep1[i,5]="Power Sword";
     wep2[i,5]="Bolt Pistol";
     armour[i,5]="Power Armour";
     gear[i,5]="Iron Halo";
@@ -712,21 +719,22 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     race[i,7]=1;
     role[i,7]="Company Champion";
     wep1[i,7]="Power Sword";
-    wep2[i,7]="Storm Shield";
+    wep2[i,7]="Bolt Pistol";
     armour[i,7]="Power Armour";
+    gear[i,7]="Combat Shield";
 
     race[i,8]=1;
     role[i,8]="Tactical Marine";
     wep1[i,8]="Bolter";
-    wep2[i,8]="Chainsword";
+    wep2[i,8]="Combat Knife";
     armour[i,8]="Power Armour";
 
     race[i,9]=1;
     role[i,9]="Devastator Marine";
-    wep1[i,9]="Heavy Ranged";
+    wep1[i,9]="";
     wep2[i,9]="Combat Knife";
     armour[i,9]="Power Armour";
-    mobi[i,9]="Heavy Weapons Pack";
+    mobi[i,9]="";
 
     race[i,10]=1;
     role[i,10]="Assault Marine";
@@ -734,6 +742,12 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     wep2[i,10]="Bolt Pistol";
     armour[i,10]="Power Armour";
     mobi[i,10]="Jump Pack";
+
+    race[i,11]=1;
+    role[i,11]="Ancient";
+    wep1[i,11]="Company Standard";
+    wep2[i,11]="Power Sword";
+    armour[i,11]="Power Armour";
 
     race[i,12]=1;
     role[i,12]="Scout";
@@ -750,7 +764,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
 
     race[i,15]=1;
     role[i,15]="Apothecary";
-    wep1[i,15]="Power Sword";
+    wep1[i,15]="Chainsword";
     wep2[i,15]="Bolt Pistol";
     armour[i,15]="Power Armour";
     gear[i,15]="Narthecium";
@@ -759,7 +773,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     role[i,16]="Techmarine";
     wep1[i,16]="Power Axe";
     wep2[i,16]="Storm Bolter";
-    armour[i,16]="Power Armour";
+    armour[i,16]="Artificer Armour";
     gear[i,16]="Servo Arms";
 
     race[i,17]=1;

@@ -1,4 +1,8 @@
 
+
+function ini_encode_and_json(ini_area, ini_code,value){
+	return ini_write_string(ini_area,ini_code,base64_encode(json_stringify(value)));
+}
 function scr_save(save_slot,save_id) {
 
 	var num, tot;
@@ -218,13 +222,15 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Controller","command"+string(g),obj_controller.command_set[g]);
 	    }
 	    ini_write_real("Controller","blandify",obj_controller.blandify);
-	    g=-1;repeat(201){g+=1;
-	        ini_write_string("Recruit","rcr"+string(g),obj_controller.recruit_name[g]);
-	        ini_write_real("Recruit","rcr_cr"+string(g),obj_controller.recruit_corruption[g]);
-	        ini_write_real("Recruit","rcr_ds"+string(g),obj_controller.recruit_distance[g]);
-	        ini_write_real("Recruit","rcr_tr"+string(g),obj_controller.recruit_training[g]);
-	        ini_write_real("Recruit","rcr_ex"+string(g),obj_controller.recruit_exp[g]);
-	    }
+
+	    ini_encode_and_json("Recruit", "data",{
+	    	names :obj_controller.recruit_name,
+	    	corruption :obj_controller.recruit_corruption,
+	    	distance :obj_controller.recruit_distance,
+	    	experience :obj_controller.recruit_exp,
+	    	training :obj_controller.recruit_training,
+
+	    });
 	    g=-1;repeat(30){g+=1;
 	        ini_write_string("Controller","lyl"+string(g),obj_controller.loyal[g]);
 	        ini_write_real("Controller","lyl_nm"+string(g),obj_controller.loyal_num[g]);
@@ -468,24 +474,27 @@ function scr_save(save_slot,save_id) {
 	        ini_write_real("Fleet","pf"+string(i)+"hurssy",instance_array[i].hurssy);
 	        ini_write_real("Fleet","pf"+string(i)+"hurssy_time",instance_array[i].hurssy_time);
 	        ini_write_real("Fleet","pf"+string(i)+"orb",instance_array[i].orbiting);
-	        var g;g=-1;repeat(10){g+=1;
-	            ini_write_string("Fleet","pf"+string(i)+"capital"+string(g),instance_array[i].capital[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"capital_num"+string(g),instance_array[i].capital_num[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"capital_sel"+string(g),instance_array[i].capital_sel[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"capital_uid"+string(g),instance_array[i].capital_uid[g]);
-	        }
-	        g=-1;repeat(21){g+=1;
-	            ini_write_string("Fleet","pf"+string(i)+"frigate"+string(g),instance_array[i].frigate[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"frigate_num"+string(g),instance_array[i].frigate_num[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"frigate_sel"+string(g),instance_array[i].frigate_sel[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"frigate_uid"+string(g),instance_array[i].frigate_uid[g]);
-	        }
-	        g=-1;repeat(35){g+=1;
-	            ini_write_string("Fleet","pf"+string(i)+"escort"+string(g),instance_array[i].escort[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"escort_num"+string(g),instance_array[i].escort_num[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"escort_sel"+string(g),instance_array[i].escort_sel[g]);
-	            ini_write_real("Fleet","pf"+string(i)+"escort_uid"+string(g),instance_array[i].escort_uid[g]);
-	        }
+
+	        ini_encode_and_json("Fleet",$"pf{i}complex_route", instance_array[i].complex_route);
+	        ini_write_real("Fleet",$"pf{i}just_left",instance_array[i].just_left);
+
+	        ini_encode_and_json("Fleet",$"pf{i}capital", instance_array[i].capital);
+	        ini_encode_and_json("Fleet",$"pf{i}capital_num", instance_array[i].capital_num);
+	        ini_encode_and_json("Fleet",$"pf{i}capital_sel", instance_array[i].capital_sel);
+	        ini_encode_and_json("Fleet",$"pf{i}capital_uid", instance_array[i].capital_uid);
+
+
+	        ini_encode_and_json("Fleet",$"pf{i}frigate", instance_array[i].frigate);
+	        ini_encode_and_json("Fleet",$"pf{i}frigate_num", instance_array[i].frigate_num);
+			ini_encode_and_json("Fleet",$"pf{i}frigate_sel", instance_array[i].frigate_sel);	        
+	        ini_encode_and_json("Fleet",$"pf{i}frigate_uid", instance_array[i].frigate_uid);
+
+
+	        ini_encode_and_json("Fleet",$"pf{i}escort", instance_array[i].escort);
+	        ini_encode_and_json("Fleet",$"pf{i}escort_num", instance_array[i].escort_num);
+			ini_encode_and_json("Fleet",$"pf{i}escort_sel", instance_array[i].escort_sel);	        
+	        ini_encode_and_json("Fleet",$"pf{i}escort_uid", instance_array[i].escort_uid);	        	        
+
 	    }
 
 	    // ENEMY FLEET OBJECTS

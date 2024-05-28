@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "gauss",
+  "name": "scr_ground_ai_helpers",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

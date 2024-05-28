@@ -475,14 +475,36 @@ global.weapons={
             "master_crafted": 1.3,
             "artifact": 1.3
         },
-        "description": "A Thunder hamer is a weapon with a long pole and a double headed hammer on the top. This weapon unleashes a massive, devastating disruption field on impact. Only experienced Astartes can use Thunder Hammers, typically Terminators.",
-        "melee_hands": 2.25,
-        "ranged_hands": 2,
+        "description": "A Thunder hammer is a weapon with a long pole and a double headed hammer on the top. This weapon unleashes a massive, devastating disruption field on impact. Only experienced Astartes can use Thunder Hammers, typically Terminators.",
+        "melee_hands": 1,
+        "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
         "spli": 10,
         "arp": 1,
         "tags":["power", "hammer", "siege"],
+        "req_exp":140,
+    },
+    "Heavy Thunder Hammer": {
+        "abbreviation": "HvyThndHmr",                
+        "attack": {
+            "standard": 975,
+            "master_crafted": 1125,
+            "artifact": 1350,
+        },
+        "melee_mod": {
+            "standard": 1.3,
+            "master_crafted": 1.3,
+            "artifact": 1.3,
+        },
+        "description": "The Heavy Thunder Hammer is the largest man-portable Thunder Hammer that is used by the Adeptus Astartes - a giant, crushing tool of destruction so heavy even a Space Marine cannot use it one-handed.",
+        "melee_hands": 2,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 15,
+        "arp": 1,
+        "tags":["heavy_melee","power", "hammer", "siege"],
         "req_exp":140,
     },
     "Power Mace": {
@@ -719,7 +741,7 @@ global.weapons={
         },
         "description": "A huge vehicle-mounted flame weapon that fires with explosive force. The reservoir is liable to explode.",
         "melee_hands": 0,
-        "ranged_hands": 2.25,
+        "ranged_hands": 3,
         "ammo": 0,
         "range": 3.1,
         "spli": 20,
@@ -847,7 +869,7 @@ global.weapons={
         },
         "description": "A heavy rotary autocannon with a devastating fire rate that can be counted in the hundreds per minute. It is incredibly effective against infantry and light armored targets.",
         "melee_hands": 2.1,
-        "ranged_hands": 2.25,
+        "ranged_hands": 3,
         "ammo": 5,
         "range": 12,
         "spli": 20,
@@ -879,7 +901,7 @@ global.weapons={
         },
         "description": "This shoulder mounted weapon is capable of firing either armor-piercing or fragmentation rockets. It's ammunition is limited by what the bearer has carried with them.",
         "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "ranged_hands": 2,
         "ammo": 6,
         "range": 24,
         "spli": 3,
@@ -918,20 +940,36 @@ global.weapons={
         "arp": 1,
         "tags":["heavy_ranged", "ancient"]
     },
-    "Integrated Bolters": {
+    "Integrated Bolter": {
         "abbreviation": "IntgBltr", 
         "attack": {
-            "standard": 75,
-            "master_crafted": 82.5,
-            "artifact": 90
+            "standard": 50,
+            "master_crafted": 55,
+            "artifact": 60
         },
-        "description": "Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle, armor, or Dreadnought.",
+        "description": "A Bolter that can be built directly into the structure of the vehicle, armor, another weapon or Dreadnought. When used as a weapon, it leaves both hands free, allowing to use any, even a twohanded weapon, efficiently.",
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 20,
-        "range": 8.1,
-        "spli": 3,
-        "arp": 1,
+        "range": 12,
+        "spli": 4,
+        "arp": 0,
+        "tags":["bolt"]
+    },
+    "Integrated Bolters": {
+        "abbreviation": "IntgBltrs", 
+        "attack": {
+            "standard": 100,
+            "master_crafted": 110,
+            "artifact": 120
+        },
+        "description": "A pair of Bolters that can be built directly into the structure of the vehicle, armor, another weapon or Dreadnought. When used as a weapon, it leaves both hands free, allowing to use any, even a twohanded weapon, efficiently.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 40,
+        "range": 12,
+        "spli": 8,
+        "arp": 0,
         "tags":["bolt"]
     },
     "Power Fist with Intergrated Bolters": {
@@ -970,6 +1008,23 @@ global.weapons={
         "range": 1,
         "spli": 2,
         "arp": 1
+    },
+    "Gauntlets of Ultramar": {
+        "abbreviation": "GntltUltrm", 
+        "attack": {
+            "standard": 900,
+            "master_crafted": 1000,
+            "artifact": 1200
+        },
+        "description": "Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself.",
+        "melee_hands": 2.25,
+        "ranged_hands": 2.25,
+        "ammo": 0,
+        "range": 1,
+        "spli": 6,
+        "arp": 1,
+        "second_profiles":["Integrated Bolters"],
+        "tags":["artifact","power","fist","pair"],
     },
     "Twin Linked Heavy Bolter": {
         "abbreviation": "TwnHvyBltr", 
@@ -1028,7 +1083,7 @@ global.weapons={
         },
         "description": "The Heavy Bolter is a heavy weapon that fires larger and more powerful bolt shells compared to the standard Bolter.",
         "melee_hands": 1,
-        "ranged_hands": 2.25,
+        "ranged_hands": 2,
         "ammo": 10,
         "range": 16,
         "spli": 6,
@@ -2124,7 +2179,23 @@ global.gear = {
         "artifact": 20
       },
          "tags":["vehicle"],              
-    },             
+    },
+    "Combat Shield": {
+        "description":"A lighter, more maneuverable version of a Storm Shield. Due to its flexibility, Combat Shields leave other hand of a Space Marine free to use other hand-to-hand weaponry.",
+        "abbreviation": "CmbtShld",
+        "armour_value": {
+            "standard": 4,
+            "master_crafted": 6,
+            "artifact": 8
+        } ,
+        "weight":3,
+        "tags":["shield"],
+        "hp_mod":{
+          "standard": 10,
+          "master_crafted": 15,
+          "artifact": 20
+        },
+      },  
   },
   "mobility":{
    "Bike": {
@@ -2337,7 +2408,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                         }
                         //item_desc_tooltip += $"#Properties:#{special_properties_string}#"
                     }
-                    if (array_length(special_properties_array)>0){
+                    if (array_length(special_properties_array) > 0){
                         var special_properties_string = ""
                         for (var j = 0; j < array_length(special_properties_array); j++) {
                             special_properties_string += special_properties_array[j]

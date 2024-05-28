@@ -59,7 +59,7 @@ function role_groups(group){
 	            obj_ini.role[100][17],
 	            "Codiciery",
 	            "Lexicanum",
-	            "Standard Bearer",
+	            obj_ini.role[100][11],
 	            "Company Champion",
 	            "Champion"
 	        ]; 
@@ -85,7 +85,7 @@ function role_groups(group){
 				roles[Role.CAPTAIN],								
 				roles[Role.TERMINATOR],				
 				roles[Role.VETERAN],
-				 "Standard Bearer",			
+				 obj_ini.role[100][11],			
 			];
 			break;
 	}

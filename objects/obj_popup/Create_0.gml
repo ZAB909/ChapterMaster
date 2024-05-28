@@ -117,9 +117,9 @@ get_unit_promotion_options = function(){
                 role_name[i]=obj_ini.role[100][5];
                 role_exp[i]=170;//all captains are equalish
             }
-            if (scr_role_count("Standard Bearer","1")==0){
+            if (scr_role_count(obj_ini.role[100][11],"1")==0){
                 i+=1;
-                role_name[i]="Standard Bearer";
+                role_name[i]=obj_ini.role[100][11];
                 role_exp[i]=company_promote_data[target_comp-1][2]+10;
             }
             if (scr_role_count(obj_ini.role[100][7],"1")==0){
@@ -225,7 +225,7 @@ calculate_equipment_needs =  function (){
             req_wep2_num=0;
             req_mobi="";
             req_mobi_num=0;
-        } else if (rall="Standard Bearer"){
+        } else if (rall=obj_ini.role[100][11]){
             req_armour="Power Armour";
             req_armour_num=units;
             req_wep2="Company Standard";
@@ -299,11 +299,13 @@ calculate_equipment_needs =  function (){
             have_wep1_num+=scr_item_count("Lascannon");
             have_wep1_num+=scr_item_count("Heavy Bolter");
             have_wep1_num+=scr_item_count("Missile Launcher");
+            have_wep1_num+=scr_item_count("Multi-Melta");
         }
         if (req_wep2="Heavy Ranged"){
             have_wep2_num+=scr_item_count("Heavy Bolter");
             have_wep2_num+=scr_item_count("Lascannon");
             have_wep2_num+=scr_item_count("Missile Launcher");
+            have_wep1_num+=scr_item_count("Multi-Melta");
         }
         if (req_gear!="") then have_gear_num+=scr_item_count(string(req_gear));
         if (req_mobi!="") then have_mobi_num+=scr_item_count(string(req_mobi));

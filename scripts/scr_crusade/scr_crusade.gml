@@ -73,7 +73,7 @@ function scr_crusade() {
 	                			array_push(heroics_strings, heroic_death);
 	                		}
 	                	}
-	                }else if (unit.role()=="Standard Bearer" || unit.role()=="Chapter Master") then dead=false;
+	                }else if (unit.role()==obj_ini.role[100][11] || unit.role()=="Chapter Master") then dead=false;
 	           	}
                 if (dead){               	
                     var man_size=0;

@@ -8,6 +8,7 @@ currently_entered = false;
 fleet_minimized=false;
 fleet_all=true;
 screen_expansion=20;
+star_travel = [];
 
 void_x=0;
 void_y=0;

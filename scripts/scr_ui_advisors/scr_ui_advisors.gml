@@ -986,8 +986,8 @@ function scr_ui_advisors() {
             if (recruits <= 0) and(marines >= 1000) then blurp += "Our Chapter currently has no Neophytes- we are at maximum strength and do not require more marines.  ";
             if (recruits <= 0) and(marines < 1000) and(recruiting = 0) then blurp += "Our Chapter currently has no Neophytes.  Without training more our chapter is doomed to a slow death.";
             if (recruits <= 0) and(marines < 1000) and(recruiting > 0) then blurp += "Our Chapter currently has no Neophytes.  We are doing our utmost best to find suitable recruits.";
-            if (recruits = 1) then blurp += "Our Chapter currently has one recruit being trained.  The Neophyte's name is " + string(recruit_name[1]) + " and they are scheduled to become a battle brother in " + string(recruit_training[1] + recruit_distance[1]) + " months' time.  ";
-            if (recruits > 1) then blurp += "Our Chapter currently has " + string(recruits) + " recruits being trained.  " + string(recruit_name[1]) + " is the next scheduled Neophyte to become a battle brother in " + string(recruit_training[1] + recruit_distance[1]) + " months' time.  ";
+            if (recruits = 1) then blurp += "Our Chapter currently has one recruit being trained.  The Neophyte's name is " + string(recruit_name[0]) + " and they are scheduled to become a battle brother in " + string(recruit_training[0] + recruit_distance[0]) + " months' time.  ";
+            if (recruits > 1) then blurp += "Our Chapter currently has " + string(recruits) + " recruits being trained.  " + string(recruit_name[0]) + " is the next scheduled Neophyte to become a battle brother in " + string(recruit_training[0] + recruit_distance[0]) + " months' time.  ";
             if (gene_seed > 0) {
                 if (recruiting = 0) and(marines >= 1000) then blurp += "##Recruitment" + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
                 if (recruiting = 0) and(marines < 1000) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers.  ";
@@ -995,9 +995,9 @@ function scr_ui_advisors() {
                 if (recruiting = 1) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  With an increase of funding I could vastly increase the rate.  ";
                 if (recruiting = 2) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  With an increase of funding I could vastly increase the rate.  ";
                 if (recruiting = 3) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "  ";
-                if (recruiting = 4) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "- give me the word when we have enough Neophytes being trained.  ";
-                if (recruiting = 5) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "- give me the word when we have enough Neophytes being trained.  ";
-                if (recruiting = 6) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "- give me the word when we have enough Neophytes being trained.  ";
+                if (recruiting>=4){
+                    blurp += $"##Recruitment {recruitment_rates[recruiting]}- give me the word when we have enough Neophytes being trained.  ";
+                }
             }
         }
 
@@ -1165,18 +1165,18 @@ function scr_ui_advisors() {
         draw_set_halign(fa_center);
         draw_text_transformed(xx + 1262, yy + 70, string_hash_to_newline("Neophytes"), 0.6, 0.6, 0);
 
-        if (recruit_name[1] != "") {
+        if (recruit_name[0] != "") {
             draw_set_font(fnt_40k_14);
             draw_set_halign(fa_left);
 
             var t_eta = 0;
-            for (var qp = 0, n = 0; qp <= 300 && n < 36; qp++) {
+            for (var qp = 0, n = 0; qp < array_length(recruit_name) && n < 36; qp++) {
                 if (recruit_name[qp] != "") {
                     n++;
                     draw_rectangle(xx + 947, yy + 100 + ((n - 1) * 20), xx + 1577, yy + 100 + (n * 20), 1);
-                    draw_text(xx + 950, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("Neophyte " + string(recruit_name[qp])));
-                    draw_text(xx + 1200, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("Starting EXP: " + string(recruit_exp[qp])));
-                    draw_text(xx + 1500, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("ETA: " + string(recruit_training[qp] + recruit_distance[qp])));
+                    draw_text(xx + 950, yy + 100 + ((n - 1) * 20), $"Neophyte {recruit_name[qp]}");
+                    draw_text(xx + 1200, yy + 100 + ((n - 1) * 20), $"Starting EXP: {recruit_exp[qp]}");
+                    draw_text(xx + 1500, yy + 100 + ((n - 1) * 20),$"ETA: {recruit_training[qp] + recruit_distance[qp]}");
                 }
             }
         }

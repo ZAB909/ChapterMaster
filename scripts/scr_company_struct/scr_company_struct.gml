@@ -192,7 +192,7 @@ function scr_company_struct(comp) constructor{
 								obj_controller.menu=0;
 				                obj_controller.hide_banner=0;
 				                obj_controller.x = garrrison_star.x;
-				                obj_controller.y =garrrison_star.y;
+				                obj_controller.y = garrrison_star.y;
 				                obj_controller.selection_data =  {
 				                	planet:cur_assignment.ident,
 				                	feature:"",
@@ -270,7 +270,6 @@ function scr_company_struct(comp) constructor{
 			for (var i=0;i<array_length(current_squad.members);i++){
 				member = fetch_unit(current_squad.members[i]);
 				if (!array_equals(squad_draw_surfaces[i][0], current_squad.members[i])){
-					show_debug_message("non equal arrays {0}, {1}",squad_draw_surfaces[i][0], current_squad.members[i]);
 					squad_draw_surfaces[i][0] = [member.company, member.marine_number];
 					squad_draw_surfaces[i][1] = member.draw_unit_image();
 				}
@@ -309,7 +308,7 @@ function scr_company_struct(comp) constructor{
 					exit_period = true;
 				}
 			}						
-			if (!unit_rollover){
+			if (!unit_rollover && !instance_exists(obj_star_select)){
 				if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+525, yy+981) && !exit_period){
 					if (rollover_sequence<10){
 						rollover_sequence++;

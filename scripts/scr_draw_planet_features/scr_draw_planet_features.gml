@@ -12,6 +12,7 @@ function feature_selected(Feature) constructor{
 	exit_sequence = false;
 	entrance_sequence=true;
 	remove=false;
+	destroy=false;
 	exit_count = 0;
 	enter_count=18;
 
@@ -76,6 +77,8 @@ function feature_selected(Feature) constructor{
 						planet : obj_controller.selecting_planet,
 						selections : []
 					});
+					destroy=true;
+
 				}
 				if (feature.size<3){
 					var upgrade_cost = 2000 * feature.size;

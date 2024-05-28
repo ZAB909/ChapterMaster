@@ -19,7 +19,7 @@ if (orbiting != 0 && action=="" && owner!=noone){
 }
 
 if ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force")) and (owner=eFACTION.Chaos) {
-    khorne_fleet_cargo()
+    khorne_fleet_cargo();
 }
 
 if (orbiting != noone) {
@@ -389,8 +389,9 @@ if (navy) {
 	                        exit;
 	                    }
 	                    if (fleet_distance>500) {// Case 2; kind of far away, move closer
-	                        var dirr,diss,goto;diss=fleet_distance/2;goto=0;
-	                        dirr=point_direction(x,y,fleet_nearby.x,fleet_nearby.y);
+	                        var diss=fleet_distance/2;
+	                        var goto=0;
+	                        var dirr=point_direction(x,y,fleet_nearby.x,fleet_nearby.y);
                         
 	                        with(orbiting){y-=20000;}
 	                        goto=instance_nearest(x+lengthdir_x(diss,dirr),y+lengthdir_x(diss,dirr),obj_star);
@@ -1768,7 +1769,7 @@ if (action="move") and (action_eta<5000){
                 with (stue){
                     if (p_type[tau_influence_planet]!="Dead"){
                     
-                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name()}.",sta.x,sta.y);
+                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name(tau_influence_planet)}.",sta.x,sta.y);
                         tau_influence = p_influence[tau_influence_planet][eFACTION.Tau]
                     
                         if (tau_influence_chance<=70) and (tau_influence<70){
