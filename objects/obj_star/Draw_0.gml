@@ -97,7 +97,7 @@ if (obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y
 	ui_node.activate();
     if (garrison){
         draw_sprite(spr_new_resource,3,x-30,y+15);
-        if (scr_hit(x-40,y+10,x-35,y+20)){
+        if (scr_hit(x-40,y+10,x-10,y+35)){
             tooltip_draw("Marine Garrison in system");
         }
     }
