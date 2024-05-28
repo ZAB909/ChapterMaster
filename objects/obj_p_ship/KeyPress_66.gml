@@ -2,9 +2,9 @@
 // if (obj_fleet.start!=5) then exit;
 
 if (selected=1) and (boarders>0) and (board_cooldown<=0) and (point_distance(x,y,mouse_x,mouse_y)<=428){
-    var tar1,tar2,tar_final;
-    tar1=instance_nearest(mouse_x,mouse_y,obj_en_ship);
-    tar2=instance_nearest(mouse_x,mouse_y,obj_en_capital);
+    var tar_final;
+    var tar1=instance_nearest(mouse_x,mouse_y,obj_en_ship);
+    var tar2=instance_nearest(mouse_x,mouse_y,obj_en_capital);
     
     if (!instance_exists(obj_en_capital)) and (instance_exists(obj_en_ship)) then tar_final=instance_nearest(mouse_x,mouse_y,obj_en_ship);
     if (instance_exists(obj_en_capital)){
