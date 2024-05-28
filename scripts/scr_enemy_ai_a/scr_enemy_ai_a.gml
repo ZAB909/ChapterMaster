@@ -131,7 +131,7 @@ function scr_enemy_ai_a() {
     		}
     	}
 
-    	if (array_length(present_forces) == 1){// if there is only one faction with present forces the planet belongs ot that faction
+    	if (array_length(present_forces) == 1 && !p_pdf[run]){// if there is only one faction with present forces the planet belongs ot that faction
     		p_owner[run] = present_forces[0];
     		stop=1;
     	} else if (planet_forces[eFACTION.Player]<=0) and (planet_forces[eFACTION.Ork]>0){//orks prevail  over other factions
@@ -567,14 +567,20 @@ function scr_enemy_ai_a() {
 	            rand2=(pdf_random*pdf_score);
 	            var active_garrison = pdf_with_player && garrison.viable_garrison>0;
 	            if (rand1>rand2){
-	                if (planet_forces[eFACTION.Ork]>=4) and (p_pdf[run]>=30000) {p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));}
-	                else if (planet_forces[eFACTION.Ork]>=4 && p_pdf[run]<30000 && p_pdf[run]>=10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
-	                else if (planet_forces[eFACTION.Ork]>=3) and (p_pdf[run]<10000){ p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;}
+	                if (planet_forces[eFACTION.Ork]>=4) and (p_pdf[run]>=30000){
+	                	p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.55+pdf_loss_reduction)));
+	            	}
+	                else if (planet_forces[eFACTION.Ork]>=4 && p_pdf[run]<30000 && p_pdf[run]>=10000){
+	                	p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;
+	                }
+	                else if (planet_forces[eFACTION.Ork]>=3) and (p_pdf[run]<10000){
+	                	p_pdf[run]=active_garrison?p_pdf[run]*0.4:0;
+	                }
 	                else if (planet_forces[eFACTION.Ork]<3 && p_pdf[run]>30000){
 	                	p_pdf[run]=floor(p_pdf[run]*(min(0.95, 0.7+pdf_loss_reduction)));
 	                }
-	                else if (planet_forces[eFACTION.Ork]>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
-	                else if (planet_forces[eFACTION.Ork]>=1) and (p_pdf[run]<200){ p_pdf[run]=0;}
+	                if (planet_forces[eFACTION.Ork]>=2) and (p_pdf[run]<2000){ p_pdf[run]=0;}
+	                if (planet_forces[eFACTION.Ork]>=1) and (p_pdf[run]<200){ p_pdf[run]=0;}
 
 	                if (active_garrison){
 	                	var tixt = $"Chapter Forces led by {garrison.garrison_leader.name_role()} on {name} {scr_roman_numerals()[run-1]} were unable to secure PDF victory chapter support requested";
