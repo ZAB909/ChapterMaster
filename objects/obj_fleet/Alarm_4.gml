@@ -1,4 +1,3 @@
-show_debug_message("alarm 4 fleet");
 
 with(obj_p_ship){instance_destroy();}
 with(obj_p_th){instance_destroy();}
@@ -60,4 +59,3 @@ if (view_x+view_y>0){
 // show_message(obj_turn_end.current_battle);
 with(obj_controller){instance_activate_all();}
 instance_destroy();
-show_debug_message("alarm 4 fleet");

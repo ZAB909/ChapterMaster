@@ -1,4 +1,3 @@
-show_debug_message("alarm 7 fleet");
 var yeehaw1, yeehaw2, tstar;
 yeehaw1=0;yeehaw2=0;tstar=0;
 
@@ -141,11 +140,14 @@ if (killer>0){
     if (instance_exists(obj_turn_end)) then scr_alert("red","inqis",string(msg),ii.x+16,ii.y-24);
     if (!instance_exists(obj_turn_end)) and (obj_controller.faction_status[eFACTION.Inquisition]!="War"){
         var pip;pip=instance_create(0,0,obj_popup);
-        pip.title="Inquisitor Killed";pip.text=msg;pip.image="inquisition";pip.cooldown=20;
+        pip.title="Inquisitor Killed";
+        pip.text=msg;
+        pip.image="inquisition";
+        pip.cooldown=20;
         
         if (obj_controller.known[eFACTION.Inquisition]<3){
             pip.title="EXCOMMUNICATUS TRAITORUS";
-            pip.text="The Inquisition has noticed your uncalled murder of "+string(msg2)+" and declared your chapter Excommunicatus Traitorus.";
+            pip.text=$"The Inquisition has noticed your uncalled murder of {msg2} and declared your chapter Excommunicatus Traitorus.";
             obj_controller.alarm[8]=1;
         }
     }
@@ -163,5 +165,4 @@ instance_activate_all();
 if (instance_exists(obj_p_assra)){obj_p_assra.alarm[0]=1;}
 alarm[4]=2;
 
-show_debug_message("alarm 7 fleet");
 
