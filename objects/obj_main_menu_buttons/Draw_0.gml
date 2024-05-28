@@ -70,12 +70,12 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
             }
             if (hover[i]=0) and (glow[i]>0) then glow[i]-=4;
         }
-    
+        // location of sprites 
         draw_set_alpha(obj_main_menu.tim4/50);
-        draw_sprite(spr_mm_butts,0,126,yy);
-        draw_sprite(spr_mm_butts,1,550,yy);
-        draw_sprite(spr_mm_butts,2,968,yy);
-        draw_sprite(spr_mm_butts,3,1280,yy);
+        draw_sprite(spr_mm_butts,0,700,500);
+        draw_sprite(spr_mm_butts,1,700,520);
+        draw_sprite(spr_mm_butts,2,700,540);
+        draw_sprite(spr_mm_butts,3,700,580);
         draw_set_alpha(1);
     }
     
