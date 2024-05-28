@@ -21,10 +21,13 @@ function scr_company_struct(comp) constructor{
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
 	captain = "none";
-	squad_draw_surfaces = array_create(15, []);
-	for (var i=0;i<15;i++){
-		squad_draw_surfaces[i]=[[-1,-1],false];
+	static reset_squad_surface = function(){
+		squad_draw_surfaces = array_create(15, []);
+		for (var i=0;i<15;i++){
+			squad_draw_surfaces[i]=[[-1,-1],false];
+		}
 	}
+	reset_squad_surface();
 
 	if (company>0 && company<11){
 		var unit;
@@ -254,6 +257,7 @@ function scr_company_struct(comp) constructor{
 			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10+35],"Reset Squad Loadout",[1,1],c_green);
 			if (point_and_click(button)){
 				current_squad.sort_squad_loadout();
+				reset_squad_surface();
 			}
 			
 			if (unit_rollover){
