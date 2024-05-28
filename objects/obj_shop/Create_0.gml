@@ -168,7 +168,7 @@ if (shop = "equipment") {
     i += 1;
     item[i] = "Lightning Claw";
     item_stocked[i] = scr_item_count(item[i]);
-    item_cost[i] = 50;
+    item_cost[i] = 90;
     if (research.power_fields[0]>1){
         forge_cost[i] = 150;
     }
@@ -755,6 +755,15 @@ if (shop = "vehicles") {
     }
     i += 1;
     x_mod[i] = 9;
+    item[i] = "Quad Linked Heavy Bolter Sponsons";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 60;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
+    x_mod[i] = 9;
     item[i] = "Twin Linked Assault Cannon Mount";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 60;
@@ -810,15 +819,15 @@ if (shop = "vehicles") {
     item[i] = "Land Speeder";
     item_stocked[i] = scr_vehicle_count(item[i], "");
     nobuy[i] = 1;
+	if (obj_controller.stc_vehicles >= 6) {
+    nobuy[i] = 0;
+    item_cost[i] = 120;
+    }
     i += 1;
     x_mod[i] = 9;
     item[i] = "Twin Linked Bolters";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 8;
-    if (obj_controller.stc_vehicles >= 6) {
-        nobuy[i] = 0;
-        item_cost[i] = 200;
-    } // if (rene=1){nobuy[i]=1;item_cost[i]=0;}
     i += 1;
     item[i] = "Bike";
     item_stocked[i] = scr_item_count(item[i]);
@@ -904,9 +913,9 @@ if (shop = "vehicles") {
     }
     i += 1;
     x_mod[i] = 9;
-    item[i] = "Flamestorm Cannon";
+    item[i] = "Dreadnought Lightning Claw";
     item_stocked[i] = scr_item_count(item[i]);
-    item_cost[i] = 135;
+    item_cost[i] = 185;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
@@ -922,7 +931,7 @@ if (shop = "vehicles") {
     }
     i += 1;
     x_mod[i] = 9;
-    item[i] = "Twin-Linked Assault Cannon";
+    item[i] = "Dreadnought Power Claw";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 150;
     if (rene = 1) {
@@ -931,7 +940,7 @@ if (shop = "vehicles") {
     }
     i += 1;
     x_mod[i] = 9;
-    item[i] = "Whirlwind Missile Launcher";
+    item[i] = "Whirlwind Missiles";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 90;
     if (rene = 1) {
@@ -951,7 +960,79 @@ if (shop = "vehicles") {
     x_mod[i] = 9;
     item[i] = "Void Shield";
     item_stocked[i] = scr_item_count(item[i]);
-    item_cost[i] = 250;
+    nobuy[i] = 1;
+    if (obj_controller.stc_vehicles >= 6) {
+        nobuy[i] = 0;
+        item_cost[i] = 500;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Lucifer Pattern Engine";
+    item_stocked[i] = scr_item_count(item[i]);
+    nobuy[i] = 1;
+    if (obj_controller.stc_vehicles >= 6) {
+        nobuy[i] = 0;
+        item_cost[i] = 90;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Artificer Hull";
+    item_stocked[i] = scr_item_count(item[i]);
+    nobuy[i] = 1;
+    if (obj_controller.stc_vehicles >= 3) {
+        nobuy[i] = 0;
+        item_cost[i] = 200;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Armoured Ceramite";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 120;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Heavy Armour";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 50;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Smoke Launchers";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 10;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Dozer Blades";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 10;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Searchlight";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 15;
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    i += 1;
+    x_mod[i] = 9;
+    item[i] = "Frag Assault Launchers";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 30;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;

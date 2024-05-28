@@ -399,6 +399,12 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	    if (number_of_shots>1) and (casulties=0) then p1=$"{number_of_shots} {weapon_name} crackle and swing into the {target_name} ranks (X{casulties} casulties).";
 	    if (number_of_shots>1) and (casulties>0) then p1=$"{number_of_shots} {weapon_name} crackle and swing into the {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
 	}
+	if (weapon_name="Dozer Blades") and (solod=false){flavored=1;
+	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is rammed but survives.";
+	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is splattered by {weapon_name}.";
+	    if (number_of_shots>1) and (casulties=0) then p1=$"{weapon_name} ploughs {target_name} ranks (X{casulties} casulties).";
+	    if (number_of_shots>1) and (casulties>0) then p1=$"{weapon_name} hits {target_name} ranks (X{casulties} casulties).  "+string(casulties)+" are smashed.";
+	}
 	if (weapon_name="Inactive Force Staff") and (solod=false){flavored=1;
 	    if (number_of_shots=1) and (casulties=0) then p1=$"A {target_name} is struck by a {weapon_name} but survives.";
 	    if (number_of_shots=1) and (casulties=1) then p1=$"A {target_name} is smashed by a {weapon_name}.";
