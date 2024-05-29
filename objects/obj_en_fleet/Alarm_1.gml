@@ -1318,20 +1318,19 @@ if (action==""){
         }
     }
     
-    if (owner=eFACTION.Ork) and (action="") and (instance_exists(orbiting)){// Should fix orks converging on useless planets
-        var maxp,bad,i,hides,hide;maxp=0;bad=0;i=0;hides=1;hide=0;
+    if (owner=eFACTION.Ork) and (action=""){// Should fix orks converging on useless planets
         
-        bad = is_dead_star(orbiting);
+        var bad = is_dead_star(instance_nearest(x,y,obj_star));
         
         if (bad){
-            hides+=choose(0,1,2,3);
+            var hides+=choose(0,1,2,3);
             
             repeat(hides){
                 instance_deactivate_object(instance_nearest(x,y,obj_star));
             }
             
             with(obj_star){
-            	if ((planets=1) and (p_type[1]="Dead")) or (owner=eFACTION.Ork) then instance_deactivate_object(id);
+            	if (is_dead_star()) or (owner=eFACTION.Ork) then instance_deactivate_object(id);
             }
             var nex=instance_nearest(x,y,obj_star);
             action_x=nex.x;
