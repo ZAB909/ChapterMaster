@@ -10,7 +10,7 @@ function new_ork_fleet(xx,yy){
     fleet.sprite_index=spr_fleet_ork;
     fleet.image_index=1;
     fleet.capital_number=1;
-    present_fleet[7]+=1;
+    present_fleet[7] = 1;
 }
 
 function build_new_ork_ships_to_fleet(star, planet){
@@ -30,6 +30,7 @@ function build_new_ork_ships_to_fleet(star, planet){
     if (rando<=15){// was 25
         show_debug_message("true")
         rando=choose(1,1,1,1,1,1,1,3,3,3,3);
+        if (capital_number<=0) then rando = 3;
         if (rando=1) then capital_number+=1;
         // if (rando=2) then fleet.frigate_number+=1;
         if (rando=3) then escort_number+=1;

@@ -69,18 +69,18 @@ function scr_enemy_ai_e() {
             if (standard_xenos_enemies > 0) then battle2 = 6;
         }
         else if (present_fleet[7] > 0){
-            if (standard_xenos_enemies > 0) then battle2 = 7;
+            if (standard_xenos_enemies-present_fleet[7] > 0) then battle2 = 7;
         }
         else if (present_fleet[8] > 0){
-            if (standard_xenos_enemies > 0) then battle2 = 8;
+            if (standard_xenos_enemies-present_fleet[8] > 0) then battle2 = 8;
         }
         else if (present_fleet[9] > 0){
-            if (standard_xenos_enemies > 0) then battle2 = 9;
+            if (standard_xenos_enemies-present_fleet[9] > 0) then battle2 = 9;
         }
         else if (present_fleet[10] > 0){
-            if (standard_xenos_enemies > 0) then battle2 = 10;
+            if (standard_xenos_enemies-present_fleet[10] > 0) then battle2 = 10;
         }
-        else if (present_fleet[13] > 0){
+        else if (present_fleet[13]-present_fleet[13] > 0){
             if (standard_xenos_enemies > 0) then battle2 = 13;
         }
     }

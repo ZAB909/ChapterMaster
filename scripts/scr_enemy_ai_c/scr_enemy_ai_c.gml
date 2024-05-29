@@ -125,7 +125,8 @@ function scr_enemy_ai_c() {
 	    landi=0;t1=0;l=0;
     
 	    repeat(4){
-	    	l+=1;if (t1=0) and (p_tyranids[l]>0) then t1=l;
+	    	l+=1;
+	    	if (t1=0) and (p_tyranids[l]>0) then t1=l;
 	    }
 	    if (t1>0) then p_tyranids[t1]-=1;
     
