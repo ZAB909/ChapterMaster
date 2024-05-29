@@ -3062,7 +3062,6 @@ function scr_initialize_custom() {
 		man_size += 8;
 		wep2[company][k] = wep2[101, 6];
 		armour[company][k] = "Dreadnought";
-		experience[company][k] = 400;
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		spawn_unit = TTRPG[company][k]
 		spawn_unit.roll_age();

@@ -2497,103 +2497,141 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static roll_age = function(){
 		var _age = 0;
-		var _company_age = 0;
-		var _role_age = 0;
 		var _minimum_age = 0;
-		var _gauss_sd_mod = 3;
+		var _maximum_age = 0;
+		var _apply_gauss = false;
+		var _gauss_sd_mod = 2;
 
 		switch(company){
 			case 1:
-				_company_age = 70;
+				_minimum_age += 75;
+				_apply_gauss = true;
 				break;
 			case 2:
 			case 3:
 			case 4:
 			case 5:
-			case 6:
-				_company_age = 50;
+				_minimum_age += 45;
+				_maximum_age += 75;
+				_apply_gauss = true;
 				break;
+			case 6:
 			case 7:
-				_company_age = 30;
+				_minimum_age += 25;
+				_maximum_age += 35;
 				break;
 			case 8:
-				_company_age = 20;
+				_minimum_age += 15;
+				_maximum_age += 15;
 				break;
 			case 9:
-				_company_age = 10;
+				_minimum_age += 5;
+				_maximum_age += 5;
 				break;
 			case 10:
-				_company_age = 0;
-				break;
 			default:
 				break;
 		}
 		switch(role()){
-			// HQ
+			// HQ only
 			case "Chapter Master":
-				_role_age = 300;
+				_minimum_age += 200;
+				_apply_gauss = true;
 				break;
 			case "Chief Librarian":
 			case "Forge Master":
 			case "Master of Sanctity":
 			case "Master of the Apothecarion":
-				_role_age = 180;
+				_minimum_age += 180;
+				_apply_gauss = true;
 				break;
 			case obj_ini.role[100][Role.HONOR_GUARD]:
-				_role_age = 140;
+				_minimum_age += 140;
+				_apply_gauss = true;
 				break;
 			case "Codiciery":
-				_role_age = 40;
+				_minimum_age += 60;
+				_maximum_age += 70;
 				break;
 			case "Lexicanum":
-				_role_age = 30;
+				_minimum_age += 50;
+				_maximum_age += 60;
 				break;
 			// 1st company only
 			case obj_ini.role[100][Role.VETERAN]:
-				_role_age = 30;
+				_minimum_age += 35;
+				_maximum_age += 45;
 				break;
 			case obj_ini.role[100][Role.TERMINATOR]:
-				_role_age = 32;
+				_minimum_age += 40;
+				_maximum_age += 50;
 				break;
 			case obj_ini.role[100][Role.VETERAN_SERGEANT]:
-				_role_age = 36;
+				_minimum_age += 40;
+				_maximum_age += 50;
 				break;
 			// Command Squads
 			case obj_ini.role[100][Role.CAPTAIN]:
-				_role_age = 40;
+				_minimum_age += 55;
+				_maximum_age += 65;
 				break;
 			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
-				_role_age = 30;
+				_minimum_age += 50;
+				_maximum_age += 60;
 				break;
 			case obj_ini.role[100][Role.ANCIENT]:
-				_role_age = 80;
+				_minimum_age += 70;
+				_maximum_age += 80;
 				break;
 			// Command Squads and HQ
 			case obj_ini.role[100][Role.CHAPLAIN]:
 			case obj_ini.role[100][Role.APOTHECARY]:
 			case obj_ini.role[100][Role.TECHMARINE]:
 			case obj_ini.role[100][Role.LIBRARIAN]:
-				_role_age = 50;
+				_minimum_age += 70;
+				_maximum_age = 0;
+				_apply_gauss = true;
 				break;
 			// Company marines
 			case obj_ini.role[100][Role.DREADNOUGHT]:
-				_role_age = 500;
+				_minimum_age += 400;
+				_maximum_age = 0;
+				_apply_gauss = true;
 				break;
-			case obj_ini.role[100][Role.SCOUT]:
+			case "Venerable Dreadnought":
+				_minimum_age += 650;
+				_maximum_age = 0;
+				_apply_gauss = true;
+				break;
 			case obj_ini.role[100][Role.TACTICAL]:
 			case obj_ini.role[100][Role.DEVASTATOR]:
 			case obj_ini.role[100][Role.ASSAULT]:
-				_role_age = 18;
+				_minimum_age += 20;
+				_maximum_age += 30;
 				break;
 			case obj_ini.role[100][Role.SERGEANT]:
-				_role_age = 24;
+				_minimum_age += 25;
+				_maximum_age += 35;
+				break;
+			case obj_ini.role[100][Role.SCOUT]:
+			default:
+				_minimum_age = 18;
+				_maximum_age = 25;
 				break;
 		}
 
-		_minimum_age = _company_age + _role_age;
-		_age = gauss(_minimum_age, _minimum_age / _gauss_sd_mod);
-		for(var i = 0; _age < _minimum_age; i++){
-			_age = gauss(_minimum_age, _minimum_age / _gauss_sd_mod);
+		if (_apply_gauss == true) {
+			if (_maximum_age != 0){
+				while (_age < _minimum_age || _age > _maximum_age){
+					_age = gauss(_minimum_age, _minimum_age / _gauss_sd_mod);
+				}
+			} else {
+				while (_age < _minimum_age){
+					_age = gauss(_minimum_age, _minimum_age / _gauss_sd_mod);
+				}
+			}
+		} else {
+			_age = irandom_range(_minimum_age, _maximum_age);
 		}
 
 		update_age(round(_age));
@@ -2601,8 +2639,36 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static roll_experience = function() {
 		var _exp = 0;
-		var _age_bonus = age() - 18;
+		var _company_bonus = 0;
+		var _age_bonus = age();
 		var _gauss_sd_mod = 14;
+
+		// switch(company){
+		// 	case 1:
+		// 		_company_bonus = 55;
+		// 		break;
+		// 	case 2:
+		// 	case 3:
+		// 	case 4:
+		// 	case 5:
+		// 	case 6:
+		// 		_company_bonus = 40;
+		// 		break;
+		// 	case 7:
+		// 		_company_bonus = 25;
+		// 		break;
+		// 	case 8:
+		// 		_company_bonus = 10;
+		// 		break;
+		// 	case 9:
+		// 		_company_bonus = 2;
+		// 		break;
+		// 	case 10:
+		// 		_company_bonus = 0;
+		// 		break;
+		// 	default:
+		// 		break;
+		// }
 
 		// switch(role()){
 			// HQ
@@ -2634,11 +2700,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// case obj_ini.role[100][Role.ASSAULT]:
 			// case obj_ini.role[100][Role.SERGEANT]:
 			// case obj_ini.role[100][Role.SCOUT]:
-			// 	_gauss_sd_mod = 10;
 			// 	break;
 		// }
 
-		_exp = max(0, floor(gauss(_age_bonus, _age_bonus / _gauss_sd_mod)));
+		_exp = _age_bonus + _company_bonus;
+		_exp = max(0, floor(gauss(_exp, _exp / _gauss_sd_mod)));
 		add_exp(_exp);
 	}
 
