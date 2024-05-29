@@ -1323,7 +1323,7 @@ if (action==""){
         var bad = is_dead_star(instance_nearest(x,y,obj_star));
         
         if (bad){
-            var hides+=choose(0,1,2,3);
+            var hides=choose(1,2,3);
             
             repeat(hides){
                 instance_deactivate_object(instance_nearest(x,y,obj_star));
