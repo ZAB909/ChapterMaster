@@ -59,7 +59,7 @@ draw_set_color(38144);
 
 
 if (maxhp!=0){
-    var zoom_modifier = zoomed?2:1;
+    var zoom_modifier = obj_controller.zoomed?2:1;
     if (shields<=0){
         var hp_percent = $"{(hp/maxhp)*100}%"
         
