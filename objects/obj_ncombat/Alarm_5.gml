@@ -273,7 +273,7 @@ if (defeat=0) and (npowers=true){
                     who_cleansed="Gene Stealer Cult"
                     make_alert=true;
                     delete_features(p_feature[battle_planet], P_features.Gene_Stealer_Cult);
-                    adjust_influence(eFACTION.Tyranids, -25, run);
+                    adjust_influence(eFACTION.Tyranids, -25, battle_planet);
                 } 
                 if (make_alert){
                      if (p_first[battle_planet] == 1){
