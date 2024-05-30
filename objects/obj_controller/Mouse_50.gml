@@ -1251,35 +1251,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
         }*/
-        // Save and exit
-        if (mouse_y>=yy+0) and (mouse_y<yy+26){
-            var sv;
-            if (mouse_x>=xx+431) and (mouse_x<xx+496){
-                menu=999;
-                zui=1;
-                cooldown=8000;
-                click=1;
-                sv=instance_create(x,y,obj_saveload);
-                sv.menu=1;
-            }
-            if (mouse_x>=xx+496) and (mouse_x<xx+559){
-                    menu=999;
-                    zui=1;
-                    cooldown=8000;
-                    click=1;
-                    sv=instance_create(x,y,obj_saveload);
-                    sv.menu=2;
-            }
-            if (mouse_x>=xx+559) and (mouse_x<xx+623){
-                menu=999;
-                cooldown=8000;
-                click=1;
-                with(obj_ini){instance_destroy();}
-                room_goto(Main_Menu);
-                with(obj_controller){instance_destroy();}
-                instance_destroy();
-            }
-        }
+
         // Management
         if (menu_buttons.chapter_manage.clicked){
             if (menu!=1)and (onceh==0){
