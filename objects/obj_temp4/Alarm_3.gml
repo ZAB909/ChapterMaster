@@ -23,18 +23,7 @@ with(obj_fleet_select){instance_destroy();}
 delete_features(plan.p_feature[num], P_features.Artifact);
 scr_event_log("","Planetary Governor hands over Artifact.");
 
-i=0;
-if (string_count("Daemonic",obj_ini.artifact_tags[last_artifact-1])=1) then repeat(140){
-    i+=1;
-    if (man_sel[i]=1){
-        if (obj_controller.man[i]="man"){
-            obj_ini.TTRPG[comp][i].corruption+=choose(0,2,4,6,8);
-        }
-        if (obj_controller.man[i]="vehicle"){
-            obj_ini.veh_chaos[comp][i]+=choose(0,2,4,6,8);
-        }
-    }
-}
+corrupt_artifact_collectors(last_artifact);
 
 obj_controller.trading_artifact=0;
 var h=0;repeat(4){h+=1;obj_controller.diplo_option[h]="";obj_controller.diplo_goto[h]="";}

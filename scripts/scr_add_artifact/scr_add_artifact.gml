@@ -259,3 +259,25 @@ function arti_struct(Index)constructor{
 
 	static description = scr_arti_descr;
 }
+
+
+function corrupt_artifact_collectors(last_artifact){
+	try{
+		var arti = obj_ini.artifact_struct[last_artifact];
+		if (arti.inquisition_disprove()){
+		    for (var i=0;i<array_length(obj_controller.display_unit);i++){
+		        if (obj_controller.man_sel[i]=1){
+		            if (obj_controller.man[i]="man"){
+		            	if (is_struct(obj_controller.display_unit[i])) then obj_controller.display_unit[i].edit_corruption(choose(0,2,4,6,8));
+		            }
+		            else if (obj_controller.man[i]="vehicle" && is_array(obj_controller.display_unit[i])){
+		                obj_ini.veh_chaos[obj_controller.display_unit[i][0]][obj_controller.display_unit[i][1]]+=choose(0,2,4,6,8);
+		            }
+		        }
+		    }
+		}
+	}
+	catch( _exception){
+	    show_debug_message(_exception.message);	
+	}
+}
