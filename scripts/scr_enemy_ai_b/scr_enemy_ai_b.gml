@@ -298,11 +298,19 @@ function scr_enemy_ai_b() {
 			var cult = return_planet_features(p_feature[i], P_features.Gene_Stealer_Cult)[0];
 			cult.cult_age++;
 			adjust_influence(eFACTION.Tyranids, cult.cult_age/100, i)
+			var planet_garrison = system_garrison[i-1];
 			if (cult.hiding){
+				var find_nid_chance = 50 - planet_garrison.total_garrison;
 				if (p_influence[i][eFACTION.Tyranids]>50){
-					if(irandom(50)<1){
+					var find_cult_chance = irandom(50);
+					var alert_text = $"A hidden Genestealer Cult in {name} Has suddenly burst forth from hiding!"
+					if (planet_garrison.garrison_force){
+						var alert_text = $"A hidden Genestealer Cult in {name} Has been discovered by marine garrison!"
+						find_cult_chance-=25;
+					}
+					if(find_cult_chance<1){
 						cult.hiding=false;
-	                    scr_popup("System Lost",$"A hidden Genestealer Cult in {name} Has suddenly burst forth from hiding!","Genestealer Cult","");
+	                    scr_popup("System Lost",alert_text,"Genestealer Cult","");
 	                    owner = eFACTION.Tyranids;
 	                    scr_event_log("red",$"A hidden Genestealer Cult in {name} {i} has Started a revolt.", name);		
 	                    p_tyranids[i]+=1;				
@@ -322,9 +330,6 @@ function scr_enemy_ai_b() {
 		    }
 		    if (p_influence[i][eFACTION.Tyranids]>55){
 		    	p_owner[i] = eFACTION.Tyranids;
-		    	if (cult.hiding){
-		    		cult.hiding = false;
-		    	}
 		    }
 		} else if (p_influence[i][eFACTION.Tyranids]>5){
 			adjust_influence(eFACTION.Tyranids, -1, i);
