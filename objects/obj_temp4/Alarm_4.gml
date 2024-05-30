@@ -59,19 +59,30 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.ad
     var ex1,ex1_num,ex2,ex2_num,ex3,ex3_num;
     ex1="";ex1_num=0;ex2="";ex2_num=0;ex3="";ex3_num=0;
     
-    var stah;stah=instance_nearest(x,y,obj_star);
+    var stah=instance_nearest(x,y,obj_star);
 
     if (stah.p_first[num]=2){
-        ex1="Meltagun";ex1_num=choose(2,3,4);ex2="Flamer";ex2_num=choose(2,3,4);
-        ex3=choose("Power Fist","Chainsword","Bolt Pistol");ex3_num=choose(2,3,4,5);
+        ex1="Meltagun";ex1_num=choose(2,3,4);
+        ex2="Flamer";
+        ex2_num=choose(2,3,4);
+        ex3=choose("Power Fist","Chainsword","Bolt Pistol");
+        ex3_num=choose(2,3,4,5);
     }
     if (stah.p_first[num]=3){
-        ex1="Plasma Pistol";ex1_num=choose(1,2);ex2="Power Armour";ex2_num=choose(2,3,4);
-        ex3=choose("Servo Arms","Bionics");ex3_num=choose(2,3,4);
+        ex1="Plasma Pistol";
+        ex1_num=choose(1,2);
+        ex2="Power Armour";
+        ex2_num=choose(2,3,4);
+        ex3=choose("Servo Arms","Bionics");
+        ex3_num=choose(2,3,4);
     }
     if (stah.p_first[num]=5){
-        ex1="Flamer";ex1_num=choose(3,4,5,6);ex2="Heavy Flamer";ex2_num=choose(1,2,3);
-        ex3=choose("Chainsword","Bolt Pistol");ex3_num=choose(2,3,4,5);
+        ex1="Flamer";
+        ex1_num=choose(3,4,5,6);
+        ex2="Heavy Flamer";
+        ex2_num=choose(1,2,3);
+        ex3=choose("Chainsword","Bolt Pistol");
+        ex3_num=choose(2,3,4,5);
     }
     
     if (ex1!=""){
@@ -80,7 +91,8 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.ad
         if (ex2_num>0) then pop.text+=", "+string(ex2_num)+" "+string(ex2);
         if (ex3_num>0) then pop.text+=", and "+string(ex3_num)+" "+string(ex3);
         pop.text+=".";
-        scr_add_item(ex1,ex1_num);scr_add_item(ex2,ex2_num);
+        scr_add_item(ex1,ex1_num);
+        scr_add_item(ex2,ex2_num);
         scr_add_item(ex3,ex3_num);
     }
 }
