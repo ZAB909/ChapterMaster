@@ -80,21 +80,27 @@ if (obj_ini.adv[1]="Scavengers") or (obj_ini.adv[2]="Scavengers") or (obj_ini.ad
         if (ex2_num>0) then pop.text+=", "+string(ex2_num)+" "+string(ex2);
         if (ex3_num>0) then pop.text+=", and "+string(ex3_num)+" "+string(ex3);
         pop.text+=".";
-        scr_add_item(ex1,ex1_num);scr_add_item(ex2,ex2_num);scr_add_item(ex3,ex3_num);
+        scr_add_item(ex1,ex1_num);scr_add_item(ex2,ex2_num);
+        scr_add_item(ex3,ex3_num);
     }
 }
 
 
 with(obj_star_select){instance_destroy();}
 with(obj_fleet_select){instance_destroy();}
- delete_features(planet.p_feature[num], P_features.Artifact);
+delete_features(planet.p_feature[num], P_features.Artifact);
 
-i=-1;
-if (array_contains(obj_ini.artifact_tags[last_artifact-1], "Daemonic")) then repeat(array_length(man_sel[i])){
-    i+=1;
-    if (man_sel[i]=1){
-        if (obj_controller.man[i]="man"){obj_ini.TTRPG[comp][i].corruption+=choose(0,2,4,6,8);}
-        if (obj_controller.man[i]="vehicle"){obj_ini.veh_chaos[comp][i]+=choose(0,2,4,6,8);}
+var arti = obj_ini.artifact_struct[last_artifact];
+if (arti.inquisition_disprove()){
+    for (var i=0;i<array_length(man_sel);i++){
+        if (man_sel[i]=1){
+            if (obj_controller.man[i]="man"){
+                display_unit[i].edit_corruption(choose(0,2,4,6,8));
+            }
+            if (obj_controller.man[i]="vehicle"){
+                obj_ini.veh_chaos[display_unit[i][0]][display_unit[i][1]]+=choose(0,2,4,6,8);
+            }
+        }
     }
 }
 
