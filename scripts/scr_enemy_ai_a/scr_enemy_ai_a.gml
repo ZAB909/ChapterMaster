@@ -886,7 +886,8 @@ function scr_enemy_ai_a() {
 			} else if (planet_feature_bool(p_feature[run], P_features.Gene_Stealer_Cult) && p_tyranids[run] <= 0){
 				who_cleansed="Gene Stealer Cult"
 				make_alert=true;
-				delete_features(p_feature[run], P_features.Gene_Stealer_Cult)
+				delete_features(p_feature[run], P_features.Gene_Stealer_Cult);
+				adjust_influence(eFACTION.Tyranids, -25, run);
 			}
 			 if (make_alert){
 				 if (p_first[run] = 1){

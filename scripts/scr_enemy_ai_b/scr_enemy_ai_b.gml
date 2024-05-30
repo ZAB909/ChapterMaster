@@ -301,7 +301,7 @@ function scr_enemy_ai_b() {
 			if (cult.hiding){
 				if (p_influence[i][eFACTION.Tyranids]>50){
 					if(irandom(50)<1){
-						hiding=false;
+						cult.hiding=false;
 	                    scr_popup("System Lost",$"A hidden Genestealer Cult in {name} Has suddenly burst forth from hiding!","Genestealer Cult","");
 	                    owner = eFACTION.Tyranids;
 	                    scr_event_log("red",$"A hidden Genestealer Cult in {name} {i} has Started a revolt.", name);		
@@ -322,6 +322,9 @@ function scr_enemy_ai_b() {
 		    }
 		    if (p_influence[i][eFACTION.Tyranids]>55){
 		    	p_owner[i] = eFACTION.Tyranids;
+		    	if (cult.hiding){
+		    		cult.hiding = false;
+		    	}
 		    }
 		} else if (p_influence[i][eFACTION.Tyranids]>5){
 			adjust_influence(eFACTION.Tyranids, -1, i);
