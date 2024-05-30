@@ -571,28 +571,6 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 	}
 
 	static set_location = function(loc, lid, wid){
-		set_member_loc = function(loc_data){
-			var loc=loc_data.loc;
-			var lid=loc_data.lid;
-			var wid=loc_data.wid;
-			var system = loc_data.system
-			var member_location=unit.marine_location();
-			if (wid>0 && loc==member_location[2]){
-				if (member_location[0]==location_types.ship){
-					unit.unload(wid, system)
-				} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
-					unit.get_unit_size();
-					system.p_player[member_location[1]]-=unit.size;
-					system.p_player[wid]+=unit.size;
-					unit.set_planet(wid);
-				}
-			} else {
-				if (wid == 0 && lid>0){
-					unit.load_marine(lid);
-				}
-			}
-			return loc_data;
-		}
 		var member_length = array_length(members);
 		var member_location;
 		var system = "none";
@@ -616,7 +594,11 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 				i--;
 				continue;
 			} else {
-				data_pack=member_func(data_pack);
+				var pack_return;
+				with (unit){
+					pack_return = member_func(data_pack);
+				}
+				data_pack=pack_return;
 				if (struct_exists(data_pack ,"action")){
 					if (data_pack.action=="break"){
 						break;
@@ -700,7 +682,28 @@ function game_start_squads(){
 		}
 	}
 }
-
+function set_member_loc (loc_data){
+	var loc=loc_data.loc;
+	var lid=loc_data.lid;
+	var wid=loc_data.wid;
+	var system = loc_data.system
+	var member_location=marine_location();
+	if (wid>0 && loc==member_location[2]){
+		if (member_location[0]==location_types.ship){
+			unload(wid, system)
+		} else if(member_location[0]==location_types.planet && member_location[1] != wid && member_location[2]==loc){
+			get_unit_size();
+			system.p_player[member_location[1]]-=size;
+			system.p_player[wid]+=size;
+			planet_location = wid;
+		}
+	} else {
+		if (wid == 0 && lid>0){
+			load_marine(lid);
+		}
+	}
+	return loc_data;
+}
 //finds all the squads linked to a given company
 //TODO coalece lots of these functions to make make a company object
 //maybe then we can have more than 10 companies

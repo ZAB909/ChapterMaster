@@ -92,13 +92,13 @@ delete_features(planet.p_feature[num], P_features.Artifact);
 
 var arti = obj_ini.artifact_struct[last_artifact];
 if (arti.inquisition_disprove()){
-    for (var i=0;i<array_length(man_sel);i++){
-        if (man_sel[i]=1){
+    for (var i=0;i<array_length(obj_controller.man_sel);i++){
+        if (obj_controller.man_sel[i]=1){
             if (obj_controller.man[i]="man"){
-                display_unit[i].edit_corruption(choose(0,2,4,6,8));
+                obj_controller.display_unit[i].edit_corruption(choose(0,2,4,6,8));
             }
             if (obj_controller.man[i]="vehicle"){
-                obj_ini.veh_chaos[display_unit[i][0]][display_unit[i][1]]+=choose(0,2,4,6,8);
+                obj_ini.veh_chaos[obj_controller.display_unit[i][0]][obj_controller.display_unit[i][1]]+=choose(0,2,4,6,8);
             }
         }
     }
