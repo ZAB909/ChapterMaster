@@ -21,7 +21,7 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 	var sgt_types = [obj_ini.role[100][18], obj_ini.role[100][19]]
 
 	//if squad has sergeants in find out if there are any available sergeants
-	for (var s = 0; s< 2;s++){
+	for (var s = 0; s < 2;s++){
 		if (struct_exists(squad_fulfilment ,sgt_types[s])){
 			sergeant_found = false;
 			for (i = 0; i < array_length(obj_ini.TTRPG[company]);i++){
@@ -42,7 +42,9 @@ function create_squad(squad_type, company, squad_loadout = true, squad_index=fal
 		}
 	}
 	for (i = 0; i < array_length( obj_ini.TTRPG[company]);i++){							//fill squad roles
-		if(!is_struct(obj_ini.TTRPG[company][i])){obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");}
+		if(!is_struct(obj_ini.TTRPG[company][i])){ //checkposition is valid marine struct
+			obj_ini.TTRPG[company][i]= new TTRPG_stats("chapter", company,i,"blank");
+		}
 		unit = obj_ini.TTRPG[company][i];
 		if ((obj_ini.name[company][i] =="") or (unit.base_group=="none")) then continue;
 		if (unit.squad== "none") and (array_contains(squad_unit_types, unit.role())){
