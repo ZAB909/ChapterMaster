@@ -27,7 +27,7 @@ function scr_quest(quest_satus=0, quest_name, quest_fac, quest_end) {
 	}
 
 
-	if (quest_satus>0){// 1 = Fail, 2 = Accomplish, 3 = Clear
+	else if (quest_satus>0){// 1 = Fail, 2 = Accomplish, 3 = Clear
 	    var que,i;
 	    que=0;i=0;
     
@@ -77,9 +77,10 @@ function scr_quest(quest_satus=0, quest_name, quest_fac, quest_end) {
 	    }
     
     
-	    if (quest_satus=4){
+	    if (quest_satus==4){
 	        var first_quest,i;
-	        first_quest=0;i=0;
+	        first_quest=0;
+	        i=0;
         
 	        repeat(30){
 	        	if (first_quest=0){

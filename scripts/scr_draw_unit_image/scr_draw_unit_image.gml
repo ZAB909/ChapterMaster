@@ -1212,7 +1212,9 @@ function scr_draw_unit_image(_background=false){
             // Draw Custom Helmets
             if (armour_type==ArmourType.Normal && !armour_bypass){
                 if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
-                    draw_sprite(spr_special_helm,0,x_surface_offset,y_surface_offset);
+                    if (armour()!="MK3 Iron Armour"){
+                        draw_sprite(spr_special_helm,0,x_surface_offset,y_surface_offset);
+                    }
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset);
                     draw_sprite(spr_helm_decorations,1,x_surface_offset,y_surface_offset);
                 }

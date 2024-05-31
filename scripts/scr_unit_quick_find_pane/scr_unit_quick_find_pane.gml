@@ -19,6 +19,8 @@ function mission_name_key(mission){
 		"bomb" : "Bombard World for inquisitor",
 		"great_crusade": "Answer Crusade Muster Call",
 		"harlequins" : "Harlequin presence Report",
+		"artifact_loan" : "Safeguard Artifact for the inquisition",
+		"300req" : "provide assistance to Eldar",
 	}
 	if (struct_exists(mission_key, mission)){
 		return mission_key[$ mission];
@@ -118,7 +120,22 @@ function scr_unit_quick_find_pane() constructor{
 				}
 			}
 		}
-		mission_log =temp_log;
+		for (i=0;i<array_length(obj_controller.quest);i++){
+			if (obj_controller.quest[i] != ""){
+				var mission_explain =  mission_name_key(quest[i]);
+				if (mission_explain!="none"){
+					array_push(temp_log,
+						{
+							system : "",
+							mission : mission_explain,
+							time : obj_controller.quest_end[i] - obj_controller.turn,
+							planet : 0
+						}
+					)
+				}				
+			}
+		}
+		mission_log = temp_log;
 	}
 	hover_item="none";
 	travel_target = [];
@@ -265,7 +282,9 @@ function scr_unit_quick_find_pane() constructor{
 					draw_set_color(c_white);
 					entered=true;
 				}
-			    draw_text(xx+80, yy+90+(20*i), $"{mission.system} {scr_roman_numerals()[mission.planet-1]}" );
+				if (mission.system!=""){
+			    	draw_text(xx+80, yy+90+(20*i), $"{mission.system} {scr_roman_numerals()[mission.planet-1]}" );
+				}
 			    draw_set_halign(fa_left);
 			    if (entered){
 			    	draw_text(xx+160-20, yy+90+(20*i), mission.mission);
