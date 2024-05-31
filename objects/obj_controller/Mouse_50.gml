@@ -734,7 +734,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                         if (requisition>=500){
                             scr_loyalty("Xeno Trade","+");
                             scr_dialogue("mission1_thanks");
-                            scr_quest(2,"300req",6,0);
+                            scr_quest(2,"fund_elder",6,0);
                             requisition-=500;questing=0;
                             diplo_option[1]="";
                             diplo_option[2]="";
@@ -830,7 +830,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                     cooldown=8;
                     if (questing==1) and (diplomacy==6){// That +2 counteracts the WAITED TOO LONG penalty
                         scr_dialogue("mission1_refused");
-                        scr_quest(3,"300req",6,0);
+                        scr_quest(3,"fund_elder",6,0);
                         questing=0;
                         diplo_option[1]="";
                         diplo_option[2]="";

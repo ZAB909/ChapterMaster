@@ -2,7 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
 function mission_name_key(mission){
-	mission_key = {
+	var mission_key = {
 		"meeting_trap" : "Chaos Lord Meeting",
 		"meeting" : "Chaos Lord Meeting",
 		"succession" : "War of succession",
@@ -20,7 +20,7 @@ function mission_name_key(mission){
 		"great_crusade": "Answer Crusade Muster Call",
 		"harlequins" : "Harlequin presence Report",
 		"artifact_loan" : "Safeguard Artifact for the inquisition",
-		"300req" : "provide assistance to Eldar",
+		"fund_elder" : "provide assistance to Eldar"
 	}
 	if (struct_exists(mission_key, mission)){
 		return mission_key[$ mission];

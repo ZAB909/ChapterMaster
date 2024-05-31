@@ -108,19 +108,7 @@ function scr_random_marine(role, exp_req, search_params="none"){
 			        	}
             		}
             		if (struct_exists(search_params, "stat")){
-            			for (var stat = 0;stat<array_length(search_params[$ "stat"]);stat++){
-            				if (search_params[$ "stat"][stat][2] =="more"){
-            					if (unit[$ search_params[$ "stat"][stat][0]] < search_params[$ "stat"][stat][1]){
-            						match = false;
-									break;
-            					}
-            				} else if(search_params[$ "stat"][stat][2] =="less"){
- 								if (unit[$ search_params[$ "stat"][stat][0]] > search_params[$ "stat"][stat][1]){
-            						match = false;
-									break;
-            					}           					
-            				}
-            			}
+            			match = stat_valuator(search_params[$ "stat"], unit);
             			if (!match){
 			        		array_delete(marine_list, list_place ,1);
 							comp_size--;

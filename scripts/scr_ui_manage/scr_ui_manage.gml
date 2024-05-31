@@ -253,6 +253,31 @@ function scr_ui_manage() {
 			                			update_general_manage_view();
 			                			exit;
 		                				break;
+									case "champion_promote":
+			                			unit = display_unit[i];
+			                			unit.update_role(obj_ini.role[100][Role.COMPANY_CHAMPION]);
+		
+										with (obj_ini){
+			                				scr_company_order(unit.company);
+			                			}
+		
+			                			managing = unit.company;
+			                			update_general_manage_view();
+			                			exit;
+		                				break;
+									case "ancient_promote":
+			                			unit = display_unit[i];
+			                			unit.update_role(obj_ini.role[100][Role.ANCIENT]);
+	
+		
+										with (obj_ini){
+			                				scr_company_order(unit.company);
+			                			}
+		
+			                			managing = unit.company;
+			                			update_general_manage_view();
+			                			exit;
+		                				break;	                						                				
 		                		}
 		                	} else {
 		                		switch(selection_data.purpose_code){
@@ -794,9 +819,14 @@ function scr_ui_manage() {
 	            }
 	        }*/
 	        man_count = 0;
+	        if (managing>0 && managing<=10){
+		        var cap_slot=company_data.captain!="none";
+		        var champ_slot=company_data.champion!="none";
+		        var ancient_slot=company_data.ancient!="none";
+	    	}
 		    for(var i=0; i<repetitions;i++){
-		    	if (managing>0 && managing<=10 && i=0){
-		    		if (company_data.captain == "none"){
+		    	if (managing>0 && managing<=10 && (!cap_slot || !champ_slot || !ancient_slot)){
+		    		if (!cap_slot){
 		    			draw_set_color(c_black);
 		    			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
 						draw_set_color(c_gray);
@@ -820,8 +850,70 @@ function scr_ui_manage() {
 							exit;						
 						}
 						yy+=20;
+						cap_slot=true;
 						continue;
 		    		}
+		    		if (!champ_slot){
+		    			draw_set_color(c_black);
+		    			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
+						draw_set_color(c_gray);
+						draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);	
+						draw_set_halign(fa_center); 
+						draw_set_color(c_yellow);
+						draw_text(xx+500,yy+66,"++New Champion Required++")
+						draw_set_halign(fa_left);
+						draw_set_color(c_gray);
+						if (point_and_click([xx+25,yy+64,xx+974,yy+85])){
+							var search_params = {
+								companies:managing,
+								"stat":[["weapon_skill", 44, "more"]]
+							};
+							var candidates = collect_role_group("standard", "", true,search_params);
+							group_selection(candidates,{
+								purpose:$"{scr_roman_numerals()[managing-1]} Company Champion Candidates",
+								purpose_code : "champion_promote",
+								number:1,
+								system:managing,
+								feature:"none",
+								planet : 0,
+								selections : [],
+							});
+							exit;						
+						}
+						yy+=20;
+						champ_slot=true;
+						continue;
+		    		}
+		    		if (!ancient_slot){
+		    			draw_set_color(c_black);
+		    			draw_rectangle(xx+25,yy+64,xx+974,yy+85,0);
+						draw_set_color(c_gray);
+						draw_rectangle(xx+25,yy+64,xx+974,yy+85,1);	
+						draw_set_halign(fa_center); 
+						draw_set_color(c_yellow);
+						draw_text(xx+500,yy+66,"++New Ancient Required++")
+						draw_set_halign(fa_left);
+						draw_set_color(c_gray);
+						if (point_and_click([xx+25,yy+64,xx+974,yy+85])){
+							var search_params = {
+								companies:managing,
+							};							
+							var candidates = collect_role_group("standard", "", true,search_params);
+							group_selection(candidates,{
+								purpose:$"{scr_roman_numerals()[managing-1]} Company Ancient Candidates",
+								purpose_code : "ancient_promote",
+								number:1,
+								system:managing,
+								feature:"none",
+								planet : 0,
+								selections : [],
+							});
+							exit;						
+						}
+						yy+=20;
+						ancient_slot=true;
+						continue;
+		    		}		    				    		
 		    	}
 		    	if (sel>=array_length(display_unit)) then break;
 		    	while (man[sel]=="hide") and (sel<array_length(display_unit)-1){sel+=1;}

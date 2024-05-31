@@ -38,7 +38,7 @@ function scr_quest(quest_satus=0, quest_name, quest_fac, quest_end) {
 	    	}
 	    }
     
-	    if (quest_name="300req") and (quest_satus=1){
+	    if (quest_name="fund_elder") and (quest_satus=1){
 	        // obj_controller.disposition[6]-=2;// Player going 'maybe' and then waiting out the quest duration
 	        scr_audience(6,"mission1_failed",-2,"",0,0);
 	        scr_event_log("red","Eldar Mission Failed: Several years have passed since offering to assist the Eldar with resources.");
@@ -70,7 +70,7 @@ function scr_quest(quest_satus=0, quest_name, quest_fac, quest_end) {
 	    }
     
     
-	    if (quest_name="300req") and (quest_satus=2){
+	    if (quest_name="fund_elder") and (quest_satus=2){
 	        if (trading=0) then quick_trade=6;
 	        obj_controller.known[eFACTION.Eldar]+=1;
 	        obj_controller.disposition[6]+=10;

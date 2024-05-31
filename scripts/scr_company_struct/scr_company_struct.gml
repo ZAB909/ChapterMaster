@@ -21,6 +21,8 @@ function scr_company_struct(comp) constructor{
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
 	captain = "none";
+	champion = "none";
+	ancient = "none";
 	static reset_squad_surface = function(){
 		squad_draw_surfaces = array_create(15, []);
 		for (var i=0;i<15;i++){
@@ -32,11 +34,16 @@ function scr_company_struct(comp) constructor{
 	if (company>0 && company<11){
 		var unit;
 		var company_units = obj_controller.display_unit;
+		var role_set = obj_ini.role[100];
 		for (var i=0;i<array_length(company_units);i++){
 			if (is_struct(company_units[i])){
 				unit = company_units[i];
-				if (unit.role() == obj_ini.role[100][Role.CAPTAIN]){
+				if (unit.role() == role_set[Role.CAPTAIN]){
 					captain = unit;
+				} else if (unit.role() == role_set[Role.ANCIENT]){
+					ancient = unit;
+				} else if (unit.role() == role_set[Role.COMPANY_CHAMPION]){
+					champion = unit;
 				}
 			}
 		}

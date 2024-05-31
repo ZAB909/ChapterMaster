@@ -184,24 +184,56 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 	return array_contains(specialists,unit_role);
 }
 
-function collect_role_group(group, location=""){
-	var units = [], unit, count=0, add=false;
+function collect_role_group(group="standard", location="", opposite=false, search_conditions = {companies:"all"}){
+	var units = [], unit, count=0, add=false, is_special_group;
 	for (var com=0;com<=10;com++){
+		var wanted_companies = search_conditions.companies;
+		if (wanted_companies!="all"){
+			if (is_array(wanted_companies)){
+				if (!array_contains(wanted_companies, com)) then continue;
+			} else {
+				if (wanted_companies != com) then continue;
+			}
+		}
 	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
 			unit=fetch_unit([com,i]);
-			if (unit.name()=="")then continue; 	
-	        if (unit.IsSpecialist(group)){
+			if (unit.name()=="") then continue; 	
+			is_special_group = unit.IsSpecialist(group);
+	        if ((is_special_group && !opposite) || (!is_special_group && opposite)){
 	        	if (location==""){
 	        		add=true;
 	       		} else if (unit.is_at_location(location, 0, 0)){
 	       			add=true;
 	       		}
 	        }
+	        if (add){
+	        	if (struct_exists(search_conditions, "stat")){
+	        		add = stat_valuator(search_conditions[$ "stat"], unit);
+	        	}
+	        }
 	        if (add) then array_push(units, obj_ini.TTRPG[com][i]);
 	    }    
 	}
 	return units;
+}
+
+function stat_valuator(search_params, unit){
+	match = true;
+	for (var stat = 0;stat<array_length(search_params);stat++){
+		if (search_params[stat][2] =="more"){
+			if (unit[$ search_params[stat][0]] < search_params[stat][1]){
+				match = false;
+				break;
+			}
+		} else if(search_params[stat][2] =="less"){
+				if (unit[$ search_params[stat][0]] > search_params[stat][1]){
+				match = false;
+				break;
+			}           					
+		}
+	}
+	return match;	
 }
 
 function collect_by_religeon(religion, sub_cult="", location=""){
