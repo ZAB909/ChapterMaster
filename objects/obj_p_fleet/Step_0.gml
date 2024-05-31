@@ -1,7 +1,8 @@
 ii_check-=1;
 
 if (action!="") and (orbiting!=0){
-    if (instance_exists(orbiting)){orbiting.present_fleet[1]-=1;}
+    orbiting = instance_nearest(x,y,obj_star)
+    orbiting.present_fleet[1]-=1;
     orbiting=0;
 }
 
