@@ -696,6 +696,7 @@ function set_member_loc (loc_data){
 			system.p_player[member_location[1]]-=size;
 			system.p_player[wid]+=size;
 			planet_location = wid;
+			ship_location = 0;
 		}
 	} else {
 		if (wid == 0 && lid>0){
