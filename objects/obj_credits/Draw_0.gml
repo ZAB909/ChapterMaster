@@ -89,6 +89,8 @@ if (instance_exists(obj_main_menu_buttons)){
     }
     draw_set_alpha(1);
 }
-
+if (mouse_check_button(mb_right)||mouse_check_button(mb_left)){
+    instance_destroy();
+}
 /* */
 /*  */
