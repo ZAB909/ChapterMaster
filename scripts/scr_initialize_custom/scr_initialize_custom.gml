@@ -2156,7 +2156,7 @@ function scr_initialize_custom() {
 	chapter_master_equip.gear = "Iron Halo";
 
 	//TODO will refactor how traits are distributed to chapter masters along with a refactor of chapter data
-	last_artifact = find_last_artifact();
+	last_artifact = find_open_artifact_slot();
 	var arti;
 	switch (global.chapter_name) {
 		case "Dark Angels":

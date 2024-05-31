@@ -1319,7 +1319,9 @@ function scr_ui_manage() {
 	                    man_current=0;
 	                    menu=1;
 	                    cooldown=8;
-	                    for(var k=0; k<=array_length(display_unit); k++){man_sel[k]=0;}        			
+	                    for(var k=0; k<array_length(display_unit); k++){
+	                    	man_sel[k]=0;
+	                    }        			
 	        		}
 		        	if (managing == -1){
   						update_garrison_manage();

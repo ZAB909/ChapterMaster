@@ -242,7 +242,7 @@ function player_fleet_selected_count(fleet="none"){
 
 function new_player_ship(type, start_loc="home"){
     var ship_names="",new_name="",index=0;
-    for(var k=1; k<=array_length(obj_ini.ship); k++){
+    for(var k=1; k<array_length(obj_ini.ship); k++){
         if (index==0) and (obj_ini.ship[k]=="") then index=k;
     }
     

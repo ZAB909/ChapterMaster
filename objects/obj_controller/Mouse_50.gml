@@ -1383,18 +1383,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 artifact_gift = new shutter_button();
                 artifact_destroy = new shutter_button();
                 artifact_namer = new text_bar_area(xx + 622, yy + 460, 350);
-                artifacts=0;
-                menu_artifact=-1;
-                unused_artifacts = 0;
-                for (var i=1;i<30;i++){
-                    if (obj_ini.artifact[i] != ""){
-                        if (menu_artifact==-1) then menu_artifact=i;
-                        artifacts++;
-                        if (!obj_ini.artifact_equipped[i]){
-                            unused_artifacts++;
-                        }
-                    }
-                }
+                set_chapter_arti_data();
             }
             if (menu==13) and (onceh==0){
                 menu=0;

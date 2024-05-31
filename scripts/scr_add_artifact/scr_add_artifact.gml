@@ -1,9 +1,12 @@
-function find_last_artifact(){
-	var i=0,last_artifact=0;
-	repeat(100){
-		if (last_artifact=0){
+function find_open_artifact_slot(){
+	var i=0,last_artifact=-1;
+	for (var i=0;i<array_length(obj_ini.artifact)){
+		if (last_artifact=-1){
 			i+=1;
-			if (obj_ini.artifact[i]=="") then last_artifact=i;
+			if (obj_ini.artifact[i]==""){
+				last_artifact=i;
+				break;
+			}
 		}
 	}
 	return last_artifact;
@@ -11,7 +14,8 @@ function find_last_artifact(){
 
 function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_location, ship_id) {
 
-	last_artifact = find_last_artifact();
+	last_artifact = find_open_artifact_slot();
+	if (last_artifact==-1) then exit;
 
 	var good=true, new_tags;
 	var rand1=floor(random(100))+1;
@@ -98,43 +102,43 @@ function scr_add_artifact(artifact_type, artifact_tags, is_identified, artifact_
 
 	if (t1="Weapon"){
 	    // gold, glowing, underslung bolter, underslung flamer
-	    t5=choose("GLD","GLO","UBL","UFL");
+	    t5=choose("GOLD","GLOW","UBOLT","UFL");
 	    // Runes, scope, adamantium, void
-	    t4=choose("RUN","SCO","ADA","VOI");
-	    if ((t2="Power Sword") or (t2="Power Axe") or (t2="Power Spear")) and (t4="SCO") then t4="CHB";// chainblade
-	    if ((t2="Power Fist") or (t2="Power Claw")) and (t4="SCO") then t4="DUB";// doubled up
-		if (t2="Thunder Hammer") and (t4="RUN") then t4="GLO";//glowing runed
-	    if (t2="Relic Blade") and (t4="SCO") then t4="UFL";// underslung flamer
+	    t4=choose("RUNE","SCOPE","ADAMANTINE","VOI");
+	    if ((t2="Power Sword") or (t2="Power Axe") or (t2="Power Spear")) and (t4="SCOPE") then t4="CHB";// chainblade
+	    if ((t2="Power Fist") or (t2="Power Claw")) and (t4="SCOPE") then t4="DUB";// doubled up
+		if (t2="Thunder Hammer") and (t4="RUNE") then t4="GLOW";//glowing runed
+	    if (t2="Relic Blade") and (t4="SCOPE") then t4="UFL";// underslung flamer
 	}else if (t1="Armour"){
 	    // golden filigree, glowing optics, purity seals
-	    t5=choose("GLD","GLO","PUR");
+	    t5=choose("GOLD","GLOW","PUR");
 	    // articulated plates, spikes, runes, drake scales
-	    t4=choose("ART","SPI","RUN","DRA");
+	    t4=choose("ART","SPIKES","RUNE","DRA");
 	}else if (t1="Gear"){
 	    // supreme construction, adamantium, gold
-	    t4=choose("SUP","ADA","GOLD");// bur = ever burning
-	    if (t2="Rosarius") then t5=choose("GLD","GLO","BIG","BUR");
-	    if (t2="Bionics") then t5=choose("GLD","GLO","RUN","SOO");// Soothing appearance
-	    if (t2="Psychic Hood") then t5=choose("FIN","GLD","BUR","MASK");// fine cloth, gold, ever burning, mask
-	    if (t2="Jump Pack") then t5=choose("SPI","SKRE","WHI","SIL");// spikes, screaming, white flame, silent
-	    if (t2="Servo Arms") then t5=choose("GLD","TEN","GOR","SOO");// gold, tentacles, gorilla build, soothing appearance
+	    t4=choose("SUP","ADAMANTINE","GOLD");// bur = ever burning
+	    if (t2="Rosarius") then t5=choose("GOLD","GLOW","BIG","BUR");
+	    if (t2="Bionics") then t5=choose("GOLD","GLOW","RUNE","SOO");// Soothing appearance
+	    if (t2="Psychic Hood") then t5=choose("FIN","GOLD","BUR","MASK");// fine cloth, gold, ever burning, mask
+	    if (t2="Jump Pack") then t5=choose("SPIKES","SKRE","WHI","SILENT");// spikes, screaming, white flame, silent
+	    if (t2="Servo Arms") then t5=choose("GOLD","TENTACLES","GOR","SOO");// gold, tentacles, gorilla build, soothing appearance
 	}else if (t1="Device") and (t2!="Robot"){
-	    t4=choose("GOLD","CRU","GLO","ADA");// skulls, falling angel, thin, tentacle, mindfuck
-	    if (t2!="Statue") then t5=choose("SKU","FAL","THI","TEN","MIN");
+	    t4=choose("GOLD","CRU","GLOW","ADAMANTINE");// skulls, falling angel, thin, tentacle, mindfuck
+	    if (t2!="Statue") then t5=choose("SKU","FAL","THI","TENTACLES","MIN");
 	    // goat, speechless, dying angel, jumping into magma, cheshire grunx
 	    if (t2="Statue") then t5=choose("GOAT","SPE","DYI","JUM","CHE");
 	    // Gold, glowing, preserved flesh, adamantium
-	    if (t2="Tome") then t4=choose("GOLD","GLO","PRE","ADA","SAL","BUR");
+	    if (t2="Tome") then t4=choose("GOLD","GLOW","PRE","ADAMANTINE","SAL","BUR");
 	    if (t4="PRE") and (t3="") then t3=choose("","chaos","daemonic");
 	}else if (t1="Device") and (t2="Robot"){// human/robutt/shivarah
 	    t4=choose("HU","RO","SHI");
-	    t5=choose("ADA","JAD","BRO","RUNE");
+	    t5=choose("ADAMANTINE","JAD","BRO","RUNE");
 	}
 
 	var big=choose(1,2);
 	// if (big=1 || artifact_tags="minor") then t5="";
-	if (artifact_tags="minor"){t4="";t5="";t3+="|mnr";}
-	if (artifact_tags="inquisition") then t3+="|inq";
+	if (artifact_tags="minor"){t4="";t5="";t3+="MINOR";}
+	if (artifact_tags="inquisition") then t3+="inq";
 	if ((artifact_tags="daemonic"||artifact_tags="daemonic")) and (t2!="Tome") then t3="daemonic"+choose("1a","2a","3a","4a");
 	if ((artifact_tags="daemonic" || artifact_tags="daemonic")) and (t2="Tome") then t3="daemonic"+choose("2a","3a","4a");
 	if (artifact_type="chaos_gift") then t3="daemonic";
@@ -206,7 +210,7 @@ function arti_struct(Index)constructor{
 
 	static inquisition_disprove = function(){
 		var inquis_tags = ["daemonic","chaos_gift", "chaos"];
-		if (has_tag("inquisition")) then return false;
+		if (has_tag("inq")) then return false;
 
 	}
 	static load_json_data = function(data){
@@ -217,7 +221,7 @@ function arti_struct(Index)constructor{
 	}
 
 	static determine_base_type = function(){
-		var item_type = "";
+		var item_type = "device";
 	    if struct_exists(global.gear[$ "armour"],type()){
             item_type = "armour";
         }
@@ -230,6 +234,11 @@ function arti_struct(Index)constructor{
         else if struct_exists(global.weapons,type()){
             item_type = "weapon";
         }
+		else if (type()=="Casket") { item_type="device";}
+		else if (type()=="Chalice") { item_type="device";}
+		else if (type()=="Statue") { item_type="device";}
+		else if (type()=="Tome") { item_type="device";}
+		else if (type()=="Robot") { item_type="device";}      
         return (item_type);
 	};
 
@@ -279,5 +288,20 @@ function corrupt_artifact_collectors(last_artifact){
 	}
 	catch( _exception){
 	    show_debug_message(_exception.message);	
+	}
+}
+
+function delete_artifact(index){
+	if (!(index>=array_length(obj_ini.artifact))){
+		with (obj_ini){
+	        obj_ini.artifact[index]="";
+	        obj_ini.artifact_tags[index]=[];
+	        obj_ini.artifact_identified[index]=0;
+	        obj_ini.artifact_condition[index]=0;
+	        obj_ini.artifact_loc[index]="";
+	        obj_ini.artifact_sid[index]=0;
+	        obj_ini.artifact_struct[index]=new arti_struct(index);
+		}
+		obj_controller.artifacts-=1;
 	}
 }

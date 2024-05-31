@@ -1038,7 +1038,7 @@ if (action==""){
                                 if (unit.role()="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (unit.role()="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
-                                if (unit.equipped_artifact_tag("Daemon")){
+                                if (unit.equipped_artifact_tag("daemon")){
                                 	tem1_base+=3;
                                 	dem+=1;
                                 }
@@ -1077,8 +1077,9 @@ if (action==""){
                         	arsenal.inquis_hidden = 0;
                             for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++){
                                 if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=cur_star.name) and (obj_controller.und_armouries<=1){
-                                    if (array_contains(obj_ini.artifact_tags[e],"Chaos")) then cha+=1;
-                                    if (array_contains(obj_ini.artifact_tags[e],"Daemon")) then dem+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"chaos")) then cha+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"chaos_gift")) then cha+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"daemonic")) then dem+=1;
                                 }
                             }
                             perc=((dem*10)+(cha*3))/100;

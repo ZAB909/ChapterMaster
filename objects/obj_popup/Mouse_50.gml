@@ -710,7 +710,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             }
             if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
 
-            if (string_count("mnr",old_tags)=0){
+            if (string_count("MINOR",old_tags)=0){
                 if (giveto=2) then obj_controller.disposition[2]+=6;
                 if (giveto=3) then obj_controller.disposition[3]+=4;
                 if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;

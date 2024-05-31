@@ -2618,9 +2618,9 @@ function format_number_with_sign(number){
                 if (string_count("DUB",thawep)>0){attack=floor(attack*1.5);melee_hands+=1;ranged_hands+=1;spli=1;}
                 if (string_count("Dae",thawep)>0){attack=floor(attack*1.5);amm=-1;}
                 if (string_count("VOI",thawep)>0){attack=floor(attack*1.2);}
-                if (string_count("ADA",thawep)>0){attack=floor(attack*1.1);}
+                if (string_count("ADAMANTINE",thawep)>0){attack=floor(attack*1.1);}
 
-                if (string_count("mnr",thawep)>0){attack=floor(attack*0.85);}
+                if (string_count("MINOR",thawep)>0){attack=floor(attack*0.85);}
                 if (string_count("MNR",thawep)>0){attack=floor(attack*0.85);}
             }
 
