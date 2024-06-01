@@ -22,7 +22,7 @@ if ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force
     khorne_fleet_cargo();
 }
 
-if (orbiting != noone) {
+if (instance_exists(orbiting)) {
     if (instance_exists(obj_crusade)) 
 	and (orbiting.owner <= eFACTION.Ecclesiarchy) 
 	and (owner = eFACTION.Imperium) 

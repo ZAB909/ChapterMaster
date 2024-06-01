@@ -1,10 +1,6 @@
-show_debug_message("alarm1");
+
 
 // if (csm_exp!=0) then show_message(string(csm_exp));
-
-
-
-
 
 
 if (control=1) then instance_activate_object(obj_cursor);
