@@ -351,7 +351,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                     squad = obj_ini.squads[move_squad];
                     squad.update_fulfilment();
                     move_members = squad.members;
-                    if (array_length(move_members==1)){
+                    if (array_length(move_member)==1){
                         unit.squad = "none";
                         array_delete(obj_ini.squads, squad, 1);
                         moveable = false;

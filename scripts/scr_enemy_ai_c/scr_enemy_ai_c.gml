@@ -67,6 +67,8 @@ function scr_enemy_ai_c() {
 						var ork_fleet = 0;
 						var oriting_name = name;
 						var fleet_loop =true;
+						var _instance_count=0;
+						var _instance_numer = instance_number(obj_en_fleet);
 						while (fleet_loop){
 							var loop_fleet = instance_nearest(x,y, obj_en_fleet);
 							with (loop_fleet){
@@ -81,6 +83,8 @@ function scr_enemy_ai_c() {
 									fleet_loop=false;
 								}
 							}
+							instane_count++;
+							if (_instance_count>_instance_numer) then break;
 						}
 						instance_activate_object(obj_en_fleet);
 						if (instance_exists(ork_fleet))	{
