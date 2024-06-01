@@ -83,7 +83,7 @@ function scr_enemy_ai_c() {
 									fleet_loop=false;
 								}
 							}
-							instane_count++;
+							_instance_count++;
 							if (_instance_count>_instance_numer) then break;
 						}
 						instance_activate_object(obj_en_fleet);

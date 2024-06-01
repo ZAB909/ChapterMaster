@@ -364,20 +364,21 @@ function new_player_ship(type, start_loc="home"){
 }
 
 
-function get_nearest_player_fleet(nearest_x, nearest_y, is_static=false){
+function get_nearest_player_fleet(nearest_x, nearest_y, is_static=false, is_moving=false){
 	var chosen_fleet = "none";
 	if instance_exists(obj_p_fleet){
 		with(obj_p_fleet){
 			var viable = !(is_static && action!="");
+			if (viable && is_moving){
+				if (action!="move") then viable = false;
+			}
+			if (!viable) then continue;
 			if (point_in_rectangle(x, y, 0, 0, room_width, room_height)){
-				if (chosen_fleet=="none" && viable){
+				if (chosen_fleet=="none"){
 					chosen_fleet=self;
-					continue;
 				}
 				if (point_distance(nearest_x, nearest_y,x,y) < point_distance(nearest_x, nearest_y,chosen_fleet.x,chosen_fleet.y)){
-					if (viable){
-						chosen_fleet=self;
-					}
+					chosen_fleet=self;
 				}
 			}
 		}
