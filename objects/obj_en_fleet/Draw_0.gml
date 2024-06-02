@@ -122,8 +122,10 @@ draw_self();
 
 
 if (instance_exists(target)){
-    draw_set_color(c_red);draw_set_alpha(0.5);
-    draw_line(x,y,target.x,target.y);draw_set_alpha(1);
+    draw_set_color(c_red);
+    draw_set_alpha(0.5);
+    draw_line(x,y,target.x,target.y);
+    draw_set_alpha(1);
 }
 
 /* */

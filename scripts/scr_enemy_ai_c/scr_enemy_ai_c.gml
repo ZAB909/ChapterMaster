@@ -485,7 +485,7 @@ function scr_enemy_ai_c() {
 
 	// Tyranids here
 	var i=0;
-	repeat(4){i+=1;
+	repeat(planets){i+=1;
 	    if (p_tyranids[i]>=5) and (planets>=i) and (p_player[i]+p_orks[i]+p_guardsmen[i]+p_pdf[i]+p_chaos[i]=0){
 	        var ship;ship=instance_nearest(x,y+32,obj_en_fleet);
 	        if (point_distance(x,y+32,ship.x,ship.y)<5) and (ship.owner = eFACTION.Tyranids) and (ship.capital_number>0) and (p_type[i]!="Dead") and (array_length(p_feature[i])!=0){
