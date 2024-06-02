@@ -518,6 +518,7 @@
     {"id":{"name":"spr_cancel_small","path":"sprites/spr_cancel_small/spr_cancel_small.yy",},},
     {"id":{"name":"spr_requisition","path":"sprites/spr_requisition/spr_requisition.yy",},},
     {"id":{"name":"spr_icon_change","path":"sprites/spr_icon_change/spr_icon_change.yy",},},
+    {"id":{"name":"scr_tyranid_fleet_functions","path":"scripts/scr_tyranid_fleet_functions/scr_tyranid_fleet_functions.yy",},},
     {"id":{"name":"spr_bar","path":"sprites/spr_bar/spr_bar.yy",},},
     {"id":{"name":"spr_disposition","path":"sprites/spr_disposition/spr_disposition.yy",},},
     {"id":{"name":"spr_laurel","path":"sprites/spr_laurel/spr_laurel.yy",},},

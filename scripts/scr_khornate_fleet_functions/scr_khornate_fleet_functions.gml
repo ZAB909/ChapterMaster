@@ -211,7 +211,7 @@ function khorne_fleet_cargo(){
 }
 function spawn_chaos_warlord(){
 	with (obj_controller){
-		show_debug_message("fleet")
+
 		with(obj_turn_end){
 			audiences+=1;
 			audien[audiences]=10;
@@ -248,7 +248,7 @@ function spawn_chaos_warlord(){
 		    frigate_number=20;
 		    escort_number=40;
 		}
-		show_debug_message("fleet")
+
 		var rep, filtered_array, candidate_systems;
 		candidate_systems = [];
 	    with(obj_star){

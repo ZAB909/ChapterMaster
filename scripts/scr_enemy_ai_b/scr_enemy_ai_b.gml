@@ -331,6 +331,15 @@ function scr_enemy_ai_b() {
 		    if (p_influence[i][eFACTION.Tyranids]>55){
 		    	p_owner[i] = eFACTION.Tyranids;
 		    }
+		    if (p_influence[i][eFACTION.Tyranids]>90){
+		    	if (!cult.hive_summoned){
+		    		if (obj_controller.turn>30){
+		    			if (irandom(20)==0){
+		    				summon_new_hive_fleet();
+		    			}
+		    		}
+		    	}
+		    }
 		} else if (p_influence[i][eFACTION.Tyranids]>5){
 			adjust_influence(eFACTION.Tyranids, -1, i);
 			if ((irandom(200)+(p_influence[i][eFACTION.Tyranids]/10)) > 195){

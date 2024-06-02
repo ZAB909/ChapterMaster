@@ -14,10 +14,7 @@ function new_ork_fleet(xx,yy){
 }
 
 function build_new_ork_ships_to_fleet(star, planet){
-    show_debug_message("{0}",star.name)
 
-    // Increase ship number for this object?
-    show_debug_message("{0},{1},{2}",capital_number,escort_number,escort_number)
     var rando=irandom(101);
     if (obj_controller.known[eFACTION.Ork]>0) then rando-=10;
     if (star.p_type[planet]=="Forge"){
@@ -40,7 +37,6 @@ function build_new_ork_ships_to_fleet(star, planet){
     ii+=round((frigate_number/2));
     ii+=round((escort_number/4));
     if (ii<=1) then ii=1;
-    show_debug_message("{0},{1}",capital_number,escort_number)
     image_index=ii;	
 	//if big enough flee bugger off to new star
     if (image_index>=5){
