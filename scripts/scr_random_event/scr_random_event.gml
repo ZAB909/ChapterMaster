@@ -482,7 +482,7 @@ function scr_random_event(execute_now) {
 		
 		var found_sleeping_necrons = false;
 		with(obj_star){
-			if(scr_star_has_planet_with_feature(id,"Necron Tomb") && !scr_star_has_planet_with_feature(id, "Awake")){
+			if(system_feature_bool(p_feature, P_features.Necron_Tomb) && !awake_necron_Star(id)){
 				array_push(inquisition_missions, INQUISITION_MISSION.tomb_world);
 				found_sleeping_necrons = true;
 				break;
@@ -682,7 +682,7 @@ function scr_random_event(execute_now) {
 	        var stars = scr_get_stars();
 			var valid_stars = array_filter_ext(stars,
 				function(star, index) {
-					return scr_star_has_planet_with_feature(star, "Necron Tomb") && !scr_star_has_planet_with_feature(star, "Awakaned");	
+					return (system_feature_bool(p_feature, P_features.Necron_Tomb) && !awake_necron_Star(id));
 			});
 			
 			if(valid_stars == 0){
@@ -786,7 +786,7 @@ function scr_random_event(execute_now) {
 		
 			
 		with(obj_star){
-			if(scr_star_has_planet_with_feature(id,P_features.Necron_Tomb)) and (awake_necron_Star(id)!= 0){
+			if (system_feature_bool(p_feature, P_features.Necron_Tomb) && !awake_necron_Star(id)){
 				var planet = scr_get_planet_with_feature(id, P_features.Necron_Tomb);
 				if(scr_is_planet_owned_by_allies(self, planet)){
 					array_push(mechanicus_missions, MECHANICUS_MISSION.necron_study);
@@ -850,7 +850,7 @@ function scr_random_event(execute_now) {
 			stars = scr_get_stars();
 			var valid_stars = array_filter_ext(stars, 
 			function(star,index) {
-				if(scr_star_has_planet_with_feature(star,P_features.Necron_Tomb)) and (awake_necron_Star(star)!= 0){
+				if (system_feature_bool(p_feature, P_features.Necron_Tomb) && !awake_necron_Star(id)){
 					var planet = scr_get_planet_with_feature(star, "Necron Tomb");
 					if(scr_is_planet_owned_by_allies(star, planet)) {
 						return true;
@@ -875,7 +875,7 @@ function scr_random_event(execute_now) {
 		var stars = scr_get_stars();
 		var valid_stars = array_filter_ext(stars,
 		function(star,index){			
-			if(scr_star_has_planet_with_feature(star, "????")){
+			if (system_player_hidden_feature(star)){
 				var fleet = instance_nearest(star.x,star.y,obj_p_fleet);
 				if(fleet == undefined || point_distance(star.x,star.y,fleet.x,fleet.y)>=160){
 					return true;

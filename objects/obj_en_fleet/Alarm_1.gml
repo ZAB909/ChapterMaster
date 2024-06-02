@@ -262,7 +262,7 @@ if (navy && action=="") {
 	                    if (civilian_losses=0) and (PDF_loses>0) then bombard_report_string+=" {PDF_loses}  PDF lost.";
                         
 	                    if (bombard_report_string!="") {
-	                        scr_alert("red","owner",bombard_report_string),orbiting.x,orbiting.y);
+	                        scr_alert("red","owner",bombard_report_string,orbiting.x,orbiting.y);
 	                        scr_event_log("red",bombard_report_string, orbiting.name);
 	                        bombard_report_string=string_replace(bombard_report_string,",.",",");
 	                    }
