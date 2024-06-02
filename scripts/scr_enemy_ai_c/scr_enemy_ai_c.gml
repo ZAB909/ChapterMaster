@@ -487,7 +487,7 @@ function scr_enemy_ai_c() {
 	var i=0;
 	repeat(planets){i+=1;
 	    if (p_tyranids[i]>=5) and (planets>=i) and (p_player[i]+p_orks[i]+p_guardsmen[i]+p_pdf[i]+p_chaos[i]=0){
-	        var ship;ship=instance_nearest(x,y+32,obj_en_fleet);
+	        var ship=instance_nearest(x,y+32,obj_en_fleet);
 	        if (point_distance(x,y+32,ship.x,ship.y)<5) and (ship.owner = eFACTION.Tyranids) and (ship.capital_number>0) and (p_type[i]!="Dead") and (array_length(p_feature[i])!=0){
 	            if (planet_feature_bool(p_feature[i], P_features.Reclamation_pools) ==1){
 	                p_tyranids[i]=0;
@@ -497,11 +497,7 @@ function scr_enemy_ai_c() {
 	                ship.image_index=floor((ship.capital_number)+(ship.frigate_number/2)+(ship.escort_number/4));
 	                p_type[i]="Dead";
 					delete_features(p_feature[i], P_features.Reclamation_pools);// show_message("D");
-	                if (planets=1) and (p_type[1]="Dead") then image_alpha=0.33;
-	                if (planets=2) and (p_type[1]="Dead") and (p_type[2]="Dead") then image_alpha=0.33;
-	                if (planets=3) and (p_type[1]="Dead") and (p_type[2]="Dead") and (p_type[3]="Dead") then image_alpha=0.33;
-	                if (planets=4) and (p_type[1]="Dead") and (p_type[2]="Dead") and (p_type[3]="Dead") and (p_type[4]="Dead") then image_alpha=0.33;
-                
+					if (is_dead_star()) then image_alpha=0.33;
                 
 	                // if image_alpha = 0.33 then send the ship somewhere new
                 

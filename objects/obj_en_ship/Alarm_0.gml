@@ -787,8 +787,9 @@ if (class="Iconoclast"){
 }
 
 // Tyranids
-
-set_nid_ships();
+if (owner = eFACTION.Tyranids){
+    set_nid_ships();
+}
 
 // Necrons
 if (class="Cairn Class"){
