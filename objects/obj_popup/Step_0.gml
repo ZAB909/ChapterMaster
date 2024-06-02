@@ -951,8 +951,10 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         var mission_is_go =false;
         if (mission_star!="none"){
             var _estimate = estimate;
+            var _planet = planet;
+            var _mission = mission;
             with (mission_star){
-                if (add_new_problem(planet, mission, _estimate)){
+                if (add_new_problem(_planet, _mission, _estimate)){
                     new_star_event_marker("green");
                     mission_is_go=true;               
                 }

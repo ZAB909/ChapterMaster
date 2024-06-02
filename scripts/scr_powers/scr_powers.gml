@@ -55,18 +55,18 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	        if (book_powers=""){// Check materials here for non-chaos powers
 	            if (string_count("GOLD",tome_tags)>0) then book_powers="default";// gold
 	            if (string_count("CRU",tome_tags)>0) then book_powers="telekenesis";// crumbling
-	            if (string_count("GLO",tome_tags)>0) then book_powers="default";// blue glow
-	            if (string_count("ADA",tome_tags)>0) then book_powers="default";// adamantium
+	            if (string_count("GLOW",tome_tags)>0) then book_powers="default";// blue glow
+	            if (string_count("ADAMANTINE",tome_tags)>0) then book_powers="default";// adamantium
 	            if (string_count("PRE",tome_tags)>0) then book_powers="biomancy";// preserved flesh
 	            if (string_count("THI",tome_tags)>0) then book_powers="biomancy";// thin
 	            if (string_count("FAL",tome_tags)>0) then book_powers="nu";// fallen angle
 	            if (string_count("SAL",tome_tags)>0) then book_powers="pyromancy";// salamander
-	            if (string_count("TEN",tome_tags)>0) then book_powers="what_the_fuck_man";// tentacles
+	            if (string_count("TENTACLES",tome_tags)>0) then book_powers="what_the_fuck_man";// tentacles
 	            if (string_count("MIN",tome_tags)>0) then book_powers="tz_daemon";// mindfuck
 	            if (book_powers="default") and (string_count("BUR",tome_tags)>0) then book_powers="pyromancy";// burning book
             
             
-	            // skulls, falling angel, thin, tentacle, mindfuckif (t2!="Statue") then t5=choose("SKU","FAL","THI","TEN","MIN");
+	            // skulls, falling angel, thin, tentacle, mindfuckif (t2!="Statue") then t5=choose("SKU","FAL","THI","TENTACLES","MIN");
             
 	        }
         

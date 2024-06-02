@@ -459,7 +459,7 @@ if (__b__){
         
         if (y<-2000) or (y>room_height+2000) or (x<-2000) or (x>room_width+2000) then hp=-50;
         // Weapon and turret cooldown
-        for (var i = 1; i <= array_length(cooldown); i++) {
+        for (var i = 1; i < array_length(cooldown); i++) {
             if (cooldown[i]>0){
                 cooldown[i]--;
             }

@@ -73,12 +73,12 @@ repeat(11){co+=1;i=0;
                 if (unit.role()="Company Champion") then l_champions+=1;
                 
                 if (string_count("Bike",obj_ini.role[co][i])=0) or (attack=0){
-                    if (obj_ini.role[co][i]="Standard Bearer") then l_mahreens+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][11]) then l_mahreens+=1;
                     if (unit.IsSpecialist("rank_and_file")) then l_mahreens++
                     if (obj_ini.role[co][i]=obj_ini.role[100][3]) then l_veterans+=1;
                 }
                 if (string_count("Bike",obj_ini.role[co][i])>0) and (attack=1){
-                    if (obj_ini.role[co][i]="Standard Bearer") then l_bikes+=1;
+                    if (obj_ini.role[co][i]=obj_ini.role[100][11]) then l_bikes+=1;
                     if (unit.IsSpecialist("rank_and_file")) then l_bikes++
                     if (obj_ini.role[co][i]=obj_ini.role[100][3]) then l_bikes+=1;
                 }

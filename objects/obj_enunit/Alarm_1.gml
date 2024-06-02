@@ -180,14 +180,14 @@ repeat(700){g+=1;
             if ((dudes[g]!="Chapter Master")) then scr_en_weapon(string(dudes_wep1[g]),false,1,dudes[g],g);
             
             if (dudes_wep1[g]="Close Combat Weapon") then scr_en_weapon("CCW Heavy Flamer",true,1,dudes[g],g);
-            if (string_count("UBL",dudes_wep1[g])>0) then scr_en_weapon("Underslung Bolter",false,1,dudes[g],g);
+            if (string_count("UBOLT",dudes_wep1[g])>0) then scr_en_weapon("Underslung Bolter",false,1,dudes[g],g);
             if (string_count("UFL",dudes_wep1[g])>0) then scr_en_weapon("Underslung Flamer",false,1,dudes[g],g);
         }
         if (dudes_wep2[g]!="") and (marine_casting[g]!=1){
             if ((dudes[g]!="Chapter Master")) then scr_en_weapon(string(dudes_wep2[g]),false,1,dudes[g],g);
             
             if (dudes_wep2[g]="Close Combat Weapon") then scr_en_weapon("CCW Heavy Flamer",true,1,dudes[g],g);
-            if (string_count("UBL",dudes_wep2[g])>0) then scr_en_weapon("Underslung Bolter",false,1,dudes[g],g);
+            if (string_count("UBOLT",dudes_wep2[g])>0) then scr_en_weapon("Underslung Bolter",false,1,dudes[g],g);
             if (string_count("UFL",dudes_wep2[g])>0) then scr_en_weapon("Underslung Flamer",false,1,dudes[g],g);
         }
     }

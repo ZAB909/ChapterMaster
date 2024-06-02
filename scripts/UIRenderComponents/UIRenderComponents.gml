@@ -158,30 +158,35 @@ function UISpriteRendererComponent(owner, name) : UIRenderComponent(owner, name)
 	__spr_frames = 0;
 	
 	static render = function(gx,gy) {
-		if !is_visible
-			return;
+		if (!is_visible)
+			exit;
 		callback(self);
 		//test if callback canceled this
-		if is_canceled || sprite == -1
-			return;
-		draw_sprite_general(
-			sprite,
-			img_index,
-			left,
-			top,
-			__spr_width,
-			__spr_height,
-			gx,
-			gy,
-			owner.width/__spr_width,
-			owner.height/__spr_height,
-			angle,
-			col1,
-			col2,
-			col3,
-			col4,
-			alpha
-		)
+		if (is_canceled || sprite == -1 || !sprite_exists(sprite)){
+			exit;
+		}
+		try{
+			draw_sprite_general(
+				sprite,
+				img_index,
+				left,
+				top,
+				__spr_width,
+				__spr_height,
+				gx,
+				gy,
+				owner.width/__spr_width,
+				owner.height/__spr_height,
+				angle,
+				col1,
+				col2,
+				col3,
+				col4,
+				alpha
+			)
+		} catch(_exception){
+			show_debug_message(_exception.message);
+		}
 		img_index = (img_index + img_speed) % __spr_frames;
 	}
 	

@@ -33,6 +33,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Chainfist":spr_weapon_chainfist,
             "Power Fist with Intergrated Bolters":spr_weapon_powfist4,
             "Power Mace":spr_weapon_powmace,
+            "Gauntlets of Ultramar":spr_weapon_gauntlets_ultramar,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
         for (var i=0;i<array_length(terminator_melee_names);i++){
@@ -77,7 +78,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Lascannon":spr_weapon_lasca,
             "Multi-Melta":spr_weapon_mmelta,
             "Heavy Flamer":spr_weapon_hflamer,
-            "Eviscerator":spr_weapon_evisc,
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){
@@ -138,6 +138,22 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
                 sprite_found = !sprite_found;
                 display_type="lightning_claw"
             }   
+        }
+    }
+
+    // Handle two-handed melee
+    if (!sprite_found){
+        var heavy_melee ={
+            "Eviscerator":spr_weapon_evisc,
+            "Heavy Thunder Hammer":spr_weapon_hthhammer,
+        }
+        var heavy_melee_names=struct_get_names(heavy_melee);
+        for (var i=0;i<array_length(heavy_melee_names);i++){
+            if (heavy_melee_names[i] == equiped_weapon) {
+                set_as_melee_twohand(heavy_melee[$ heavy_melee_names[i]],left_or_right)
+                sprite_found = true;
+                break;               
+            }
         }
     }
 
@@ -262,7 +278,12 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     }
 
     if ("Storm Shield" == equiped_weapon) {
-        ui_weapon[left_or_right] = spr_weapon_storm;
+        if (global.chapter_name == "Dark Angels" && role() == obj_ini.role[100][Role.HONOR_GUARD]){
+            ui_weapon[left_or_right] = spr_weapon_storm;
+        }
+        else {
+            ui_weapon[left_or_right] = spr_weapon_storm2;
+        }
         ui_arm[left_or_right] = 2;
         ui_above[left_or_right] = true;
         ui_spec[left_or_right] = false;
@@ -281,7 +302,10 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     if ("Company Standard" == equiped_weapon) {
         ui_hand[left_or_right] = 0;
     }
-    
+
+    if ("Gauntlets of Ultramar" == equiped_weapon) {
+        ui_twoh[left_or_right] = true;
+    }
 
     // Flip the ui_xmod for offhand
     if (left_or_right == 2  && ui_xmod[left_or_right] != 0) {
@@ -346,6 +370,16 @@ function set_as_melee_onehand_special(sprite, left_or_right) {
     ui_above[left_or_right] = true;
     ui_spec[left_or_right] = true;
     display_type = "melee_onehand";
+}
+
+function set_as_melee_twohand(sprite, left_or_right) {
+    ui_weapon[left_or_right] = sprite;
+    display_type = "melee_twohand";
+    ui_arm[1] = 0;
+    ui_arm[2] = 0;
+    ui_above[left_or_right] = true;
+    ui_spec[left_or_right] = true;
+    ui_twoh[left_or_right] = true;
 }
 
 function set_as_terminator_melee(sprite, left_or_right) {

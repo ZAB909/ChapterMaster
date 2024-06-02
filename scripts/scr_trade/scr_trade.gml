@@ -430,8 +430,8 @@ function scr_trade(argument0) {
             
 	            if (got>=500) and (diplomacy=6){
 	                var got2;got2=0;
-	                repeat(10){if (got2<50){got2+=1;if (quest[got2]="300req") and (quest_faction[got2]=6){
-	                    scr_dialogue("mission1_thanks");scr_quest(2,"300req",6,0);got2=50;trading=0;
+	                repeat(10){if (got2<50){got2+=1;if (quest[got2]="fund_elder") and (quest_faction[got2]=6){
+	                    scr_dialogue("mission1_thanks");scr_quest(2,"fund_elder",6,0);got2=50;trading=0;
 	                    trade_take[0]="";trade_take[1]="";trade_take[2]="";trade_take[3]="";trade_take[4]="";trade_take[5]="";trade_tnum[0]=0;trade_tnum[1]=0;trade_tnum[2]=0;trade_tnum[3]=0;trade_tnum[4]=0;trade_tnum[5]=0;
 	                    trade_give[0]="";trade_give[1]="";trade_give[2]="";trade_give[3]="";trade_give[4]="";trade_give[5]="";trade_mnum[0]=0;trade_mnum[1]=0;trade_mnum[2]=0;trade_mnum[3]=0;trade_mnum[4]=0;trade_mnum[5]=0;
 	                    exit;

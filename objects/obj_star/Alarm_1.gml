@@ -276,7 +276,7 @@ if (owner == eFACTION.Tyranids){
             //array_push(p_feature[i], new new_planet_feature(P_features.Gene_Stealer_Cult));
 
         }
-        p_owner[i] = eFaction.Imperium;
+        p_owner[i] = eFACTION.Imperium;
     }
 }
 

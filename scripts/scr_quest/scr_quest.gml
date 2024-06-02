@@ -1,53 +1,66 @@
-function scr_quest(argument0, argument1, argument2, argument3) {
+function scr_quest(quest_satus=0, quest_name, quest_fac, quest_end) {
 
-	// argument0: 0/1/2/3/4       create/fail/accomplish/clear/check
-	// argument1: quest name
-	// argument2: faction
-	// argument3: duration before end
+	// quest_satus: 0/1/2/3/4       create/fail/accomplish/clear/check
+	// quest_name: quest name
+	// quest_fac: faction
+	// quest_end: duration before end
 
 
 
 	var quick_trade;
 	quick_trade=0;
 
-	if (argument0=0){// Create
+	if (quest_satus=0){// Create
 	    var first_quest,i;
 	    first_quest=0;i=0;
     
-	    repeat(30){if (first_quest=0){i+=1;if (obj_controller.quest[i]="") then first_quest=i;}}
+	    repeat(30){
+	    	if (first_quest=0){
+	    		i+=1;
+	    		if (obj_controller.quest[i]="") then first_quest=i;
+	    	}
+	    }
 
-	    obj_controller.quest[i]=argument1;
-	    obj_controller.quest_faction[i]=argument2;
-	    obj_controller.quest_end[i]=obj_controller.turn+argument3;
+	    obj_controller.quest[i]=quest_name;
+	    obj_controller.quest_faction[i]=quest_fac;
+	    obj_controller.quest_end[i]=obj_controller.turn+quest_end;
 	}
 
 
-	if (argument0>0){// 1 = Fail, 2 = Accomplish, 3 = Clear
+	else if (quest_satus>0){// 1 = Fail, 2 = Accomplish, 3 = Clear
 	    var que,i;
 	    que=0;i=0;
     
-	    repeat(10){if (que=0){i+=1;if (obj_controller.quest[i]=argument1) then que=i;}}
+	    repeat(10){
+	    	if (que=0){
+	    		i+=1;
+	    		if (obj_controller.quest[i]=quest_name) then que=i;
+	    	}
+	    }
     
-	    if (argument1="300req") and (argument0=1){
+	    if (quest_name="fund_elder") and (quest_satus=1){
 	        // obj_controller.disposition[6]-=2;// Player going 'maybe' and then waiting out the quest duration
 	        scr_audience(6,"mission1_failed",-2,"",0,0);
 	        scr_event_log("red","Eldar Mission Failed: Several years have passed since offering to assist the Eldar with resources.");
 	    }
-	    if (argument1="artifact_return") and (argument0=1){// Inq are now pissed
+	    else if (quest_name="artifact_return") and (quest_satus=1){// Inq are now pissed
 	        obj_controller.alarm[8]=1;
 	    }
-	    if (argument1="artifact_loan") and (argument0=1){// Inq want the artifact back
-	        var that;that=0;        
-	        i=0;repeat(30){i+=1;if (that=0) and (obj_ini.artifact[i]!=""){if (string_count("inq",obj_ini.artifact_tags[i])>0) then that=i;}}
+	    else if (quest_name="artifact_loan") and (quest_satus=1){// Inq want the artifact back
+	        var that=0;        
+	        for (var i=0;i<array_length(obj_ini.artifact);i++){
+	        	if (that=0) and (obj_ini.artifact[i]!=""){
+	        		if (array_contains(obj_ini.artifact_tags[i], "inq")) then that=i;
+	        	}
+	        }
 	        if (that=0){
 	            scr_popup("Inquisition Artifact","The Inquisition has asked for the return of the Artifact left in your care.  Despite your Marine's best efforts they were unable to waylay the Inquisition, who are now furious.  They demand the Artifact's immediate return.","inquisition","");
 	            scr_event_log("red","Inquisition Mission: The Inquisition Artifact entrusted to your Chapter is not retrievable.");
-	            disposition[4]-=10;obj_controller.qsfx=1;
+	            disposition[4]-=10;
+	            obj_controller.qsfx=1;
 	        }
 	        if (that>0){
-	            obj_ini.artifact[that]="";obj_ini.artifact_tags[that]="";obj_ini.artifact_identified[that]=0;
-	            obj_ini.artifact_condition[that]=0;obj_ini.artifact_loc[that]="";obj_ini.artifact_sid[that]=0;
-	            obj_controller.artifacts-=1;
+	            delete_artifact(index);
 	            i=that;
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
@@ -57,24 +70,33 @@ function scr_quest(argument0, argument1, argument2, argument3) {
 	    }
     
     
-	    if (argument1="300req") and (argument0=2){
+	    if (quest_name="fund_elder") and (quest_satus=2){
 	        if (trading=0) then quick_trade=6;
-	        obj_controller.known[eFACTION.Eldar]+=1;obj_controller.disposition[6]+=10;
+	        obj_controller.known[eFACTION.Eldar]+=1;
+	        obj_controller.disposition[6]+=10;
 	    }
     
     
-	    if (argument0=4){
+	    if (quest_satus==4){
 	        var first_quest,i;
-	        first_quest=0;i=0;
+	        first_quest=0;
+	        i=0;
         
-	        repeat(30){if (first_quest=0){i+=1;if (obj_controller.quest[i]=argument1) then first_quest=i;}}
+	        repeat(30){
+	        	if (first_quest=0){
+	        		i+=1;
+	        		if (obj_controller.quest[i]=quest_name) then first_quest=i;
+	        	}
+	        }
     
 	        if (first_quest!=0) then return(first_quest);
 	        exit;
 	    }
     
     
-	    obj_controller.quest[que]="";obj_controller.quest_faction[que]=0;obj_controller.quest_end[que]=0;
+	    obj_controller.quest[que]="";
+	    obj_controller.quest_faction[que]=0;
+	    obj_controller.quest_end[que]=0;
 	}
 
 

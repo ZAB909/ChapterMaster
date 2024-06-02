@@ -73,11 +73,26 @@ if (hp>0) and (instance_exists(target)){
     if (cooldown[3]>0) then cooldown[3]-=1;
     if (cooldown[4]>0) then cooldown[4]-=1;
 
-    if (class="Apocalypse Class Battleship") or (class="Slaughtersong"){o_dist=500;action="attack";}
-    if (class="Nemesis Class Fleet Carrier"){o_dist=1000;action="attack";}
-    if (class="Avenger Class Grand Cruiser"){o_dist=64;action="broadside";}
-    if (class="Battle Barge") or (class="Strike Cruiser"){o_dist=300;action="attack";}
-    if (class="Hunter") or (class="Gladius"){o_dist=64;action="flank";}
+    if (class="Apocalypse Class Battleship") or (class="Slaughtersong"){
+        o_dist=500;
+        action="attack";
+    }
+    if (class="Nemesis Class Fleet Carrier"){
+        o_dist=1000;
+        action="attack";
+    }
+    if (class="Avenger Class Grand Cruiser"){
+        o_dist=64;
+        action="broadside";
+    }
+    if (class="Battle Barge") or (class="Strike Cruiser"){
+        o_dist=300;
+        action="attack";
+    }
+    if (class="Hunter") or (class="Gladius"){
+        o_dist=64;
+        action="flank";
+    }
     // if (class!="big") then flank!!!!
     
     
@@ -145,7 +160,9 @@ if (hp>0) and (instance_exists(target)){
         if (paction="attack_move") and (instance_exists(obj_en_ship)){
             if (!instance_exists(target)) then target=instance_nearest(x,y,obj_en_ship);
             dist=point_distance(x,y,target.x,target.y);
-            if (dist<=o_dist){paction="";action="attack";}
+            if (dist<=o_dist){paction="";
+            action="attack";
+        }
         }
         
         if (dist>20) and (speed<(obj_fleet.ship_speed[self.ship_id]/10)) then speed+=speed_up;
@@ -295,12 +312,10 @@ if (hp>0) and (instance_exists(target)){
 
 /* */
 if (instance_exists(obj_en_ship)) and (boarders>0) and (board_cooldown<=0) and ((board_capital=true) or (board_frigate=true)){
-    show_debug_message("{0}",boarders)
     var eh=0,te=0;
     repeat(2){eh+=1;te=0;
         if (eh=1) and (board_capital=true){if (instance_exists(obj_en_capital)) then te=instance_nearest(x,y,obj_en_capital);}
         if (eh=2) and (board_frigate=true){if (instance_exists(obj_en_cruiser)) then te=instance_nearest(x,y,obj_en_cruiser);}
-        show_debug_message("{0}",te)
         if (te!=0) and (instance_exists(te)){
             if (point_distance(x,y,te.x,te.y)<=428){
                 create_boarding_craft(te);

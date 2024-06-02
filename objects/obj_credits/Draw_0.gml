@@ -1,5 +1,6 @@
 
-draw_set_color(0);draw_rectangle(918,102,1110,610,0);
+draw_set_color(0);
+draw_rectangle(918,102,1110,610,0);
 draw_sprite(spr_credits_bg,0,0,0);
 
 draw_set_font(fnt_cul_18);
@@ -7,31 +8,33 @@ draw_set_halign(fa_center);
 draw_set_color(c_gray);
 
 draw_text_transformed(172,373,string_hash_to_newline("LEAD PROGRAMMERS"),0.85,0.85,0);
+draw_set_font(fnt_cul_14);
+draw_text(172,397,string_hash_to_newline("ZAB#Mystic#NelsonH#EttyKitty"));
+draw_set_font(fnt_cul_18);
 draw_text_transformed(172,472,string_hash_to_newline("CONTRIBUTORS&#SPECIAL THANKS"),0.85,0.85,0);
 
-draw_text_transformed(492-100,373,string_hash_to_newline("LEAD WRITERS"),0.85,0.85,0);
-draw_text_transformed(492-100,472,string_hash_to_newline("ASSISTANT WRITERS"),0.85,0.85,0);
-
-draw_text_transformed(802-200,373,string_hash_to_newline("LEAD ARTISTS"),0.85,0.85,0);
-draw_text_transformed(802-200,472,string_hash_to_newline("ASSISTANT ARTISTS"),0.85,0.85,0);
-
-draw_text_transformed(802,373,string_hash_to_newline("SUPPORTERS"),0.85,0.85,0);
-// draw_text_transformed(802,472,"FORMER SUPPORTERS",0.85,0.85,0);
-
-
-draw_set_font(fnt_cul_14);
-draw_text(172,397,string_hash_to_newline("Duke"));
 draw_text(172,526,string_hash_to_newline("vbcoder, Batat#Xorcon#IRC AFK'ers#/TG/"));
 
+draw_text_transformed(492-100,373,string_hash_to_newline("LEAD WRITERS"),0.85,0.85,0);
+
 draw_text(492-100,397,string_hash_to_newline("Neddy#Nenjin#Pilz"));
+
+draw_text_transformed(492-100,472,string_hash_to_newline("ASSISTANT WRITERS"),0.85,0.85,0);
+
 draw_text(492-100,498,string_hash_to_newline("Earthflame#Bludhawk#UCO Agent"));
 
+draw_text_transformed(802-200,373,string_hash_to_newline("LEAD ARTISTS"),0.85,0.85,0);
+
 draw_text(802-200,397,string_hash_to_newline("Duke"));
-// draw_text(802-200,498,"sinndogg#efngn#Toni ''TrashMan'' Staničić");
+
+draw_text_transformed(802-200,472,string_hash_to_newline("ASSISTANT ARTISTS"),0.85,0.85,0);
+
 draw_text(802-200,498,string_hash_to_newline("sinndogg#efngn#Toni ''TrashMan'' Stanicic"));
 
+draw_text_transformed(802,373,string_hash_to_newline("SUPPORTERS AND LEGACY CODERS"),0.85,0.85,0);
+// draw_text_transformed(802,472,"FORMER SUPPORTERS",0.85,0.85,0);
 
-draw_text(802,397,string_hash_to_newline("Paul-Ross#MANDOZERTHEGREAT#Alex Norry#Carli"));
+draw_text(802,397,string_hash_to_newline("Duke#Paul-Ross#MANDOZERTHEGREAT#Alex Norry#Carli"));
 // draw_text(802,496,"");
 
 
@@ -86,6 +89,8 @@ if (instance_exists(obj_main_menu_buttons)){
     }
     draw_set_alpha(1);
 }
-
+if (mouse_check_button(mb_right)||mouse_check_button(mb_left)){
+    instance_destroy();
+}
 /* */
 /*  */

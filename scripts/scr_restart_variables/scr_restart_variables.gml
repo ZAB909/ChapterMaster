@@ -117,7 +117,7 @@ function scr_restart_variables(saved_game) {
         
 	        obj_restart_vars.r_race[i,5]=1;
 	        obj_restart_vars.r_role[i,5]="Captain";
-			obj_restart_vars.r_wep1[i,5]="Power Fist";
+			obj_restart_vars.r_wep1[i,5]="Power Sword";
 			obj_restart_vars.r_wep2[i,5]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,5]="Power Armour";
 			obj_restart_vars.r_mobi[i,5]="";
@@ -134,22 +134,22 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_race[i,7]=1;
 	        obj_restart_vars.r_role[i,7]="Company Champion";
 			obj_restart_vars.r_wep1[i,7]="Power Sword";
-			obj_restart_vars.r_wep2[i,7]="Storm Shield";
+			obj_restart_vars.r_wep2[i,7]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,7]="Power Armour";
 			obj_restart_vars.r_mobi[i,7]="";
-			obj_restart_vars.r_gear[i,7]="";
+			obj_restart_vars.r_gear[i,7]="Combat Shield";
         
 	        obj_restart_vars.r_race[i,8]=1;
 	        obj_restart_vars.r_role[i,8]="Tactical Marine";
 			obj_restart_vars.r_wep1[i,8]="Bolter";
-			obj_restart_vars.r_wep2[i,8]="Chainsword";
+			obj_restart_vars.r_wep2[i,8]="Combat Knife";
 	        obj_restart_vars.r_armour[i,8]="Power Armour";
 			obj_restart_vars.r_mobi[i,8]="";
 			obj_restart_vars.r_gear[i,8]="";
         
 	        obj_restart_vars.r_race[i,9]=1;
 	        obj_restart_vars.r_role[i,9]="Devastator Marine";
-			obj_restart_vars.r_wep1[i,9]="Heavy Ranged";
+			obj_restart_vars.r_wep1[i,9]="";
 			obj_restart_vars.r_wep2[i,9]="Combat Knife";
 	        obj_restart_vars.r_armour[i,9]="Power Armour";
 			obj_restart_vars.r_mobi[i,9]="";
@@ -163,6 +163,13 @@ function scr_restart_variables(saved_game) {
 			obj_restart_vars.r_mobi[i,10]="Jump Pack";
 			obj_restart_vars.r_gear[i,10]="";
         
+			obj_restart_vars.r_role[i,11]="Ancient";
+			obj_restart_vars.r_wep1[i,11]="Company Standard";
+			obj_restart_vars.r_wep2[i,11]="Power Sword";
+			obj_restart_vars.r_armour[i,11]="Power Armour";
+			obj_restart_vars.r_mobi[i,11]="";
+			obj_restart_vars.r_gear[i,11]="";
+
 	        obj_restart_vars.r_race[i,12]=1;
 	        obj_restart_vars.r_role[i,12]="Scout";
 			obj_restart_vars.r_wep1[i,12]="Sniper Rifle";
@@ -181,7 +188,7 @@ function scr_restart_variables(saved_game) {
         
 	        obj_restart_vars.r_race[i,15]=1;
 	        obj_restart_vars.r_role[i,15]="Apothecary";
-			obj_restart_vars.r_wep1[i,15]="Power Sword";
+			obj_restart_vars.r_wep1[i,15]="Chainsword";
 			obj_restart_vars.r_wep2[i,15]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,15]="Power Armour";
 			obj_restart_vars.r_gear[i,15]="Narthecium";
@@ -191,14 +198,14 @@ function scr_restart_variables(saved_game) {
 	        obj_restart_vars.r_role[i,16]="Techmarine";
 			obj_restart_vars.r_wep1[i,16]="Power Axe";
 			obj_restart_vars.r_wep2[i,16]="Storm Bolter";
-	        obj_restart_vars.r_armour[i,16]="Power Armour";
+	        obj_restart_vars.r_armour[i,16]="Artificer Armour";
 			obj_restart_vars.r_gear[i,16]="Servo Arms";
 			obj_restart_vars.r_mobi[i,16]="";
         
 	        obj_restart_vars.r_race[i,17]=1;
 	        obj_restart_vars.r_role[i,17]="Librarian";
 			obj_restart_vars.r_wep1[i,17]="Force Staff";
-			obj_restart_vars.r_wep2[i,17]="Storm Bolter";
+			obj_restart_vars.r_wep2[i,17]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,17]="Power Armour";
 			obj_restart_vars.r_gear[i,17]="Psychic Hood";
 			obj_restart_vars.r_mobi[i,17]="";
@@ -347,7 +354,7 @@ function scr_restart_variables(saved_game) {
         
 	        obj_controller.r_race[i,5]=1;
 	        obj_controller.r_role[i,5]="Captain";
-			obj_controller.r_wep1[i,5]="Power Fist";
+			obj_controller.r_wep1[i,5]="Power Sword";
 			obj_controller.r_wep2[i,5]="Bolt Pistol";
 	        obj_controller.r_armour[i,5]="Power Armour";
 			obj_controller.r_mobi[i,5]="";
@@ -364,22 +371,22 @@ function scr_restart_variables(saved_game) {
 	        obj_controller.r_race[i,7]=1;
 	        obj_controller.r_role[i,7]="Company Champion";
 			obj_controller.r_wep1[i,7]="Power Sword";
-			obj_controller.r_wep2[i,7]="Storm Shield";
+			obj_controller.r_wep2[i,7]="Bolt Pistol";
 	        obj_controller.r_armour[i,7]="Power Armour";
 			obj_controller.r_mobi[i,7]="";
-			obj_controller.r_gear[i,7]="";
+			obj_controller.r_gear[i,7]="Combat Shield";
         
 	        obj_controller.r_race[i,8]=1;
 	        obj_controller.r_role[i,8]="Tactical Marine";
 			obj_controller.r_wep1[i,8]="Bolter";
-			obj_controller.r_wep2[i,8]="Chainsword";
+			obj_controller.r_wep2[i,8]="Combat Knife";
 	        obj_controller.r_armour[i,8]="Power Armour";
 			obj_controller.r_mobi[i,8]="";
 			obj_controller.r_gear[i,8]="";
         
 	        obj_controller.r_race[i,9]=1;
 	        obj_controller.r_role[i,9]="Devastator Marine";
-			obj_controller.r_wep1[i,9]="Heavy Ranged";
+			obj_controller.r_wep1[i,9]="";
 			obj_controller.r_wep2[i,9]="Combat Knife";
 	        obj_controller.r_armour[i,9]="Power Armour";
 			obj_controller.r_mobi[i,9]="";
@@ -411,20 +418,24 @@ function scr_restart_variables(saved_game) {
         
 	        obj_controller.r_race[i,15]=1;
 	        obj_controller.r_role[i,15]="Apothecary";
-			obj_controller.r_wep1[i,15]="Power Sword";obj_controller.r_wep2[i,15]="Bolt Pistol";
+			obj_controller.r_wep1[i,15]="Chainsword";
+			obj_controller.r_wep2[i,15]="Bolt Pistol";
 	        obj_controller.r_armour[i,15]="Power Armour";
-			obj_controller.r_gear[i,15]="Narthecium";obj_controller.r_mobi[i,15]="";
+			obj_controller.r_gear[i,15]="Narthecium";
+			obj_controller.r_mobi[i,15]="";
         
 	        obj_controller.r_race[i,16]=1;
 	        obj_controller.r_role[i,16]="Techmarine";
-			obj_controller.r_wep1[i,16]="Power Axe";obj_controller.r_wep2[i,16]="Storm Bolter";
-	        obj_controller.r_armour[i,16]="Power Armour";
-			obj_controller.r_gear[i,16]="Servo Arms";obj_controller.r_mobi[i,16]="";
+			obj_controller.r_wep1[i,16]="Power Axe";
+			obj_controller.r_wep2[i,16]="Storm Bolter";
+	        obj_controller.r_armour[i,16]="Artificer Armour";
+			obj_controller.r_gear[i,16]="Servo Arms";
+			obj_controller.r_mobi[i,16]="";
         
 	        obj_controller.r_race[i,17]=1;
 	        obj_controller.r_role[i,17]="Librarian";
 			obj_controller.r_wep1[i,17]="Force Staff";
-			obj_controller.r_wep2[i,17]="Storm Bolter";
+			obj_controller.r_wep2[i,17]="Bolt Pistol";
 	        obj_controller.r_armour[i,17]="Power Armour";
 			obj_controller.r_gear[i,17]="Psychic Hood";
 			obj_controller.r_mobi[i,17]="";
@@ -601,7 +612,7 @@ function scr_restart_variables(saved_game) {
 	        
 			race[i,5]=1;
 			role[i,5]="Captain";
-			wep1[i,5]="Power Fist";
+			wep1[i,5]="Power Sword";
 			wep2[i,5]="Bolt Pistol";
 			armour[i,5]="Power Armour";
 			gear[i,5]="Iron Halo";
@@ -615,12 +626,12 @@ function scr_restart_variables(saved_game) {
 			race[i,8]=1;
 			role[i,8]="Tactical Marine";
 			wep1[i,8]="Bolter";
-			wep2[i,8]="Chainsword";
+			wep2[i,8]="Combat Knife";
 			armour[i,8]="Power Armour";
 	        
 			race[i,9]=1;
 			role[i,9]="Devastator Marine";
-			wep1[i,9]="Heavy Ranged";
+			wep1[i,9]="";
 			wep2[i,9]="Combat Knife";
 			armour[i,9]="Power Armour";
 	        
@@ -631,6 +642,12 @@ function scr_restart_variables(saved_game) {
 			armour[i,10]="Power Armour";
 			mobi[i,10]="Jump Pack";
 	        
+			race[i,11]=1;
+			role[i,11]="Ancient";
+			wep1[i,11]="Company Standard";
+			wep2[i,11]="Power Sword";
+			armour[i,11]="Power Armour";
+
 			race[i,12]=1;
 			role[i,12]="Scout";
 			wep1[i,12]="Sniper Rifle";
@@ -646,7 +663,7 @@ function scr_restart_variables(saved_game) {
 	        
 			race[i,15]=1;
 			role[i,15]="Apothecary";
-			wep1[i,15]="Power Sword";
+			wep1[i,15]="Chainsword";
 			wep2[i,15]="Bolt Pistol";
 			armour[i,15]="Power Armour";
 			gear[i,15]="Narthecium";
@@ -655,13 +672,13 @@ function scr_restart_variables(saved_game) {
 			role[i,16]="Techmarine";
 			wep1[i,16]="Power Axe";
 			wep2[i,16]="Storm Bolter";
-			armour[i,16]="Power Armour";
+			armour[i,16]="Artificer Armour";
 			gear[i,16]="Servo Arms";
 	        
 			race[i,17]=1;
 			role[i,17]="Librarian";
 			wep1[i,17]="Force Staff";
-			wep2[i,17]="Storm Bolter";
+			wep2[i,17]="Bolt Pistol";
 			armour[i,17]="Power Armour";
 			gear[i,17]="Psychic Hood";
 			

@@ -29,7 +29,7 @@ function scr_return_ship(ship_name, object, planet_number) {
 						obj_ini.veh_lid[unit[0]][unit[1]]=return_place[i];
 						obj_ini.veh_wid[unit[0]][unit[1]]=0;
 						var man_size =scr_unit_size("",obj_ini.veh_role[unit[0]][unit[1]], true);
-						an.p_player[planet_number]-=man_size;
+						return_planet.p_player[planet_number]-=man_size;
 						obj_ini.ship_carrying[return_place[i]]+=man_size;
 					 }
 				}

@@ -136,6 +136,8 @@ if (boarding=true) and (board_cooldown>=0) and (instance_exists(target)) and (in
                         
                         bridge_damage=3;
                         //TODO tagging system to slove this
+                        we="Heavy Thunder Hammer";
+                        if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,8);
                         we="Eviscerator";
                         if (we1=we) or (we2=we) then bridge_damage=max(bridge_damage,7);
                         we="Chainfist";

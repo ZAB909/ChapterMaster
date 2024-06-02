@@ -40,6 +40,9 @@ capital_health=100;
 frigate_health=100;
 escort_health=100;
 
+complex_route = [];
+just_left=false;
+
 
 action="";
 action_x=0;

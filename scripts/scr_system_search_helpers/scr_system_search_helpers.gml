@@ -11,7 +11,8 @@ function scr_get_planet_with_feature(star, feature){
 	return -1;
 }
 
-function NSystemSearchHelpers() {
+//TODO make an adaptive allies system
+function NSystemSearchHelpers() constructor{
 	static default_allies = [
 		eFACTION.Player,
 		eFACTION.Imperium,
@@ -20,7 +21,7 @@ function NSystemSearchHelpers() {
 		eFACTION.Ecclesiarchy
 	]
 }
-NSystemSearchHelpers()
+global.SystemHelps = new NSystemSearchHelpers();
 
 function scr_star_has_planet_with_feature(star, feature){
 	return scr_get_planet_with_feature(star, feature) != -1;
@@ -29,11 +30,11 @@ function scr_star_has_planet_with_feature(star, feature){
 function scr_is_planet_owned_by_allies(star, planet_idx) {
 	if planet_idx < 1 //1 because weird indexing starting at 1 in this game
 		return false;
-	return array_contains(NSystemSearchHelpers.default_allies, star.p_owner[planet_idx])
+	return array_contains(global.SystemHelps.default_allies, star.p_owner[planet_idx])
 }
 
 function scr_is_star_owned_by_allies(star) {
-	return array_contains(NSystemSearchHelpers.default_allies, star.owner)
+	return array_contains(global.SystemHelps.default_allies, star.owner)
 }
 
 function scr_get_planet_with_type(star, type){

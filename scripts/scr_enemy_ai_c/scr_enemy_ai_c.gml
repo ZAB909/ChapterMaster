@@ -31,21 +31,19 @@ function scr_enemy_ai_c() {
 
 	    	}
 	    }
-	    contin=0;rando=floor(random(100))+1;// This part handles the ship building
+	    contin=0;
+	    rando=floor(random(100))+1;// This part handles the ship building
 	    if (p_population[i]>0) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_traitors[i]=0) and (p_tau[i]=0) and (p_large[i]=0) then p_population[i]=round(p_population[i]*0.97);
 	    if (p_population[i]>0) and (p_pdf[i]=0) and (p_guardsmen[i]=0) and (p_traitors[i]=0) and (p_tau[i]=0) and (p_large[i]=1) then p_population[i]-=0.01;
 	    // ^ And extermination
     
-    
-	    var chick=0;
 	    var enemies_present=false;
 	    for (var n=0;n<array_length(non_deads);n++){
 	    	var plan=non_deads[n]
-	    	chick+=p_owner[plan];
 	    	 if (planets>=1) and ((p_pdf[plan]>0) or (p_guardsmen[plan]>0) or (p_traitors[plan]>0) or (p_tau[plan]>0)) then enemies_present=true;
 	    }
 	    //What is the point of this?
-	    if (chick/7)=round(chick/7) and (owner = eFACTION.Ork){    
+	    if (owner = eFACTION.Ork){    
 	        contin=1;
 	    }
 
@@ -56,7 +54,8 @@ function scr_enemy_ai_c() {
 	        // Check for industrial facilities
 	        if (p_type[i]!="Dead") and (p_type[i]!="Lava"){// Used to not have Ice either
 	            if (p_orks[i]>=4){// Have the proppa facilities and size
-	                fleet=0;contin=2;
+	                fleet=0;
+	                contin=2;
 					if (instance_number(obj_en_fleet)==0) then contin=3;
 					if (instance_number(obj_en_fleet)>0) then contin=2;
 
@@ -68,12 +67,14 @@ function scr_enemy_ai_c() {
 						var ork_fleet = 0;
 						var oriting_name = name;
 						var fleet_loop =true;
+						var _instance_count=0;
+						var _instance_numer = instance_number(obj_en_fleet);
 						while (fleet_loop){
 							var loop_fleet = instance_nearest(x,y, obj_en_fleet);
 							with (loop_fleet){
 								if (instance_nearest(x,y,obj_star).name==oriting_name){
 									if (owner==eFACTION.Ork && action==""){
-										ork_fleet=id;
+										ork_fleet=self;
 										fleet_loop=false;
 									} else{
 										instance_deactivate_object(id);
@@ -82,14 +83,19 @@ function scr_enemy_ai_c() {
 									fleet_loop=false;
 								}
 							}
+							_instance_count++;
+							if (_instance_count>_instance_numer) then break;
 						}
 						instance_activate_object(obj_en_fleet);
 						if (instance_exists(ork_fleet))	{
+							var star_id=self.id;
 							with (ork_fleet){
-								build_new_ork_ships_to_fleet(self.id);
+								build_new_ork_ships_to_fleet(star_id, i);
 							}
 						} else {
-							contin=3;
+							if (rando<=25){
+								new_ork_fleet(x,y);
+							}
 						}
 					}
 					if (contin=3) and (rando<=25){// Create a fleet
@@ -122,7 +128,10 @@ function scr_enemy_ai_c() {
 	    var landi,t1,l;
 	    landi=0;t1=0;l=0;
     
-	    repeat(4){l+=1;if (t1=0) and (p_tyranids[l]>0) then t1=l;}
+	    repeat(4){
+	    	l+=1;
+	    	if (t1=0) and (p_tyranids[l]>0) then t1=l;
+	    }
 	    if (t1>0) then p_tyranids[t1]-=1;
     
 	    if (planets>=1) and (p_type[1]!="Dead") and ((p_guardsmen[1]+p_pdf[1]+p_player[1]+p_traitors[1]+p_tau[1]>0) or ((p_owner[1]!=7) and (p_orks[1]<=0))) then landi=1;

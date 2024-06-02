@@ -734,7 +734,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                         if (requisition>=500){
                             scr_loyalty("Xeno Trade","+");
                             scr_dialogue("mission1_thanks");
-                            scr_quest(2,"300req",6,0);
+                            scr_quest(2,"fund_elder",6,0);
                             requisition-=500;questing=0;
                             diplo_option[1]="";
                             diplo_option[2]="";
@@ -830,7 +830,7 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                     cooldown=8;
                     if (questing==1) and (diplomacy==6){// That +2 counteracts the WAITED TOO LONG penalty
                         scr_dialogue("mission1_refused");
-                        scr_quest(3,"300req",6,0);
+                        scr_quest(3,"fund_elder",6,0);
                         questing=0;
                         diplo_option[1]="";
                         diplo_option[2]="";
@@ -1251,35 +1251,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 }
             }
         }*/
-        // Save and exit
-        if (mouse_y>=yy+0) and (mouse_y<yy+26){
-            var sv;
-            if (mouse_x>=xx+431) and (mouse_x<xx+496){
-                menu=999;
-                zui=1;
-                cooldown=8000;
-                click=1;
-                sv=instance_create(x,y,obj_saveload);
-                sv.menu=1;
-            }
-            if (mouse_x>=xx+496) and (mouse_x<xx+559){
-                    menu=999;
-                    zui=1;
-                    cooldown=8000;
-                    click=1;
-                    sv=instance_create(x,y,obj_saveload);
-                    sv.menu=2;
-            }
-            if (mouse_x>=xx+559) and (mouse_x<xx+623){
-                menu=999;
-                cooldown=8000;
-                click=1;
-                with(obj_ini){instance_destroy();}
-                room_goto(Main_Menu);
-                with(obj_controller){instance_destroy();}
-                instance_destroy();
-            }
-        }
+
         // Management
         if (menu_buttons.chapter_manage.clicked){
             if (menu!=1)and (onceh==0){
@@ -1411,18 +1383,7 @@ if (action_if_number(obj_saveload, 0, 0) &&
                 artifact_gift = new shutter_button();
                 artifact_destroy = new shutter_button();
                 artifact_namer = new text_bar_area(xx + 622, yy + 460, 350);
-                artifacts=0;
-                menu_artifact=-1;
-                unused_artifacts = 0;
-                for (var i=1;i<30;i++){
-                    if (obj_ini.artifact[i] != ""){
-                        if (menu_artifact==-1) then menu_artifact=i;
-                        artifacts++;
-                        if (!obj_ini.artifact_equipped[i]){
-                            unused_artifacts++;
-                        }
-                    }
-                }
+                set_chapter_arti_data();
             }
             if (menu==13) and (onceh==0){
                 menu=0;
