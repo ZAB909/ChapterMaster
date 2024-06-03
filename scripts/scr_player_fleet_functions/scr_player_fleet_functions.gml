@@ -70,12 +70,16 @@ function cancel_fleet_movement(){
 }
 function set_new_player_fleet_course(target_array){
 	if (array_length(target_array)>0){
-		var target_planet = target_array[0];
+		var target_planet = star_by_name(target_array[0]);
 		var nearest_planet = instance_nearest(x,y,obj_star);
 		var from_star = point_distance(nearest_planet.x,nearest_planet.y, x, y) <100;
-		if (target_planet.id == nearest_planet.id && from_star){
+		var valid = target_planet!="none";
+		if (valid){
+			valid = !(target_planet.id == nearest_planet.id && from_star);
+		}
+		if (!valid){
 			if (array_length(target_array)>1){
-				target_planet = target_array[1];
+				target_planet = star_by_name(target_array[1]);
 				array_delete(target_array, 0, 2);
 			} else {
 				return "complex_route_finish";

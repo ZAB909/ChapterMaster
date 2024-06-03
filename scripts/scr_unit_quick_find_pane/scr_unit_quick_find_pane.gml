@@ -122,7 +122,7 @@ function scr_unit_quick_find_pane() constructor{
 		}
 		for (i=0;i<array_length(obj_controller.quest);i++){
 			if (obj_controller.quest[i] != ""){
-				var mission_explain =  mission_name_key(quest[i]);
+				var mission_explain =  mission_name_key(obj_controller.quest[i]);
 				if (mission_explain!="none"){
 					array_push(temp_log,
 						{
