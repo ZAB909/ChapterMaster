@@ -158,7 +158,7 @@ function scr_enemy_ai_b() {
 		if (p_owner[i] == eFACTION.Chaos) and (p_heresy[i] < 80) then
 		    p_heresy[i] += 1;
 
-		if (p_owner[i] != eFACTION.Chaos) and (p_owner[i] != eFACTION.Eldar) and (planets >= i) and (p_type[i] != "Dead") and (p_type[i] != "Craftworld") {
+		if (p_owner[i] != eFACTION.Chaos)&& (p_owner[i] != eFACTION.Heretics) and (p_owner[i] != eFACTION.Eldar) and (planets >= i) and (p_type[i] != "Dead") and (p_type[i] != "Craftworld") {
 		    success = false;
 		    is_ork = p_owner[i] == eFACTION.Ork;
 		
@@ -210,7 +210,7 @@ function scr_enemy_ai_b() {
 		            var garrison_mod = choose(0.05, 0.1, 0.15, 0.2);
 
 		            if (is_garrison_force) {
-		                garrison_mod -= 0.005 * total_garrison;
+		                garrison_mod -= 0.01 * total_garrison;
 		            }
 
 		            if (garrison_mod > 0) {
@@ -235,7 +235,8 @@ function scr_enemy_ai_b() {
 		            } else {
 		                tixt = $"Marine garrison prevents rebellion on {planet_string}"
 		                scr_alert("green", "owner", tixt, x, y);
-		                scr_event_log("purple", tixt, name);
+		                scr_event_log("green", tixt, name);
+		                p_heresy[i]-=irandom(5);
 		            }
 		            // Cult crushed; don't bother showing if there's already fighting going on over there
 		        } else if (rando >= 41) and (rando < 81) and (p_traitors[i] < 2) {
