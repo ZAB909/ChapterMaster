@@ -528,7 +528,7 @@ if (menu==1 && (managing>0 || managing<0)){
         if (!is_array(last_unit)){
             last_unit=[0,0];
         }
-        if (unit.base_group != "none") && (last_unit[1]!=unit.marine_number){
+        if (unit.base_group != "none") && (last_unit[1]!=unit.marine_number || last_unit[0]!=unit.company){
             last_unit=[unit.company,unit.marine_number]
             marine_armour[0]=unit.armour();
             fix_right=0;

@@ -55,69 +55,39 @@ function scr_special_view(command_group) {
 	}
 
 	if (command_group==12) or (command_group==0){// Apothecarion
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
-			bad=0;
-		    if (obj_ini.TTRPG[company,v].ship_location>0){
-		        var ham=obj_ini.TTRPG[0][v].ship_location;
-		        if (obj_ini.ship_location[ham]=="Lost") then continue
-		    }
-			unit = obj_ini.TTRPG[company][v]
-		    if (unit.IsSpecialist("apoth", true)){
-		        add_man_to_manage_arrays(unit);
-		        if (obj_ini.role[0][v]=obj_ini.role[100][15]) then ma_promote[b]=1;
-		    }
+		var apothecaries = collect_role_group(["apoth",true]);
+		for (var i=0;i<array_length(apothecaries);i++){
+			unit = apothecaries[i];
+			add_man_to_manage_arrays(apothecaries[i]);
+			//if (unit.role()== obj_ini.role[0][v]=obj_ini.role[100][15]) then ma_promote[b]=1;
 		}
 	}
 
 	v=0;
 	if (command_group==13) or (command_group==0){// Librarium
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
-		    if (obj_ini.TTRPG[company,v].ship_location>0){
-		        var ham=obj_ini.TTRPG[0][v].ship_location;
-		        if (obj_ini.ship_location[ham]=="Lost") then continue;
-		    }
-		    //find if mlib specialist or trainee
-		    unit = obj_ini.TTRPG[company][v];
-		    if (unit.IsSpecialist("libs", true)){
-		        add_man_to_manage_arrays(unit);
-	            if (unit.role()=="Lexicanum") and (ma_exp[b]>=80) then ma_promote[b]=1;
-	            if (unit.role()=="Codiciery") and (ma_exp[b]>=125) then ma_promote[b]=1;
-		    }
-		}
+		var libs = collect_role_group(["libs",true]);
+		for (var i=0;i<array_length(libs);i++){
+			unit = libs[i];
+			add_man_to_manage_arrays(libs[i]);
+		}		
 	}
 
 	v=0;
 	if (command_group==14) or (command_group==0){// Reclusium
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
-		    bad=0;
-		    if (obj_ini.TTRPG[company,v].ship_location>0){
-		        var ham=obj_ini.TTRPG[0][v].ship_location;
-		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
-		    }
-		    unit = obj_ini.TTRPG[company,v];
-		    if (bad==0){
-		    	if (unit.IsSpecialist("chap", true) && (global.chapter_name!="Iron Hands" || unit.role()=="Master of Sanctity")){
-		    		add_man_to_manage_arrays(unit);
-		    	}
-			}
-		}
+		var chaps = collect_role_group(["chap",true]);
+		for (var i=0;i<array_length(chaps);i++){
+			unit = chaps[i];
+			add_man_to_manage_arrays(chaps[i]);
+		}	
 	}
 
 	v=0;
 	squads=0;
 	if (command_group==15) or (command_group==0){// Armamentarium
-		for (v = 0;v<array_length(obj_ini.TTRPG[0]);v++){
-		    bad=0;
-		    if (obj_ini.TTRPG[company,v].ship_location>0){
-		        var ham=obj_ini.TTRPG[0][v].ship_location;
-		        if (obj_ini.ship_location[ham]=="Lost") then bad=1;
-		    }
-		    unit = obj_ini.TTRPG[company,v];
-		    if (!bad){
-		    	if (unit.IsSpecialist("forge", true)){
-		    		add_man_to_manage_arrays(unit);
-		    	}
-			}
+		var chaps = collect_role_group(["forge",true]);
+		for (var i=0;i<array_length(chaps);i++){
+			unit = chaps[i];
+			add_man_to_manage_arrays(chaps[i]);
 		}
 	}
 
