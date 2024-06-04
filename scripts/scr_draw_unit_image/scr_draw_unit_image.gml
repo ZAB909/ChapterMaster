@@ -505,7 +505,6 @@ function scr_draw_unit_image(_background=false){
 				armour_sprite=spr_scout_colors2;
                 if (squad!="none"){
                     if (obj_ini.squads[squad].type=="scout_sniper_squad" || weapon_one()=="Sniper Rifle" || weapon_two()=="Sniper Rifle"){
-                        armour_sprite=spr_scout_colors;
                         unit_is_sniper = true;
                     }
                 }
@@ -1225,7 +1224,7 @@ function scr_draw_unit_image(_background=false){
                     draw_sprite(spr_helm_decorations,1,x_surface_offset,y_surface_offset);
                 }
             }
-            if (armour_type==ArmourType.Indomitus && !armour_bypass){
+            else if (armour_type==ArmourType.Indomitus && !armour_bypass){
                 if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset-8);
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
@@ -1235,6 +1234,13 @@ function scr_draw_unit_image(_background=false){
                 }
                 if (role() == obj_ini.role[100][Role.SERGEANT] || role() == obj_ini.role[100][Role.VETERAN_SERGEANT]) {
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
+                }
+            } else if (armour()=="Scout Armour"){
+                var head_mod = body.head.variation%3;
+                if (head_mod == 1){
+                    draw_sprite(spr_scout_heads,0,x_surface_offset,y_surface_offset);
+                } else if (head_mod==2){
+                    draw_sprite(spr_scout_heads,1,x_surface_offset,y_surface_offset);
                 }
             }
 
