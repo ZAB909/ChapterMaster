@@ -2622,12 +2622,11 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		if (_apply_gauss == true) {
 			if (_maximum_age != 0){
-				while (_age < _minimum_age || _age > _maximum_age){
-					_age = gauss(_minimum_age, _minimum_age / _gauss_sd_mod);
-				}
+				_gauss_sd_mod = ((_maximum_age-_minimum_age)/4)
+				gauss_positive(_minimum_age, _gauss_sd_mod)
 			} else {
 				while (_age < _minimum_age){
-					_age = gauss(_minimum_age, _minimum_age / _gauss_sd_mod);
+					_age = gauss(_minimum_age, _minimum_age / 4);
 				}
 			}
 		} else {
