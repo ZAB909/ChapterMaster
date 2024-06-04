@@ -2636,9 +2636,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static roll_experience = function() {
 		var _exp = 0;
-		var _company_bonus = 0;
 		var _age_bonus = age();
-		var _gauss_sd_mod = 14;
 
 		// switch(company){
 		// 	case 1:
@@ -2699,10 +2697,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// case obj_ini.role[100][Role.SCOUT]:
 			// 	break;
 		// }
+		_comp_bonus_list = [5,20,15,10,8,6,5,4,3,2,1];
+		_company_bonus = _comp_bonus_list[company]
 
 		_exp = _age_bonus + _company_bonus;
-		_exp = max(0, floor(gauss(_exp, _exp / _gauss_sd_mod)));
-		add_exp(_exp);
+		_exp += gauss_positive(0, _company_bonus);
+
+		add_exp(floor(_exp));
 	}
 
 	static assign_reactionary_traits = function() {
