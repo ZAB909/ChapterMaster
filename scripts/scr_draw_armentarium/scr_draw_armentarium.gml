@@ -93,12 +93,14 @@ function drop_down(selection, draw_x, draw_y, options,open_marker){
 
 function same_locations(first_loc,second_loc){
     var same_loc = false;
-    if (first_loc[2] != "warp" && first_loc[2] != "lost"){
-        if (first_loc[2] == second_loc[2]) then same_loc=true;
-    } else {
-        if (first_loc[1] == second_loc[1]) &&
-            (first_loc[0] == second_loc[0]){
-                same_loc=true;
+    if (is_array(first_loc)&& is_array(second_loc)){
+        if (first_loc[2] != "warp" && first_loc[2] != "lost"){
+            if (first_loc[2] == second_loc[2]) then same_loc=true;
+        } else {
+            if (first_loc[1] == second_loc[1]) &&
+                (first_loc[0] == second_loc[0]){
+                    same_loc=true;
+            }
         }
     }
     return same_loc;
@@ -114,6 +116,9 @@ function calculate_research_points(turn_end=false){
         var tech_locations=[]
         var techs = collect_role_group("forge");
         for (var i=0; i<array_length(techs); i++){
+            if (techs[i].IsSpecialist("heads")){
+                forge_master=i;
+            }            
             if (techs[i].in_jail()) then continue;
             if (techs[i].technology>40 && techs[i].hp() >0){
                 research_points += techs[i].technology-40;
@@ -130,9 +135,6 @@ function calculate_research_points(turn_end=false){
                 }
             }
             tech_locations[i] = techs[i].marine_location();
-            if (techs[i].IsSpecialist("heads")){
-                forge_master=i;
-            }
         }
         if (forge_master>-1){
             obj_controller.master_of_forge = techs[forge_master];

@@ -44,7 +44,7 @@ function scr_cheatcode(argument0) {
             createobj_controller.chaplain_points = 50;
         }                      
         if (cheatcode_string=="artifact"){
-            scr_add_artifact("random","",0,obj_ini.ship[1],501);
+            scr_add_artifact("random","",6,obj_ini.ship[1],501);
         }
         if (cheatcode_string=="inspection"){
             new_inquisitor_inspection();
