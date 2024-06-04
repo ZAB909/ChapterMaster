@@ -1844,6 +1844,7 @@ function scr_initialize_custom() {
 							],
 							[
 								weapon_lists.heavy_weapons, 1, {
+									"wep2":"Combat Knife",
 									"mobi":"Heavy Weapons Pack",
 								}
 							]
