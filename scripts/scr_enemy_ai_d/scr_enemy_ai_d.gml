@@ -387,8 +387,10 @@ function scr_enemy_ai_d() {
                 
                 
 	                var fleet, xx, yy;
-	                xx=random_range(room_width*1.25,room_width*2);xx=choose(xx*-1,xx);xx=x+xx;
-	                yy=random_range(room_height*1.25,room_height*2);yy=choose(yy*-1,yy);yy=y+yy;
+	                xx=random_range(room_width*1.25,room_width*2);xx=choose(xx*-1,xx);
+                    xx=x+xx;
+	                yy=random_range(room_height*1.25,room_height*2);yy=choose(yy*-1,yy);
+                    yy=y+yy;
 	                fleet=instance_create(xx,yy,obj_en_fleet);
 	                fleet.owner = eFACTION.Tyranids;
 	                fleet.sprite_index=spr_fleet_tyranid;
