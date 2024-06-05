@@ -87,6 +87,13 @@ function role_groups(group){
 				roles[Role.VETERAN],
 				 obj_ini.role[100][11],			
 			];
+		case "battle_line":
+			role_list = [
+				obj_ini.role[100][Role.TACTICAL],
+				obj_ini.role[100][Role.DEVASTATOR],
+				obj_ini.role[100][Role.ASSAULT],
+				obj_ini.role[100][Role.SERGEANT],		
+			];			
 			break;
 	}
 	return role_list;
@@ -178,7 +185,10 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "captain_candidates":
 			specialists = role_groups("captain_candidates");
-			break;			
+			break;
+		case "battle_line":
+			specialists = role_groups("battle_line");
+			break;						
 	}
 
 	return array_contains(specialists,unit_role);

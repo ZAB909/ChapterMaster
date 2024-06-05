@@ -2697,7 +2697,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// case obj_ini.role[100][Role.SCOUT]:
 			// 	break;
 		// }
-		_comp_bonus_list = [5,20,15,10,8,6,5,4,3,2,1];
+		_comp_bonus_list = [5,20,10,10,10,10,5,4,3,2,1];
 		_company_bonus = _comp_bonus_list[company]
 
 		_exp = _age_bonus + _company_bonus;
