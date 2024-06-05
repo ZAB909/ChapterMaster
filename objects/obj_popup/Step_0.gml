@@ -951,8 +951,10 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         var mission_is_go =false;
         if (mission_star!="none"){
             var _estimate = estimate;
+            var _planet = planet;
+            var _mission = mission;
             with (mission_star){
-                if (add_new_problem(planet, mission, _estimate)){
+                if (add_new_problem(_planet, _mission, _estimate)){
                     new_star_event_marker("green");
                     mission_is_go=true;               
                 }
@@ -1047,6 +1049,7 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
         }
         if (!mission_is_go){
             if (mission="artifact"){
+                var last_artifact;
                 scr_quest(0,"artifact_loan",4,estimate);
                 if (obj_ini.fleet_type=1){
                     image="fortress";
@@ -1057,31 +1060,24 @@ if (press=1) and (option1!="") or ((demand=1) and (mission!="") and (string_coun
                     if (obj_ini.icon_name="dorf1") then image="fortress_dorf";
                     if (obj_ini.icon_name="dorf2") then image="fortress_dorf";
                     if (obj_ini.icon_name="dorf3") then image="fortress_dorf";
-                    scr_add_artifact("good","inquisition",0,obj_ini.home_name,2);
+                    last_artifact = scr_add_artifact("good","inquisition",0,obj_ini.home_name,2);
                 }else if (obj_ini.fleet_type!=1){
                     image="artifact_given";
-                    scr_add_artifact("good","inquisition",0,obj_ini.ship[1],501);
+                    last_artifact =scr_add_artifact("good","inquisition",0,obj_ini.ship[1],501);
                 }
                 
-                title="New Artifact";fancy_title=0;text_center=0;
+                title="New Artifact";
+                fancy_title=0;
+                text_center=0;
                 text="The Inquisition has left an Artifact in your care, until it may be retrieved.  It has been stored ";
                 if (obj_ini.fleet_type=1) then text+="within your Fortress Monastery.";
                 if (obj_ini.fleet_type!=1) then text+="upon your ship '"+string(obj_ini.ship[1])+"'.";
                 scr_event_log("","Inquisition Mission Accepted: The Inquisition has left an Artifact in your care.");
                 
-                var i,last_artifact;i=0;last_artifact=0;
-                repeat(100){
-                    if (last_artifact=0){
-                        i+=1;
-                        if (obj_ini.artifact[i]=""){
-                            last_artifact=i-1;
-                            break;
-                        }
-                    }
-                }
-                
                 text+="  It is some form of "+string(obj_ini.artifact[last_artifact])+".";
-                option1="";option2="";option3="";
+                option1="";
+                option2="";
+                option3="";
                 obj_controller.cooldown=10;exit;
             }
         }

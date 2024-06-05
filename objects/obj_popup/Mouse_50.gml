@@ -342,14 +342,20 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][3],"sternguard_veteran_squad");
         variable_struct_set(role_squad_equivilances,obj_ini.role[100][4],"terminator_squad");
 
-        for(i=0;i<array_length(obj_controller.display_unit);i++){
+        for(i=0;i<array_length(obj_controller.display_unit) && mahreens<500;i++){
             if (obj_controller.man[i]=="man") and (obj_controller.man_sel[i]==1) and (obj_controller.ma_exp[i]>=min_exp){
                 moveable=true;
                 unit = obj_controller.display_unit[i];
                 if (unit.squad != "none"){   // this evaluates if you are trying promote a whole squad
                     move_squad = unit.squad;
                     squad = obj_ini.squads[move_squad];
+                    squad.update_fulfilment();
                     move_members = squad.members;
+                    if (array_length(move_members)==1){
+                        unit.squad = "none";
+                        array_delete(obj_ini.squads, squad, 1);
+                        moveable = false;
+                    }                  
                     for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
                         if (i+mem<array_length(obj_controller.display_unit)){
                             if (!is_struct(obj_controller.display_unit[i+mem])) then continue;
@@ -366,7 +372,7 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                     if (moveable){
                         var mem_unit;
                         for (var mem = 0;mem<array_length(move_members);mem++){
-                            var mem_unit = fetch_unit(move_members[mem])
+                            var mem_unit = fetch_unit(move_members[mem]);
                             if (mem_unit.company!=target_comp){
                                 scr_move_unit_info(mem_unit.company,target_comp,mem_unit.marine_number,mahreens, false);
                                 squad.members[mem][0] = target_comp;
@@ -710,7 +716,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             }
             if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
 
-            if (string_count("mnr",old_tags)=0){
+            if (string_count("MINOR",old_tags)=0){
                 if (giveto=2) then obj_controller.disposition[2]+=6;
                 if (giveto=3) then obj_controller.disposition[3]+=4;
                 if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;

@@ -1117,7 +1117,7 @@ for(var i=1; i<=99; i++){
             }
             // Ships construction
             if (string_count("new_",event[i])>0){
-                var fucking=event[i];
+                var new_ship_event=event[i];
                 with(obj_temp5){instance_destroy();}
                 with(obj_star){
                     if (owner==eFACTION.Mechanicus){
@@ -1133,138 +1133,28 @@ for(var i=1; i<=99; i++){
                     that2=instance_nearest(that.x,that.y,obj_star);
                     new_defense_fleet=instance_create(that2.x+24,that2.y-24,obj_p_fleet);
 
-                    var ship_names="",new_name="",last_ship=0;
-                    for(var k=1; k<=40; k++){
-                        if (obj_ini.ship[k]!="") then ship_names+=string(obj_ini.ship[k]);
-                        if (last_ship==0) and (obj_ini.ship[k]=="") then last_ship=k;
-                    }
-                    for(var k=1; k<=50; k++){
-                        if (new_name==""){
-                            new_name=global.name_generator.generate_imperial_ship_name();
-                            if (string_count(new_name,ship_names)>0) then new_name="";
-                        } else {break};
-                    }
-
-                    obj_ini.ship[last_ship]=new_name;
-                    obj_ini.ship_uid[last_ship]=floor(random(99999999))+1;
-                    obj_ini.ship_owner[last_ship]=1; //TODO: determine if this means the player or not
-                    obj_ini.ship_size[last_ship]=1;
-                    obj_ini.ship_location[last_ship]=that2.name;
-                    obj_ini.ship_leadership[last_ship]=100;
                     // Creates the ship
-                    if (string_count("Battle Barge",fucking)>0){
-                        obj_ini.ship_class[last_ship]="Battle Barge";
-                        obj_ini.ship_size[last_ship]=3;
-                        obj_ini.ship_hp[last_ship]=1200;
-                        obj_ini.ship_maxhp[last_ship]=1200;
-                        obj_ini.ship_conditions[last_ship]="";
-                        obj_ini.ship_speed[last_ship]=20;
-                        obj_ini.ship_turning[last_ship]=45;
-                        obj_ini.ship_front_armour[last_ship]=6;
-                        obj_ini.ship_other_armour[last_ship]=6;
-                        obj_ini.ship_weapons[last_ship]=5;
-                        obj_ini.ship_shields[last_ship]=12;
-                        obj_ini.ship_wep[last_ship,1]="Weapons Battery";
-                        ship_wep_facing[last_ship,1]="left";
-                        obj_ini.ship_wep_condition[last_ship,1]="";
-                        obj_ini.ship_wep[last_ship,2]="Weapons Battery";
-                        ship_wep_facing[last_ship,2]="right";
-                        obj_ini.ship_wep_condition[last_ship,2]="";
-                        obj_ini.ship_wep[last_ship,3]="Thunderhawk Launch Bays";
-                        obj_ini.ship_wep_facing[last_ship,3]="special";
-                        obj_ini.ship_wep_condition[last_ship,3]="";
-                        obj_ini.ship_wep[last_ship,4]="Torpedo Tubes";
-                        obj_ini.ship_wep_facing[last_ship,4]="front";
-                        obj_ini.ship_wep_condition[last_ship,4]="";
-                        obj_ini.ship_wep[last_ship,5]="Bombardment Cannons";
-                        obj_ini.ship_wep_facing[last_ship,5]="most";
-                        obj_ini.ship_wep_condition[last_ship,5]="";
-                        obj_ini.ship_capacity[last_ship]=600;
-                        obj_ini.ship_carrying[last_ship]=0;
-                        obj_ini.ship_contents[last_ship]="";
-                        obj_ini.ship_turrets[last_ship]=3;
+
+                    last_ship = new_player_ship(new_ship_event, that2.name);
+                    if (obj_ini.ship_class[last_ship] =="Battle Barge"){
                         new_defense_fleet.capital[1]=obj_ini.ship[last_ship];
                         new_defense_fleet.capital_number=1;
                         new_defense_fleet.capital_num[1]=last_ship;
                         new_defense_fleet.capital_uid[1]=obj_ini.ship_uid[last_ship];
                     }
-                    if (string_count("Strike Cruiser",fucking)>0){
-                        obj_ini.ship_class[last_ship]="Strike Cruiser";
-                        obj_ini.ship_size[last_ship]=2;
-                        obj_ini.ship_hp[last_ship]=600;
-                        obj_ini.ship_maxhp[last_ship]=600;
-                        obj_ini.ship_conditions[last_ship]="";
-                        obj_ini.ship_speed[last_ship]=25;
-                        obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armour[last_ship]=6;
-                        obj_ini.ship_other_armour[last_ship]=6;
-                        obj_ini.ship_weapons[last_ship]=4;
-                        obj_ini.ship_shields[last_ship]=6;
-                        obj_ini.ship_wep[last_ship,1]="Weapons Battery";
-                        ship_wep_facing[last_ship,1]="left";
-                        obj_ini.ship_wep_condition[last_ship,1]="";
-                        obj_ini.ship_wep[last_ship,2]="Weapons Battery";
-                        ship_wep_facing[last_ship,2]="right";
-                        obj_ini.ship_wep_condition[last_ship,2]="";
-                        obj_ini.ship_wep[last_ship,3]="Thunderhawk Launch Bays";
-                        obj_ini.ship_wep_facing[last_ship,3]="special";
-                        obj_ini.ship_wep_condition[last_ship,3]="";
-                        obj_ini.ship_wep[last_ship,4]="Bombardment Cannons";
-                        obj_ini.ship_wep_facing[last_ship,4]="most";
-                        obj_ini.ship_wep_condition[last_ship,4]="";
-                        obj_ini.ship_capacity[last_ship]=250;
-                        obj_ini.ship_carrying[last_ship]=0;
-                        obj_ini.ship_contents[last_ship]="";
-                        obj_ini.ship_turrets[last_ship]=1;
+                    else if (obj_ini.ship_class[last_ship] =="Strike Cruiser"){
                         new_defense_fleet.frigate[1]=obj_ini.ship[last_ship];
                         new_defense_fleet.frigate_number=1;
                         new_defense_fleet.frigate_num[1]=last_ship;
                         new_defense_fleet.frigate_uid[1]=obj_ini.ship_uid[last_ship];
                     }
-                    if (string_count("Gladius",fucking)>0){
-                        obj_ini.ship_class[last_ship]="Gladius";
-                        obj_ini.ship_hp[last_ship]=200;
-                        obj_ini.ship_maxhp[last_ship]=200;
-                        obj_ini.ship_conditions[last_ship]="";
-                        obj_ini.ship_speed[last_ship]=30;
-                        obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armour[last_ship]=5;
-                        obj_ini.ship_other_armour[last_ship]=5;
-                        obj_ini.ship_weapons[last_ship]=1;
-                        obj_ini.ship_shields[last_ship]=1;
-                        obj_ini.ship_wep[last_ship,1]="Weapons Battery";
-                        ship_wep_facing[last_ship,1]="most";
-                        obj_ini.ship_wep_condition[last_ship,1]="";
-                        obj_ini.ship_capacity[last_ship]=30;
-                        obj_ini.ship_carrying[last_ship]=0;
-                        obj_ini.ship_contents[last_ship]="";
-                        obj_ini.ship_turrets[last_ship]=1;
+                    else if (obj_ini.ship_class[last_ship] =="Gladius"){
                         new_defense_fleet.escort[1]=obj_ini.ship[last_ship];
                         new_defense_fleet.escort_number=1;
                         new_defense_fleet.escort_num[1]=last_ship;
                         new_defense_fleet.escort_uid[1]=obj_ini.ship_uid[last_ship];
                     }
-                    if (string_count("Hunter",fucking)>0){
-                        obj_ini.ship_class[last_ship]="Hunter";
-                        obj_ini.ship_hp[last_ship]=200;
-                        obj_ini.ship_maxhp[last_ship]=200;
-                        obj_ini.ship_conditions[last_ship]="";
-                        obj_ini.ship_speed[last_ship]=30;
-                        obj_ini.ship_turning[last_ship]=90;
-                        obj_ini.ship_front_armour[last_ship]=5;
-                        obj_ini.ship_other_armour[last_ship]=5;
-                        obj_ini.ship_weapons[last_ship]=2;
-                        obj_ini.ship_shields[last_ship]=1;
-                        obj_ini.ship_wep[last_ship,1]="Torpedoes";
-                        ship_wep_facing[last_ship,1]="front";
-                        obj_ini.ship_wep_condition[last_ship,1]="";
-                        obj_ini.ship_wep[last_ship,2]="Weapons Battery";
-                        ship_wep_facing[last_ship,2]="most";
-                        obj_ini.ship_wep_condition[last_ship,2]="";
-                        obj_ini.ship_capacity[last_ship]=25;
-                        obj_ini.ship_carrying[last_ship]=0;
-                        obj_ini.ship_contents[last_ship]="";
-                        obj_ini.ship_turrets[last_ship]=1;
+                    else if (obj_ini.ship_class[last_ship] =="Hunter"){
                         new_defense_fleet.escort[1]=obj_ini.ship[last_ship];
                         new_defense_fleet.escort_number=1;
                         new_defense_fleet.escort_num[1]=last_ship;
@@ -1350,10 +1240,12 @@ for(var i=1; i<=99; i++){
                 if (item=="robot"){
                     unit.edit_corruption(choose(2,4,6,8,10));
                     tixt+="some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step.  "+string(marine_name)+" maintains that it has no AI, though the other "+string(obj_ini.role[100][16])+" express skepticism.";
+                    unit.add_trait("tech_heretic");
                 }
                 if (item=="demon"){
                     unit.edit_corruption(choose(8,12,16,20));
                     tixt+="some form of horrendous statue.  What was meant to be some sort of angel, or primarch, instead has a mishappen face that is hardly human in nature.  Between the fetid, ragged feathers and empty sockets it is truly blasphemous.";
+                    unit.add_trait("tech_heretic");
                 }
                 if (item=="fusion"){
                     //TODO if tech heretic chosen don't kill the dude
@@ -1467,3 +1359,5 @@ if (fest_scheduled>0) and (fest_repeats>0){
 //research and forge related actions
 research_end();
 apothecary_simple();
+
+//complex route plotting for player fleets

@@ -5,11 +5,23 @@ function gauss(base, sd){
     do {
         x1 = random(2) - 1;
         x2 = random(2) - 1;
-        w = (x1 * x1) + (x2 * x2);
+        w = sqr(x1)+sqr(x2);
     } until (0 < w and w < 1);
 
     w = sqrt(-2 * ln(w) / w);
     return base + sd * x1 * w;
+}
+
+function gauss_positive(base, sd){
+    var x1, x2, w;
+    do {
+        x1 = random_range(0, 1);
+        x2 = random_range(0, 1);
+        w = sqr(x1)+sqr(x2);
+    } until (0 < w and w < 1);
+
+    w = sqrt(-2 * ln(w) / w);
+    return base + (sd * x1 * w);
 }
 
 function pareto(base, exponent=1){

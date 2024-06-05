@@ -16,10 +16,10 @@ if (closing=true) and (fading=-1) and (fade_alpha<=0){
     repeat(700){ide+=1;
         unit = obj_ini.TTRPG[attend_co[ide]][attend_id[ide]];
         if (attend_corrupted[ide]=0) and (attend_id[ide]>0){
-            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"Chaos")){
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"chaos")){
                 unit.corruption+=choose(1,2,3,4);
             }
-            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"Daemon")){
+            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],"daemonic")){
                 unit.corruption+=choose(6,7,8,9);
             }            
             attend_corrupted[ide]=1;
@@ -272,7 +272,7 @@ if (ticked=1){// Select a random marine and have them perform an action
     if (activity="artifact"){
         var spesh="";
         var woa=string(obj_ini.artifact[obj_controller.fest_display]);
-        var nerves_spesh = ["GOAT","CHE","THI","TEN","JUM","PRE"]
+        var nerves_spesh = ["GOAT","CHE","THI","TENTACLES","JUM","PRE"]
         for (var sp=0;sp<array_length(nerves_spesh);sp++){
             if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display],nerves_spesh[sp])){
                 spesh="nerves";
@@ -326,40 +326,40 @@ if (ticked=1){// Select a random marine and have them perform an action
         
         if (t1="Weapon"){
             // gold, glowing, underslung bolter, underslung flamer
-            t5=choose("GLD","GLO","UBL","UFL");
+            t5=choose("GOLD","GLOW","UBOLT","UFL");
             // Runes, scope, adamantium, void
-            t4=choose("RUN","SCO","ADA","VOI");
+            t4=choose("RUN","SCO","ADAMANTINE","VOI");
             if ((t2="Power Sword") or (t2="Power Axe") or (t2="Power Spear")) and (t4="SCO") then t4="CHB";// chainblade
             if ((t2="Power Fist") or (t2="Power Claw")) and (t4="SCO") then t4="DUB";// doubled up
             if (t2="Relic Blade") and (t4="SCO") then t4="UFL";// underslung flamer
         }
         if (t1="Armour"){
             // golden filigree, glowing optics, purity seals
-            t5=choose("GLD","GLO","PUR");
+            t5=choose("GOLD","GLOW","PUR");
             // articulated plates, spikes, runes, drake scales
-            t4=choose("ART","SPI","RUN","DRA");
+            t4=choose("ART","SPIKES","RUN","DRA");
         }
         if (t1="Gear"){
             // supreme construction, adamantium, gold
-            t4=choose("SUP","ADA","GOLD");// bur = ever burning
-            if (t2="Rosarius") then t5=choose("GLD","GLO","BIG","BUR");
-            if (t2="Bionics") then t5=choose("GLD","GLO","RUN","SOO");// Soothing appearance
-            if (t2="Psychic Hood") then t5=choose("FIN","GLD","BUR","MASK");// fine cloth, gold, ever burning, mask
-            if (t2="Jump Pack") then t5=choose("SPI","SKRE","WHI","SIL");// spikes, screaming, white flame, silent
-            if (t2="Servo Arms") then t5=choose("GLD","TEN","GOR","SOO");// gold, tentacles, gorilla build, soothing appearance
+            t4=choose("SUP","ADAMANTINE","GOLD");// bur = ever burning
+            if (t2="Rosarius") then t5=choose("GOLD","GLOW","BIG","BUR");
+            if (t2="Bionics") then t5=choose("GOLD","GLOW","RUN","SOO");// Soothing appearance
+            if (t2="Psychic Hood") then t5=choose("FIN","GOLD","BUR","MASK");// fine cloth, gold, ever burning, mask
+            if (t2="Jump Pack") then t5=choose("SPIKES","SKRE","WHI","SILENT");// spikes, screaming, white flame, silent
+            if (t2="Servo Arms") then t5=choose("GOLD","TENTACLES","GOR","SOO");// gold, tentacles, gorilla build, soothing appearance
         }
         if (t1="Device") and (t2!="Robot"){
-            t4=choose("GOLD","CRU","GLO","ADA");// skulls, falling angel, thin, tentacle, mindfuck
-            if (t2!="Statue") then t5=choose("SKU","FAL","THI","TEN","MIN");
+            t4=choose("GOLD","CRU","GLOW","ADAMANTINE");// skulls, falling angel, thin, tentacle, mindfuck
+            if (t2!="Statue") then t5=choose("SKU","FAL","THI","TENTACLES","MIN");
             // goat, speechless, dying angel, jumping into magma, cheshire grunx
             if (t2="Statue") then t5=choose("GOAT","SPE","DYI","JUM","CHE");
             // Gold, glowing, preserved flesh, adamantium
-            if (t2="Tome") then t4=choose("GOLD","GLO","PRE","ADA","SAL","BUR");
+            if (t2="Tome") then t4=choose("GOLD","GLOW","PRE","ADAMANTINE","SAL","BUR");
             if (t4="PRE") and (t3="") then t3=choose("","Chaos","Daemonic");
         }
         if (t1="Device") and (t2="Robot"){// human/robutt/shivarah
             t4=choose("HU","RO","SHI");
-            t5=choose("ADA","JAD","BRO","RUNE");
+            t5=choose("ADAMANTINE","JAD","BRO","RUNE");
         }
         
         

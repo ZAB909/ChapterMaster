@@ -123,6 +123,9 @@ if (instance_exists(obj_controller)){
         if (mfleet.escort_number+mfleet.frigate_number+mfleet.capital_number=0){
             text="Your fleet is given the command to fall back.  The vessels turn and prepare to enter the Warp, constantly under a hail of enemy fire.  All of your ships are destroyed attempting to flee.";
         }
+        with (mfleet){
+            complex_route=[];
+        }
         
         with(obj_fleet_select){instance_destroy();}
         if (mfleet.escort_number+mfleet.frigate_number+mfleet.capital_number=0) and (instance_exists(mfleet)){with(mfleet){instance_destroy();}}

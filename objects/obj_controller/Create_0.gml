@@ -796,12 +796,14 @@ recruits=0;
 recruiting_worlds="";
 recruit_trial="Blood Duel";
 recruit_last=0;
+
+recruit_name[0]="";
+recruit_corruption[0]=0;
+recruit_distance[0]=0;
+recruit_training[0]=0;
+recruit_exp[0]=0;
+
 for(var i=0; i<501; i++){
-    recruit_name[i]="";
-    recruit_corruption[i]=0;
-    recruit_distance[i]=0;
-    recruit_training[i]=0;
-    recruit_exp[i]=0;
     
     // For loyalty penalties
     if (i<=50){
@@ -1750,10 +1752,35 @@ action_set_alarm(2, 0);
 controller_standard_draw=function(){
  // if (instance_exists(obj_turn_end)) then exit;
 
-    script_execute(scr_ui_manage,0,0,0,0,0);
-    script_execute(scr_ui_advisors,0,0,0,0,0);
-    script_execute(scr_ui_diplomacy,0,0,0,0,0);
-    script_execute(scr_ui_settings,0,0,0,0,0);
+    try{
+        script_execute(scr_ui_manage,0,0,0,0,0);
+    } catch(_exception){
+        show_debug_message(_exception.message);
+        manage = 0;
+        menu = 0;
+
+    }
+    try{
+        script_execute(scr_ui_advisors,0,0,0,0,0);
+    } catch(_exception){
+        show_debug_message(_exception.message);
+        manage = 0;
+        menu = 0;   
+    }
+    try{
+        script_execute(scr_ui_diplomacy,0,0,0,0,0);
+    } catch(_exception){
+        show_debug_message(_exception.message);
+        manage = 0;
+        menu = 0;   
+    }
+    try{
+        script_execute(scr_ui_settings,0,0,0,0,0);
+    } catch(_exception){
+        show_debug_message(_exception.message);
+        manage = 0;
+        menu = 0;   
+    }
     var xx =__view_get( e__VW.XView, 0 );
     var yy =__view_get( e__VW.YView, 0 );
     // Main UI

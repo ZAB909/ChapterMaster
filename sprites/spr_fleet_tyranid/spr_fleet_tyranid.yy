@@ -79,7 +79,7 @@
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"26cce3c8-bd6b-4863-84da-05b93a669ad7","path":"sprites/spr_fleet_tyranid/spr_fleet_tyranid.yy",},},},"Disabled":false,"id":"ba17c42b-edf8-4b31-b958-ac28bf2f31e8","IsCreationKey":false,"Key":11.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
-    "visibleRange": {"x":0.0,"y":0.0,},
+    "visibleRange": null,
     "volume": 1.0,
     "xorigin": 14,
     "yorigin": 14,

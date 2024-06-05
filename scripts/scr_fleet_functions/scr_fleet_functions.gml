@@ -18,13 +18,13 @@ function fleets_next_location(fleet="none"){
 	var targ_location ="none";
 	if (fleet=="none"){
 		if (action!=""){
-	        var goal_x=fleet.action_x;
-	        var goal_y=fleet.action_y;
+	        var goal_x=action_x;
+	        var goal_y=action_y;
 	        targ_location=instance_nearest(goal_x,goal_y,obj_star);
 		} else {
-			targ_location=instance_nearest(fleet.x,fleet.y,obj_star);
+			targ_location=instance_nearest(x,y,obj_star);
 		}		
-	} else {
+	} else if (instance_exists(fleet)){
 		with (fleet){
 			targ_location = fleets_next_location();
 		}
@@ -78,24 +78,6 @@ function get_largest_player_fleet(){
 		}
 	}
 	return chosen_fleet;
-}
-
-function get_nearest_player_fleet(nearest_x, nearest_y){
-	var chosen_fleet = "none";
-	if instance_exists(obj_p_fleet){
-		with(obj_p_fleet){
-			if (point_in_rectangle(x, y, 0, 0, room_width, room_height)){
-				if (chosen_fleet=="none"){
-					chosen_fleet=self;
-					continue;
-				}
-				if (point_distance(nearest_x, nearest_y,x,y) < point_distance(nearest_x, nearest_y,chosen_fleet.x,chosen_fleet.y)){
-					chosen_fleet=self;
-				}
-			}
-		}
-	}
-	return chosen_fleet;	
 }
 
 function set_fleet_movement(){
@@ -320,8 +302,12 @@ function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_s
 	}
 	static final_array_path = function(){
 		var final_path = final_route_info[2];
+		var path_store = [];
 		array_push(final_path, final_route_info[0]);
-		return final_path;
+		for (var i=0;i<array_length(final_path);i++){
+			array_push(path_store, final_path[i].name);
+		}
+		return path_store;
 	}
 }
 

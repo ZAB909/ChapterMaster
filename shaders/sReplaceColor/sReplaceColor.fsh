@@ -41,7 +41,7 @@ void main()
   vec4 col = texture2D(gm_BaseTexture, v_vTexcoord);
   if (u_blend_modes==3 && (col.rgb == f_Colour1.rgb|| col.rgb == f_Colour2.rgb)){
     vec4 background = texture2D(background_texture, v_vTexcoord);
-    if (background.rgb==helm_replace.rgb || background.rgb==helm_second_replace.rgb||helm_lense_replace.rgb==helm_replace.rgb){
+    if (background.rgb==helm_replace.rgb || background.rgb==helm_second_replace.rgb || helm_lense_replace.rgb==helm_replace.rgb){
       col.rgb = background.rgb;
     }
   }   

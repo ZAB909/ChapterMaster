@@ -25,7 +25,7 @@ function scr_chapter_new(argument0) {
 	    role[i,8]="Tactical Marine";wep1[i,8]="Bolter";wep2[i,8]="Combat Knife";armour[i,8]="Power Armour";
 	    role[i,9]="Devastator Marine";wep1[i,9]="Heavy Ranged";wep2[i,9]="Combat Knife";armour[i,9]="Power Armour";mobi[i,9]="Heavy Weapons Pack";
 	    role[i,10]="Assault Marine";wep1[i,10]="Chainsword";wep2[i,10]="Bolt Pistol";armour[i,10]="Power Armour";mobi[i,10]="Jump Pack";
-		role[i,11]="Ancient";wep1[i,11]="Company Standard";wep2[i,11]="Bold Pistol";armour[i,11]="Power Armour";
+		role[i,11]="Ancient";wep1[i,11]="Company Standard";wep2[i,11]="Bolt Pistol";armour[i,11]="Power Armour";
 	    role[i,12]="Scout";wep1[i,12]="Bolter";wep2[i,12]="Combat Knife";armour[i,12]="Scout Armour";
 	    role[i,14]="Chaplain";wep1[i,14]="Crozius Arcanum";wep2[i,14]="Bolt Pistol";armour[i,14]="Power Armour";gear[i,14]="Rosarius";
 	    role[i,15]="Apothecary";wep1[i,15]="Chainsword";wep2[i,15]="Bolt Pistol";armour[i,15]="Power Armour";gear[i,15]="Narthecium";

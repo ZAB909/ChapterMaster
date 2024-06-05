@@ -16,7 +16,7 @@ function scr_random_event(execute_now) {
 	//        if (obj_controller.known[eFACTION.Eldar]=2){
 	//            obj_turn_end.audien_topic[obj_turn_end.audiences]="mission1";
 	//            obj_controller.known[eFACTION.Eldar]=2.2;
-	//            scr_quest(0,"300req",6,24);
+	//            scr_quest(0,"fund_elder",6,24);
 	//        }
         
 	//        exit;

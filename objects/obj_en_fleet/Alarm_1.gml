@@ -22,7 +22,7 @@ if ((trade_goods="Khorne_warband") or (trade_goods="Khorne_warband_landing_force
     khorne_fleet_cargo();
 }
 
-if (orbiting != noone) {
+if (instance_exists(orbiting)) {
     if (instance_exists(obj_crusade)) 
 	and (orbiting.owner <= eFACTION.Ecclesiarchy) 
 	and (owner = eFACTION.Imperium) 
@@ -111,17 +111,17 @@ if (orbiting != noone) {
     }
 }
 
-if (navy) {
+if (navy && action=="") {
 	if trade_goods != "player_hold" {
 
 
-	if (action="") and (trade_goods="") and (instance_exists(orbiting)){
+	if (trade_goods="") and (instance_exists(orbiting)){
 	    if (orbiting.present_fleet[20]>0) then exit;
 	}
 
 
 	// Check if the ground battle is victorious or not
-	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="invading_player") and (guardsmen_unloaded=1) {
+	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (trade_goods="invading_player") and (guardsmen_unloaded=1) {
 	    if (instance_exists(orbiting)) {
 			
 			//slightly more verbose than the last way, but reduces reliance on fixed array sizes
@@ -130,7 +130,8 @@ if (navy) {
 			},0)
 			
 	        if (tar == 0) {// Guard all dead
-	            trade_goods="recr";action="";
+	            trade_goods="recr";
+	            action="";
 	        } else { //this was always a dead path previously since tar could never be bigger than i, now it will
 	            if (orbiting.p_owner[tar]=eFACTION.Player) and (orbiting.p_player[tar]=0) and (planet_feature_bool(orbiting.p_feature[tar],P_features.Monastery)==0){
 	                if (orbiting.p_first[tar] != eFACTION.Player) {
@@ -147,7 +148,7 @@ if (navy) {
 	}
 
 	// Invade the player homeworld as needed
-	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="invade_player") and (guardsmen_unloaded=0){
+	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (trade_goods="invade_player") and (guardsmen_unloaded=0){
 	    if (instance_exists(orbiting)){
 	        var tar=0;
 			var i=0;
@@ -191,7 +192,7 @@ if (navy) {
 	}
 
 	// Bombard the shit out of the player homeworld
-	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (action="") and (trade_goods="") and (guardsmen_unloaded=0) and (instance_exists(orbiting)){
+	if (obj_controller.faction_status[eFACTION.Imperium]="War") and (trade_goods="") and (guardsmen_unloaded=0) and (instance_exists(orbiting)){
         var bombard=false;
 	    if (orbiting!=noone){
             if (orbiting.object_index==obj_star) then bombard=true;
@@ -215,19 +216,15 @@ if (navy) {
 				}
 	            if (hostile_fleet_count == 0){
                 
-	                var o,bombard,deaths,hurss,scare,onceh,wob,kill;
-	                o=0;bombard=0;deaths=0;hurss=0;onceh=0;wob=0;kill=0;
+	                var bombard=0,deaths=0,hurss=0,onceh=0,wob=0,kill=0;
                 
-	                repeat(4){
-						o+=1;
-	                    if (orbiting.p_owner[o]=eFACTION.Player) and (orbiting.p_population[o]+orbiting.p_pdf[o]>0) {
-							bombard=o;
-							break;
-						}
-	                    if (orbiting.p_owner[o]=eFACTION.Player) and (orbiting.p_player[o]>0) {
-							bombard=o;
-							break;
-						}
+	                for (var o=1;o<=planets;o++){
+	                	if (orbiting.p_owner[o]==eFACTION.Player){
+	                		if (orbiting.p_population[o]+orbiting.p_pdf[o]>0) ||  (orbiting.p_player[o]>0){
+	                			bombard=o;
+	                			break;
+	                		}
+	                	}
 	                }
                 
 	                if (bombard){
@@ -243,31 +240,31 @@ if (navy) {
 						} else {
 							kill=scare*15000000; // pop if small
 						}
-	                    var eheh,eheh2,eheh3;eheh=0;eheh2=0;eheh3="";
-	                    eheh=min(orbiting.p_pdf[bombard],(scare*15000000)/2);
+
+						var bombard_name = planet_numeral_name(bombard, orbiting);
+	                    var bombard_report_string=$"Imperial Battlefleet bombards {bombard_name}.";
+	                    var PDF_loses=min(orbiting.p_pdf[bombard],(scare*15000000)/2);
 						
-	                    if (orbiting.p_large[bombard]=0) {
-							eheh2=min(orbiting.p_population[bombard],scare*15000000)
+						var civil_loss_mod = orbiting.p_large[bombard]?scare*0.15:scare*15000000;
+
+						var civilian_losses=min(orbiting.p_population[bombard],civil_loss_mod)
+
+
+	                    if (civilian_losses>0) and (orbiting.p_large[bombard]=0) then {
+							bombard_report_string+=$" {civilian_losses} civilian casualties";
 						}
-	                    if (orbiting.p_large[bombard]=1) {
-							eheh2=min(orbiting.p_population[bombard],scare*0.15);
-						}
-                        
-	                    if (eheh2>0) and (orbiting.p_large[bombard]=0) then {
-							eheh3="Imperial Battlefleet bombards "+string(orbiting.name)+" "+scr_roman(bombard)+".  "+string(scr_display_number(eheh2))+" civilian casualties";
-						}
-	                    if (eheh2>0) and (orbiting.p_large[bombard]=1) {
-	                        if (eheh2>=1) then eheh3="Imperial Battlefleet bombards "+string(orbiting.name)+" "+scr_roman(bombard)+".  "+string(eheh2)+" billion civilian casualties";
-	                        if (eheh2<1) then eheh3="Imperial Battlefleet bombards "+string(orbiting.name)+" "+scr_roman(bombard)+".  "+string(floor(eheh2*1000))+" million civilian casualties";
+	                    if (civilian_losses>0) and (orbiting.p_large[bombard]=1) {
+	                        if (civilian_losses>=1) then bombard_report_string+=$" {civilian_losses} billion civilian casualties";
+	                        if (civilian_losses<1) then bombard_report_string+=$"  {floor(civilian_losses*1000)} million civilian casualties";
 	                    }
-	                    if (eheh>0) then eheh3+=" and "+string(scr_display_number(eheh))+" PDF lost.";
-	                    if (eheh<=0) and (eheh2>0) then eheh3+=".";
-	                    if (eheh2=0) and (eheh>0) then eheh3="Imperial Battlefleet bombards "+string(orbiting.name)+" "+scr_roman(bombard)+".  "+string(eheh)+" PDF lost.";
+	                    if (PDF_loses>0) then bombard_report_string+=$" and {scr_display_number(PDF_loses)} PDF lost.";
+	                    if (PDF_loses<=0) and (civilian_losses>0) then bombard_report_string+=".";
+	                    if (civilian_losses=0) and (PDF_loses>0) then bombard_report_string+=" {PDF_loses}  PDF lost.";
                         
-	                    if (eheh3!="") {
-	                        scr_alert("red","owner",string(eheh3),orbiting.x,orbiting.y);
-	                        scr_event_log("red",string(eheh3));
-	                        eheh3=string_replace(eheh3,",.",",");
+	                    if (bombard_report_string!="") {
+	                        scr_alert("red","owner",bombard_report_string,orbiting.x,orbiting.y);
+	                        scr_event_log("red",bombard_report_string, orbiting.name);
+	                        bombard_report_string=string_replace(bombard_report_string,",.",",");
 	                    }
                         
 	                    orbiting.p_pdf[bombard]-=(scare*15000000)/2;
@@ -307,33 +304,17 @@ if (navy) {
     
 	    if (hold){
 	        // Chase player fleets
-	        with(obj_temp8){instance_destroy();}
-	        with(obj_p_fleet) {
-	            if (action="move") and (x>0) and (x<room_width) and (y>0) and (y<room_height) {
-	                if (action_x>0) and (action_x<room_width) and (action_y>0) and (action_y<room_width) {
-	                    var tem;
-						tem=instance_create(action_x,action_y,obj_temp8);
-						tem.eta=action_eta;
-	                }
-	            }
-	        }
-	        if (instance_exists(obj_temp8)) and (instance_exists(orbiting)){
-	            var that,thatp,my_dis;
-	            that=instance_nearest(x,y,obj_temp8);
-				etah=that.eta;
-	            thatp=instance_nearest(that.x,that.y,obj_star);
-            
-	            if (instance_exists(thatp)){
-	                my_dis=point_distance(orbiting.x,orbiting.y,thatp.x,thatp.y)/48;
-	                if ((orbiting.x2=thatp.x) and (orbiting.y2=thatp.y)) 
-						or ((thatp.x2=orbiting.x) and (thatp.y2=orbiting.y)) 
-						then my_dis=my_dis/2;
-                
-	                if (my_dis<=etah) {
-	                    action_x=thatp.x;
-						action_y=thatp.y;
-						alarm[4]=1;// show_message("A");
-	                    with(obj_temp8){instance_destroy();}
+	        var chase_fleet = get_nearest_player_fleet(x,y, false, true);
+	        if (chase_fleet!="none") and (instance_exists(orbiting)){
+	            var thatp,my_dis;
+				etah=chase_fleet.eta;
+            	
+            	var intercept =  fleet_intercept_time_calculate(chase_fleet);
+	            if (intercept){
+
+	                if (intercept<=etah) {
+	                	target = chase_fleet.id;
+						chase_fleet_target_set();
 	                    trade_goods="player_hold";
 	                    exit;
 	                }
@@ -344,8 +325,6 @@ if (navy) {
         
         
 	        // Go after home planet or fleet?
-	        with(obj_temp7){instance_destroy();}
-	        with(obj_temp8){instance_destroy();}
         
         
 	        if (trade_goods="") and (action="") {
@@ -488,7 +467,7 @@ if (navy) {
 	var maxi,curr,i,o;
 	maxi=0;curr=0;i=0;o=0;
 
-	i=0;repeat(20){i+=1;
+	for (i=1;i<array_length(capital_imp);i++){
 	    if (capital_max_imp[i]>0) and (capital_number>i){capital_max_imp[i]=0;}
 	    if (capital_imp[i]>0) and (capital_number<=i) and (guardsmen_unloaded=0) then curr+=capital_imp[i];
 	    if (capital_max_imp[i]>0) and (capital_number<=i) then maxi+=capital_max_imp[i];
@@ -1038,7 +1017,7 @@ if (action==""){
                                 if (unit.role()="Ork Sniper") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (unit.role()="Flash Git") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
                                 if (unit.role()="Ranger") and (obj_ini.race[ca,ia]!=1){tem1_base=3;}
-                                if (unit.equipped_artifact_tag("Daemon")){
+                                if (unit.equipped_artifact_tag("daemon")){
                                 	tem1_base+=3;
                                 	dem+=1;
                                 }
@@ -1077,8 +1056,9 @@ if (action==""){
                         	arsenal.inquis_hidden = 0;
                             for (e=0;e<array_length(obj_ini.artifact_tags[e]);e++){
                                 if (obj_ini.artifact[e]!="") and (obj_ini.artifact_loc[e]=cur_star.name) and (obj_controller.und_armouries<=1){
-                                    if (array_contains(obj_ini.artifact_tags[e],"Chaos")) then cha+=1;
-                                    if (array_contains(obj_ini.artifact_tags[e],"Daemon")) then dem+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"chaos")) then cha+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"chaos_gift")) then cha+=1;
+                                    if (array_contains(obj_ini.artifact_tags[e],"daemonic")) then dem+=1;
                                 }
                             }
                             perc=((dem*10)+(cha*3))/100;
@@ -1318,20 +1298,19 @@ if (action==""){
         }
     }
     
-    if (owner=eFACTION.Ork) and (action="") and (instance_exists(orbiting)){// Should fix orks converging on useless planets
-        var maxp,bad,i,hides,hide;maxp=0;bad=0;i=0;hides=1;hide=0;
+    if (owner=eFACTION.Ork) and (action=""){// Should fix orks converging on useless planets
         
-        bad = is_dead_star(orbiting);
+        var bad = is_dead_star(instance_nearest(x,y,obj_star));
         
         if (bad){
-            hides+=choose(0,1,2,3);
+            var hides=choose(1,2,3);
             
             repeat(hides){
                 instance_deactivate_object(instance_nearest(x,y,obj_star));
             }
             
             with(obj_star){
-            	if ((planets=1) and (p_type[1]="Dead")) or (owner=eFACTION.Ork) then instance_deactivate_object(id);
+            	if (is_dead_star()) or (owner=eFACTION.Ork) then instance_deactivate_object(id);
             }
             var nex=instance_nearest(x,y,obj_star);
             action_x=nex.x;
@@ -1769,7 +1748,7 @@ if (action="move") and (action_eta<5000){
                 with (stue){
                     if (p_type[tau_influence_planet]!="Dead"){
                     
-                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name()}.",sta.x,sta.y);
+                        scr_alert("green","owner",$"Tau ship broadcasts subversive messages to {planet_numeral_name(tau_influence_planet)}.",sta.x,sta.y);
                         tau_influence = p_influence[tau_influence_planet][eFACTION.Tau]
                     
                         if (tau_influence_chance<=70) and (tau_influence<70){

@@ -43,162 +43,7 @@ function scr_ui_advisors() {
 
     // ** Fleet **
     if (menu = 16) {
-        draw_sprite(spr_rock_bg, 0, xx, yy);
-        draw_set_alpha(0.75);
-        draw_set_color(0);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 0);
-        draw_set_alpha(1);
-        draw_set_color(c_gray);
-        draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
-        draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
-        draw_set_alpha(0.75);
-        draw_set_color(0);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
-        draw_set_alpha(1);
-        draw_set_color(c_gray);
-        draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
-
-        if (menu_adept = 0) {
-            scr_image("advisor", 6, xx + 16, yy + 43, 310, 828);
-            // draw_sprite(spr_advisors,6,xx+16,yy+43);
-            draw_set_halign(fa_left);
-            draw_set_color(c_gray);
-            draw_set_font(fnt_40k_30b);
-            draw_text_transformed(xx + 336 + 16, yy + 66, string_hash_to_newline("Flagship Bridge"), 1, 1, 0);
-            draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Master of the Fleet " + string(obj_ini.lord_admiral_name)), 0.6, 0.6, 0);
-            draw_set_font(fnt_40k_14);
-            blurp = "Greetings, Chapter Master.##You requested a report?  Our fleet contains ";
-        }
-        if (menu_adept = 1) {
-            scr_image("advisor", 0, xx + 16, yy + 43, 310, 828);
-            // draw_sprite(spr_advisors,0,xx+16,yy+43);
-            draw_set_halign(fa_left);
-            draw_set_color(c_gray);
-            draw_set_font(fnt_40k_30b);
-            draw_text_transformed(xx + 336 + 16, yy + 40, string_hash_to_newline("Flagship Bridge"), 1, 1, 0);
-            draw_text_transformed(xx + 336 + 16, yy + 100, string_hash_to_newline("Adept " + string(obj_controller.adept_name)), 0.6, 0.6, 0);
-            draw_set_font(fnt_40k_14);
-            blurp = "Your fleet contains ";
-        }
-
-        blurp += string(temp[37]) + " Capital Ships, ";
-        blurp += string(temp[38]) + " Frigates, and ";
-        blurp += string(temp[39]) + " Escorts";
-
-        va = real(temp[41]);
-
-        if (va >= 1) then blurp += ", none of which are damaged.";
-        if (va < 1) then blurp += ".  Our most damaged vessel is the " + string(temp[40]) + "- it has " + string(min(99, round(va * 100))) + "% Hull Integrity.";
-
-        va = real(temp[42]);
-        if (va = 2) then blurp += "  Two of our ships are highly damaged.  You may wish to purchase a Repair License from the Sector Governerner.";
-        if (va > 2) then blurp += "  Several of our ships are highly damaged.  It is advisable that you purchase a Repair License from the Sector Governer.";
-        blurp += "##Here are the current positions of our ships and their contents:";
-
-        if (menu_adept = 1) {
-            blurp = string_replace(blurp, "Our", "Your");
-            blurp = string_replace(blurp, " our", " your");
-            blurp = string_replace(blurp, "We", "You");
-        }
-
-        draw_text_ext(xx + 336 + 16, yy + 130, string_hash_to_newline(string(blurp)), -1, 536);
-
-        draw_set_font(fnt_40k_30b);
-        draw_set_halign(fa_center);
-        draw_text_transformed(xx + 1262, yy + 70, string_hash_to_newline("Fleet"), 0.6, 0.6, 0);
-
-        draw_set_font(fnt_40k_14);
-        draw_set_halign(fa_left);
-
-        var cn = obj_controller;
-
-        if (instance_exists(cn)) {
-            for (var i = ship_current; i < ship_current + 34; i++) {
-                if (obj_ini.ship[i] != "") {
-                    draw_rectangle(xx + 950, yy + 80 + (i * 20), xx + 1546, yy + 100 + (i * 20), 1);
-                    draw_sprite(spr_view_small, 0, xx + 953, yy + 84 + (i * 20));
-                    draw_text(xx + 970, yy + 80 + (i * 20), string_hash_to_newline(string(obj_ini.ship[i]) + " (" + string(obj_ini.ship_class[i]) + ")"));
-                    draw_text(xx + 1222, yy + 80 + (i * 20), string_hash_to_newline(string(obj_ini.ship_location[i])));
-                    draw_text(xx + 1372, yy + 80 + (i * 20), string_hash_to_newline(string(round((obj_ini.ship_hp[i] / obj_ini.ship_maxhp[i]) * 100)) + "% HP"));
-                    draw_text(xx + 1450, yy + 80 + (i * 20), string_hash_to_newline(string(obj_ini.ship_carrying[i]) + "/" + string(obj_ini.ship_capacity[i]) + " Space"));
-
-                    if (mouse_x >= xx + 950) and(mouse_y >= yy + 80 + (i * 20)) and(mouse_x < xx + 1546) and(mouse_y < yy + 100 + (i * 20)) {
-                        if (cn.temp[101] != obj_ini.ship[i]) {
-                            cn.temp[101] = obj_ini.ship[i];
-                            cn.temp[102] = obj_ini.ship_class[i];
-
-                            cn.temp[103] = string(obj_ini.ship_hp[i]);
-                            cn.temp[104] = string(obj_ini.ship_maxhp[i]);
-                            cn.temp[105] = string(obj_ini.ship_shields[i] * 100);
-
-                            cn.temp[106] = string(obj_ini.ship_speed[i]);
-
-                            cn.temp[107] = string(obj_ini.ship_front_armour[i]);
-                            cn.temp[108] = string(obj_ini.ship_other_armour[i]);
-
-                            cn.temp[109] = string(obj_ini.ship_turrets[i]);
-
-                            cn.temp[110] = obj_ini.ship_wep[i, 1];
-                            cn.temp[111] = obj_ini.ship_wep_facing[i, 1];
-                            cn.temp[112] = obj_ini.ship_wep[i, 2];
-                            cn.temp[113] = obj_ini.ship_wep_facing[i, 2];
-                            cn.temp[114] = obj_ini.ship_wep[i, 3];
-                            cn.temp[115] = obj_ini.ship_wep_facing[i, 3];
-                            cn.temp[116] = obj_ini.ship_wep[i, 4];
-                            cn.temp[117] = obj_ini.ship_wep_facing[i, 4];
-
-                            cn.temp[118] = string(obj_ini.ship_carrying[i]) + "/" + string(obj_ini.ship_capacity[i]);
-                            cn.temp[119] = "";
-                            if (obj_ini.ship_carrying[i] > 0) then cn.temp[119] = scr_ship_occupants(i);
-                        }
-                    }
-                }
-            }
-
-            if (cn.temp[101] != "") {
-                draw_set_font(fnt_40k_30b);
-                draw_set_halign(fa_center);
-                draw_text_transformed(xx + 622, yy + 434, string_hash_to_newline(string(cn.temp[101])), 0.75, 0.75, 0);
-                draw_text_transformed(xx + 622, yy + 460, string_hash_to_newline(string(cn.temp[102])), 0.5, 0.5, 0);
-
-                draw_set_color(c_white);
-                draw_rectangle(xx + 498, yy + 492, xx + 746, yy + 623, 0);
-                draw_set_color(c_gray);
-
-                draw_set_font(fnt_40k_14);
-                draw_set_halign(fa_left);
-
-                yy -= 34;
-
-                draw_text(xx + 383, yy + 665, string_hash_to_newline("Health: " + string(cn.temp[103]) + "/" + string(cn.temp[104])));
-                draw_text(xx + 588, yy + 665, string_hash_to_newline("Shields: " + string(cn.temp[105])));
-                draw_text(xx + 768, yy + 665, string_hash_to_newline("Armour: " + string(cn.temp[107]) + "," + string(cn.temp[108])));
-
-                draw_text(xx + 485, yy + 683, string_hash_to_newline("Speed: " + string(cn.temp[106])));
-                draw_text(xx + 678, yy + 683, string_hash_to_newline("Turrets: " + string(cn.temp[109])));
-
-                if (cn.temp[110] != "") {
-                    draw_text(xx + 383, yy + 701, string_hash_to_newline("-" + string(cn.temp[110]) + " (" + string(cn.temp[111]) + ")"));
-                }
-                if (cn.temp[112] != "") {
-                    draw_text(xx + 383, yy + 719, string_hash_to_newline("-" + string(cn.temp[112]) + " (" + string(cn.temp[113]) + ")"));
-                }
-                if (cn.temp[114] != "") {
-                    draw_text(xx + 383, yy + 737, string_hash_to_newline("-" + string(cn.temp[114]) + " (" + string(cn.temp[115]) + ")"));
-                }
-                if (cn.temp[116] != "") {
-                    draw_text(xx + 383, yy + 755, string_hash_to_newline("-" + string(cn.temp[116]) + " (" + string(cn.temp[117]) + ")"));
-                }
-
-                draw_set_font(fnt_40k_12);
-                draw_text_ext(xx + 352, yy + 775, string_hash_to_newline("Carrying (" + string(cn.temp[118]) + "): " + string(cn.temp[119])), -1, 542);
-                draw_set_font(fnt_40k_14);
-
-                yy += 34;
-            }
-        }
-        // 31 wide
-        scr_scrollbar(1547, 100, 1577, 780, 34, ship_max, ship_current);
+        scr_fleet_advisor();
     }
 
 
@@ -986,8 +831,8 @@ function scr_ui_advisors() {
             if (recruits <= 0) and(marines >= 1000) then blurp += "Our Chapter currently has no Neophytes- we are at maximum strength and do not require more marines.  ";
             if (recruits <= 0) and(marines < 1000) and(recruiting = 0) then blurp += "Our Chapter currently has no Neophytes.  Without training more our chapter is doomed to a slow death.";
             if (recruits <= 0) and(marines < 1000) and(recruiting > 0) then blurp += "Our Chapter currently has no Neophytes.  We are doing our utmost best to find suitable recruits.";
-            if (recruits = 1) then blurp += "Our Chapter currently has one recruit being trained.  The Neophyte's name is " + string(recruit_name[1]) + " and they are scheduled to become a battle brother in " + string(recruit_training[1] + recruit_distance[1]) + " months' time.  ";
-            if (recruits > 1) then blurp += "Our Chapter currently has " + string(recruits) + " recruits being trained.  " + string(recruit_name[1]) + " is the next scheduled Neophyte to become a battle brother in " + string(recruit_training[1] + recruit_distance[1]) + " months' time.  ";
+            if (recruits = 1) then blurp += "Our Chapter currently has one recruit being trained.  The Neophyte's name is " + string(recruit_name[0]) + " and they are scheduled to become a battle brother in " + string(recruit_training[0] + recruit_distance[0]) + " months' time.  ";
+            if (recruits > 1) then blurp += "Our Chapter currently has " + string(recruits) + " recruits being trained.  " + string(recruit_name[0]) + " is the next scheduled Neophyte to become a battle brother in " + string(recruit_training[0] + recruit_distance[0]) + " months' time.  ";
             if (gene_seed > 0) {
                 if (recruiting = 0) and(marines >= 1000) then blurp += "##Recruitment" + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
                 if (recruiting = 0) and(marines < 1000) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers.  ";
@@ -995,9 +840,9 @@ function scr_ui_advisors() {
                 if (recruiting = 1) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  With an increase of funding I could vastly increase the rate.  ";
                 if (recruiting = 2) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  With an increase of funding I could vastly increase the rate.  ";
                 if (recruiting = 3) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "  ";
-                if (recruiting = 4) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "- give me the word when we have enough Neophytes being trained.  ";
-                if (recruiting = 5) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "- give me the word when we have enough Neophytes being trained.  ";
-                if (recruiting = 6) then blurp += "##Recruitment " + recruitment_rates[recruiting] + "- give me the word when we have enough Neophytes being trained.  ";
+                if (recruiting>=4){
+                    blurp += $"##Recruitment {recruitment_rates[recruiting]}- give me the word when we have enough Neophytes being trained.  ";
+                }
             }
         }
 
@@ -1165,18 +1010,18 @@ function scr_ui_advisors() {
         draw_set_halign(fa_center);
         draw_text_transformed(xx + 1262, yy + 70, string_hash_to_newline("Neophytes"), 0.6, 0.6, 0);
 
-        if (recruit_name[1] != "") {
+        if (recruit_name[0] != "") {
             draw_set_font(fnt_40k_14);
             draw_set_halign(fa_left);
 
             var t_eta = 0;
-            for (var qp = 0, n = 0; qp <= 300 && n < 36; qp++) {
+            for (var qp = 0, n = 0; qp < array_length(recruit_name) && n < 36; qp++) {
                 if (recruit_name[qp] != "") {
                     n++;
                     draw_rectangle(xx + 947, yy + 100 + ((n - 1) * 20), xx + 1577, yy + 100 + (n * 20), 1);
-                    draw_text(xx + 950, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("Neophyte " + string(recruit_name[qp])));
-                    draw_text(xx + 1200, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("Starting EXP: " + string(recruit_exp[qp])));
-                    draw_text(xx + 1500, yy + 100 + ((qp - 1) * 20), string_hash_to_newline("ETA: " + string(recruit_training[qp] + recruit_distance[qp])));
+                    draw_text(xx + 950, yy + 100 + ((n - 1) * 20), $"Neophyte {recruit_name[qp]}");
+                    draw_text(xx + 1200, yy + 100 + ((n - 1) * 20), $"Starting EXP: {recruit_exp[qp]}");
+                    draw_text(xx + 1500, yy + 100 + ((n - 1) * 20),$"ETA: {recruit_training[qp] + recruit_distance[qp]}");
                 }
             }
         }

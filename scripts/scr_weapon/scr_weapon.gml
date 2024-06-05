@@ -167,7 +167,8 @@ global.weapons={
         "ammo": 0,
         "range": 1,
         "spli": 2,
-        "arp": 0
+        "arp": 0,
+		"tags":["sword"],
     },
     "Chainsword": {
         "abbreviation": "ChSwrd",
@@ -294,17 +295,17 @@ global.weapons={
     "Chainfist": {
      "abbreviation": "ChFst",
         "attack": {
-            "standard": 300,
-            "master_crafted": 325,
-            "artifact": 350
+           "standard": 550,
+            "master_crafted": 600,
+            "artifact": 700
         },
         "description": "Created by mounting a chainsword to a power fist, this weapon is easily able to carve through armoured bulkheads.",
         "melee_hands": 1.25,
         "ranged_hands": 1,
         "range": 1,
-        "spli": 1,
+        "spli": 2,
         "arp": 1,
-        "tags":["power", "chain", "fist", "siege"],
+        "tags":["power", "chain", "fist", "dual", "siege"],
     },
     "Lascutter": {
        "abbreviation": "Lasct",
@@ -405,7 +406,7 @@ global.weapons={
         "tags":["power", "axe"],
     },    
     "Power Fist": {
-       "abbreviation": "PwrFst",       
+        "abbreviation": "PwrFst",       
         "attack": {
             "standard": 450,
             "master_crafted": 500,
@@ -417,20 +418,53 @@ global.weapons={
             "artifact": 1
         },
         "description": "A large, ceramite clad gauntlet surrounded by an power energy field. Though cumbersome to use, it dishes out tremendous damage to enemies, leaving very little behind.",
-        "melee_hands": 1.1,
+        "melee_hands": 1,
         "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
         "spli": 2,
         "arp": 1,
+        "tags":["power", "dual", "fist"],
+    },
+    "Power Fists": {
+        "abbreviation": "PwrFsts", 
+        "attack": {
+            "standard": 900,
+            "master_crafted": 1000,
+            "artifact": 1200
+        },
+        "description": "A large, ceramite clad gauntlets surrounded by power energy fields. Though cumbersome to use, they dish out tremendous damage to enemies, leaving very little behind.",
+        "melee_hands": 2,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 4,
+        "arp": 1,
+        "tags":["power","fist","pair"],
+    },
+    "Boltstorm Gauntlet": {
+        "abbreviation": "BlstGnt", 
+        "attack": {
+            "standard": 450,
+            "master_crafted": 500,
+            "artifact": 600
+        },
+        "description": "The Boltstorm Gauntlet is a Power Fists with an Integrated Bolter, so aside from being reinforced with a crackling power field and able to crush armour, bone and even thick vehicle plating, it is also capable of firing bolts at an astonishing rate",
+        "melee_hands": 2,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 2,
+        "arp": 1,
+        "second_profiles":["Integrated Bolter"],
         "tags":["power","fist"],
     },
     "Lightning Claw": {
     "abbreviation": "LghtClw",             
         "attack": {
-            "standard": 130,
-            "master_crafted": 160,
-            "artifact": 190
+            "standard": 450,
+            "master_crafted": 500,
+            "artifact": 600
         },
         "description": "Lightning claws are specialized close combat weapons with built-in disruptor fields. These lethal claws rip into infantry like butter, bringing terror to the foe.",
         "melee_hands": 1.1,
@@ -439,7 +473,7 @@ global.weapons={
         "range": 1,
         "spli": 5,
         "arp": 1,
-        "tags":["power","dual","fist"],
+        "tags":["power", "dual", "fist"],
     },
     "Dreadnought Lightning Claw": {
     "abbreviation": "LghtClw",             
@@ -458,9 +492,9 @@ global.weapons={
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
-        "spli": 10,
-        "arp": 0,
-        "tags":["power", "vehicle","dual","fist"],
+        "spli": 15,
+        "arp": 1,
+        "tags":["power", "vehicle", "dual", "dreadnought", "fist"],
     },
     "Thunder Hammer": {
       "abbreviation": "ThndHmr",                
@@ -715,7 +749,7 @@ global.weapons={
         "range": 1,
         "spli": 10,
         "arp": 1,
-        "tags":["dreadnought"]  
+        "tags":["power", "vehicle", "dual", "dreadnought", "fist"]  
     },
     "Close Combat Weapon":{
         "abbreviation": "CCW",               
@@ -729,7 +763,7 @@ global.weapons={
         "range": 1,
         "spli": 10,
         "arp": 1,
-        "tags":["dreadnought","fist"]
+        "tags":["dreadnought", "flame", "fist"]
     },       
     "Inferno Cannon": {
         "abbreviation": "InfCann",               
@@ -745,14 +779,14 @@ global.weapons={
         "range": 3.1,
         "spli": 20,
         "arp": -1,
-        "tags":["vehicle","flame","dreadnought"]
+        "tags":["vehicle", "flame", "dreadnought"]
     },
     "Meltagun": {
         "abbreviation": "Mltgn",
         "attack": {
-            "standard": 250,
-            "master_crafted": 275,
-            "artifact": 300
+            "standard": 450,
+            "master_crafted": 475,
+            "artifact": 500
         },
         "description": "A loud weapon that roars with fury, this gun vaporizes flesh and armor alike. Due to heat dissipation, it has only a short range.",
         "melee_hands": 1,
@@ -766,9 +800,9 @@ global.weapons={
     "Multi-Melta": {
          "abbreviation": "MltMelt",
         "attack": {
-            "standard": 500,
-            "master_crafted": 550,
-            "artifact": 600
+            "standard": 800,
+            "master_crafted": 850,
+            "artifact": 900
         },
         "description": "Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles though those with Power Armor can carry this cumbersome weapon into battle.",
         "melee_hands": 1,
@@ -777,7 +811,7 @@ global.weapons={
         "range": 4.1,
         "spli": 1,
         "arp": 1,
-        "tags":["melta","heavy_ranged", "dreadnought"]
+        "tags":["melta", "heavy_ranged", "dreadnought"]
     },
     "Plasma Pistol": {
         "abbreviation": "PlsmPstl",
@@ -793,7 +827,7 @@ global.weapons={
         "range": 3.1,
         "spli": 1,
         "arp": 1,
-        "tags":["plasma","pistol"]
+        "tags":["plasma", "pistol"]
     },
     "Infernus Pistol": {
       "abbreviation": "InfPstl" ,
@@ -809,7 +843,7 @@ global.weapons={
         "range": 2.1,
         "spli": 3,
         "arp": 1,
-        "tags":["flame","pistol"]
+        "tags":["flame", "pistol"]
     },
     "Plasma Gun": {
         "abbreviation": "PlsmGn",
@@ -857,7 +891,7 @@ global.weapons={
         "range": 18,
         "spli": 1,
         "arp": 0,
-        "tags":["precision"]
+        "tags":["precision", "rifle"]
     },
     "Assault Cannon": {
         "abbreviation": "AssCann",       
@@ -866,21 +900,21 @@ global.weapons={
             "master_crafted": 264,
             "artifact": 288
         },
-        "description": "A heavy rotary autocannon with a devastating fire rate that can be counted in the hundreds per minute. It is incredibly effective against infantry and lightly armored targets.",
+        "description": "A heavy rotary autocannon with a devastating fire rate that can be counted in the hundreds per minute. It is incredibly effective against infantry and light armored targets.",
         "melee_hands": 2.1,
         "ranged_hands": 3,
         "ammo": 5,
         "range": 12,
         "spli": 20,
-        "arp": 0,
-        "tags":["heavy_ranged","dreadnought"]
+        "arp": 1,
+        "tags":["heavy_ranged", "dreadnought"]
     },
     "Autocannon": {
         "abbreviation": "Autocnn",       
         "attack": {
-            "standard": 180,
-            "master_crafted": 198,
-            "artifact": 216
+            "standard": 380,
+            "master_crafted": 400,
+            "artifact": 430
         },
         "description": "A rapid-firing weapon able to use a wide variety of ammunition, from mass-reactive explosive to solid shells. It has been found to be incredibly effective against large groups of targets and even Traitor Astartes to an extent.",
         "melee_hands": 0,
@@ -888,8 +922,8 @@ global.weapons={
         "ammo": 25,
         "range": 18,
         "spli": 15,
-        "arp": 0,
-        "tags":["heavy_ranged","dreadnought"]
+        "arp": 1,
+        "tags":["heavy_ranged", "dreadnought"]
     },
     "Missile Launcher": {
       "abbreviation": "MsslLnch",          
@@ -905,7 +939,7 @@ global.weapons={
         "range": 24,
         "spli": 3,
         "arp": 0,
-        "tags":["heavy_ranged","dreadnought"]
+        "tags":["heavy_ranged", "dreadnought"]
     },
     "Lascannon": {
        "abbreviation": "Lascnn",           
@@ -921,7 +955,7 @@ global.weapons={
         "range": 24,
         "spli": 1,
         "arp": 1,
-         "tags":["heavy_ranged"]
+         "tags":["heavy_ranged", "las"]
     },
     "Conversion Beam Projector": {
         "abbreviation": "CnvBmPrj",            
@@ -936,7 +970,8 @@ global.weapons={
         "ammo": 1,
         "range": 20,
         "spli": 3,
-        "arp": 1
+        "arp": 1,
+        "tags":["heavy_ranged", "ancient"]
     },
     "Integrated Bolter": {
         "abbreviation": "IntgBltr", 
@@ -953,108 +988,38 @@ global.weapons={
         "spli": 4,
         "arp": 0,
         "tags":["bolt"]
-    },
-    "Integrated Bolters": {
-        "abbreviation": "IntgBltrs", 
-        "attack": {
-            "standard": 100,
-            "master_crafted": 110,
-            "artifact": 120
-        },
-        "description": "A pair of Bolters that can be built directly into the structure of the vehicle, armor, another weapon or Dreadnought. When used as a weapon, it leaves both hands free, allowing to use any, even a twohanded weapon, efficiently.",
-        "melee_hands": 0,
-        "ranged_hands": 0,
-        "ammo": 40,
-        "range": 12,
-        "spli": 8,
-        "arp": 0,
-        "tags":["bolt"]
-    },
-    "Power Fist with Intergrated Bolters": {
-       "abbreviation": "PwrFstBltr",       
-        "attack": {
-            "standard": 450,
-            "master_crafted": 500,
-            "artifact": 600
-        },
-        "melee_mod": {
-            "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
-        },
-        "description": "This is a Power Fist weapon with bolters integrated into them to give the user ranged capabilities.",
-        "melee_hands": 1.1,
-        "ranged_hands": 1,
-        "ammo": 0,
-        "range": 1,
-        "spli": 3,
-        "arp": 1,
-        "second_profiles":["Integrated Bolter"],
-        "tags":["power","fist"],
-    },    
-    "Power Fists": {
-        "abbreviation": "PwrFists", 
-        "attack": {
-            "standard": 425,
-            "master_crafted": 467.5,
-            "artifact": 510
-        },
-        "description": "While not quite as strong as two Power Fists, these artifacts allow the use of an additional, third weapon.",
-        "melee_hands": 3,
-        "ranged_hands": 0,
-        "ammo": 0,
-        "range": 1,
-        "spli": 3,
-        "arp": 0
-    },
-    "Gauntlets of Ultramar": {
-        "abbreviation": "GntltUltrm", 
-        "attack": {
-            "standard": 900,
-            "master_crafted": 1000,
-            "artifact": 1200
-        },
-        "description": "Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself.",
-        "melee_hands": 2.25,
-        "ranged_hands": 2.25,
-        "ammo": 0,
-        "range": 1,
-        "spli": 6,
-        "arp": 1,
-        "second_profiles":["Integrated Bolters"],
-        "tags":["artifact","power","fist","pair"],
-    },
+    }, 
     "Twin Linked Heavy Bolter": {
         "abbreviation": "TwnHvyBltr", 
         "attack": {
-            "standard": 240,
-            "master_crafted": 264,
-            "artifact": 288
+            "standard": 320,
+            "master_crafted": 352,
+            "artifact": 384
         },
         "description": "Twin-linked Heavy Bolters are an upgraded version of the standard Heavy Bolter weapon, which is known for its high rate of fire and effectiveness against infantry and light vehicles.",
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 20,
         "range": 16,
-        "spli": 8,
+        "spli": 9,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","dreadnought"]
+        "tags":["bolt", "heavy_ranged", "vehicle", "dreadnought"]
     },
     "Twin Linked Lascannon": {
         "abbreviation": "TwnLascnn", 
         "attack": {
-            "standard": 250,
-            "master_crafted": 275,
-            "artifact": 300
+            "standard": 600,
+            "master_crafted": 700,
+            "artifact": 900
         },
         "description": "The Twin-Linked Lascannons is a powerful anti-armour weapons that fire highly focused and devastating duel energy beams capable of penetrating even the toughest armor.",
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 10,
-        "range": 20,
+        "ammo": 8,
+        "range": 24,
         "spli": 2,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","dreadnought"]
+        "tags":["las", "heavy_ranged", "vehicle", "dreadnought"]
     },
     "Lascannons": {
          "abbreviation": "DblLascnn", 
@@ -1070,7 +1035,7 @@ global.weapons={
         "range": 20,
         "spli": 2,
         "arp": 1,
-        "tags":["heavy_ranged","vehicle","dreadnought"]
+        "tags":["las", "heavy_ranged", "vehicle", "dreadnought"]
     },
     "Heavy Bolter": {
         "abbreviation": "HvyBltr", 
@@ -1086,7 +1051,7 @@ global.weapons={
         "range": 16,
         "spli": 6,
         "arp": 1,
-        "tags":["heavy_ranged"]
+        "tags":["heavy_ranged", "bolt"]
     },
     "Whirlwind Missiles": {
         "attack": {
@@ -1101,11 +1066,13 @@ global.weapons={
         "ammo": 6,
         "range": 20,
         "spli": 25,
-        "arp": 1
+        "arp": 1,
+        "tags":["vehicle", "indirect"]
     },
     "HK Missile": {
         "abbreviation": "HKMssl", 
-        "description": "",
+        "description": "A single shot hunter killer	missile that serves as a powerful anti armour/aircraft deterent.",
+        "tags":["HK"]
     },  
     "Twin Linked Heavy Bolter Mount": {
         "attack": {
@@ -1120,7 +1087,8 @@ global.weapons={
         "ammo": 20,
         "range": 16,
         "spli": 3,
-        "arp": 0
+        "arp": 1,
+       "tags":["vehicle", "dreadnought", "heavy_ranged", "bolt"]
     },
     "Twin Linked Lascannon Mount": {
         "attack": {
@@ -1135,29 +1103,30 @@ global.weapons={
         "ammo": 10,
         "range": 20,
         "spli": 3,
-        "arp": 1
+        "arp": 1,
+       "tags":["las", "vehicle", "heavy_ranged", "dreadnought"]
     },
     "Twin Linked Assault Cannon Mount": {
         "attack": {
-            "standard": 360,
-            "master_crafted": 396,
-            "artifact": 432
+            "standard": 240,
+            "master_crafted": 264,
+            "artifact": 288
         },
         "description": "A twin mount of rotary autocannons, boasting an incredible rate of fire numbering in the hundreds of shots fired per second.",
         "abbreviation": "TwnAssCnn", 
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 5,
+        "ammo": 6,
         "range": 12,
-        "spli": 3,
-        "arp": 0,
-        "tags":["vehicle","pintle"]
+        "spli": 30,
+        "arp": 1,
+        "tags":["vehicle", "pintle", "dreadnought"]
     },
     "Reaper Autocannon Mount": {
         "attack": {
-            "standard": 250,
-            "master_crafted": 275,
-            "artifact": 300
+            "standard": 500,
+            "master_crafted": 550,
+            "artifact": 600
         },
         "description": "An archaic twin-linked autocannon design dating back to the Great Crusade. The Reaper Autocannon is effective against infantry and armored targets. This version is mounted onto vehicles.",
         "abbreviation": "RprAtcnn", 
@@ -1165,31 +1134,31 @@ global.weapons={
         "ranged_hands": 0,
         "ammo": 25,
         "range": 15,
-        "spli": 3,
-        "arp": 0,
-        "tags":["vehicle","pintle"]
+        "spli": 6,
+        "arp": 1,
+        "tags":["vehicle", "pintle"]
     },
     "Quad Linked Heavy Bolter Sponsons": {
         "attack": {
-            "standard": 480,
-            "master_crafted": 528,
-            "artifact": 576
+            "standard": 320,
+            "master_crafted": 352,
+            "artifact": 384
         },
         "description": "Quad-linked Heavy Bolters are a significantly upgraded version of the standard Heavy Bolter mount; already punishing in a single mount, this quad mount is devastating against a variety of targets.",
         "abbreviation": "QdHvyBltrs", 
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 10,
+        "ammo": 15,
         "range": 16,
-        "spli": 3,
+        "spli": 5,
         "arp": 1,
-        "tags":["bolt", "vehicle","sponson"]
+        "tags":["bolt", "vehicle", "sponson"]
     },
     "Twin Linked Lascannon Sponsons": {
         "attack": {
-            "standard": 375,
-            "master_crafted": 412.5,
-            "artifact": 450
+            "standard": 600,
+            "master_crafted": 700,
+            "artifact": 900
         },
         "description": "The Twin-Linked Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. This version is mounted onto the sides of vehicles.",
         "abbreviation": "TwnLascnns", 
@@ -1197,41 +1166,41 @@ global.weapons={
         "ranged_hands": 0,
         "ammo": 5,
         "range": 20,
-        "spli": 4,
+        "spli": 3,
         "arp": 1,
-        "tags":["las", "vehicle","sponson", "twin_linked"]
+        "tags":["las", "vehicle", "sponson", "twin_linked"]
     },
     "Lascannon Sponsons": {
         "attack": {
-            "standard": 250,
-            "master_crafted": 300,
-            "artifact": 350
+            "standard": 500,
+            "master_crafted": 600,
+            "artifact": 750
         },
         "description": "Lascannons are powerful anti-armour weapons that fire highly focused and devastating energy beams capable of penetrating even the toughest armour. This version is mounted onto the sides of vehicles.",
         "abbreviation": "Lscnns", 
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 5,
+        "ammo": 8,
         "range": 20,
-        "spli": 2,
+        "spli": 1,
         "arp": 1,
-        "tags":["las", "vehicle","sponson"]
+        "tags":["las", "vehicle", "sponson"]
     },    
     "Hurricane Bolter Sponsons": {
         "attack": {
-            "standard": 405,
-            "master_crafted": 445.5,
-            "artifact": 486
+            "standard": 50,
+            "master_crafted": 55,
+            "artifact": 60
         },
         "description": "Hurricane Bolters are large hex-mount bolter arrays that are able to deliver a withering hail of anti-infantry fire at short ranges. This version is mounted onto the sides of vehicles.",
         "abbreviation": "HrcBltrs", 
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 20,
-        "range": 12,
-        "spli": 3,
+        "ammo": 10,
+        "range": 10,
+        "spli": 60,
         "arp": 0,
-        "tags":["bolt", "vehicle","sponson"]
+        "tags":["bolt", "vehicle", "sponson"]
     },
     "Flamestorm Cannon Sponsons": {
         "attack": {
@@ -1244,26 +1213,26 @@ global.weapons={
         "melee_hands": 0,
         "ranged_hands": 0,
         "ammo": 6,
-        "range": 3,
+        "range": 2,
         "spli": 3,
         "arp": 1,
-        "tags":["flame", "vehicle","sponson"]
+        "tags":["flame", "vehicle", "sponson"]
     },
     "Twin Linked Heavy Flamer Sponsons": {
         "attack": {
-            "standard": 550,
-            "master_crafted": 605,
-            "artifact": 660
+            "standard": 500,
+            "master_crafted": 550,
+            "artifact": 600
         },
         "description": "A twin-linked significantly heavier flamer attached to the sponsons on a vehicle.",
         "abbreviation": "TwnHvyFlmrs", 
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 12,
+        "ammo": 8,
         "range": 2.1,
-        "spli": 3,
+        "spli": 8,
         "arp": -1,
-        "tags":["flame", "vehicle","sponson"]
+        "tags":["flame", "vehicle", "dreadnought", "sponson"]
     },
 "Twin Linked Bolters": {
         "attack": {
@@ -1278,25 +1247,76 @@ global.weapons={
         "ammo": 30,
         "range": 12,
         "spli": 6,
+        "arp": 0,
+        "tags":["bolt", "vehicle"]
     },        
     "Twin Linked Multi-Melta Sponsons": {
         "abbreviation": "TwnMltMelts", 
         "attack": {
-            "standard": 450,
-            "master_crafted": 495,
-            "artifact": 540
+            "standard": 800,
+            "master_crafted": 850,
+            "artifact": 900
         },
         "description": "Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles. In this case it is mounted to the sponsons on a vehicle.",
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 6,
+        "ammo": 8,
         "range": 4.1,
-        "spli": 3,
+        "spli": 2,
         "arp": 1,
         "tags":["vehicle", "Sponson", "melta"]
     },
     "Twin Linked Volkite Culverin Sponsons": {
         "abbreviation": "TwnVlkCulvs", 
+        "attack": {
+            "standard": 480,
+            "master_crafted": 510,
+            "artifact": 540
+        },
+        "description": "An advanced thermal weapon from a bygone era, Volkite Culverins are able to ignite entire formations of enemy forces. In this case it is mounted to the sponsons on a vehicle.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 25,
+        "range": 18,
+        "spli": 9,
+        "arp": 0,
+        "tags":["vehicle", "Sponson", "volkite", "ancient"]
+    },
+    "Heavy Bolter Sponsons": {
+        "abbreviation": "HvyBltrs", 
+        "attack": {
+            "standard": 240,
+            "master_crafted": 264,
+            "artifact": 288
+        },
+        "description": "Heavy Bolters are mounted in sponsons. They are known for high rates of fire and effectiveness against infantry and light vehicles.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 20,
+        "range": 16,
+        "spli": 4,
+        "arp": 1,
+        "tags":["heavy_ranged", "vehicle", "sponson", "bolt"]
+    },  
+    "Heavy Flamer Sponsons": {
+        "abbreviation": "HvyFlmrs", 
+        "attack": {
+            "standard": 500,
+            "master_crafted": 550,
+            "artifact": 600
+        },
+        "description": "A significantly heavier flamer attached to the sponsons on a vehicle.",
+        "abbreviation": "SpnHvyFlmrs", 
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 8,
+        "range": 2.1,
+        "spli": 4,
+        "arp": -1,
+        "tags":["flame", "vehicle", "sponson"]
+    },  
+    "Volkite Culverin Sponsons": {
+        "abbreviation": "VlkClvs", 
         "attack": {
             "standard": 480,
             "master_crafted": 528,
@@ -1307,35 +1327,23 @@ global.weapons={
         "ranged_hands": 0,
         "ammo": 25,
         "range": 18,
-        "spli": 3,
-        "arp": 0,
-        "tags":["vehicle", "Sponson", "volkite"]
-    },
-    "Heavy Bolter Sponsons": {
-        "abbreviation": "HvyBltrs", 
-        "description": "",
-    },  
-    "Heavy Flamer Sponsons": {
-        "abbreviation": "HvyFlmrs", 
-        "description": "",
-    },  
-    "Volkite Culverin Sponsons": {
-        "abbreviation": "VlkClvs", 
-        "description": "",
+        "spli": 5,
+        "arp": 1,
+        "tags":["vehicle", "Sponson", "volkite", "ancient"]
     },  
     "Autocannon Turret": {
         "abbreviation": "Autocnn", 
         "attack": {
-            "standard": 130,
+            "standard": 380,
             "master_crafted": 528,
             "artifact": 576
         },
         "description": "A Predator-compatible turret mounting a reliable all-purpose autocannon capable of doing effective damage to infantry and lightly armored targets.",
         "melee_hands": 0,
         "ranged_hands": 0,
-        "ammo": 50,
+        "ammo": 25,
         "range": 18,
-        "spli": 3,
+        "spli": 15,
         "arp": 0,
         "tags":["vehicle", "turrent"]
     },     
@@ -1390,7 +1398,7 @@ global.weapons={
         "range": 2.1,
         "spli": 3,
         "arp": 0,
-        "tags":["flame"]
+        "tags":["flame", "attached"]
     },
     "Combiflamer": {
         "abbreviation": "CmbFlmr", 
@@ -1492,47 +1500,129 @@ global.weapons={
 	},
      "Twin Linked Lascannon Turret": {
         "attack": {
-            "standard": 250,
-            "master_crafted": 300,
-            "artifact": 350
+            "standard": 600,
+            "master_crafted": 700,
+            "artifact": 900
         },
         "abbreviation": "TwnLscnn", 
         "description": "A Predator-compatible turret mounting a twin-linked lascannon.",
-        "range": 1,
-        "spli": 0,
         "arp": 1,
-        "range":20,
-        "ammo":10,
+        "range":24,
+        "ammo":5,
         "spli": 2,
         "tags":["las", "twin_linked", "vehicle","turret"]
     },
     "Twin Linked Assault Cannon Turret": {
         "abbreviation": "TwnAssCnn", 
-        "description": "",
+        "attack": {
+            "standard": 240,
+            "master_crafted": 264,
+            "artifact": 288
+        },
+        "description": "A heavy rotary autocannon with a devastating fire rate that can be counted in the hundreds per minute, in a twin mount. It is incredibly effective against infantry and lightly armored targets.",
+        "melee_hands": 2.1,
+        "ranged_hands": 2.25,
+        "ammo": 5,
+        "range": 12,
+        "spli": 30,
+        "arp": 1,
+        "tags":["heavy_ranged", "twin_linked", "vehicle", "turret"]
     },  
     "Flamestorm Cannon Turret": {
         "abbreviation": "FlmstCnn", 
-        "description": "",
+        "attack": {
+            "standard": 600,
+            "master_crafted": 660,
+            "artifact": 720
+        },
+        "description": "A huge vehicle-mounted flamethrower cannon, the heat produced by this terrifying weapon can melt armoured ceramite.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 12,
+        "range": 2,
+        "spli": 3,
+        "arp": 1,
+        "tags":["flame", "vehicle", "turret"]
     },  
     "Magna-Melta Turret": {
         "abbreviation": "MgnMlt", 
-        "description": "",
+        "attack": {
+            "standard": 800,
+            "master_crafted": 900,
+            "artifact": 1000
+        },
+        "description": "Though bearing longer range than the Meltagun, this weapon's great size usually restricts it to vehicles. In this case it is mounted to the turret on a vehicle.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 6,
+        "range": 5.1,
+        "spli": 2,
+        "arp": 1,
+        "tags":["vehicle", "turret", "melta"]
     },  
     "Plasma Destroyer Turret": {
         "abbreviation": "PlsmDestr", 
-        "description": "",
+        "attack": {
+            "standard": 500,
+            "master_crafted": 600,
+            "artifact": 750
+        },
+        "description": "A heavy variant of the plasma gun, its power output is significantly higher and its damage capability shows. However, it is mounted in a tank turret.",
+        "melee_hands": 1,
+        "ranged_hands": 3,
+        "ammo": 16,
+        "range": 14,
+        "spli": 3,
+        "arp": 1,
+        "tags":["plasma", "vehicle", "turret"]
     },  
-    "Heavy Conversion Beamer Turret": {
+    "Heavy Conversion Beam Projector": {
         "abbreviation": "HvyCnvBmr", 
-        "description": "",
+        "attack": {
+            "standard": 800,
+            "master_crafted": 900,
+            "artifact": 1000
+        },
+        "description": "The Conversion Beam Projector is a heavy energy weapon that harnesses advanced technology to project a concentrated beam of destructive energy. Armor detonates as the matter that comproises it is transformed into pure energy. This is the heavy version for mounting in vehicles.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 6,
+        "range": 20,
+        "spli": 1,
+        "arp": 1,
+        "tags":["vehicle", "dreadnought", "turret", "ancient"]
     },  
     "Neutron Blaster Turret": {
         "abbreviation": "NtrnBlstr", 
-        "description": "",
+        "attack": {
+            "standard": 800,
+            "master_crafted": 900,
+            "artifact": 1000
+        },
+        "description": "This is a Neutron blaster, typically found in Sabre Strike Tanks, this one has been mounted for use in a space marine tank.",
+        "melee_hands": 0,
+        "ranged_hands": 1,
+        "ammo": 6,
+        "range": 20,
+        "spli": 2,
+        "arp": 1,
+	"tags":[ "vehicle", "turret"]
     },  
     "Volkite Saker Turret": {
         "abbreviation": "VlkSkr", 
-        "description": "",
+        "attack": {
+            "standard": 300,
+            "master_crafted": 333,
+            "artifact": 375
+        },
+        "description": "An advanced thermal weapon from a bygone era, Volkite sakers are optimized for spreading damage across swaths of enemy troops.",
+        "melee_hands": 0,
+        "ranged_hands": 0,
+        "ammo": 25,
+        "range": 18,
+        "spli": 30,
+        "arp": 0,
+        "tags":["vehicle", "turret", "volkite", "ancient"]
     },
 				
 }
@@ -1752,7 +1842,7 @@ global.gear = {
       "armour_value": {
         "standard": 15,
         "master_crafted": 17,
-        "artifact": 19
+        "artifact": 21
       },
       "ranged_mod": {
         "standard": -5,
@@ -1761,8 +1851,8 @@ global.gear = {
       },
       "melee_mod": {
         "standard": 20,
-        "master_crafted": 0,
-        "artifact": 0
+        "master_crafted": 25,
+        "artifact": 30
       },
       "description": "A hastily assembled Power Armor that first started appearing during the Horus Heresy to act as a stopgap while new suits were produced and sent to loyalist legions. It excels in close combat but it has limited sensors for ranged combat.",
       "tags":["power_armour"],
@@ -1873,7 +1963,7 @@ global.gear = {
             "master_crafted": 24, 
             "artifact": 28 
         }, 
-        "tags":["vehicle","armour"],              
+        "tags":["vehicle", "armour"],              
     },
     "Heavy Armour":{
         "abbreviation": "HvyArm",
@@ -1883,7 +1973,37 @@ global.gear = {
             "master_crafted": 12, 
             "artifact": 14 
         }, 
-        "tags":["vehicle","armour"],              
+        "tags":["vehicle", "armour"],              
+    },
+    "Void Shield":{
+        "abbreviation": "V Shld",
+        "description": "An advanced shield capable of providing extreme protection to heavy vehicles.",
+         "armour_value": {
+            "standard": 40,
+            "master_crafted": 52, 
+            "artifact": 64 
+        },
+		"damage_resistance_mod": {
+        "standard": 30,
+        "master_crafted": 35,
+        "artifact": 40
+      },
+        "tags":["vehicle", "armour", "voidshield"],              
+    },
+    "Lucifer Pattern Engine":{
+        "abbreviation": "Luc Eng",
+        "description": "An advanced engine that increases tactical flexibility by enabling more options for movement and faster repositioning.",
+		"damage_resistance_mod": {
+        "standard": 10,
+        "master_crafted": 15,
+        "artifact": 20
+      },
+      "ranged_mod": {
+        "standard": 10,
+        "master_crafted": 15,
+        "artifact": 20
+      },
+        "tags":["vehicle", "armour", "Upgrade"],              
     },
     "Artificer Hull":{
         "abbreviation": "ArtHll",
@@ -1893,7 +2013,12 @@ global.gear = {
             "master_crafted": 12, 
             "artifact": 14 
         }, 
-        "tags":["vehicle","Upgrade"],              
+      "damage_resistance_mod": {
+        "standard": 15,
+        "master_crafted": 20,
+        "artifact": 25
+      },
+        "tags":["vehicle", "Upgrade"],              
     }                
 } , 
   "gear": {
@@ -1977,21 +2102,45 @@ global.gear = {
     "Smoke Launchers": {
       "description": "Useful for providing concealment in open terrain, these launchers project wide-spectrum concealing smoke to prevent accurate targeting of the vehicle.",
       "abbreviation": "SmkLnchrs",
-      "tags":["smoke","conceal", "vehicle"]
+      "damage_resistance_mod": {
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
+      },
+      "tags":["smoke", "conceal", "vehicle", "dreadnought"]
     },
     "Dozer Blades": {
       "description": "An attachment for the front of vehicles, useful for clearing difficult terrain and can be used as an improvised weapon. ",
       "abbreviation": "DzrBlds",
+        "attack": {
+            "standard": 30,
+            "master_crafted": 35,
+            "artifact": 50
+        },
+        "ammo": 0,
+        "range": 1,
+        "spli": 1,
+        "arp": 0,
        "tags":["vehicle"],              
     },
     "Searchlight": {
       "description": "A simple solution for fighting in dark environments, searchlights serve to illuminate enemies for ease of targeting.",
       "abbreviation": "SrchLght",
-       "tags":["vehicle"],              
+      "ranged_mod": {
+        "standard": 5,
+        "master_crafted": 10,
+        "artifact": 15
+      },
+       "tags":["vehicle", "dreadnought"],              
     },
     "Frag Assault Launchers": {
         "abbreviation": "FrgAssLnchrs", 
-        "description": "",
+        "description": "These launchers enable a vehicle to clear an area for its loaded troops, or prevent boarding by an enemy at close range.",
+      "damage_resistance_mod": {
+        "standard": 10,
+        "master_crafted": 15,
+        "artifact": 20
+      },
          "tags":["vehicle"],              
     },
     "Combat Shield": {
@@ -2432,9 +2581,9 @@ function format_number_with_sign(number){
                 if (string_count("DUB",thawep)>0){attack=floor(attack*1.5);melee_hands+=1;ranged_hands+=1;spli=1;}
                 if (string_count("Dae",thawep)>0){attack=floor(attack*1.5);amm=-1;}
                 if (string_count("VOI",thawep)>0){attack=floor(attack*1.2);}
-                if (string_count("ADA",thawep)>0){attack=floor(attack*1.1);}
+                if (string_count("ADAMANTINE",thawep)>0){attack=floor(attack*1.1);}
 
-                if (string_count("mnr",thawep)>0){attack=floor(attack*0.85);}
+                if (string_count("MINOR",thawep)>0){attack=floor(attack*0.85);}
                 if (string_count("MNR",thawep)>0){attack=floor(attack*0.85);}
             }
 

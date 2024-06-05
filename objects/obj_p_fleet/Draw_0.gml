@@ -1,6 +1,7 @@
 
 if (instance_exists(orbiting)) and (obj_controller.is_test_map=true){
-    draw_set_color(c_red);draw_line_width(x,y,orbiting.x,orbiting.y,1);
+    draw_set_color(c_red);
+    draw_line_width(x,y,orbiting.x,orbiting.y,1);
 }
 
 var m_dist, within;m_dist=point_distance(x,y,mouse_x,mouse_y);within=0;
@@ -41,11 +42,11 @@ if (action!=""){
     if (array_length(complex_route)>0){
         var next_loc = instance_nearest(action_x,action_y, obj_star);
         for (var i=0;i<array_length(complex_route);i++){
-            var target_loc = complex_route[i];
+            var target_loc = star_by_name(complex_route[i]);
             draw_set_color(c_blue);
             draw_set_alpha(1);            
             draw_line_dashed(next_loc.x,next_loc.y,target_loc.x,target_loc.y,16,0.5);
-            next_loc = complex_route[i];
+            next_loc = star_by_name(complex_route[i]);
         }
     }
 }

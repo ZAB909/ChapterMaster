@@ -394,41 +394,43 @@ function scr_planetary_feature(planet_num) {
 		var feat = p_feature[planet_num][f];
 		if (feat.player_hidden ==1){
 			feat.player_hidden =0;
+			var numeral_n = planet_numeral_name(planet_num);
 			switch (feat.f_type){
 				case P_features.Sororitas_Cathedral:
 					if (obj_controller.known[eFACTION.Ecclesiarchy]=0) then obj_controller.known[eFACTION.Ecclesiarchy]=1;
-				    var lop="Sororitas Cathedral discovered on "+string(name)+" "+scr_roman(planet_num)+".";debugl(lop);
-				    scr_alert("green","feature",lop,x,y);scr_event_log("",lop);
+				    var lop=$"Sororitas Cathedral discovered on {numeral_n}.";
+				    scr_alert("green","feature",lop,x,y);
+				    scr_event_log("",lop);
 				    if (p_heresy[planet_num]>10) then p_heresy[planet_num]-=10;
 				    p_sisters[planet_num]=choose(2,2,3);goo=1;
 					break;
 				case P_features.Necron_Tomb:
-				    var lop="Necron Tomb discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+				    var lop=$"Necron Tomb discovered on {numeral_n}.";
 				    scr_alert("red","feature",lop,x,y);
 				    scr_event_log("red",lop);
 					break;
 				case P_features.Artifact:
-					var lop="Artifact discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					var lop=$"Artifact discovered on {numeral_n}.";
 					scr_alert("green","feature",lop,x,y);
 					scr_event_log("",lop);
 					break;
 				case P_features.STC_Fragment:
-					var lop="STC Fragment located on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					var lop=$"STC Fragment located on {numeral_n}.";
 					 scr_alert("green","feature",lop,x,y);
 					 scr_event_log("",lop);
 					 break;
 				case P_features.Ancient_Ruins:
-					var lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}."debugl(lop);
+					var lop=$"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}.";
 					scr_alert("green","feature",lop,x,y);
 					scr_event_log("",lop);
 					break;
 				case P_features.Cave_Network:
-					var lop="Extensive Cave Network discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+					var lop=$"Extensive Cave Network discovered on {numeral_n}.";
 			        scr_alert("green","feature",lop,x,y);
 			        scr_event_log("",lop);
 					break;
 				case P_features.OrkWarboss:
-				    var lop="Ork Warboss discovered on "+string(name)+" "+scr_roman(planet_num)+"."debugl(lop);
+				    var lop=$"Ork Warboss discovered on {numeral_n}.";
 				    scr_alert("red","feature",lop,x,y);
 				    scr_event_log("red",lop);
 					break;		

@@ -1,12 +1,14 @@
 
 if (selected=1) and (!instance_exists(obj_circular)) and (obj_fleet.control!=0){
     var stahp;stahp=0;
+    var xx=__view_get( e__VW.XView, 0);
+    var yy=__view_get( e__VW.YView, 0);
     
     if (obj_fleet.start=5) and (obj_controller.zoomed=0){
-        if (mouse_x>=__view_get( e__VW.XView, 0 )+12) and (mouse_y>=__view_get( e__VW.YView, 0 )+436) and (mouse_x<__view_get( e__VW.XView, 0 )+48) and (mouse_y<__view_get( e__VW.YView, 0 )+480) then stahp=1;
+        if (point_in_rectangle(mouse_x,mouse_y, xx+12,yy+436,xx+48,yy+480)) then stahp=1;
     }
-    if (obj_fleet.start=5) and (obj_controller.zoomed=1){
-        if (mouse_x>24) and (mouse_y>872) and (mouse_x<90) and (mouse_y<960) then stahp=1;
+    else if (obj_fleet.start=5) and (obj_controller.zoomed=1){
+        if (point_in_rectangle(mouse_x,mouse_y, xx+24,yy+872,xx+90,yy+960)) then stahp=1;
     }// and (room_speed<90)
     
     if (stahp=0){

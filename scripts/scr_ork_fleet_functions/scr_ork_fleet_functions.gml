@@ -10,21 +10,35 @@ function new_ork_fleet(xx,yy){
     fleet.sprite_index=spr_fleet_ork;
     fleet.image_index=1;
     fleet.capital_number=1;
-    present_fleet[7]+=1;
+    present_fleet[7] = 1;
 }
 
-function build_new_ork_ships_to_fleet(star){
+function build_new_ork_ships_to_fleet(star, planet){
 
     // Increase ship number for this object?
     var rando=irandom(101);
     if (obj_controller.known[eFACTION.Ork]>0) then rando-=10;
+    if (star.p_type[planet]=="Forge"){
+        rando-=20;
+    } else if (star.p_type[planet]=="Hive"){
+        rando-=10;
+    }else if (star.p_type[planet]=="Shrine" || star.p_type[planet]=="Temperate"){
+        rando-=5;
+    }
     if (rando<=15){// was 25
         rando=choose(1,1,1,1,1,1,1,3,3,3,3);
+        if (capital_number<=0) then rando = 3;
         if (rando=1) then capital_number+=1;
         // if (rando=2) then fleet.frigate_number+=1;
         if (rando=3) then escort_number+=1;
     }
-	
+    var ii=0;
+    ii+=capital_number;
+    ii+=round((frigate_number/2));
+    ii+=round((escort_number/4));
+    if (ii<=1) then ii=1;
+    show_debug_message("{0},{1}",capital_number,escort_number)
+    image_index=ii;	
 	//if big enough flee bugger off to new star
     if (image_index>=5){
     	instance_deactivate_object(star);
@@ -46,4 +60,5 @@ function build_new_ork_ships_to_fleet(star){
     
     }
 	instance_activate_object(obj_star);
+    show_debug_message("{0},{1}",capital_number,escort_number)
 }

@@ -76,6 +76,7 @@ for(run=1; run<=8; run++){
 }
 
 system_player_ground_forces = 0;
+garrison = false;
 
 for(run=8; run<=30; run++){
     present_fleet[run]=0;

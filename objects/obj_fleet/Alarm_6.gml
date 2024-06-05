@@ -148,20 +148,45 @@ repeat(100){i+=1;
         if (obj_ini.ship_size[i]=1) then escort+=1;
         
         ship_class[i]=obj_ini.ship_class[i];
-        ship[i]=obj_ini.ship[i];ship_id[i]=i;ship_size[i]=obj_ini.ship_size[i];
-        ship_leadership[i]=100;ship_hp[i]=obj_ini.ship_hp[i];ship_maxhp[i]=obj_ini.ship_maxhp[i];
-        ship_conditions[i]=obj_ini.ship_conditions[i];ship_speed[i]=obj_ini.ship_speed[i];ship_turning[i]=obj_ini.ship_turning[i];
-        ship_front_armour[i]=obj_ini.ship_front_armour[i];ship_other_armour[i]=obj_ini.ship_other_armour[i];ship_weapons[i]=obj_ini.ship_weapons[i];
+        ship[i]=obj_ini.ship[i];
+        ship_id[i]=i;
+        ship_size[i]=obj_ini.ship_size[i];
+        ship_leadership[i]=100;
+        ship_hp[i]=obj_ini.ship_hp[i];
+        ship_maxhp[i]=obj_ini.ship_maxhp[i];
+        ship_conditions[i]=obj_ini.ship_conditions[i];
+        ship_speed[i]=obj_ini.ship_speed[i];
+        ship_turning[i]=obj_ini.ship_turning[i];
+        ship_front_armour[i]=obj_ini.ship_front_armour[i];
+        ship_other_armour[i]=obj_ini.ship_other_armour[i];
+        ship_weapons[i]=obj_ini.ship_weapons[i];
         
         var t=0;
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
-        t+=1;ship_wep[i,t]=obj_ini.ship_wep[i,t];ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
+        t+=1;
+        ship_wep[i,t]=obj_ini.ship_wep[i,t];
+        ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];
+        ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
+        t+=1;
+        ship_wep[i,t]=obj_ini.ship_wep[i,t];
+        ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];
+        ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
+        t+=1;
+        ship_wep[i,t]=obj_ini.ship_wep[i,t];
+        ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];
+        ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
+        t+=1;
+        ship_wep[i,t]=obj_ini.ship_wep[i,t];
+        ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];
+        ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
+        t+=1;
+        ship_wep[i,t]=obj_ini.ship_wep[i,t];
+        ship_wep_facing[i,t]=obj_ini.ship_wep_facing[i,t];
+        ship_wep_condition[i,t]=obj_ini.ship_wep_condition[i,t];
         
-        ship_capacity[i]=obj_ini.ship_capacity[i];ship_carrying[i]=obj_ini.ship_carrying[i];
-        ship_contents[i]=obj_ini.ship_contents[i];ship_turrets[i]=obj_ini.ship_turrets[i];
+        ship_capacity[i]=obj_ini.ship_capacity[i];
+        ship_carrying[i]=obj_ini.ship_carrying[i];
+        ship_contents[i]=obj_ini.ship_contents[i];
+        ship_turrets[i]=obj_ini.ship_turrets[i];
     }
 }
 
@@ -173,6 +198,5 @@ obj_fleet_spawner.alarm[0]=1;
 
 
 // alarm[1]=2;
-
 /* */
 /*  */

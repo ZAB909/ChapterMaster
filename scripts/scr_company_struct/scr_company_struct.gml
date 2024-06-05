@@ -21,19 +21,29 @@ function scr_company_struct(comp) constructor{
 	selected_unit=obj_controller.temp[120];
 	drop_down_open=false;
 	captain = "none";
-	squad_draw_surfaces = array_create(15, []);
-	for (var i=0;i<15;i++){
-		squad_draw_surfaces[i]=[[-1,-1],false];
+	champion = "none";
+	ancient = "none";
+	static reset_squad_surface = function(){
+		squad_draw_surfaces = array_create(15, []);
+		for (var i=0;i<15;i++){
+			squad_draw_surfaces[i]=[[-1,-1],false];
+		}
 	}
+	reset_squad_surface();
 
 	if (company>0 && company<11){
 		var unit;
 		var company_units = obj_controller.display_unit;
+		var role_set = obj_ini.role[100];
 		for (var i=0;i<array_length(company_units);i++){
 			if (is_struct(company_units[i])){
 				unit = company_units[i];
-				if (unit.role() == obj_ini.role[100][Role.CAPTAIN]){
+				if (unit.role() == role_set[Role.CAPTAIN]){
 					captain = unit;
+				} else if (unit.role() == role_set[Role.ANCIENT]){
+					ancient = unit;
+				} else if (unit.role() == role_set[Role.COMPANY_CHAMPION]){
+					champion = unit;
 				}
 			}
 		}
@@ -192,7 +202,7 @@ function scr_company_struct(comp) constructor{
 								obj_controller.menu=0;
 				                obj_controller.hide_banner=0;
 				                obj_controller.x = garrrison_star.x;
-				                obj_controller.y =garrrison_star.y;
+				                obj_controller.y = garrrison_star.y;
 				                obj_controller.selection_data =  {
 				                	planet:cur_assignment.ident,
 				                	feature:"",
@@ -254,6 +264,7 @@ function scr_company_struct(comp) constructor{
 			button = draw_unit_buttons([xx+bound_width[0]+30 + string_width(deploy_text), yy+bound_height[0]+10+35],"Reset Squad Loadout",[1,1],c_green);
 			if (point_and_click(button)){
 				current_squad.sort_squad_loadout();
+				reset_squad_surface();
 			}
 			
 			if (unit_rollover){
@@ -270,7 +281,6 @@ function scr_company_struct(comp) constructor{
 			for (var i=0;i<array_length(current_squad.members);i++){
 				member = fetch_unit(current_squad.members[i]);
 				if (!array_equals(squad_draw_surfaces[i][0], current_squad.members[i])){
-					show_debug_message("non equal arrays {0}, {1}",squad_draw_surfaces[i][0], current_squad.members[i]);
 					squad_draw_surfaces[i][0] = [member.company, member.marine_number];
 					squad_draw_surfaces[i][1] = member.draw_unit_image();
 				}
@@ -309,7 +319,7 @@ function scr_company_struct(comp) constructor{
 					exit_period = true;
 				}
 			}						
-			if (!unit_rollover){
+			if (!unit_rollover && !instance_exists(obj_star_select)){
 				if (point_in_rectangle(mouse_x, mouse_y, xx+25, yy+144, xx+525, yy+981) && !exit_period){
 					if (rollover_sequence<10){
 						rollover_sequence++;

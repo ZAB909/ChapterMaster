@@ -1,5 +1,20 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+
+function set_chapter_arti_data(){
+    artifacts=0;
+    menu_artifact=-1;
+    unused_artifacts = 0;
+    for (var i=1;i<array_length(obj_ini.artifact);i++){
+        if (obj_ini.artifact[i] != ""){
+            if (menu_artifact==-1) then menu_artifact=i;
+            artifacts++;
+            if (!obj_ini.artifact_equipped[i]){
+                unused_artifacts++;
+            }
+        }
+    }                    
+}
 function scr_librarium(){
 	var blurp="";
 	var recruitment_pace = [
@@ -172,8 +187,12 @@ function scr_librarium(){
                 }
                 if (obj_ini.artifact_identified[menu_artifact] = 0) {
                     draw_set_color(881503);
-
-                    artif_descr = obj_ini.artifact_struct[menu_artifact].description();
+                    artif_descr = "";
+                    try{
+                        artif_descr = obj_ini.artifact_struct[menu_artifact].description();
+                    }   catch( _exception){
+                        show_debug_message(_exception.message); 
+                    }
                     tooltip = "";
                     tooltip_stat1 = 0;
                     tooltip_stat2 = 0;
@@ -219,7 +238,7 @@ function scr_librarium(){
 
                         if (menu_artifact==fest_display) then fest_display=0;
 
-                        if (array_contains(obj_ini.artifact_tags[i],"Daemon")){
+                        if (array_contains(obj_ini.artifact_tags[i],"daemonic")){
                             if (obj_ini.artifact_sid[i]>=500){
                                 var demonSummonChance=irandom(100)+1;
 
@@ -243,16 +262,8 @@ function scr_librarium(){
                                 scr_recent("","",0);
                             }
                         }
-
-                        obj_ini.artifact[i]="";
-                        obj_ini.artifact_tags[i]=[];
-                        obj_ini.artifact_identified[i]=0;
-                        obj_ini.artifact_condition[i]=100;
-                        obj_ini.artifact_loc[i]="";
-                        obj_ini.artifact_sid[i]=0;
-                        artifacts-=1;
-                        cooldown=12;
-                        if (menu_artifact>artifacts) then menu_artifact=artifacts;              
+                        delete_artifact(i);                           
+                        set_chapter_arti_data();      
                     }
 
                     if (menu_artifact_type = 1) { // Weapon
