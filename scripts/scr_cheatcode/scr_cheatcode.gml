@@ -32,7 +32,7 @@ function scr_cheatcode(argument0) {
             obj_controller.dungeon =  new dungeon_struct();
             squad=obj_ini.squads[5];
             for (var i =0;i<array_length(squad.members);i++){
-                array_push(obj_controller.dungeon.members, new unit_dungeon_member(obj_ini.TTRPG[squad.members[i][0]][squad.members[i][1]]));
+                array_push(obj_controller.dungeon.members, new UnitDungeonMember(obj_ini.TTRPG[squad.members[i][0]][squad.members[i][1]]));
             }
         }
         if (cheatcode_string=="slaughtersong"){

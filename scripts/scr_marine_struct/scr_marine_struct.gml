@@ -2763,6 +2763,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 		}
 	}
+
+	static has_equipped = function(item, slot="any"){
+		if (slot =="any"){
+			var equipped = [mobility_item(), gear(), weapon_one(), weapon_two(), armour()];
+			return array_contains(equipped, item);
+		}
+	}
+
+	static has_equipped_tag = function (tag, collect_strings=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"]){
+		var item_data = unit_equipment_data();
+		for (var i=0; i<5;i++){
+			if (is_struct(item_data[$collect_strings[i]])){
+				if (item_data[$collect_strings[i]].has_tag(tag)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	static stat_display = scr_draw_unit_stat_data;
 	static draw_unit_image = scr_draw_unit_image;
 	static display_wepaons = scr_ui_display_weapons;

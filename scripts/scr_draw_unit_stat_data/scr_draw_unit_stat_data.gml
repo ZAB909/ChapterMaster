@@ -136,8 +136,8 @@ function scr_draw_unit_stat_data(manage=false,draw_cords = [1008,520], ){
 				filter_and_sort_company("stat", stat_display_list[i][6]);
 				obj_controller.unit_bio = false;
 			}
+			array_push(stat_tool_tips,[attribute_box.x1, attribute_box.y1, attribute_box.x2, attribute_box.y2,stat_display_list[i][1] + $"#Click to order by highest {stat_display_list[i][4]}", $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
 		}
-		array_push(stat_tool_tips,[attribute_box.x1, attribute_box.y1, attribute_box.x2, attribute_box.y2,stat_display_list[i][1] + $"#Click to order by highest {stat_display_list[i][4]}", $"{stat_display_list[i][4]} ({stat_display_list[i][5]})"]);
 		attribute_box.x1+=36;
 		attribute_box.x2+=36;
 	}

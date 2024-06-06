@@ -1,7 +1,5 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 
-function unit_map_sprite() constructor{
+function UnitMapSprite() constructor{
 	is_walking = true;
 	walking_no=0;
 	walk_sprite = spr_mar_walk_body1;
@@ -24,11 +22,11 @@ function unit_map_sprite() constructor{
 	}
 }
 
-function unit_dungeon_member(unit) constructor{
+function UnitDungeonMember(unit) constructor{
 	struct = unit;
 	actions = 3;
     action_able = true;
-    unit_image = unit.draw_unit_image();
+    unit_image_ = unit.draw_unit_image();
 
     static dungeon_data_panel = function(xx,yy,scale_x=(166/161), scale_y = (271/198)/2){	
     	draw_set_color(c_black);				
@@ -69,6 +67,36 @@ function dungeon_struct() constructor{
 		"req" : 0,
 	}
 
+	static draw_solution_options = function(){
+		var solution_coords;
+		var ob = dungeon.current_obstacle.base_data;
+		draw_set_color(c_gray);
+		draw_set_font(fnt_40k_14b);
+		for (var i=0;i<array_length(ob.solutions);i++){
+			if (ob.solutions[i].valid){
+				if (struct_exists(ob.solutions[i],"stat_icon")){
+					draw_col = stat_type_data()[ob.solutions[i].stat_icon][1];
+				}
+				solution_coords = draw_unit_buttons([xx+90+(200*solutions_found), yy+100+(50*y_tier)],ob.solutions[i].name,[1.5,1.5],draw_col);
+				if (struct_exists(ob.solutions[i],"stat_icon")){
+					draw_set_color(c_gray);
+					draw_rectangle(solution_coords[0]-34, solution_coords[1], solution_coords[0], solution_coords[3],0);
+					draw_rectangle(solution_coords[2], solution_coords[1], solution_coords[2]+34, solution_coords[3],0);
+					draw_stat_icons(ob.solutions[i].stat_icon, solution_coords[0]-33, solution_coords[1]+1);
+					draw_stat_icons(ob.solutions[i].stat_icon, solution_coords[2]+1, solution_coords[1]+1);
+				}
+				if (point_and_click(solution_coords)){
+					dungeon.solution = i;
+					calculate_solution_members();
+				}
+				solutions_found++;
+				if (solutions_found==3){
+					solutions_found=0;
+					y_tier++;
+				}
+			}
+		}		
+	}
 	static attempt_solution = function (){
 		if (dungeon.solution>-1 && !is_string(selected_unit)){
 			var test;
@@ -160,13 +188,143 @@ function dungeon_struct() constructor{
 		}
 
 	}
-	unit_data_slate.inside_method = function(){
-		selected_unit = "none";
+	static DungeonUnitOverview = function(){
 		var unit, mem;
 		var xx =unit_data_slate.XX;
 		var yy =unit_data_slate.YY;	
 		var _x_depth=0;
 		var _y_depth=0;
+		
+		if (unit_data_slate.individual_display>-1 && (unit_data_slate.individual_view_sequence<21 || unit_data_slate.individual_view_sequence>21)) then unit_data_slate.individual_view_sequence++;
+		if (unit_data_slate.individual_view_sequence<11 || unit_data_slate.individual_view_sequence>32){
+			var unit_draw = [0,0];
+			var banner_x_scale = (166/161);
+			var banner_y_scale = (271/198)/2;
+			for (var i=0;i<array_length(members);i++){
+				draw_set_alpha(1);
+				mem = members[i];
+				unit = mem.struct;
+				unit_draw = [start_x+(170*_x_depth),start_y+(250*_y_depth)];
+				mem.unit_draw=[start_x+(170*_x_depth),start_y+(250*_y_depth)];
+				mem.unit_image_.draw(unit_draw[0],unit_draw[1], true);
+				//if (selected_unit>-1 && selected_unit != i)
+				if (scr_hit(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271)){										
+					selected_unit=i;
+					//unit_data_slate.individual_view_sequence++;
+					if (mouse_check_button(mb_left) && unit_data_slate.individual_display ==-1){
+						unit_data_slate.individual_display = i;
+						unit_data_slate.individual_view_sequence = 0;
+						if (dungeon.solution>-1 && mem.action_able){
+							action_unit = i;
+						}
+					}
+				};
+				_x_depth++;
+				if (_x_depth==4){
+					_x_depth=0;
+					_y_depth++;
+				}				
+			}
+			draw_set_color(c_black);
+			draw_rectangle(start_x,start_y,start_x+(170*4), start_y+21, 0);
+			_x_depth=0;
+			_y_depth=0;
+			for (var i=0;i<array_length(members);i++){
+				mem = members[i];
+				unit = members[i].struct;
+				unit_draw=[start_x+(170*_x_depth),start_y+(250*_y_depth)];
+				mem.current_draw_loc = unit_draw;
+				mem.dungeon_data_panel(unit_draw[0], unit_draw[1]+135);
+				draw_set_color(c_gray);
+				_x_depth++;
+				if (_x_depth==4){
+					_x_depth=0;
+					_y_depth++;
+				}
+				if (dungeon.solution>-1){
+					if(!members[i].action_able){
+						draw_set_alpha(0.7)
+						draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271, 0);
+					}
+				}
+				draw_set_alpha(1)	
+				if (unit_data_slate.individual_display>-1 && unit_data_slate.individual_view_sequence<11){
+					if (unit_data_slate.individual_display!=i){
+						draw_set_color(c_black);
+						draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+21 + (25*unit_data_slate.individual_view_sequence), 0);
+					}					
+				} else if (unit_data_slate.individual_view_sequence>32){
+					if (unit_data_slate.individual_display!=i){
+						draw_set_color(c_black);
+						draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+21 + (25*(10-(unit_data_slate.individual_view_sequence-32))), 0);
+					}						
+				}
+				if (selected_unit == i && unit_data_slate.individual_view_sequence<11){
+					draw_set_color(c_yellow);
+					draw_set_alpha(1);
+					draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166, unit_draw[1]+271, 1);
+					draw_set_alpha(0.75);
+					draw_rectangle(unit_draw[0]-1, unit_draw[1]+20, unit_draw[0]+167, unit_draw[1]+272, 1);
+					draw_set_alpha(0.5);
+					draw_rectangle(unit_draw[0]-2, unit_draw[1]+19, unit_draw[0]+168, unit_draw[1]+273, 1);
+					draw_set_alpha(0.25);
+					draw_rectangle(unit_draw[0]-3, unit_draw[1]+18, unit_draw[0]+169, unit_draw[1]+274, 1);
+					draw_set_alpha(1);
+					draw_set_color(c_black);
+					if (unit_data_slate.individual_view_sequence == 10){
+						mem = members[unit_data_slate.individual_display];
+						mem.current_draw_loc = [unit_draw[0]-xx,unit_draw[1]-yy];
+						mem.return_point  = [unit_draw[0]-xx,unit_draw[1]-yy];
+						var targ_x = xx+(unit_data_slate.width/2)-133;
+						var targ_y = start_y+21;
+						var increment_x = (targ_x-unit_draw[0])/10;
+						var increment_y = (targ_y-unit_draw[1])/10;
+						mem.draw_increments = [increment_x,increment_y];
+					}
+				}
+				if (unit_data_slate.individual_view_sequence==42){
+					unit_data_slate.individual_view_sequence=0;
+					unit_data_slate.individual_display=-1;
+				}		
+			}
+		} else if (unit_data_slate.individual_view_sequence>10 && unit_data_slate.individual_view_sequence<=20){
+			var seq = (unit_data_slate.individual_view_sequence-10)/10;
+			var display_cur = unit_data_slate.individual_display;
+			with (members[display_cur]){
+				unit = struct;
+				current_draw_loc[0] += draw_increments[0];
+				current_draw_loc[1] += draw_increments[1];
+				unit_image_.draw(xx+current_draw_loc[0], yy+current_draw_loc[1], true);
+				dungeon_data_panel(current_draw_loc[0]+xx+(166*(seq)), current_draw_loc[1]+yy+(135));		
+			}
+		}else if (unit_data_slate.individual_view_sequence>22 && unit_data_slate.individual_view_sequence<=32){
+			var display_cur = unit_data_slate.individual_display;
+			unit = members[display_cur].struct;
+			mem =  members[display_cur];
+			mem.current_draw_loc[0] -= mem.draw_increments[0];
+			mem.current_draw_loc[1] -= mem.draw_increments[1];
+			mem.unit_image_.draw(xx+mem.current_draw_loc[0], yy+mem.current_draw_loc[1], true);
+			var seq = (10-(unit_data_slate.individual_view_sequence-22))/10;
+			mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166*(seq)), mem.current_draw_loc[1]+yy+(135));						
+		}else {
+			unit = members[unit_data_slate.individual_display].struct;
+			mem =  members[unit_data_slate.individual_display];
+			draw_set_color(c_gray);
+			mem.unit_image_.draw(xx+mem.current_draw_loc[0], yy+mem.current_draw_loc[1], true);
+			mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166), mem.current_draw_loc[1]+yy+(135));
+	        draw_set_color(c_gray);
+	        draw_set_halign(fa_center);
+	        draw_set_font(fnt_40k_14b);
+	        draw_text_transformed(xx+mem.current_draw_loc[0]+100,mem.current_draw_loc[1]+yy-30,string_hash_to_newline(unit.name_role()),1.5,1.5,0);
+	        draw_set_halign(fa_left);
+			if (point_and_click(draw_unit_buttons([xx+50,mem.current_draw_loc[1]+yy-30],"<----",[1.5,1.5],c_red))){
+				unit_data_slate.individual_view_sequence = 22;
+			}		        				
+			unit.stat_display(false,[130,430]);
+		}		
+	}
+	static DungeonMainModule = function(){
+		selected_unit = "none";
 		var _draw_colour = c_red;
 		var mis_obj_cords = draw_unit_buttons([xx+70,yy+70], "Mission Objectives",[1.5,1.5],c_red);
 		if (point_and_click(mis_obj_cords)){
@@ -185,137 +343,14 @@ function dungeon_struct() constructor{
 		var start_x =mis_obj_cords[0]+50;
 		var health_bar;
 		if (current_view=="unit"){
-			if (unit_data_slate.individual_display>-1 && (unit_data_slate.individual_view_sequence<21 || unit_data_slate.individual_view_sequence>21)) then unit_data_slate.individual_view_sequence++;
-			if (unit_data_slate.individual_view_sequence<11 || unit_data_slate.individual_view_sequence>32){
-				var unit_draw = [0,0];
-				var banner_x_scale = (166/161);
-				var banner_y_scale = (271/198)/2;
-				for (var i=0;i<array_length(members);i++){
-					draw_set_alpha(1);
-					mem = members[i];
-					unit = mem.struct;
-					unit_draw = [start_x+(170*_x_depth),start_y+(250*_y_depth)];
-					mem.unit_draw=[start_x+(170*_x_depth),start_y+(250*_y_depth)];
-					mem.unit_image.draw(unit_draw[0],unit_draw[1], true);
-					//if (selected_unit>-1 && selected_unit != i)
-					if (point_in_rectangle(mouse_x, mouse_y, unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271)){										
-						selected_unit=i;
-						//unit_data_slate.individual_view_sequence++;
-						if (mouse_check_button(mb_left) && unit_data_slate.individual_display ==-1){
-							unit_data_slate.individual_display = i;
-							unit_data_slate.individual_view_sequence = 0;
-							if (dungeon.solution>-1 && mem.action_able){
-								action_unit = i;
-							}
-						}
-					};
-					_x_depth++;
-					if (_x_depth==4){
-						_x_depth=0;
-						_y_depth++;
-					}				
-				}
-				draw_set_color(c_black);
-				draw_rectangle(start_x,start_y,start_x+(170*4), start_y+21, 0);
-				_x_depth=0;
-				_y_depth=0;
-				for (var i=0;i<array_length(members);i++){
-					mem = members[i];
-					unit = members[i].struct;
-					unit_draw=[start_x+(170*_x_depth),start_y+(250*_y_depth)];
-					mem.unit_draw = unit_draw;
-					mem.dungeon_data_panel(unit_draw[0], unit_draw[1]+135);
-					draw_set_color(c_gray);
-					_x_depth++;
-					if (_x_depth==4){
-						_x_depth=0;
-						_y_depth++;
-					}
-					if (dungeon.solution>-1){
-						if(!members[i].action_able){
-							draw_set_alpha(0.7)
-							draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+271, 0);
-						}
-					}
-					draw_set_alpha(1)	
-					if (unit_data_slate.individual_display>-1 && unit_data_slate.individual_view_sequence<11){
-						if (unit_data_slate.individual_display!=i){
-							draw_set_color(c_black);
-							draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+21 + (25*unit_data_slate.individual_view_sequence), 0);
-						}					
-					} else if (unit_data_slate.individual_view_sequence>32){
-						if (unit_data_slate.individual_display!=i){
-							draw_set_color(c_black);
-							draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166,unit_draw[1]+21 + (25*(10-(unit_data_slate.individual_view_sequence-32))), 0);
-						}						
-					}
-					if (selected_unit == i && unit_data_slate.individual_view_sequence<11){
-						draw_set_color(c_yellow);
-						draw_set_alpha(1);
-						draw_rectangle(unit_draw[0], unit_draw[1]+21, unit_draw[0]+166, unit_draw[1]+271, 1);
-						draw_set_alpha(0.75);
-						draw_rectangle(unit_draw[0]-1, unit_draw[1]+20, unit_draw[0]+167, unit_draw[1]+272, 1);
-						draw_set_alpha(0.5);
-						draw_rectangle(unit_draw[0]-2, unit_draw[1]+19, unit_draw[0]+168, unit_draw[1]+273, 1);
-						draw_set_alpha(0.25);
-						draw_rectangle(unit_draw[0]-3, unit_draw[1]+18, unit_draw[0]+169, unit_draw[1]+274, 1);
-						draw_set_alpha(1);
-						draw_set_color(c_black);
-						if (unit_data_slate.individual_view_sequence == 10){
-							mem = members[unit_data_slate.individual_display];
-							mem.current_draw_loc = [unit_draw[0]-xx,unit_draw[1]-yy];
-							mem.return_point  = [unit_draw[0]-xx,unit_draw[1]-yy];
-							var targ_x = xx+(unit_data_slate.width/2)-133;
-							var targ_y = start_y+21;
-							var increment_x = (targ_x-unit_draw[0])/10;
-							var increment_y = (targ_y-unit_draw[1])/10;
-							mem.draw_increments = [increment_x,increment_y];
-						}
-					}
-					if (unit_data_slate.individual_view_sequence==42){
-						unit_data_slate.individual_view_sequence=0;
-						unit_data_slate.individual_display=-1;
-					}		
-				}
-			} else if (unit_data_slate.individual_view_sequence>10 && unit_data_slate.individual_view_sequence<=20){
-				var seq;
-				with (unit_data_slate){
-					unit = members[individual_display].struct;
-					mem =  members[individual_display];
-					mem.current_draw_loc[0] += mem.draw_increments[0];
-					mem.current_draw_loc[1] += mem.draw_increments[1];
-					mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
-					var seq = (individual_view_sequence-10)/10;
-				}
-				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166*(seq)), mem.current_draw_loc[1]+yy+(135));		
-			}else if (unit_data_slate.individual_view_sequence>22 && unit_data_slate.individual_view_sequence<=32){
-				unit = members[unit_data_slate.individual_display].struct;
-				mem =  members[unit_data_slate.individual_display];
-				mem.current_draw_loc[0] -= mem.draw_increments[0];
-				mem.current_draw_loc[1] -= mem.draw_increments[1];
-				mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
-				var seq = (10-(unit_data_slate.individual_view_sequence-22))/10;
-				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166*(seq)), mem.current_draw_loc[1]+yy+(135));						
-			}else {
-				unit = members[unit_data_slate.individual_display].struct;
-				mem =  members[unit_data_slate.individual_display];
-				draw_set_color(c_gray);
-				mem.unit_image.draw(mem.current_draw_loc[0], mem.current_draw_loc[1], true);
-				mem.dungeon_data_panel(mem.current_draw_loc[0]+xx+(166), mem.current_draw_loc[1]+yy+(135));
-		        draw_set_color(c_gray);
-		        draw_set_halign(fa_center);
-		        draw_set_font(fnt_40k_14b);
-		        draw_text_transformed(xx+mem.current_draw_loc[0]+100,mem.current_draw_loc[1]+yy-30,string_hash_to_newline(unit.name_role()),1.5,1.5,0);
-		        draw_set_halign(fa_left);
-				if (point_and_click(draw_unit_buttons([xx+50,mem.current_draw_loc[1]+yy-30],"<----",[1.5,1.5],c_red))){
-					unit_data_slate.individual_view_sequence = 22;
-				}		        				
-				unit.stat_display(false,[xx+130,yy+430]);
-			}
+			DungeonUnitOverview();
 		} else if (current_view="mission"){
 
 		}
 	}
+
+
+	unit_data_slate.inside_method = DungeonMainModule;
 
 
 	map_data_slate.inside_method = function(){
@@ -331,8 +366,38 @@ function dungeon_struct() constructor{
 				draw_text_transformed(xx+(map_data_slate.width/2), yy+40, "Relevant Data", 2, 2, 0);
 				var ob = dungeon.current_obstacle.base_data;
 				var stat_data = stat_type_data();
-				for (var t=0; t<array_length(ob.tests);t++){
-					//if 
+				draw_set_color(c_gray);
+				draw_yy = yy+20;
+				draw_xx = xx+(map_data_slate.width/2)+20;
+				var required_tests = ob[dungeon.solution].tests;
+				var cur_test;
+				for (var t=0; t<required_tests);t++){
+					cur_test = required_tests[t];
+					draw_stat_icons(cur_test.attribute, draw_xx, draw_yy, 0.5, colour, 0, 1);
+					draw_text(draw_xx+20, draw_yy,"difficulty : Normal");
+					var space=0;
+					if (struct_exists(cur_test, "modfiers")){
+						var mods = cur_test.modfiers;
+						if (struct_exists(mods, "equipment")){
+							for (var e=0;e<array_length(mods.equipment);e++){
+								if (unit.has_equipped(mods.equipment[e][0])){
+									draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.equipment[e][1]%");
+									space++;
+								}
+							}
+						}
+						if (struct_exists(mods, "trait")){
+							for (var e=0;e<array_length(mods.trait);e++){
+								if (unit.has_trai(mods.trait[e])){
+									draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.trait[e][1]%");
+									space++;									
+								}
+							}
+						}
+					} 
+					if (!space){
+						draw_text(draw_xx+40, draw_yy+10,"No other bonus'");
+					}
 				}
 
 			}
@@ -344,7 +409,7 @@ function dungeon_struct() constructor{
 				var y_scatter = 0;
 				for (var i=0; i <unit_count;i++){
 					x_scatter++;
-					members[i].map_figure = new unit_map_sprite();
+					members[i].map_figure = new UnitMapSprite();
 					cur_fig = members[i].map_figure;
 					cur_fig.current_x =  70 + (x_scatter*40);
 					cur_fig.current_y = 150+(50*y_scatter);
@@ -384,31 +449,7 @@ function dungeon_struct() constructor{
 					}
 				}
 				if (dungeon.solution==-1){
-					var solution_coords;
-					for (var i=0;i<array_length(ob.solutions);i++){
-						if (ob.solutions[i].valid){
-							if (struct_exists(ob.solutions[i],"stat_icon")){
-								draw_col = stat_type_data()[ob.solutions[i].stat_icon][1];
-							}
-							solution_coords = draw_unit_buttons([xx+90+(200*solutions_found), yy+100+(50*y_tier)],ob.solutions[i].name,[1.5,1.5],draw_col);
-							if (struct_exists(ob.solutions[i],"stat_icon")){
-								draw_set_color(c_gray);
-								draw_rectangle(solution_coords[0]-34, solution_coords[1], solution_coords[0], solution_coords[3],0);
-								draw_rectangle(solution_coords[2], solution_coords[1], solution_coords[2]+34, solution_coords[3],0);
-								draw_stat_icons(ob.solutions[i].stat_icon, solution_coords[0]-33, solution_coords[1]+1);
-								draw_stat_icons(ob.solutions[i].stat_icon, solution_coords[2]+1, solution_coords[1]+1);
-							}
-							if (point_and_click(solution_coords)){
-								dungeon.solution = i;
-								calculate_solution_members();
-							}
-							solutions_found++;
-							if (solutions_found==3){
-								solutions_found=0;
-								y_tier++;
-							}
-						}
-					}
+					draw_solution_options();
 				} else {
 					var solution = ob.solutions[dungeon.solution];
 					draw_text_ext(xx+(decision_data_slate.width/2), yy+70, $"Who will attempt to {solution.description}", -1, decision_data_slate.width-50);
@@ -532,28 +573,32 @@ function dungeon_map_maker(size=10) constructor{
 		up, 
 		down
 	}
-	map = array_create(size array_create(size, {room_type:"null"}));
+	map = array_create(size, array_create(size, {room_type:"null"}));
 	entrance = [0,floor(size)/2];
-	static return_room_from_array(coords){
+	static return_room_from_array =function (coords){
 		return map[coords[0]][coords[1]];
 	}
-	static set_room_from_array(coords, room_data){
-		return map[coords[0]][coords[1]];
+	static set_room_from_array =function (coords, room_data){
+		map[coords[0]][coords[1]] = room_data;
 	}
-	static fetch_current_room(){
+	static fetch_current_room =function (){
 		return_room_from_array(current_room);
 	};
-	static fetch_current_room_neigbour(move_direction=Direction.east){
+	static fetch_current_room_neigbour =function (move_direction=Direction.east){
 		var array_edit;
 		switch(move_direction){
-			case Direction.east;
-				array_edit = [current_room[0]+1, current_room[1]]);
-			case Direction.west;
-				array_edit = [current_room[0]-1, current_room[1]]);
-			case Direction.south;
-				array_edit = [current_room[0], current_room[1]+1]);
-			case Direction.north;
-				array_edit = [current_room[0]+1, current_room[1]-1]);
+			case Direction.east:
+				array_edit = [current_room[0]+1, current_room[1]];
+				break;
+			case Direction.west:
+				array_edit = [current_room[0]-1, current_room[1]];
+				break;
+			case Direction.south:
+				array_edit = [current_room[0], current_room[1]+1];
+				break;
+			case Direction.north:
+				array_edit = [current_room[0]+1, current_room[1]-1];
+				break;
 		}
 		return_room_from_array(array_edit);
 	};	
@@ -565,28 +610,33 @@ function dungeon_map_maker(size=10) constructor{
 
 	var generation_possible=true;
 	var north, south, east, west;
-	while (generation_possible){
-		north=false; south=false; east=false; west=false;
-		viable_rooms = [];
-		if (current_room[0]>0){
-			var east_room  = fetch_current_room_neigbour(Direction.east);
-		}
-		if (current_room[0]<size-1){
-			var west_room  = fetch_current_room_neigbour(Direction.west);
-		}
-		if (current_room[1]>0){
-			var north_room  = fetch_current_room_neigbour(Direction.north);
-		}
-		if (current_room[1]<size-1){
-			var south_room  = fetch_current_room_neigbour(Direction.south);
-		}
-		viable_rooms = [east_room,west_room,north_room,south_room];
-		build_room = viable_rooms[irandom(array_length(viable_rooms)-1)];	
-	}
 
 
 	current_room = entrance;
-	current_obstacle = current_room.obstacles;
+
+	while (generation_possible){
+		north=false; south=false; east=false; west=false;
+		viable_rooms = [];
+		if (current_room[0]<size-1){
+			var east_room  = fetch_current_room_neigbour(Direction.east);
+			array_push(viable_rooms, east_room);
+		}
+		if (current_room[0]>0){
+			var west_room  = fetch_current_room_neigbour(Direction.west);
+			array_push(viable_rooms, west_room);
+		}
+		if (current_room[1]>0){
+			var north_room  = fetch_current_room_neigbour(Direction.north);
+			array_push(viable_rooms, north_room);
+		}
+		if (current_room[1]<size-1){
+			var south_room  = fetch_current_room_neigbour(Direction.south);
+			array_push(viable_rooms, south_room);
+		}
+		build_room = viable_rooms[irandom(array_length(viable_rooms)-1)];	
+		generation_possible = false;
+	}
+	current_obstacle = return_room_from_array(current_room).obstacles;
 	solution=-1;
 	viable_members=[];
 }
@@ -596,15 +646,15 @@ function obstacle(bd) constructor{
 }
 
 function dungeon_map(size=10) constructor{
-	map = array_create(size array_create(size, {}));
+	map = array_create(size, array_create(size, {}));
 	entrance = [0,floor(size)/2];
-	static return_room_from_array(coords){
+	static return_room_from_array = function(coords){
 		return map[coords[0]][coords[1]];
 	}
-	static set_room_from_array(coords, room_data){
+	static set_room_from_array = function(coords, room_data){
 		return map[coords[0]][coords[1]];
 	}
-	static fetch_current_room(){
+	static fetch_current_room = function(){
 		return_room_from_array(current_room);
 	};
 	set_room_from_array(entrance, {
