@@ -9,6 +9,19 @@ enum eDirection{
 
 function dungeon_map_maker(size=10) constructor{
 
+	map_surface = surface_create(600, 600);
+	self.size = size;
+	static function draw_map(){
+		surface_set_target(map_surface);
+		draw_clear_alpha(c_black, 0);//RESET surface
+		for (var i=0;i<size;i++){
+			for (var s=0;s<size;s++){
+				rect = [0+(60*i), 0+(60*s),60+(60*i), 60+(60*s)];
+			}
+			draw_rectangle(rect[0], rect[1], rect[2], rect[3]);
+		}
+	}
+
 	map = array_create(size, array_create(size, {room_type:"null"}));
 	entrance = [0,floor(size)/2];
 	static return_room_from_array =function (coords){
