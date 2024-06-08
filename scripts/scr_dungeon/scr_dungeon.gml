@@ -97,22 +97,108 @@ function dungeon_struct() constructor{
 			}
 		}		
 	}
+	static TestUnitAgainstRequirements = function(requirements, unit){
+		viable = true;
+		if (struct_exists(requirements,"group")){
+			viable = unit.IsSpecialist(requirements.group);
+		}
+		if (viable){
+			viable = TestObstaclesUnitTruthsWeapons(unit, requirements, true, viable);
+		}
+		if (viable){
+			viable = TestObstaclesUnitTruthsItem(unit, requirements, true, viable);
+		}		
+		return viable;
+	}
+
+	// handles all tests to see mods or if unit needs to have a particular weapon equipped
+	static TestObstaclesUnitTruthsWeapons(unit, modifiers, require_test, test_mod){
+		if (struct_exists(modifiers,"weapon")){
+			var weapon_mods = modifiers.weapon;
+			if (struct_exists(weapon_mods, "tag")){
+				test_mod = TestObstacleTags(unit, weapon_mods.tag, ["weapon_one_data", "weapon_two_data"],require_test, test_mod)
+			}
+			if (struct_exists(weapon_mods, "name")){
+				test_mod = TestObstacleName(unit, weapon_mods.name,require_test, test_mod)
+			}
+		}
+
+		return test_mod;
+	}
+
+	TestObstaclesUnitTruthsItem(unit, modifiers, require_test, test_mod){
+		if (struct_exists(modifiers,"equipment")){
+			var equip_mods = test.modifiers.equipment
+			if (struct_exists(equip_mods, "tag")){
+				test_mod = TestObstacleTags(unit, equip_mods.tag, ,require_test, test_mod);				
+			}
+			if (struct_exists(equip_mods, "name")){
+				test_mod = TestObstacleName(unit, equip_mods.name,require_test, test_mod);					
+			}					
+		}
+		return test_mod;		
+	}
+
+	static TestObstacleTags(unit, tag_set, areas=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"], require_test, test_mod){
+		for (var i = 0;i<array_length(tag_set)i++){
+			var saught_tag = tag_set[i];
+			if (unit.has_equipped_tag(saught_tag.name,areas)){
+				if (!require_test){
+					array_push(test_mod, saught_tag);							
+				} else {
+					return false;
+				}
+			}
+		}
+		if (require_test){
+			return true;
+		} else {
+			return test_mod;
+		}		
+	}
+	static TestObstacleName(unit, name_set,require_test, test_mod){
+		for (var i = 0;i<array_length(name_set)i++){
+			saught_name = name_set[i];
+			if (unit.has_equipped(saught_tag.name)){
+				if (!require_test){
+					array_push(test_mod, saught_name);							
+				} else {
+					return false;
+				}
+			}
+		}
+		if (require_test){
+			return true;
+		} else {
+			return test_mod;
+		}	
+	}
+	static TestUnitModifiers = function(modifiers, unit, test_mod){
+
+		test_mod = TestObstaclesUnitTruthsWeapons(modifiers, unit, false, test_mod);
+		test_mod = TestObstaclesUnitTruthsItem(modifiers, unit, false, test_mod);
+	}
 	static attempt_solution = function (){
 		if (dungeon.solution>-1 && !is_string(selected_unit)){
 			var test;
 			var mem = members[selected_unit];
+			var unit = mem.struct;
 			var ob = dungeon.current_obstacle.base_data;
 			var solution = ob.solutions[dungeon.solution];
+			var test_pass;
+			var test_mods=[];
+			var viable = true;
 			for (var t = 0; t<array_length(solution.tests);t++){
 				test = solution.tests;
-				if (struct_exists(test, "modifiers")){
-					if (struct_exists(test.modifiers,"weapon")){
-						var weapon_mods = test.modifiers.weapon
-						if (struct_exists(weapon_mods, "tag")){
-							//for (var s=0;s)
-						}
-					}
+				test_mod = [];
+				if (struct_exists(test, "requirements")){
+					viable = TestUnitAgainstRequirements(test.requirements, unit);
+					if (!viable) then break;
 				}
+				if (struct_exists(test, "modifiers")){
+					test_mod = TestUnitModifiers(test.modifiers, unit, test_mod);					
+				}
+				array_push(test_mods, test_mod)
 			}
 		}
 	}
@@ -128,63 +214,7 @@ function dungeon_struct() constructor{
 			mem.action_able = (mem.actions!=0 && mem.struct.hp()>0)
 		}
 		if (struct_exists(solution, "requirements")){
-			var requirements = solution.requirements;
-			if (struct_exists(requirements,"weapon")){
-				var needed_weapon = requirements.weapon;
-				if (struct_exists(needed_weapon, "name")){
-					for (var i=0;i<array_length(members);i++){
-						if (!members[i].action_able) then continue;
-						mem = members[i];
-						unit = mem.struct;
-						if (!array_contains(needed_weapon.name, unit.weapon_one())&&!array_contains(needed_weapon.name, unit.weapon_two())){
-							mem.action_able=false;
-						}
-					}
-				}
-				if (struct_exists(needed_weapon, "tag")){
-					var _wep1;
-					var _wep2;
-					for (var i=0;i<array_length(members);i++){
-						if (!members[i].action_able) then continue;
-						mem = members[i];
-						unit = mem.struct;
-						_wep1 = unit.get_weapon_one_data();
-						_wep2 = unit.get_weapon_two_data();
-						if (is_struct(_wep1)){
-							if (_wep1.has_tags(needed_weapon.tag)){
-								continue;
-							}
-						}
-						if (is_struct(_wep2)){
-							if (_wep2.has_tags(needed_weapon.tag)){
-								continue;
-							}
-						}
-						mem.action_able=false;
-					}
-				}
-				if (struct_exists(needed_weapon, "tags")){
-					var _wep1;
-					var _wep2;
-					for (var i=0;i<array_length(members);i++){
-						if (!members[i].action_able) then continue;
-						mem = members[i];
-						unit = mem.struct;
-						_wep1 = unit.get_weapon_one_data();
-						_wep2 = unit.get_weapon_two_data();
-						if (is_struct(_wep1)){
-							if (_wep1.has_tags_all(needed_weapon.tags)){
-								continue;
-							}
-						}
-						if (is_struct(_wep2)){
-							if (_wep2.has_tags_all(needed_weapon.tags)){
-								continue;
-							}
-						}
-					}					
-				}
-			}
+			mem.action_able = TestUnitAgainstRequirements(solution.requirements);
 		}
 
 	}
@@ -315,12 +345,24 @@ function dungeon_struct() constructor{
 	        draw_set_color(c_gray);
 	        draw_set_halign(fa_center);
 	        draw_set_font(fnt_40k_14b);
-	        draw_text_transformed(xx+mem.current_draw_loc[0]+100,mem.current_draw_loc[1]+yy-30,string_hash_to_newline(unit.name_role()),1.5,1.5,0);
+	        draw_text_transformed(xx+mem.current_draw_loc[0]+100,mem.current_draw_loc[1]+yy-30,unit.name_role(),1.5,1.5,0);
 	        draw_set_halign(fa_left);
 			if (point_and_click(draw_unit_buttons([xx+50,mem.current_draw_loc[1]+yy-30],"<----",[1.5,1.5],c_red))){
 				unit_data_slate.individual_view_sequence = 22;
 			}		        				
 			unit.stat_display(false,[130,430]);
+		}		
+	}
+
+	static DrawMissionObjectives = function(){
+		var objec;
+		for (var i=0;i<array_length(mission_objectives);i++){
+			objec = mission_objectives[i];
+			draw_set_color(c_gray);
+	        draw_set_halign(fa_center);
+	        draw_set_font(fnt_40k_14b);
+			draw_text(start_x, start_y+(20*i), mission_objectives.title);
+			draw_text(start_x+40, start_y+(20*i), mission_objectives.finished?"Complete");
 		}		
 	}
 	static DungeonMainModule = function(){
@@ -347,91 +389,99 @@ function dungeon_struct() constructor{
 		if (current_view=="unit"){
 			DungeonUnitOverview();
 		} else if (current_view="mission"){
-
+			DrawMissionObjectives();
 		}
 	}
 
 
 	unit_data_slate.inside_method = DungeonMainModule;
 
+	static DrawMiniUnits = function(){
+		shader_set(sReplaceColor);
+		set_shader_to_base_values();
+		var cur_fig;
+		if (!units_set){
+			unit_count = array_length(members);
+			var x_scatter = 0;
+			var y_scatter = 0;
+			for (var i=0; i <unit_count;i++){
+				x_scatter++;
+				members[i].map_figure = new UnitMapSprite();
+				cur_fig = members[i].map_figure;
+				cur_fig.current_x =  70 + (x_scatter*40);
+				cur_fig.current_y = 150+(50*y_scatter);
+				cur_fig.is_walking =true;
+				cur_fig.walking_no = irandom(16);
+				if (x_scatter == 4){
+					x_scatter = 0.5;
+					y_scatter++;
+				} else if (x_scatter == 4.5){
+					x_scatter = 0;
+					y_scatter++;
+				}
+			}
+			units_set=true;
+		}
+		for (var i=0; i <unit_count;i++){
+			cur_fig = members[i].map_figure;
+			cur_fig.draw(xx,yy);
+			shader_reset();
+		}		
+	}
 
+	static DrawUnitSolutionAdvantages = function(){
+		if (!is_string(selected_unit)){
+			//members[selected_unit].struct.stat_display(true, [xx+20, yy+10]);
+			var mem = members[selected_unit];
+			var unit = mem.struct;
+			draw_set_color(c_red);
+			draw_set_halign(fa_center);
+			draw_text_transformed(xx+(map_data_slate.width/2), yy+40, "Relevant Data", 2, 2, 0);
+			var ob = dungeon.current_obstacle.base_data;
+			var stat_data = stat_type_data();
+			draw_set_color(c_gray);
+			draw_yy = yy+20;
+			draw_xx = xx+(map_data_slate.width/2)+20;
+			var required_tests = ob[dungeon.solution].tests;
+			var cur_test;
+			for (var t=0; t<required_tests;t++){
+				cur_test = required_tests[t];
+				draw_stat_icons(cur_test.attribute, draw_xx, draw_yy, 0.5, colour, 0, 1);
+				draw_text(draw_xx+20, draw_yy,"difficulty : Normal");
+				var space=0;
+				if (struct_exists(cur_test, "modfiers")){
+					var mods = cur_test.modfiers;
+					if (struct_exists(mods, "equipment")){
+						for (var e=0;e<array_length(mods.equipment);e++){
+							if (unit.has_equipped(mods.equipment[e][0])){
+								draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.equipment[e][1]}%");
+								space++;
+							}
+						}
+					}
+					if (struct_exists(mods, "trait")){
+						for (var e=0;e<array_length(mods.trait);e++){
+							if (unit.has_trait(mods.trait[e])){
+								draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.trait[e][1]}%");
+								space++;									
+							}
+						}
+					}
+				} 
+				if (!space){
+					draw_text(draw_xx+40, draw_yy+10,"No other bonus'");
+				}
+			}
+
+		}		
+	}
 	map_data_slate.inside_method = function(){
 		var xx =map_data_slate.XX;
 		var yy =map_data_slate.YY;
 		if (enter_sequence_completed || dungeon.solution>-1){		
-			if (!is_string(selected_unit)){
-				//members[selected_unit].struct.stat_display(true, [xx+20, yy+10]);
-				var mem = members[selected_unit];
-				var unit = mem.struct;
-				draw_set_color(c_red);
-				draw_set_halign(fa_center);
-				draw_text_transformed(xx+(map_data_slate.width/2), yy+40, "Relevant Data", 2, 2, 0);
-				var ob = dungeon.current_obstacle.base_data;
-				var stat_data = stat_type_data();
-				draw_set_color(c_gray);
-				draw_yy = yy+20;
-				draw_xx = xx+(map_data_slate.width/2)+20;
-				var required_tests = ob[dungeon.solution].tests;
-				var cur_test;
-				for (var t=0; t<required_tests;t++){
-					cur_test = required_tests[t];
-					draw_stat_icons(cur_test.attribute, draw_xx, draw_yy, 0.5, colour, 0, 1);
-					draw_text(draw_xx+20, draw_yy,"difficulty : Normal");
-					var space=0;
-					if (struct_exists(cur_test, "modfiers")){
-						var mods = cur_test.modfiers;
-						if (struct_exists(mods, "equipment")){
-							for (var e=0;e<array_length(mods.equipment);e++){
-								if (unit.has_equipped(mods.equipment[e][0])){
-									draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.equipment[e][1]}%");
-									space++;
-								}
-							}
-						}
-						if (struct_exists(mods, "trait")){
-							for (var e=0;e<array_length(mods.trait);e++){
-								if (unit.has_trait(mods.trait[e])){
-									draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.trait[e][1]}%");
-									space++;									
-								}
-							}
-						}
-					} 
-					if (!space){
-						draw_text(draw_xx+40, draw_yy+10,"No other bonus'");
-					}
-				}
-
-			}
+			DrawUnitSolutionAdvantages();
 		} else {
-			var cur_fig;
-			if (!units_set){
-				unit_count = array_length(members);
-				var x_scatter = 0;
-				var y_scatter = 0;
-				for (var i=0; i <unit_count;i++){
-					x_scatter++;
-					members[i].map_figure = new UnitMapSprite();
-					cur_fig = members[i].map_figure;
-					cur_fig.current_x =  70 + (x_scatter*40);
-					cur_fig.current_y = 150+(50*y_scatter);
-					cur_fig.is_walking =true;
-					cur_fig.walking_no = irandom(16);
-					if (x_scatter == 4){
-						x_scatter = 0.5;
-						y_scatter++;
-					} else if (x_scatter == 4.5){
-						x_scatter = 0;
-						y_scatter++;
-					}
-				}
-				units_set=true;
-			}
-			for (var i=0; i <unit_count;i++){
-				cur_fig = members[i].map_figure;
-				cur_fig.draw(xx,yy);
-				shader_reset();
-			}
+			DrawMiniUnits();
 		}
 
 	}

@@ -10,7 +10,14 @@ global.obstacles = {
 						attribute :eStats.technology,
 						base : 50,
 						modfiers : {
-							equipment : [["servo harness", 10]]
+							equipment : {
+								name : [
+								{
+									name:"servo harness", 
+									mod:10,
+									flavour : "aided by their Servo Harness"
+								}],
+							}
 						}
 					}
 				],
@@ -20,7 +27,7 @@ global.obstacles = {
 			{
 				name :"divine",
 				requirements : {
-					class:"psyker", 
+					group:"libs", 
 					skill:"divination",
 				},
 				tests :[
@@ -51,7 +58,18 @@ global.obstacles = {
 						base : 40,
 						modifiers : {
 							weapon : {
-								tag : [["heavy_weapon",20],["pistol",-20]]
+								tag : [
+									{
+										name:"heavy_weapon",
+										mod:20, 
+										flavour:"The Heavy Weapon Blasts with ease"
+									},
+									{
+										name:"pistol",
+										mod:-20, 
+										flavour:"The Lightweight pistol struggles"
+									},	
+								]								
 							}
 						}					
 					}				
