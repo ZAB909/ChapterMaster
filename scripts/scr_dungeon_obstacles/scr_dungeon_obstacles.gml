@@ -1,5 +1,5 @@
 global.obstacles = {
-	"ob_blast" : {
+	blast_door : {
 		name : "Blast Door",
 		description : "a sturdy blast door stands in the way of your progress",
 		solutions : [

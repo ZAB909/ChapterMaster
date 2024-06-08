@@ -366,8 +366,8 @@ function dungeon_struct() constructor{
 		}		
 	}
 	static DungeonMainModule = function(){
-		var xx =unit_data_slate.XX;
-		var yy =unit_data_slate.YY;			
+		var xx = unit_data_slate.XX;
+		var yy = unit_data_slate.YY;			
 		selected_unit = "none";
 		var _draw_colour = c_red;
 		var mis_obj_cords = draw_unit_buttons([xx+70,yy+70], "Mission Objectives",[1.5,1.5],c_red);
@@ -383,8 +383,8 @@ function dungeon_struct() constructor{
 		if (point_and_click(unit_overviews_chords)){
 			current_view="unit";
 		}
-		var start_y = unit_overviews_chords[3]+10;
-		var start_x =mis_obj_cords[0]+50;
+		start_y = unit_overviews_chords[3]+10;
+		start_x =mis_obj_cords[0]+50;
 		var health_bar;
 		if (current_view=="unit"){
 			DungeonUnitOverview();
@@ -394,10 +394,13 @@ function dungeon_struct() constructor{
 	}
 
 
-	unit_data_slate.inside_method = DungeonMainModule;
+	unit_data_slate.inside_method = function(){
+		DungeonMainModule();
+	};
 
 	static DrawMiniUnits = function(){
-		shader_set(sReplaceColor);
+		var xx =map_data_slate.XX;
+		var yy =map_data_slate.YY;		
 		set_shader_to_base_values();
 		var cur_fig;
 		if (!units_set){
@@ -423,10 +426,11 @@ function dungeon_struct() constructor{
 			units_set=true;
 		}
 		for (var i=0; i <unit_count;i++){
+			shader_set(sReplaceColor);
 			cur_fig = members[i].map_figure;
 			cur_fig.draw(xx,yy);
-			shader_reset();
-		}		
+			shader_reset();	
+		}
 	}
 
 	static DrawUnitSolutionAdvantages = function(){
@@ -476,8 +480,6 @@ function dungeon_struct() constructor{
 		}		
 	}
 	map_data_slate.inside_method = function(){
-		var xx =map_data_slate.XX;
-		var yy =map_data_slate.YY;
 		if (enter_sequence_completed || dungeon.solution>-1){		
 			DrawUnitSolutionAdvantages();
 		} else {

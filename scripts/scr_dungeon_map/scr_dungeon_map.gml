@@ -36,11 +36,11 @@ function dungeon_map_maker(size=10) constructor{
 				array_edit = [current_room[0]+1, current_room[1]-1];
 				break;
 		}
-		return_room_from_array(array_edit);
+		return(array_edit);
 	};	
 	set_room_from_array(entrance, {
 		room_type : "enterance",
-		obstacles : new obstacle(global.obstacles.ob_blast)
+		obstacles :[ new obstacle(global.obstacles.blast_door)]
 	});
 
 
@@ -75,10 +75,13 @@ function dungeon_map_maker(size=10) constructor{
 		if (is_array(build_room)){
 			array_push(passages, [current_room, build_room]);
 			set_room_from_array(build_room, new CreateNewDungeonRoom());
-			generation_possible = false;
 		}
+		generation_possible = false;
 	}
-	current_obstacle = return_room_from_array(current_room).obstacles;
+
+	current_room = entrance;
+
+	current_obstacle = fetch_current_room().obstacles[0];
 	solution=-1;
 	viable_members=[];
 }
