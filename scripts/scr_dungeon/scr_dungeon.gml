@@ -112,7 +112,7 @@ function dungeon_struct() constructor{
 	}
 
 	// handles all tests to see mods or if unit needs to have a particular weapon equipped
-	static TestObstaclesUnitTruthsWeapons(unit, modifiers, require_test, test_mod){
+	static TestObstaclesUnitTruthsWeapons = function(unit, modifiers, require_test, test_mod){
 		if (struct_exists(modifiers,"weapon")){
 			var weapon_mods = modifiers.weapon;
 			if (struct_exists(weapon_mods, "tag")){
@@ -126,7 +126,7 @@ function dungeon_struct() constructor{
 		return test_mod;
 	}
 
-	TestObstaclesUnitTruthsItem(unit, modifiers, require_test, test_mod){
+	TestObstaclesUnitTruthsItem = function(unit, modifiers, require_test, test_mod){
 		if (struct_exists(modifiers,"equipment")){
 			var equip_mods = test.modifiers.equipment
 			if (struct_exists(equip_mods, "tag")){
@@ -139,7 +139,7 @@ function dungeon_struct() constructor{
 		return test_mod;		
 	}
 
-	static TestObstacleTags(unit, tag_set, areas=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"], require_test, test_mod){
+	static TestObstacleTags = function(unit, tag_set, areas=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"], require_test, test_mod){
 		for (var i = 0;i<array_length(tag_set)i++){
 			var saught_tag = tag_set[i];
 			if (unit.has_equipped_tag(saught_tag.name,areas)){
@@ -156,7 +156,7 @@ function dungeon_struct() constructor{
 			return test_mod;
 		}		
 	}
-	static TestObstacleName(unit, name_set,require_test, test_mod){
+	static TestObstacleName = function(unit, name_set,require_test, test_mod){
 		for (var i = 0;i<array_length(name_set)i++){
 			saught_name = name_set[i];
 			if (unit.has_equipped(saught_tag.name)){
@@ -362,7 +362,7 @@ function dungeon_struct() constructor{
 	        draw_set_halign(fa_center);
 	        draw_set_font(fnt_40k_14b);
 			draw_text(start_x, start_y+(20*i), mission_objectives.title);
-			draw_text(start_x+40, start_y+(20*i), mission_objectives.finished?"Complete");
+			draw_text(start_x+40, start_y+(20*i), mission_objectives.finished?"Complete":"");
 		}		
 	}
 	static DungeonMainModule = function(){

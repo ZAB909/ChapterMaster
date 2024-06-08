@@ -14,7 +14,7 @@ global.obstacles = {
 								name : [
 								{
 									name:"servo harness", 
-									mod:10,
+									mod_val:10,
 									flavour : "aided by their Servo Harness"
 								}],
 							}
@@ -61,12 +61,12 @@ global.obstacles = {
 								tag : [
 									{
 										name:"heavy_weapon",
-										mod:20, 
+										mod_val:20, 
 										flavour:"The Heavy Weapon Blasts with ease"
 									},
 									{
 										name:"pistol",
-										mod:-20, 
+										mod_val:-20, 
 										flavour:"The Lightweight pistol struggles"
 									},	
 								]								
