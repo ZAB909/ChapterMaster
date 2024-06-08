@@ -2500,11 +2500,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		var _minimum_age = 0;
 		var _maximum_age = 0;
 		var _apply_gauss = false;
-		var _gauss_sd_mod = 2;
+		var _gauss_sd_mod = 6;
 
 		switch(company){
 			case 1:
 				_minimum_age += 75;
+				_maximum_age = 300;
 				_apply_gauss = true;
 				break;
 			case 2:
@@ -2532,21 +2533,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			default:
 				break;
 		}
+
 		switch(role()){
 			// HQ only
 			case "Chapter Master":
-				_minimum_age += 200;
+				_minimum_age = 200;
+				_maximum_age = 300;
 				_apply_gauss = true;
 				break;
 			case "Chief Librarian":
 			case "Forge Master":
 			case "Master of Sanctity":
 			case "Master of the Apothecarion":
-				_minimum_age += 180;
+				_minimum_age = 180;
+				_maximum_age = 300;
 				_apply_gauss = true;
 				break;
 			case obj_ini.role[100][Role.HONOR_GUARD]:
-				_minimum_age += 140;
+				_minimum_age = 140;
+				_maximum_age = 200;
 				_apply_gauss = true;
 				break;
 			case "Codiciery":
@@ -2560,15 +2565,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// 1st company only
 			case obj_ini.role[100][Role.VETERAN]:
 				_minimum_age += 35;
-				_maximum_age += 45;
 				break;
 			case obj_ini.role[100][Role.TERMINATOR]:
 				_minimum_age += 40;
-				_maximum_age += 50;
 				break;
 			case obj_ini.role[100][Role.VETERAN_SERGEANT]:
 				_minimum_age += 40;
-				_maximum_age += 50;
 				break;
 			// Command Squads
 			case obj_ini.role[100][Role.CAPTAIN]:
@@ -2622,10 +2624,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 		if (_apply_gauss == true) {
 			if (_maximum_age != 0){
-				_gauss_sd_mod = ((_maximum_age-_minimum_age)/4)
-				_age = gauss_positive(_minimum_age, _gauss_sd_mod)
+				_gauss_sd_mod = ((_maximum_age - _minimum_age) / _gauss_sd_mod);
+				_age = gauss_positive(_minimum_age, _gauss_sd_mod);
 			} else {
-				_age = gauss_positive(_minimum_age, _minimum_age / 4);
+				_age = gauss_positive(_minimum_age, _minimum_age / _gauss_sd_mod);
 			}
 		} else {
 			_age = irandom_range(_minimum_age, _maximum_age);
