@@ -45,7 +45,7 @@ function lanczos_gamma(x1) {
         for (var i = 1; i < array_length(p); i++) {
             a += p[i] / (x1 + i);
         }
-        return sqrt(2 * pi) * pow(t, x1 + 0.5) * exp(-t) * a;
+        return sqrt(2 * pi) * power(t, x1 + 0.5) * exp(-t) * a;
     }
 }
 
@@ -55,7 +55,7 @@ function beta_function(alpha, beta) {
 
 function beta_distribution(alpha, beta) {
     x1 = random_range(0, 1);
-    return pow(x1, alpha - 1) * pow(1 - x1, beta - 1) / beta_function(alpha, beta);
+    return power(x1, alpha - 1) * power(1 - x1, beta - 1) / beta_function(alpha, beta);
 }
 
 // function exponent(lambda, base) {
