@@ -476,7 +476,7 @@ global.weapons={
             "artifact": 1.3
         },
         "description": "A Thunder hammer is a weapon with a long pole and a double headed hammer on the top. This weapon unleashes a massive, devastating disruption field on impact. Only experienced Astartes can use Thunder Hammers, typically Terminators.",
-        "melee_hands": 1,
+        "melee_hands": 1.1,
         "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
