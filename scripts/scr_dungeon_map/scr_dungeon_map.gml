@@ -128,4 +128,5 @@ function CreateNewDungeonRoom(pre_data = {}) constructor{
 function Obstacle(bd) constructor{
 	base_data = bd;
 	overcome=false;
+	attempts = [];
 }

@@ -56,9 +56,10 @@ function difficulty_string_chart(val){
 	else if (val<30){
 		difficulty = "simple";
 	}
-	else if (val<50){
+	else if (val<100){
 		difficulty = "Idiot Proof";
-	}		
+	}
+	return	difficulty;
 }
 
 function fetch_stat(stat_enum){

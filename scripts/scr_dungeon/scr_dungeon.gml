@@ -73,6 +73,7 @@ function dungeon_struct() constructor{
 		draw_set_color(c_gray);
 		draw_set_font(fnt_40k_14b);
 		for (var i=0;i<array_length(ob.solutions);i++){
+			if (array_contains(dungeon.current_obstacle.attempts, i)) then continue;
 			if (ob.solutions[i].valid){
 				if (struct_exists(ob.solutions[i],"stat_icon")){
 					draw_col = stat_type_data()[ob.solutions[i].stat_icon][1];
@@ -108,9 +109,11 @@ function dungeon_struct() constructor{
 			var test_pass=true;
 			var test_mods=[];
 			var viable = true;
+			var test_results=[];
+			var final_flavours = "";
 			for (var t = 0; t<array_length(solution.tests);t++){
-				test = solution.tests;
-				test_mod = [];
+				test = solution.tests[i];
+				var test_mod = [];
 				if (struct_exists(test, "requirements")){
 					viable = TestUnitAgainstRequirements(test.requirements, unit);
 					if (!viable) then break;
@@ -120,17 +123,39 @@ function dungeon_struct() constructor{
 				}
 
 				//array_push(test_mods, test_mod);
-				var final_difficulty_mod = 0;
+				var final_difficulty_mod = test.base_difficulty;
 				for (var m=0;m<array_length(test_mod);m++){
 					final_difficulty_mod+=test_mod.mod_val;
 				}
 				test_result = character_tester.standard_test(unit, test.attribute,final_difficulty_mod);
+				array_push(test_mods, test_mod);
+				array_push (test_results, test_result);
 				if (!test_result[0]){
 					test_pass=false;
-					break;
+					break
 				}
 			}
+			array_push(dungeon.current_obstacle.attempts, dungeon.solution)
+			if (test_pass){
+				var final_test_result = 0;
+				for (var t=0;t<array_length(test_results);t++){
+					final_test_result += test_results[t][1];
+					for (var m=0;m<array_length(test_mods[t])m++){
+						if (struct_exists(test_mods[t][m], "flvaour")){
+							final_flavours += " " + test_mods[t][m].flvaour;
+						}
+					}
+				}
+				final_test_result/=t;
+			} else {
+				final_test_result = test_result[1];
+			}
+			return [final_test_result, final_flavours];
 		}
+	}
+
+	static SolutionAttemptOutcomes = function(){
+
 	}
 
 	static add_mission_log = function(){
@@ -388,7 +413,7 @@ function dungeon_struct() constructor{
 				var test_value = unit[$ fetch_stat(test_stat)];
 				draw_text_transformed(draw_xx+20, draw_yy+10, $": {test_value}",2,2,0);
 				draw_yy+=40
-				draw_text(draw_xx+20, draw_yy,"difficulty : {cur_test.base_difficulty}");
+				draw_text(draw_xx+20, draw_yy,$"difficulty : {difficulty_string_chart(cur_test.base_difficulty)}");
 				var space=0;
 				if (struct_exists(cur_test, "modifiers")){
 					mods = TestUnitModifiers(cur_test.modifiers, unit, []);
@@ -403,7 +428,7 @@ function dungeon_struct() constructor{
 				if (!space){
 					draw_text(draw_xx+40, draw_yy+10,"No other bonus'");
 				}
-				draw_text(draw_xx+40, draw_yy+40,$"Success Chance {test_value}%");
+				draw_text(draw_xx+40, draw_yy+40,$"Success Chance {test_value+cur_test.base_difficulty}%");
 			}
 
 		}		
@@ -443,7 +468,8 @@ function dungeon_struct() constructor{
 						if (members[unit_data_slate.individual_display].action_able){
 							var confirm_coords = draw_unit_buttons([xx+(decision_data_slate.width/2)-(string_width("Confirm Unit")*1.5), yy+150],"Confirm Unit",[1.5,1.5],c_green);
 							if(point_and_click(confirm_coords)){
-								attempt_solution();
+								var solution_attempt_results = attempt_solution();
+								current_view="log";
 							}
 						}
 					}

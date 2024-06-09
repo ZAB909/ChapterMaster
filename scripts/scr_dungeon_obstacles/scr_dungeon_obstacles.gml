@@ -1,3 +1,36 @@
+global.obstacle_class_data = {
+    "trained_technology" : {
+        modifiers : {
+            equipment : {
+                name : [
+                    {
+                        name:"servo harness", 
+                        mod_val:10,
+                        flavour : "aided by their Servo Harness"
+                    }
+                ],
+            },
+            traits :[
+                {
+                    mod_val:10,
+                    name : "tinkerer",
+                    flavour : "{name} is adebt at understanding obscure mechanism",
+                },
+                {
+                    mod_val:10,
+                    name : "mars_trained",
+                    flavour : "their extensive training on mars enables them to approach the task logically",
+                },
+                {
+                    mod_val:10,
+                    name : "technophobe",
+                    flavour : "{name} dislikes such work",
+                },                              
+            ]            
+        }
+    }
+}
+
 global.obstacles = {
 	blast_door : {
 		name : "Blast Door",
@@ -28,6 +61,7 @@ global.obstacles = {
 						}
 					},
                 ],
+                class : ["trained_technology"],				
 				description : "attempt to bypass the door at the control panel",
 				stat_icon : eStats.technology,
                 result_chart : [
