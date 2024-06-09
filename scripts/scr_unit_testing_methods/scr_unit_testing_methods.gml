@@ -1,7 +1,38 @@
+enum eStats{
+	dexterity,
+	strength,
+	constitution,
+	intelligence,
+	wisdom,
+	piety,
+	weapon_skill,
+	ballistic_skill,
+	luck,
+	technology,
+	charisma
+}
 
+global.stat_list = [
+	"dexterity", 
+	"strength", 
+	"constitution", 
+	"intelligence", 
+	"wisdom", 
+	"piety", 
+	"weapon_skill", 
+	"ballistic_skill",
+	"luck", 
+	"technology", 
+	"charisma"
+];
 
+function fetch_stat(stat_enum){
+	if (stat_enum<array_length(global.stat_list)){
+		return global.stat_list[stat_enum];
+	}
+}
 
-static TestUnitAgainstRequirements = function(requirements, unit){
+function TestUnitAgainstRequirements(requirements, unit){
 	viable = true;
 	if (struct_exists(requirements,"group")){
 		viable = unit.IsSpecialist(requirements.group);
@@ -19,7 +50,7 @@ static TestUnitAgainstRequirements = function(requirements, unit){
 }
 
 // handles all tests to see mods or if unit needs to have a particular weapon equipped
-static TestObstaclesUnitTruthsWeapons = function(unit, modifiers, require_test, test_mod){
+function TestObstaclesUnitTruthsWeapons(unit, modifiers, require_test, test_mod){
 	if (struct_exists(modifiers,"weapon")){
 		var weapon_mods = modifiers.weapon;
 		if (struct_exists(weapon_mods, "tag")){
@@ -33,7 +64,7 @@ static TestObstaclesUnitTruthsWeapons = function(unit, modifiers, require_test, 
 	return test_mod;
 }
 
-static TestObstaclesUnitTraits = function(unit, modifiers, require_test, test_mod){
+function TestObstaclesUnitTraits(unit, modifiers, require_test, test_mod){
 	if (struct_exists(modifiers,"traits")){
 		var trait_mods = modifiers.traits;
 		for (var i=0;i<array_length(trait_mods);i++){
@@ -54,9 +85,9 @@ static TestObstaclesUnitTraits = function(unit, modifiers, require_test, test_mo
 	}
 }
 
-static TestObstaclesUnitTruthsItem = function(unit, modifiers, require_test, test_mod){
+function TestObstaclesUnitTruthsItem(unit, modifiers, require_test, test_mod){
 	if (struct_exists(modifiers,"equipment")){
-		var equip_mods = test.modifiers.equipment
+		var equip_mods = modifiers.equipment
 		if (struct_exists(equip_mods, "tag")){
 			test_mod = TestObstacleTags(unit, equip_mods.tag, ,require_test, test_mod);				
 		}
@@ -67,7 +98,7 @@ static TestObstaclesUnitTruthsItem = function(unit, modifiers, require_test, tes
 	return test_mod;		
 }
 
-static TestObstacleTags = function(unit, tag_set, areas=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"], require_test, test_mod){
+function TestObstacleTags(unit, tag_set, areas=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"], require_test, test_mod){
 	for (var i = 0;i<array_length(tag_set)i++){
 		var saught_tag = tag_set[i];
 		if (unit.has_equipped_tag(saught_tag.name,areas)){
@@ -86,7 +117,7 @@ static TestObstacleTags = function(unit, tag_set, areas=["armour_data", "gear_da
 }
 
 
-static TestObstacleName = function(unit, name_set,require_test, test_mod){
+function TestObstacleName(unit, name_set,require_test, test_mod){
 	for (var i = 0;i<array_length(name_set)i++){
 		saught_name = name_set[i];
 		if (unit.has_equipped(saught_tag.name)){
@@ -105,9 +136,11 @@ static TestObstacleName = function(unit, name_set,require_test, test_mod){
 }
 
 
-static TestUnitModifiers = function(modifiers, unit, test_mod){
-	test_mod = TestObstaclesUnitTruthsWeapons(modifiers, unit, false, test_mod);
-	test_mod = TestObstaclesUnitTruthsItem(modifiers, unit, false, test_mod);
+function TestUnitModifiers(modifiers, unit, test_mod){
+	test_mod = TestObstaclesUnitTruthsWeapons(unit, modifiers,false, test_mod);
+	test_mod = TestObstaclesUnitTruthsItem(unit,modifiers, false, test_mod);
+	test_mod = TestObstaclesUnitTraits(unit, modifiers, false, test_mod);
+	return test_mod;
 }
 
 
@@ -168,19 +201,31 @@ function pen_and_paper_sim() constructor{
 		return [winner, pass_margin];
 	}
 
-	static standard_test = function(unit, stat, difficulty_mod=0){
-		var passed =false;
-		var margin=0
+	static standard_test = function(unit, stat, difficulty_mod=0, allow_luck=false){
+		var passed = false;
+		var margin = 0
+		var luck_cost = 0;
 		var random_roll = irandom(99)+1;
+		if (!is_string(stat)){
+			stat = global.stat_list[$ stat];
+		}
 		if (random_roll<unit[$ stat]+difficulty_mod){
 			passed = true;
 			margin = unit[$ stat]+difficulty_mod - random_roll;
 		} else {
 			passed = false;
-			margin = unit[$ stat]+difficulty_mod - random_roll;
+			margin = unit[$ stat]+difficulty_mod - random_roll;			
+			if (allow_luck){
+				if (margin+allow_luck>=0){
+					passed = true;
+					luck_cost = allow_luck-margin;
+					margin=0;
+				}
+			}
+
 		}
 
-		return [passed, margin];
+		return [passed, margin, luck_cost];
 	}
 }
 

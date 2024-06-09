@@ -9,7 +9,7 @@ global.obstacles = {
 					{
 						attribute :eStats.technology,
 						base : 50,
-						modfiers : {
+						modifiers : {
 							equipment : {
 								name : [
 								{
@@ -34,7 +34,7 @@ global.obstacles = {
 					{
 						attribute :eStats.intelligence,
 						base : 40,
-						modfiers : {
+						modifiers : {
 						}
 					}
 				],
@@ -45,7 +45,11 @@ global.obstacles = {
 				name :"Melta Blast",
 				requirements : {
 					weapon:{
-						tag:["melta"]
+						tag:[
+                            {
+                                name:"melta",
+                            }
+                        ]
 					},
 				},
 				tests :[
@@ -99,7 +103,7 @@ global.obstacles = {
 						var result effects = "{unit.name_role()} looses two action points";
 					}]
 				],
-				classs : ["perception"],
+				class : ["perception"],
 				description : "Try find another way through",
 				stat_icon : eStats.wisdom
 			}			

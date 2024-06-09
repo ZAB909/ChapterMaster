@@ -288,19 +288,7 @@ function scr_draw_unit_stat_data(manage=false,draw_cords = [1008,520], ){
 			}
 		}
 }
-enum eStats{
-	dexterity,
-	strength,
-	constitution,
-	intelligence,
-	wisdom,
-	piety,
-	weapon_skill,
-	ballistic_skill,
-	luck,
-	technology,
-	charisma
-}
+
 function stat_type_data(){
 	return [
 		[

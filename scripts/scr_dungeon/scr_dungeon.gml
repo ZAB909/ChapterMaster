@@ -105,7 +105,7 @@ function dungeon_struct() constructor{
 			var unit = mem.struct;
 			var ob = dungeon.current_obstacle.base_data;
 			var solution = ob.solutions[dungeon.solution];
-			var test_pass;
+			var test_pass=true;
 			var test_mods=[];
 			var viable = true;
 			for (var t = 0; t<array_length(solution.tests);t++){
@@ -118,7 +118,17 @@ function dungeon_struct() constructor{
 				if (struct_exists(test, "modifiers")){
 					test_mod = TestUnitModifiers(test.modifiers, unit, test_mod);					
 				}
-				array_push(test_mods, test_mod)
+
+				//array_push(test_mods, test_mod);
+				var final_difficulty_mod = 0;
+				for (var m=0;m<array_length(test_mod);m++){
+					final_difficulty_mod+=test_mod.mod_val;
+				}
+				test_result = character_tester.standard_test(unit, test.attribute,final_difficulty_mod);
+				if (!test_result[0]){
+					test_pass=false;
+					break;
+				}
 			}
 		}
 	}
@@ -132,11 +142,10 @@ function dungeon_struct() constructor{
 		for (var i=0;i<array_length(members);i++){
 			mem = members[i];
 			mem.action_able = (mem.actions!=0 && mem.struct.hp()>0)
+			if (struct_exists(solution, "requirements")){
+				mem.action_able = TestUnitAgainstRequirements(solution.requirements, mem.struct);
+			}			
 		}
-		if (struct_exists(solution, "requirements")){
-			mem.action_able = TestUnitAgainstRequirements(solution.requirements);
-		}
-
 	}
 	static DungeonUnitOverview = function(){
 		var unit, mem;
@@ -356,6 +365,8 @@ function dungeon_struct() constructor{
 	static DrawUnitSolutionAdvantages = function(){
 		if (!is_string(selected_unit)){
 			//members[selected_unit].struct.stat_display(true, [xx+20, yy+10]);
+			var xx = map_data_slate.XX;
+			var yy = map_data_slate.YY;				
 			var mem = members[selected_unit];
 			var unit = mem.struct;
 			draw_set_color(c_red);
@@ -364,33 +375,27 @@ function dungeon_struct() constructor{
 			var ob = dungeon.current_obstacle.base_data;
 			var stat_data = stat_type_data();
 			draw_set_color(c_gray);
-			draw_yy = yy+20;
-			draw_xx = xx+(map_data_slate.width/2)+20;
-			var required_tests = ob[dungeon.solution].tests;
+			draw_yy = yy+100;
+			draw_xx = xx+(map_data_slate.width/2);
+			var required_tests = ob.solutions[dungeon.solution].tests;
 			var cur_test;
-			for (var t=0; t<required_tests;t++){
+			for (var t=0; t<array_length(required_tests);t++){
+
 				cur_test = required_tests[t];
-				draw_stat_icons(cur_test.attribute, draw_xx, draw_yy, 0.5, colour, 0, 1);
+				var test_stat = cur_test.attribute;
+				draw_stat_icons(cur_test.attribute, draw_xx, draw_yy, 0.75, c_white, 0, 1);
+				draw_text_transformed(draw_xx+20, draw_yy+10, $": {unit[$ fetch_stat(test_stat)]}",2,2,0);
+				draw_yy+=40
 				draw_text(draw_xx+20, draw_yy,"difficulty : Normal");
 				var space=0;
-				if (struct_exists(cur_test, "modfiers")){
-					var mods = cur_test.modfiers;
-					if (struct_exists(mods, "equipment")){
-						for (var e=0;e<array_length(mods.equipment);e++){
-							if (unit.has_equipped(mods.equipment[e][0])){
-								draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.equipment[e][1]}%");
-								space++;
-							}
-						}
+				if (struct_exists(cur_test, "modifiers")){
+					mods = TestUnitModifiers(cur_test.modifiers, unit, []);
+					var mods = cur_test.modifiers;
+					for (var m=0;m<array_length(mods);m++){
+						cur_mod = mods[m];
+						draw_text(draw_xx+30+(30*space), draw_yy+10,$"{cur_mod.name} : {cur_mod.mod_value}");
 					}
-					if (struct_exists(mods, "trait")){
-						for (var e=0;e<array_length(mods.trait);e++){
-							if (unit.has_trait(mods.trait[e])){
-								draw_text(draw_xx+20+(20*space), draw_yy+10,$"{mods.equipment[e][0]} : {mods.trait[e][1]}%");
-								space++;									
-							}
-						}
-					}
+					space++;
 				} 
 				if (!space){
 					draw_text(draw_xx+40, draw_yy+10,"No other bonus'");

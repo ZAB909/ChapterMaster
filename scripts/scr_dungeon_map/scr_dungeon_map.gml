@@ -11,19 +11,24 @@ function dungeon_map_maker(size=10) constructor{
 
 	map_surface = surface_create(600, 600);
 	self.size = size;
-	static function draw_map(){
+	static draw_map = function(){
 		surface_set_target(map_surface);
 		draw_clear_alpha(c_black, 0);//RESET surface
 		for (var i=0;i<size;i++){
 			for (var s=0;s<size;s++){
 				rect = [0+(60*i), 0+(60*s),60+(60*i), 60+(60*s)];
 			}
-			draw_rectangle(rect[0], rect[1], rect[2], rect[3]);
+			draw_set_color(c_red);
+			draw_rectangle(rect[0], rect[1], rect[2], rect[3], 0);
+			draw_set_color(c_grey);
 		}
+		surface_reset_target();
 	}
 
 	map = array_create(size, array_create(size, {room_type:"null"}));
+
 	entrance = [0,floor(size)/2];
+
 	static return_room_from_array =function (coords){
 		return map[coords[0]][coords[1]];
 	}
@@ -31,7 +36,7 @@ function dungeon_map_maker(size=10) constructor{
 		map[coords[0]][coords[1]] = room_data;
 	}
 	static fetch_current_room =function (){
-		return_room_from_array(current_room);
+		return return_room_from_array(current_room);
 	};
 	static fetch_current_room_neigbour = function (move_direction=eDirection.east){
 		var array_edit;
@@ -46,14 +51,14 @@ function dungeon_map_maker(size=10) constructor{
 				array_edit = [current_room[0], current_room[1]+1];
 				break;
 			case eDirection.north:
-				array_edit = [current_room[0]+1, current_room[1]-1];
+				array_edit = [current_room[0], current_room[1]-1];
 				break;
 		}
 		return(array_edit);
 	};	
 	set_room_from_array(entrance, {
 		room_type : "enterance",
-		obstacles :[ new obstacle(global.obstacles.blast_door)]
+		obstacles :[ new Obstacle(global.obstacles.blast_door)]
 	});
 
 
@@ -93,8 +98,8 @@ function dungeon_map_maker(size=10) constructor{
 	}
 
 	current_room = entrance;
-
-	current_obstacle = fetch_current_room().obstacles[0];
+	var cur_room_data = fetch_current_room();
+	current_obstacle = cur_room_data.obstacles[0];
 	solution=-1;
 	viable_members=[];
 }
@@ -120,7 +125,7 @@ function CreateNewDungeonRoom(pre_data = {}) constructor{
 	}
 }
 
-function obstacle(bd) constructor{
+function Obstacle(bd) constructor{
 	base_data = bd;
 	overcome=false;
 }
