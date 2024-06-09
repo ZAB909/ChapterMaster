@@ -900,6 +900,7 @@
     {"id":{"name":"spr_bionics_leg","path":"sprites/spr_bionics_leg/spr_bionics_leg.yy",},},
     {"id":{"name":"spr_bionics_eye","path":"sprites/spr_bionics_eye/spr_bionics_eye.yy",},},
     {"id":{"name":"spr_bionics_arm","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},
+    {"id":{"name":"scr_unit_testing_methods","path":"scripts/scr_unit_testing_methods/scr_unit_testing_methods.yy",},},
     {"id":{"name":"scr_enemy_ai_c","path":"scripts/scr_enemy_ai_c/scr_enemy_ai_c.yy",},},
     {"id":{"name":"scr_enemy_ai_d","path":"scripts/scr_enemy_ai_d/scr_enemy_ai_d.yy",},},
     {"id":{"name":"scr_enemy_ai_e","path":"scripts/scr_enemy_ai_e/scr_enemy_ai_e.yy",},},

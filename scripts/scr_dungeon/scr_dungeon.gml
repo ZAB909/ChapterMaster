@@ -55,7 +55,7 @@ function dungeon_struct() constructor{
 	mission_objectives = [{
 		title:"Complete Dungeon", 
 		finished:false
-	}]
+	}];
 	units_set=false;
 	obs_calcs=false;
 	members=[];
@@ -97,87 +97,7 @@ function dungeon_struct() constructor{
 			}
 		}		
 	}
-	static TestUnitAgainstRequirements = function(requirements, unit){
-		viable = true;
-		if (struct_exists(requirements,"group")){
-			viable = unit.IsSpecialist(requirements.group);
-		}
-		if (viable){
-			viable = TestObstaclesUnitTruthsWeapons(unit, requirements, true, viable);
-		}
-		if (viable){
-			viable = TestObstaclesUnitTruthsItem(unit, requirements, true, viable);
-		}		
-		return viable;
-	}
-
-	// handles all tests to see mods or if unit needs to have a particular weapon equipped
-	static TestObstaclesUnitTruthsWeapons = function(unit, modifiers, require_test, test_mod){
-		if (struct_exists(modifiers,"weapon")){
-			var weapon_mods = modifiers.weapon;
-			if (struct_exists(weapon_mods, "tag")){
-				test_mod = TestObstacleTags(unit, weapon_mods.tag, ["weapon_one_data", "weapon_two_data"],require_test, test_mod)
-			}
-			if (struct_exists(weapon_mods, "name")){
-				test_mod = TestObstacleName(unit, weapon_mods.name,require_test, test_mod)
-			}
-		}
-
-		return test_mod;
-	}
-
-	TestObstaclesUnitTruthsItem = function(unit, modifiers, require_test, test_mod){
-		if (struct_exists(modifiers,"equipment")){
-			var equip_mods = test.modifiers.equipment
-			if (struct_exists(equip_mods, "tag")){
-				test_mod = TestObstacleTags(unit, equip_mods.tag, ,require_test, test_mod);				
-			}
-			if (struct_exists(equip_mods, "name")){
-				test_mod = TestObstacleName(unit, equip_mods.name,require_test, test_mod);					
-			}					
-		}
-		return test_mod;		
-	}
-
-	static TestObstacleTags = function(unit, tag_set, areas=["armour_data", "gear_data", "mobility_data", "weapon_one_data", "weapon_two_data"], require_test, test_mod){
-		for (var i = 0;i<array_length(tag_set)i++){
-			var saught_tag = tag_set[i];
-			if (unit.has_equipped_tag(saught_tag.name,areas)){
-				if (!require_test){
-					array_push(test_mod, saught_tag);							
-				} else {
-					return false;
-				}
-			}
-		}
-		if (require_test){
-			return true;
-		} else {
-			return test_mod;
-		}		
-	}
-	static TestObstacleName = function(unit, name_set,require_test, test_mod){
-		for (var i = 0;i<array_length(name_set)i++){
-			saught_name = name_set[i];
-			if (unit.has_equipped(saught_tag.name)){
-				if (!require_test){
-					array_push(test_mod, saught_name);							
-				} else {
-					return false;
-				}
-			}
-		}
-		if (require_test){
-			return true;
-		} else {
-			return test_mod;
-		}	
-	}
-	static TestUnitModifiers = function(modifiers, unit, test_mod){
-
-		test_mod = TestObstaclesUnitTruthsWeapons(modifiers, unit, false, test_mod);
-		test_mod = TestObstaclesUnitTruthsItem(modifiers, unit, false, test_mod);
-	}
+	
 	static attempt_solution = function (){
 		if (dungeon.solution>-1 && !is_string(selected_unit)){
 			var test;

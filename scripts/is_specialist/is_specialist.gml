@@ -232,23 +232,6 @@ function collect_role_group(group="standard", location="", opposite=false, searc
 	return units;
 }
 
-function stat_valuator(search_params, unit){
-	match = true;
-	for (var stat = 0;stat<array_length(search_params);stat++){
-		if (search_params[stat][2] =="more"){
-			if (unit[$ search_params[stat][0]] < search_params[stat][1]){
-				match = false;
-				break;
-			}
-		} else if(search_params[stat][2] =="less"){
-				if (unit[$ search_params[stat][0]] > search_params[stat][1]){
-				match = false;
-				break;
-			}           					
-		}
-	}
-	return match;	
-}
 
 function collect_by_religeon(religion, sub_cult="", location=""){
 	var units = [], unit, count=0, add=false;
