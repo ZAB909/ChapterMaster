@@ -26,6 +26,41 @@ global.stat_list = [
 	"charisma"
 ];
 
+function difficulty_string_chart(val){
+	if (val<-90){
+		difficulty = "Impossible";
+	} else if (val<-70){
+		difficulty = "Brutal";
+	}
+	 else if (val<-50){
+		difficulty = "Harsh";
+	}
+	 else if (val<-30){
+		difficulty = "Very Hard";
+	}
+	 else if (val<-20){
+		difficulty = "Hard";
+	}
+	 else if (val<-5){
+		difficulty = "Challenging";
+	}
+	 else if (val<5){
+		difficulty = "standard";
+	}
+	else if (val<5){
+			difficulty = "standard";
+		}
+	else if (val<20){
+			difficulty = "routine";
+		}
+	else if (val<30){
+		difficulty = "simple";
+	}
+	else if (val<50){
+		difficulty = "Idiot Proof";
+	}		
+}
+
 function fetch_stat(stat_enum){
 	if (stat_enum<array_length(global.stat_list)){
 		return global.stat_list[stat_enum];
@@ -120,7 +155,7 @@ function TestObstacleTags(unit, tag_set, areas=["armour_data", "gear_data", "mob
 function TestObstacleName(unit, name_set,require_test, test_mod){
 	for (var i = 0;i<array_length(name_set)i++){
 		saught_name = name_set[i];
-		if (unit.has_equipped(saught_tag.name)){
+		if (unit.has_equipped(saught_name.name)){
 			if (!require_test){
 				array_push(test_mod, saught_name);							
 			}

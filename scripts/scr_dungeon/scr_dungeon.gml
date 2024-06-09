@@ -290,8 +290,8 @@ function dungeon_struct() constructor{
 			draw_set_color(c_gray);
 	        draw_set_halign(fa_center);
 	        draw_set_font(fnt_40k_14b);
-			draw_text(start_x, start_y+(20*i), mission_objectives.title);
-			draw_text(start_x+40, start_y+(20*i), mission_objectives.finished?"Complete":"");
+			draw_text(start_x, start_y+(20*i), objec.title);
+			draw_text(start_x+70, start_y+(20*i), objec.finished?"Complete":"");
 		}		
 	}
 	static DungeonMainModule = function(){
@@ -383,10 +383,12 @@ function dungeon_struct() constructor{
 
 				cur_test = required_tests[t];
 				var test_stat = cur_test.attribute;
-				draw_stat_icons(cur_test.attribute, draw_xx, draw_yy, 0.75, c_white, 0, 1);
-				draw_text_transformed(draw_xx+20, draw_yy+10, $": {unit[$ fetch_stat(test_stat)]}",2,2,0);
+				draw_stat_icons(cur_test.attribute, draw_xx-20, draw_yy, 0.75, c_white, 0, 1);
+				draw_set_font(fnt_40k_14b);
+				var test_value = unit[$ fetch_stat(test_stat)];
+				draw_text_transformed(draw_xx+20, draw_yy+10, $": {test_value}",2,2,0);
 				draw_yy+=40
-				draw_text(draw_xx+20, draw_yy,"difficulty : Normal");
+				draw_text(draw_xx+20, draw_yy,"difficulty : {cur_test.base_difficulty}");
 				var space=0;
 				if (struct_exists(cur_test, "modifiers")){
 					mods = TestUnitModifiers(cur_test.modifiers, unit, []);
@@ -394,12 +396,14 @@ function dungeon_struct() constructor{
 					for (var m=0;m<array_length(mods);m++){
 						cur_mod = mods[m];
 						draw_text(draw_xx+30+(30*space), draw_yy+10,$"{cur_mod.name} : {cur_mod.mod_value}");
+						test_value+=cur_mod.mod_value;
 					}
 					space++;
 				} 
 				if (!space){
 					draw_text(draw_xx+40, draw_yy+10,"No other bonus'");
 				}
+				draw_text(draw_xx+40, draw_yy+40,$"Success Chance {test_value}%");
 			}
 
 		}		

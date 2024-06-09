@@ -8,21 +8,47 @@ global.obstacles = {
 				tests :[
 					{
 						attribute :eStats.technology,
-						base : 50,
+						base_difficulty : 10,
 						modifiers : {
 							equipment : {
 								name : [
-								{
-									name:"servo harness", 
-									mod_val:10,
-									flavour : "aided by their Servo Harness"
-								}],
-							}
+    								{
+    									name:"servo harness", 
+    									mod_val:10,
+    									flavour : "aided by their Servo Harness"
+    								}
+                                ],
+							},
+                            traits :[
+                                {
+                                    name : "tinkerer",
+                                    flavour : "{name} is adebt at understanding obscure mechanism",
+                                }
+                            ]
 						}
-					}
-				],
+					},
+                ],
 				description : "attempt to bypass the door at the control panel",
-				stat_icon : eStats.technology
+				stat_icon : eStats.technology,
+                result_chart : [
+                    [-1, 
+                        {
+                            result_text :"{name_role} {flavour1},unfortunatly {name} is unable to figure out the mechanism and soon gives up",
+                            result_effects : {
+                                action_points : -1,
+                                damage : "moderate"
+                            },
+                        }
+                    ],
+                    [100, 
+                        {
+                            result_text :"{name_role} finds that the mechanism is simple enough and quickly and efficiently directs some power into the system and opens the door",
+                            result_effects : {
+                                action_points : 0
+                            },
+                        }
+                    ],                    
+                ],                
 			},
 			{
 				name :"divine",
@@ -33,7 +59,7 @@ global.obstacles = {
 				tests :[
 					{
 						attribute :eStats.intelligence,
-						base : 40,
+						base_difficulty : 0,
 						modifiers : {
 						}
 					}
@@ -55,11 +81,11 @@ global.obstacles = {
 				tests :[
 					/*{
 						attribute : "luck",
-						base : 10,
+						base_difficulty : 10,
 					},*/
 					{
 						attribute :eStats.ballistic_skill,
-						base : 40,
+						base_difficulty : 0,
 						modifiers : {
 							weapon : {
 								tag : [
@@ -79,36 +105,190 @@ global.obstacles = {
 					}				
 				],
 				description : "Melt the Door with a melta blast",
+                result_chart : [
+                    [-60, 
+                        {
+                            result_text :"{name_role} fires on the door {flavour1}, The door appears to have more to it than it seems and the melta blast after searing the surface reflects off the surface below",
+                            result_effects : {
+                                action_points : -2,
+                                damage : "moderate"
+                            },
+                        }
+                    ],
+                    [-20, 
+                        {
+                            result_text :"{name_role} fires on the door {flavour1}, after several shots the door remains mostly intact and it becomes apparent that it has been built far more robustly than origionally thought",
+                            result_effects : {
+                                action_points : -2
+                            },
+                        }
+                    ],
+                    [0, 
+                        {
+                            result_text :"{name_role} fires on the door {flavour1}, eventually after several shots the door lock disengages and the door swings open",
+                            result_effects : {
+                                action_points : -2
+                            },
+                        }
+                    ],
+                    [100, 
+                        {
+                            result_text :"{name_role}fires on the door {flavour1}, {name}'s shot is perfect and the door imediatly flops open as its central mecanism is destroyed",
+                            result_effects : {
+                                action_points : 0,
+                                loot :["archeotech", "basic"]
+                            },
+                        }
+                    ]                    
+                ],                
 				stat_icon : eStats.ballistic_skill
 			},
 			{
 				name :"Find Way Round",
 				//requirements : ["melta"],
 				tests :[
-					 /*{
-					 	attribute : "luck",
-						base : 10,
-					},*/
 					{
 						attribute : eStats.wisdom,
-						base : -40,					
+						base_difficulty : -20,
+                        modifiers : {
+                            traits : [
+                                {
+                                    name : "observant",
+                                    mod_val:10, 
+                                    flavour:"observational tendancies come in handy"
+                                }
+                            ]
+                        }				
 					}				
 				],
 				result_chart : [
-					[-60, function(){
-						var mem = members[action_unit];
-						mem.actions = mem.actions-2<0?mem.actions=0:mem.actions=mem.actions-2;
-						var unit = meme.struct;
-						var result_text = $"{unit.name_role()} Is able to find what they think is a way around in the form of a small hidden chamber, however upon entering the side chamber another door seals shut leaving them trpped in a dissused control room. It takes several minutes from {unit.name()} to escape by eventually battering the door down";
-						var result effects = "{unit.name_role()} looses two action points";
-					}]
+					[-60, 
+                        {
+    						result_text :"{name_role} Is able to find what they think is a way around in the form of a small hidden chamber, however upon entering the side chamber another door seals shut leaving them trpped in a dissused control room. It takes several minutes from {role} to escape by eventually battering the door down",
+    						result_effects : {
+                                action_points : -2
+                            },
+    					}
+                    ],
+                    [-1, 
+                        {
+                            result_text :"{name_role} finds nothing though they search for many hours",
+                            result_effects : {
+                                action_points : -1
+                            },
+                        }
+                    ],
+                    [40, 
+                        {
+                            result_text :"{name_role} evetnually finds a small service duct, any security measures that once stopped passage have since been eroded and a way through is found",
+                            result_effects : {
+                                action_points : -2
+                            },
+                        }
+                    ],
+                    [100, 
+                        {
+                            result_text :"{name_role} examines every inch of the room, an almost imperceptiable breeze brings their attention to a statue that is heaved out the way to reveal what was probably some sort of redundancy escape route, it provides a quick route through and also provisions some archeotype equipment stashed for the convinince of the tunnels intended user.",
+                            result_effects : {
+                                action_points : 0,
+                                loot :["archeotech", "basic"]
+                            },
+                        }
+                    ]                    
 				],
 				class : ["perception"],
 				description : "Try find another way through",
 				stat_icon : eStats.wisdom
 			}			
 		]
-	}
+	},
+    "hidde_nid":{
+        name: "Hidden Tyranid",
+        description: "A deadly Tyranid lurks in the shadows, ready to strike at any moment.",
+        solutions: [
+            {
+                name: "Heightened Awareness",
+                tests: [
+                    {
+                        attribute: eStats.wisdom,
+                        base_difficulty: 55,
+                        modifiers: {
+                            equipment: [["augmented optics", 15]]
+                        }
+                    },
+                    {
+                        attribute: "intelligence",
+                        base_difficulty: 50,
+                        modifiers: {}
+                    }
+                ],
+                description: "Maintain heightened awareness and use advanced optics to spot any subtle movements or signs of the hidden Tyranid.",
+                stat_icon: "perception"
+            },
+            {
+                name: "Scout and Recon",
+                requirements: {
+                    skill: "scouting"
+                },
+                tests: [
+                    {
+                        attribute: eStats.dexterity,
+                        base_difficulty: 50,
+                        modifiers: {}
+                    },
+                    {
+                        attribute: "dexterity",
+                        base_difficulty: 45,
+                        modifiers: {
+                            equipment: [
+                                {
+
+                                }
+                            ]
+                        }
+                    }
+                ],
+                description: "Send out scouts to recon the area, utilizing camouflage and keen perception to detect the hidden Tyranid.",
+                stat_icon: "perception"
+            },
+            {
+                name: "Bait and Ambush",
+                tests: [
+                    {
+                        attribute: "charisma",
+                        base_difficulty: 40,
+                        modifiers: {}
+                    },
+                    {
+                        attribute: "intelligence",
+                        base_difficulty: 55,
+                        modifiers: {}
+                    }
+                ],
+                description: "Set up a bait and ambush strategy, luring out the hidden Tyranid with clever tactics and intelligence.",
+                stat_icon: "charisma"
+            },
+            {
+                name: "Biological Detection",
+                requirements: {
+                    traits : [
+                        {
+                            name : "tyranic_war_vet"
+                        }
+                    ]
+                },
+                tests: [
+                    {
+                        attribute: eStats.intelligence,
+                        base_difficulty: 60,
+                        modifiers: {}
+                    }
+                ],
+                description: "Utilize knowledge of Tyranid biology to anticipate its behavior and locate its hidden presence.",
+                stat_icon: "intelligence"
+            }
+        ]
+    }
 }
 
 /*{
@@ -123,7 +303,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "dexterity",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {
                         equipment: [["climbing harness", 10]]
                     }
@@ -137,7 +317,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "strength",
-                    base: 40,
+                    base_difficulty: 40,
                     modifiers: {
                         equipment: [["adrenaline injection", 15]]
                     }
@@ -154,7 +334,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "intelligence",
-                    base: 60,
+                    base_difficulty: 60,
                     modifiers: {}
                 }
             ],
@@ -169,7 +349,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "technology",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {}
                 }
             ],
@@ -192,7 +372,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "technology",
-                    base: 60,
+                    base_difficulty: 60,
                     modifiers: {}
                 }
             ],
@@ -204,7 +384,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "dexterity",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {
                         equipment: [["stealth suit", 10]]
                     }
@@ -221,7 +401,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "charisma",
-                    base: 40,
+                    base_difficulty: 40,
                     modifiers: {}
                 }
             ],
@@ -233,7 +413,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "intelligence",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {
                         equipment: [["toolkit", 10]]
                     }
@@ -254,12 +434,12 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "intelligence",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {}
                 },
                 {
                     attribute: "wisdom",
-                    base: 40,
+                    base_difficulty: 40,
                     modifiers: {}
                 }
             ],
@@ -271,14 +451,14 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "wisdom",
-                    base: 45,
+                    base_difficulty: 45,
                     modifiers: {
                         equipment: [["listening device", 10]]
                     }
                 },
                 {
                     attribute: "luck",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {}
                 }
             ],
@@ -293,7 +473,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "intelligence",
-                    base: 55,
+                    base_difficulty: 55,
                     modifiers: {}
                 }
             ],
@@ -305,12 +485,12 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "dexterity",
-                    base: 40,
+                    base_difficulty: 40,
                     modifiers: {}
                 },
                 {
                     attribute: "constitution",
-                    base: 45,
+                    base_difficulty: 45,
                     modifiers: {
                         equipment: [["torch", 10]]
                     }
@@ -333,14 +513,14 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "strength",
-                    base: 60,
+                    base_difficulty: 60,
                     modifiers: {
                         equipment: [["power armor", 20]]
                     }
                 },
                 {
                     attribute: "dexterity",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {}
                 }
             ],
@@ -352,7 +532,7 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "intelligence",
-                    base: 55,
+                    base_difficulty: 55,
                     modifiers: {
                         equipment: [["grapnel launcher", 15]]
                     }
@@ -369,12 +549,12 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "dexterity",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {}
                 },
                 {
                     attribute: "constitution",
-                    base: 45,
+                    base_difficulty: 45,
                     modifiers: {
                         equipment: [["climbing harness", 10]]
                     }
@@ -388,14 +568,14 @@ global.obstacles = {
             tests: [
                 {
                     attribute: "perception",
-                    base: 45,
+                    base_difficulty: 45,
                     modifiers: {
                         equipment: [["magnoculars", 10]]
                     }
                 },
                 {
                     attribute: "luck",
-                    base: 50,
+                    base_difficulty: 50,
                     modifiers: {}
                 }
             ],
@@ -404,83 +584,4 @@ global.obstacles = {
         }
     ]
 }
-
-{
-    name: "Hidden Tyranid",
-    description: "A deadly Tyranid lurks in the shadows, ready to strike at any moment.",
-    solutions: [
-        {
-            name: "Heightened Awareness",
-            tests: [
-                {
-                    attribute: "perception",
-                    base: 55,
-                    modifiers: {
-                        equipment: [["augmented optics", 15]]
-                    }
-                },
-                {
-                    attribute: "intelligence",
-                    base: 50,
-                    modifiers: {}
-                }
-            ],
-            description: "Maintain heightened awareness and use advanced optics to spot any subtle movements or signs of the hidden Tyranid.",
-            stat_icon: "perception"
-        },
-        {
-            name: "Scout and Recon",
-            requirements: {
-                skill: "scouting"
-            },
-            tests: [
-                {
-                    attribute: "perception",
-                    base: 50,
-                    modifiers: {}
-                },
-                {
-                    attribute: "dexterity",
-                    base: 45,
-                    modifiers: {
-                        equipment: [["camo cloak", 10]]
-                    }
-                }
-            ],
-            description: "Send out scouts to recon the area, utilizing camouflage and keen perception to detect the hidden Tyranid.",
-            stat_icon: "perception"
-        },
-        {
-            name: "Bait and Ambush",
-            tests: [
-                {
-                    attribute: "charisma",
-                    base: 40,
-                    modifiers: {}
-                },
-                {
-                    attribute: "intelligence",
-                    base: 55,
-                    modifiers: {}
-                }
-            ],
-            description: "Set up a bait and ambush strategy, luring out the hidden Tyranid with clever tactics and intelligence.",
-            stat_icon: "charisma"
-        },
-        {
-            name: "Biological Detection",
-            requirements: {
-                skill: "biology"
-            },
-            tests: [
-                {
-                    attribute: "intelligence",
-                    base: 60,
-                    modifiers: {}
-                }
-            ],
-            description: "Utilize knowledge of Tyranid biology to anticipate its behavior and locate its hidden presence.",
-            stat_icon: "intelligence"
-        }
-    ]
-}*/
+*/
