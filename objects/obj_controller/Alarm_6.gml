@@ -42,7 +42,7 @@ if (menu==1) and (managing>0){
                 else if (unit.role()==obj_ini.role[100][6]) { drea+=1;}
 				else if (unit.role()==obj_ini.role[100][18]) { sgt++;}
                 else if (unit.role()==obj_ini.role[100][19]) { vet_sgt++;}
-                else if (unit.role()==$"Venerable {obj_ini.role[100][6]}"{ vdrea+=1;}
+                else if (unit.role()==$"Venerable {obj_ini.role[100][6]}"){ vdrea+=1;}
                 else if (unit.role()=="Codiciery") { codi+=1;}
                 else if (unit.role()=="Lexicanum") { lexi+=1;}
                  else if (unit.role()==obj_ini.role[100][Role.ANCIENT]) { champ+=1;}
