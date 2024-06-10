@@ -227,6 +227,7 @@ function arti_struct(Index)constructor{
 		return array_contains(tags(), wanted_tag);
 	}
 	static has_tags = function(wanted_tags){
+		var wanted_tag;
 		for (var i=0;i<array_length(wanted_tags);i++){
 			wanted_tag = wanted_tags[i];
 			if (array_contains(tags(), wanted_tag)){

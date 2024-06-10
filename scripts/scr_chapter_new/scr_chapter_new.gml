@@ -602,7 +602,8 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    selected_chapter=21;chapter=argument0;icon=icon21;icon_name=icon_name21;founding=founding21;
 	    fleet_type=fleet_type21;
 		strength=strength21;
-		purity=purity21;stability=stability21;cooperation=cooperation21;
+		purity=purity21;
+		stability=stability21;cooperation=cooperation21;
 	    homeworld=homeworld21;homeworld_name=homeworld_name21;recruiting=recruiting_world21;recruiting_name=recruiting_name21;
 	    homeworld_exists=homeworld_rule21;recruiting_exists=recruiting_exists21;homeworld_rule=homeworld_rule21;aspirant_trial=aspirant_trial21;discipline=discipline21;
 	    // Pauldron2: Left, Pauldron: Right
@@ -619,163 +620,15 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    battle_cry=battle_cry_21
 		load_to_ships=[2,0,0];
 		
-	for (var i=1;i<=20;i++){
-    role[100][i] = role_21[i];
-	wep1[100][i]=wep1_21[i]
-	wep2[100][i]=wep2_21[i]
-	armour[100][i]=armour_21[i]
-	gear[100][i]=gear_21[i]
-	mobi[100][i]=mobi_21[i]
-}
+		for (var i=1;i<=20;i++){
+		    role[100][i] = role_21[i];
+			wep1[100][i]=wep1_21[i]
+			wep2[100][i]=wep2_21[i]
+			armour[100][i]=armour_21[i]
+			gear[100][i]=gear_21[i]
+			mobi[100][i]=mobi_21[i]
+		}
 	
-	/*for(var i=100;i<=116;i++){
-		
-	//Honor Guard
-	race[i,2]=1;
-    role[i,2]=role_21[i];
-    wep1[i,2]=wep1_21[i];
-    wep2[i,2]=wep2_21[i];
-    armour[i,2]=armour_21[i];
-	gear[i,2]=gear_21[i]
-	mobi[i,2]=mobi_21[i];
-	
-	//Veteran
-	race[i,3]=1;
-    role[i,3]=role_21[i];
-    wep1[i,3]=wep1_21[i];
-    wep2[i,3]=wep2_21[i];
-    armour[i,3]=armour_21[i];
-	gear[i,3]=gear_21[i]
-	mobi[i,3]=mobi_21[i];
-	
-	//Terminator
-	race[i,4]=1;
-    role[i,4]=role_21[i];
-    wep1[i,4]=wep1_21[i];
-    wep2[i,4]=wep2_21[i];
-    armour[i,4]=armour_21[i];
-	gear[i,4]=gear_21[i]
-	mobi[i,4]=mobi_21[i];
-	
-	//Captain
-	race[i,5]=1;
-    role[i,5]=role_21[i];
-    wep1[i,5]=wep1_21[i];
-    wep2[i,5]=wep2_21[i];
-    armour[i,5]=armour_21[i];
-	gear[i,5]=gear_21[i]
-	mobi[i,5]=mobi_21[i];
-	
-	//Dreadnought
-	race[i,6]=1;
-    role[i,6]=role_21[i];
-    wep1[i,6]=wep1_21[i];
-    wep2[i,6]=wep2_21[i];
-    armour[i,6]=armour_21[i];
-	gear[i,6]=gear_21[i];
-	mobi[i,6]=mobi_21[i];
-	
-	//Compmny Champion
-	race[i,7]=1;
-    role[i,7]=role_21[i];
-    wep1[i,7]=wep1_21[i];
-    wep2[i,7]=wep2_21[i];
-    armour[i,7]=armour_21[i];
-	gear[i,7]=gear_21[i];
-	mobi[i,7]=mobi_21[i];
-	
-	//Tactical
-	race[i,8]=1;
-    role[i,8]=role_21[i];
-    wep1[i,8]=wep1_21[i];
-    wep2[i,8]=wep2_21[i];
-    armour[i,8]=armour_21[i];
-	gear[i,8]=gear_21[i];
-	mobi[i,8]=mobi_21[i];
-	
-	//Devastator
-	race[i,9]=1;
-    role[i,9]=role_21[i];
-    wep1[i,9]=wep1_21[i];
-    wep2[i,9]=wep2_21[i];
-    armour[i,9]=armour_21[i];
-	gear[i,9]=gear_21[i]
-	mobi[i,9]=mobi_21[i];
-	
-	//Assault
-	race[i,10]=1;
-    role[i,10]=role_21[i];
-    wep1[i,10]=wep1_21[i];
-    wep2[i,10]=wep2_21[i];
-    armour[i,10]=armour_21[i];
-	gear[i,10]=gear_21[i];
-	mobi[i,10]=mobi_21[i];
-	
-	//Scout
-	race[i,12]=1;
-    role[i,12]=role_21[i];
-    wep1[i,12]=wep1_21[i];
-    wep2[i,12]=wep2_21[i];
-    armour[i,12]=armour_21[i];
-	gear[i,12]=gear_21[i];
-	mobi[i,12]=mobi_21[i];
-	
-	//Chaplain
-	race[i,14]=1;
-    role[i,14]=role_21[i];
-    wep1[i,14]=wep1_21[i];
-    wep2[i,14]=wep2_21[i];
-    armour[i,14]=armour_21[i];
-	gear[i,14]=gear_21[i];
-	mobi[i,14]=mobi_21[i];
-	
-	//Apothecary
-	race[i,15]=1;
-    role[i,15]=role_21[i];
-    wep1[i,15]=wep1_21[i];
-    wep2[i,15]=wep2_21[i];
-    armour[i,15]=armour_21[i];
-	gear[i,15]=gear_21[i];
-	mobi[i,15]=mobi_21[i];
-	
-	//Techmarine
-	race[i,16]=1;
-    role[i,16]=role_21[i];
-    wep1[i,16]=wep1_21[i];
-    wep2[i,16]=wep2_21[i];
-    armour[i,16]=armour_21[i];
-	gear[i,16]=gear_21[i];
-	mobi[i,16]=mobi_21[i];
-	
-	//Librarian
-	race[i,17]=1;
-    role[i,17]=role_21[i];
-    wep1[i,17]=wep1_21[i];
-    wep2[i,17]=wep2_21[i];
-    armour[i,17]=armour_21[i];
-	gear[i,17]=gear_21[i];
-	mobi[i,17]=mobi_21[i];
-	
-	//Seargeant
-	race[i,18]=1;
-    role[i,18]=role_21[i];
-    wep1[i,18]=wep1_21[i];
-    wep2[i,18]=wep2_21[i];
-    armour[i,18]=armour_21[i];
-	gear[i,18]=gear_21[i];
-	mobi[i,18]=mobi_21[i];
-	
-	//Veteran Seargeant
-	race[i,19]=1;
-    role[i,19]=role_21[i];
-    wep1[i,19]=wep1_21[i];
-    wep2[i,19]=wep2_21[i];
-    armour[i,19]=armour_21[i];
-	gear[i,19]=gear_21[i];
-	mobi[i,19]=mobi_21[i];
-	
-    
-	    }*/
 		
 		//monastery_name=monastery_name21;
 		//master_name=master_name21
