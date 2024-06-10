@@ -619,6 +619,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		recruiter=recruiter21
 	    battle_cry=battle_cry_21
 		load_to_ships=[2,0,0];
+		complex_livery_data = complex_livery21;
 		
 		for (var i=1;i<=20;i++){
 		    role[100][i] = role_21[i];
