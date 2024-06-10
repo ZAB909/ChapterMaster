@@ -87,20 +87,22 @@ __b__ = action_if_number(obj_popup, 0, 0);
 					for (var p_num = 1; p_num<5;p_num++){
 						//if(planet_feature_bool(stahr.p_feature[p_num], P_features.Monastery)==1)thenobj_fleet.player_lasers=stahr.p_lasers[p_num]; 
 					}
+        			var capital_count = array_length(battle_pobject[current_battle].capital[i]);
+
+					for (var i=1;i<array_length(capital_count);i++){
+					    if (battle_pobject[current_battle].capital[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].capital_num[i]]=1;
+					}
         
-			        var i=0;
-			        repeat(40){
-			            i+=1;if (battle_pobject[current_battle].capital[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].capital_num[i]]=1;
-			        }
+			        var frigate_count = array_length(battle_pobject[current_battle].frigate[i]);
+
+					for (i=1;i<array_length(frigate_count);i++){
+					   if (battle_pobject[current_battle].frigate[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].frigate_num[i]]=1;
+					}
         
-			        i=0;
-			        repeat(90){
-			            i+=1;if (battle_pobject[current_battle].frigate[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].frigate_num[i]]=1;
-			        }
-        
-			        i=0;
-			        repeat(90){
-			            i+=1;if (battle_pobject[current_battle].escort[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].escort_num[i]]=1;
+					var escort_count = array_length(battle_pobject[current_battle].escort[i]);
+
+			        for (i=1;i<array_length(battle_pobject[current_battle].escort[i]);i++){
+			            if (battle_pobject[current_battle].escort[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].escort_num[i]]=1;
 			        }
         
 			        instance_deactivate_all(true);
