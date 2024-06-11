@@ -803,7 +803,7 @@ function scr_restart_variables(saved_game) {
 		
 		for(var i=1; i<=4; i++){
 	        if (adv[i]!="") and (adv_num[i]=0){
-				for(var n=1; n<=40; n++){
+				for (var n=1; n<=40; n++){
 	                if (advantage[n]=adv[i]) then adv_num[i]=n;
 	            }
 	        }
@@ -811,7 +811,7 @@ function scr_restart_variables(saved_game) {
 
 		for(var i=1; i<=4; i++){
 	        if (dis[i]!="") and (dis_num[i]=0){
-	            for(var n=1; n<=40; n++){
+	            for (var n=1; n<=40; n++){
 	                if (disadvantage[n]=dis[i]) then dis_num[i]=n;
 	            }
 	        }
