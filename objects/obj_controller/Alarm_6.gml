@@ -30,7 +30,8 @@ if (menu==1) and (managing>0){
                 else if (unit.role()==obj_ini.role[100][14]) { chap+=1;}
                 else if (unit.role()==obj_ini.role[100][17]) { lib+=1;}
                 else if (unit.role()==obj_ini.role[100][16]) { tech+=1;}
-                else if (unit.role()==obj_ini.role[100][6]) or (ma_role[f]=="Venerable "+string(obj_ini.role[100][6])) { drea+=1;}
+                else if (unit.role()==obj_ini.role[100][6]) { drea+=1;}
+                else if (unit.role()==$"Venerable {obj_ini.role[100][6]}"){ vdrea+=1;}                
                 else if (unit.role()==obj_ini.role[100][11]) { bear+=1;}
                 else if (unit.role()==obj_ini.role[100][8]) { tct+=1;}
                 else if (unit.role()==obj_ini.role[100][10]) { assa+=1;}
@@ -39,10 +40,8 @@ if (menu==1) and (managing>0){
                 else if (unit.role()==obj_ini.role[100][2]) { hon+=1;}
                 else if (unit.role()==obj_ini.role[100][3]) { ve+=1;}
                 else if (unit.role()==obj_ini.role[100][4]) { ter+=1;}
-                else if (unit.role()==obj_ini.role[100][6]) { drea+=1;}
 				else if (unit.role()==obj_ini.role[100][18]) { sgt++;}
                 else if (unit.role()==obj_ini.role[100][19]) { vet_sgt++;}
-                else if (unit.role()==$"Venerable {obj_ini.role[100][6]}"){ vdrea+=1;}
                 else if (unit.role()=="Codiciery") { codi+=1;}
                 else if (unit.role()=="Lexicanum") { lexi+=1;}
                  else if (unit.role()==obj_ini.role[100][Role.ANCIENT]) { champ+=1;}
