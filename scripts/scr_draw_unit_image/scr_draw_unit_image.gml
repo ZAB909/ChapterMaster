@@ -371,7 +371,7 @@ function scr_draw_unit_image(_background=false){
             }
 			
 			// Techmarine
-            else if (ui_specialist=5){
+            else if (ui_specialist=5 && global.chapter_name!="Iron Hands"){
                 shader_array_set[ShaderType.Body] = Colors.Red;
                 shader_array_set[ShaderType.Helmet] = Colors.Red;
                 shader_array_set[ShaderType.Lens] = Colors.Lime;
