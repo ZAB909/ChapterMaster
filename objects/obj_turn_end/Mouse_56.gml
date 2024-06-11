@@ -90,13 +90,13 @@ __b__ = action_if_number(obj_popup, 0, 0);
 					}
         			var capital_count = array_length(battle_pobject[current_battle].capital[i]);
 
-					for (var i=1;i<capital_count);i++){
+					for (var i=1;i<capital_count;i++){
 					    if (battle_pobject[current_battle].capital[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].capital_num[i]]=1;
 					}
         
 			        var frigate_count = array_length(battle_pobject[current_battle].frigate[i]);
 
-					for (i=1;i<frigate_count);i++){
+					for (i=1;i<frigate_count;i++){
 					   if (battle_pobject[current_battle].frigate[i]!="") then obj_fleet.fighting[battle_pobject[current_battle].frigate_num[i]]=1;
 					}
         
