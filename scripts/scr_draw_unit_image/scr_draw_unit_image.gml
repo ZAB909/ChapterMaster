@@ -863,7 +863,7 @@ function scr_draw_unit_image(_background=false){
                             if (body[$ "right_arm"][$ "bionic"].variant == 0){
                                 draw_sprite(spr_bionics_arm,0,x_surface_offset,y_surface_offset);
                             }else{
-                                draw_sprite(spr_bionics_arm_2,1,x_surface_offset,y_surface_offset);
+                                draw_sprite(spr_bionics_arm_2,0,x_surface_offset,y_surface_offset);
                             }
                         } else{
                             draw_sprite(armour_sprite,6,x_surface_offset,y_surface_offset);
@@ -875,7 +875,7 @@ function scr_draw_unit_image(_background=false){
                                     if (body[$ "left_arm"][$ "bionic"].variant == 0){
                                         draw_sprite(spr_bionics_arm,1,x_surface_offset,y_surface_offset);
                                     } else{
-                                        draw_sprite(spr_bionics_arm_2,0,x_surface_offset,y_surface_offset);
+                                        draw_sprite(spr_bionics_arm_2,1,x_surface_offset,y_surface_offset);
                                     }
                             }else {
                                 draw_sprite(armour_sprite,8,x_surface_offset,y_surface_offset);
@@ -885,7 +885,7 @@ function scr_draw_unit_image(_background=false){
                                     if (body[$ "left_arm"][$ "bionic"].variant == 0){
                                         draw_sprite(spr_bionics_arm,3,x_surface_offset,y_surface_offset);
                                     } else{
-                                        draw_sprite(spr_bionics_arm_2,2,x_surface_offset,y_surface_offset);
+                                        draw_sprite(spr_bionics_arm_2,3,x_surface_offset,y_surface_offset);
                                     }
                             }else {
                                 draw_sprite(armour_sprite,9,x_surface_offset,y_surface_offset);
@@ -1066,8 +1066,15 @@ function scr_draw_unit_image(_background=false){
                     var psy_hood_offset_y = 0;
                     robes_hood_bypass = true;
                     if (array_contains(obj_ini.adv,"Daemon Binders") && blandify==0 && psy_hood<7){
-                        if (ttrim=1) then draw_sprite(spr_gear_hood2,0,x_surface_offset-2,y_surface_offset-11);
-                        if (ttrim==0) then draw_sprite(spr_gear_hood2,1,x_surface_offset-2,y_surface_offset-11);
+						robes_bypass = true;
+                        if (ttrim=1){
+							draw_sprite(spr_gear_hood2,0,x_surface_offset-2,y_surface_offset-11);
+							draw_sprite(spr_binders_robes,0,x_surface_offset-2,y_surface_offset-11);
+						}
+                        if (ttrim==0){
+							draw_sprite(spr_gear_hood2,1,x_surface_offset-2,y_surface_offset-11);
+							draw_sprite(spr_binders_robes,1,x_surface_offset-2,y_surface_offset-11);
+						}
                     } else {
                         if (armour_type == ArmourType.Indomitus) {
                             psy_hood_offset_y = -8;
