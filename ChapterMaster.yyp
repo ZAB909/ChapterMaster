@@ -859,6 +859,7 @@
     {"id":{"name":"scr_ui_advisors","path":"scripts/scr_ui_advisors/scr_ui_advisors.yy",},},
     {"id":{"name":"scr_ui_diplomacy","path":"scripts/scr_ui_diplomacy/scr_ui_diplomacy.yy",},},
     {"id":{"name":"scr_ui_popup","path":"scripts/scr_ui_popup/scr_ui_popup.yy",},},
+    {"id":{"name":"spr_weapon_plasma_cannon_term","path":"sprites/spr_weapon_plasma_cannon_term/spr_weapon_plasma_cannon_term.yy",},},
     {"id":{"name":"scr_ui_formation_bars","path":"scripts/scr_ui_formation_bars/scr_ui_formation_bars.yy",},},
     {"id":{"name":"scr_ui_settings","path":"scripts/scr_ui_settings/scr_ui_settings.yy",},},
     {"id":{"name":"scr_arti_descr","path":"scripts/scr_arti_descr/scr_arti_descr.yy",},},

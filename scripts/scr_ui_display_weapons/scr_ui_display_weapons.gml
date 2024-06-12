@@ -14,6 +14,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         var terminator_ranged = {
             "Assault Cannon":spr_weapon_assca,
             "Heavy Flamer":spr_weapon_hflamer_term,
+			"Plasma Cannon":spr_weapon_plasma_cannon_term,
         }
         var terminator_ranged_names=struct_get_names(terminator_ranged);
         for (var i=0;i<array_length(terminator_ranged_names);i++){
@@ -77,6 +78,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Lascannon":spr_weapon_lasca,
             "Multi-Melta":spr_weapon_mmelta,
             "Heavy Flamer":spr_weapon_hflamer,
+			"Plasma Cannon":spr_weapon_plasc,
         }
         var heavy_ranged_names=struct_get_names(heavy_ranged);
         for (var i=0;i<array_length(heavy_ranged_names);i++){
