@@ -2,8 +2,8 @@
 // 
 
 
-var i=0,unit;
-repeat(600){i+=1;
+var unit;
+for (var i=0;i<array_length(unit_struct);i++){i+=1;
     unit = unit_struct[i];
     if (!is_struct(unit))then continue;
     if (marine_type[i]!="") and (unit.hp()<-3000) and (obj_ncombat.defeat=0){
@@ -13,7 +13,10 @@ repeat(600){i+=1;
     
     if (ally[i]=false){
         if (obj_ncombat.dropping=1) and (obj_ncombat.defeat=1) and (marine_dead[i]<2) then marine_dead[i]=1;
-        if (obj_ncombat.dropping=0) and (obj_ncombat.defeat=1) and (marine_dead[i]<2){marine_dead[i]=2;marine_hp[i]=-50;}
+        if (obj_ncombat.dropping=0) and (obj_ncombat.defeat=1) and (marine_dead[i]<2){
+            marine_dead[i]=2;
+            marine_hp[i]=-50;
+        }
         
     
         if (marine_type[i]!="") and (obj_ncombat.defeat=1) and (marine_dead[i]<2){marine_dead[i]=1;marine_hp[i]=-50;}

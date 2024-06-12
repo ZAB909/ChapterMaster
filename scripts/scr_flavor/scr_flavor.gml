@@ -28,7 +28,7 @@ function scr_flavor(number_of_attacking_weapons, target, target_type, number_of_
 	        if (wep_title[number_of_attacking_weapons]!=""){
 	            full_name=wep_title[number_of_attacking_weapons]+" "+wep_solo[number_of_attacking_weapons];
 	        }
-	        if (wep_solo[number_of_attacking_weapons]=obj_ini.master_name) then cm_kill=1;
+	        if (wep_solo[number_of_attacking_weapons]==obj_ini.master_name) then cm_kill=1;
 	    }
 	}
 
