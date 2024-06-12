@@ -3,8 +3,8 @@
 function gauss(base, sd){
     var x1, x2, w;
     do {
-        x1 = random(-1, 1);
-        x2 = random(-1, 1);
+        x1 = random_range(-1, 1);
+        x2 = random_range(-1, 1);
         w = sqr(x1)+sqr(x2);
     } until (0 < w and w < 1);
 
@@ -54,7 +54,7 @@ function beta_function(alpha, beta) {
 }
 
 function beta_distribution(alpha, beta) {
-    x1 = random_range(0, 1);
+    var x1 = random_range(0, 1);
     return power(x1, alpha - 1) * power(1 - x1, beta - 1) / beta_function(alpha, beta);
 }
 
