@@ -198,6 +198,18 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             }
         }
 
+        if (display_type == "melee_twohand") {
+            ui_arm[1] = 2;
+            ui_arm[2] = 2;
+            ui_hand[1] = 2;
+            ui_hand[2] = 3;
+            if (current_armor == ArmourType.Indomitus) {
+                ui_ymod[left_or_right] += 25;
+            } else if (current_armor == ArmourType.Tartaros) {
+                ui_ymod[left_or_right] += 39;
+            }
+        }
+
         if (array_contains(["Thunder Hammer", "Chainaxe", "Crozius Arcanum"], equiped_weapon)) {
             ui_hand[left_or_right] = 2;
         }
@@ -302,10 +314,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
 
     if ("Company Standard" == equiped_weapon) {
         ui_hand[left_or_right] = 0;
-    }
-
-    if ("Gauntlets of Ultramar" == equiped_weapon) {
-        ui_twoh[left_or_right] = true;
     }
 
     // Flip the ui_xmod for offhand

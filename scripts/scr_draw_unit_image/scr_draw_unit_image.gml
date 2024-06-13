@@ -1382,6 +1382,37 @@ function scr_draw_unit_image(_background=false){
                 }
             }
 
+            if ui_hand[1] == 3 {
+                if (armour_type == ArmourType.Tartaros){
+                    draw_sprite(spr_terminator_hands,4,x_surface_offset+4,y_surface_offset+13);
+                }
+                else if (armour_type == ArmourType.Indomitus){
+                    draw_sprite(spr_terminator_hands,4,x_surface_offset,y_surface_offset);
+                }
+            }
+            if ui_hand[2] == 3 {
+                if (armour_type == ArmourType.Tartaros){
+                    if (specialist_colours <= 1){
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,4,x_surface_offset+spr_w-4,y_surface_offset+13,-1,1,0,c_white,1);
+                    }
+                    else if (specialist_colours >= 2){
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,5,x_surface_offset+spr_w-4,y_surface_offset+13,-1,1,0,c_white,1);
+                    }
+                }
+                else if (armour_type == ArmourType.Indomitus){
+                    if (specialist_colours <= 1){
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,4,x_surface_offset+spr_w,y_surface_offset,-1,1,0,c_white,1);
+                    }
+                    else if (specialist_colours >= 2){
+                        var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
+                        draw_sprite_ext(spr_terminator_hands,5,x_surface_offset+spr_w,y_surface_offset,-1,1,0,c_white,1);
+                    }
+                }
+            }       
+
             var shield_offset_x = 0;
             var shield_offset_y = 0;
             if (armour_type == ArmourType.Indomitus){
