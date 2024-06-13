@@ -201,11 +201,11 @@ function scr_draw_unit_image(_background=false){
             // Honour guard
             if (role() == obj_ini.role[100][Role.HONOR_GUARD]) then ui_coloring="deathwing";
             // Deathwing
-            else if (company == 1 && !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.LIBRARIAN], obj_ini.role[100][Role.TECHMARINE]], role())) {
+            else if (company == 1) {
                 ui_coloring="deathwing";
             }
             // Ravenwing
-            else if (company == 2 && ui_specialist == 0) {
+            else if (company == 2) {
                 ui_coloring="ravenwing";
             }
         }
@@ -407,27 +407,33 @@ function scr_draw_unit_image(_background=false){
 			
 			// Deathwing
             if (ui_coloring == "deathwing"){
-                shader_array_set[ShaderType.Body] = Colors.Deathwing;
-                shader_array_set[ShaderType.LeftPauldron] = Colors.Deathwing;
-                shader_array_set[ShaderType.RightPauldron] = Colors.Deathwing;
-                if (role() != obj_ini.role[100][2]){
-                    shader_array_set[ShaderType.Trim] = Colors.Light_Caliban_Green;
+                if !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.LIBRARIAN], obj_ini.role[100][Role.TECHMARINE]], role()){
+                    shader_array_set[ShaderType.Body] = Colors.Deathwing;
                     if (role() != obj_ini.role[100][Role.APOTHECARY]){
                         shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
                     }
+                    if (role() != obj_ini.role[100][Role.HONOR_GUARD]){
+                        shader_array_set[ShaderType.Trim] = Colors.Light_Caliban_Green;
+                    }
                 }
+                if !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.TECHMARINE]], role()){
+                    shader_array_set[ShaderType.RightPauldron] = Colors.Deathwing;
+                }
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Deathwing;
                 ttrim=0;
                 specialist_colours=0;
             }
             
 			// Ravenwing
             if (ui_coloring="ravenwing"){
-                shader_array_set[ShaderType.Body] = Colors.Black;
-                shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
-                shader_array_set[ShaderType.RightPauldron] = Colors.Black;
-                if (role() != obj_ini.role[100][Role.APOTHECARY]){
+                if !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.LIBRARIAN], obj_ini.role[100][Role.TECHMARINE],obj_ini.role[100][Role.APOTHECARY]], role()){
+                    shader_array_set[ShaderType.Body] = Colors.Black;
                     shader_array_set[ShaderType.Helmet] = Colors.Black;
                 }
+                if !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.TECHMARINE]], role()){
+                    shader_array_set[ShaderType.RightPauldron] = Colors.Black;
+                }
+                shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
                 ttrim=0;
                 specialist_colours=0;
             }
@@ -1264,7 +1270,7 @@ function scr_draw_unit_image(_background=false){
 			}
 
             // Drawing Robes
-            if (global.chapter_name == "Dark Angels" && role() != obj_ini.role[100][Role.SERGEANT] && role() != obj_ini.role[100][Role.VETERAN_SERGEANT]){
+            if (global.chapter_name == "Dark Angels" or obj_ini.progenitor == 0) && (role() != obj_ini.role[100][Role.SERGEANT]) && (role() != obj_ini.role[100][Role.VETERAN_SERGEANT]){
                 robes_bypass = true;
                 robes_hood_bypass = true;
             }
