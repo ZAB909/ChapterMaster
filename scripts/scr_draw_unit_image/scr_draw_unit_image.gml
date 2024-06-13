@@ -579,7 +579,7 @@ function scr_draw_unit_image(_background=false){
             }
         
             // Draw the lights
-            if (ui_specialist=3) and (armour()!=""){
+            if (ui_specialist=3) and (armour()!="") and (back_type == BackType.None){
                 if (armour_type==ArmourType.Indomitus) then draw_sprite(spr_gear_apoth,0,x_surface_offset,y_surface_offset-22); // for terminators
                 else draw_sprite(spr_gear_apoth,0,x_surface_offset,y_surface_offset-6); // for normal power armour
             }
@@ -1046,9 +1046,13 @@ function scr_draw_unit_image(_background=false){
                 }            
                 // Apothecary Lens
                 if (ui_specialist=3){
-                    if (armour_type==ArmourType.Tartaros) then draw_sprite(spr_gear_apoth,1, x_surface_offset+2,y_surface_offset-3);// was y_draw-4 with old tartar
-                    if (armour_type==ArmourType.Indomitus) then draw_sprite(spr_gear_apoth,1,x_surface_offset,y_surface_offset-6);
-                    if (armour_type!=ArmourType.Indomitus) and (armour_type!=ArmourType.Tartaros) then draw_sprite(spr_gear_apoth,1,x_surface_offset,y_surface_offset);
+                    if (armour_type==ArmourType.Tartaros){
+                        draw_sprite(spr_gear_apoth,1, x_surface_offset+2,y_surface_offset-3);// was y_draw-4 with old tartar
+                    }else if (armour_type==ArmourType.Indomitus){
+                        draw_sprite(spr_gear_apoth,1,x_surface_offset,y_surface_offset-6);
+                    }else{
+                        draw_sprite(spr_gear_apoth,1,x_surface_offset,y_surface_offset);
+                    }
                     if (gear() == "Narthecium"){
                         if (armour_type==ArmourType.Normal) {
                             draw_sprite(spr_narthecium_2,0,x_surface_offset+66,y_surface_offset+5);
