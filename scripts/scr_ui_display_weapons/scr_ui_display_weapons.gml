@@ -111,6 +111,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Force Staff":spr_weapon_frcstaff,
 			"Force Sword":spr_weapon_powswo,
 			"Force Axe":spr_weapon_powaxe,
+			"Chainfist":spr_weapon_chainfist_small,
+			"Power Weapon":spr_weapon_powswo,
         }
         var melee_weapons_names=struct_get_names(melee_weapons);
         var wep_
@@ -129,15 +131,11 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             if ("Power Fist" == equiped_weapon) {
                 set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
                 sprite_found = !sprite_found;
-                display_type="power_fist"
-            }if ("Chainfist" == equiped_weapon) {
-                set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
-                sprite_found = !sprite_found;
-                display_type="power_fist"
-            }else if ("Lightning Claw" == equiped_weapon) {
+                display_type="power_fist";
+            }if ("Lightning Claw" == equiped_weapon) {
                 set_as_melee_onehand_special(spr_weapon_lightning1, left_or_right);
                 sprite_found = !sprite_found;
-                display_type="lightning_claw"
+                display_type="lightning_claw";
             }   
         }
     }

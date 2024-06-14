@@ -353,7 +353,6 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                     move_members = squad.members;
                     if (array_length(move_members)==1){
                         unit.squad = "none";
-                        array_delete(obj_ini.squads, squad, 1);
                         moveable = false;
                     }                  
                     for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company

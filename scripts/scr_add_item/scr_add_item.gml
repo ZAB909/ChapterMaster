@@ -85,7 +85,7 @@ function scr_add_item(item_name, number_of_items, quality="any") {
 		    				if(quality_item_found){
 		    					return quality;
 		    				} else{
-		    					equipment_number[match_slot]++;
+		    					obj_ini.equipment_number[match_slot]++;
 		    					return "no_item";
 		    				}
 		    			}

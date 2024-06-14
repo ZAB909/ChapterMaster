@@ -516,29 +516,29 @@ function scr_ui_manage() {
 	        for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(selected_unit.body[$ global.body_parts[part]], "bionic")){
 					var part_display = global.body_parts_display[part];
-					bionic_tooltip += $"Bionic {part_display}#";
+					bionic_tooltip += $"Bionic {part_display}";
 					switch (part_display) {
 						case "Left Leg":
 						case "Right Leg":
-							bionic_tooltip += $"CON: +2 STR: +1 DEX: -2#";
+							bionic_tooltip += $" (CON: +2 STR: +1 DEX: -2)#";
 							break;
 						case "Left Eye":
 						case "Right Eye":
-							bionic_tooltip += $"CON: +1 WIS: +1 DEX: +1#";
+							bionic_tooltip += $" (CON: +1 WIS: +1 DEX: +1)#";
 							break;
 						case "Left Arm":
 						case "Right Arm":
-							bionic_tooltip += $"CON: +2 STR: +2 WS: -1#";
+							bionic_tooltip += $" (CON: +2 STR: +2 WS: -1)#";
 							break;
 						case "Torso":
-							bionic_tooltip += $"CON: +4 STR: +1 DEX: -1#";
+							bionic_tooltip += $" (CON: +4 STR: +1 DEX: -1)#";
 							break;
 						case "Throat":
-							bionic_tooltip += $"CHA: -1#";
+							bionic_tooltip += $" (CHA: -1)#";
 							break;
 						case "Jaw":
 						case "Head":
-							bionic_tooltip += $"CON: +1#";
+							bionic_tooltip += $" (CON: +1)#";
 							break;
 					}
 				}				

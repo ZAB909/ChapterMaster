@@ -1,3 +1,13 @@
+function return_json_from_ini(ini_area,ini_code, default_val=[]){
+	var ini_fetch = ini_read_string(ini_area,ini_code,"");
+	if (ini_fetch!=""){
+		return json_parse(base64_decode(ini_fetch));
+	} else {
+		return default_val;
+	}
+}
+
+
 function scr_load(argument0, argument1) {
 	var int_strings = [];
 	for (var i=0;i<=20;i++){
@@ -11,15 +21,6 @@ function scr_load(argument0, argument1) {
 				obj_ini.TTRPG[company, marine].load_json_data(marStruct);
 			} else {obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");}		
 	};
-
-	function return_json_from_ini(ini_area,ini_code, default_val=[]){
-		var ini_fetch = ini_read_string(ini_area,ini_code,"");
-		if (ini_fetch!=""){
-			return json_parse(base64_decode(ini_fetch));
-		} else {
-			return default_val;
-		}
-	}
 	var rang,i,g,stars,pfleets,efleets,unit;
 	rang=0;i=0;g=0;stars=0;pfleets=0;efleets=0;
 

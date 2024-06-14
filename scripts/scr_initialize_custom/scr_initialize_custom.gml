@@ -1348,7 +1348,7 @@ function scr_initialize_custom() {
 	var weapon_lists = {
 		heavy_weapons: ["Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Heavy Bolter", "Missile Launcher", "Missile Launcher", "Multi-Melta", "Lascannon"],
 		special_weapons: ["Flamer", "Flamer", "Flamer", "Meltagun", "Meltagun", "Plasma Gun"],
-		melee_weapons: ["Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Power Sword", "Power Sword", "Power Sword", "Lightning Claw", "Lightning Claw", "Lightning Claw", "Power Fist", "Power Fist", "Thunder Hammer"],
+		melee_weapons: ["Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Power Sword", "Power Sword", "Power Sword", "Lightning Claw", "Lightning Claw", "Lightning Claw", "Power Fist", "Power Fist"],
 		ranged_weapons: ["Bolter", "Bolter", "Bolter", "Bolter", "Bolter", "Bolter", "Storm Bolter", "Storm Bolter", "Storm Bolter", "Combiflamer", "Combiflamer", "Plasma Pistol"],
 		pistols: ["Bolt Pistol", "Bolt Pistol", "Bolt Pistol", "Bolt Pistol", "Plasma Pistol"],
 		one_hand_melee: ["Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Chainsword", "Power Sword", "Power Sword", "Power Sword", "Lightning Claw", "Lightning Claw", "Lightning Claw", "Power Fist", "Power Fist", "Thunder Hammer"],
@@ -1730,7 +1730,7 @@ function scr_initialize_custom() {
 				"loadout": {
 					"required": {
 						"wep1": ["", 0],
-						"wep2": ["", 0]
+						"wep2": ["Chainsword", 1]
 					},
 					"option": {
 						"wep1": [
@@ -1788,7 +1788,7 @@ function scr_initialize_custom() {
 					"option": {
 						"wep1": [
 							[
-								["Bolt Pistol", "Bolt Pistol", "Plasma Pistol"], 1
+								weapon_lists.pistols, 1
 							],
 						],
 						"wep2": [
@@ -1833,12 +1833,12 @@ function scr_initialize_custom() {
 						"option": {
 							"wep1": [
 								[
-									["Power Sword", "Chainsword", "Power Axe"], 1
+									["Bolt Pistol", "Bolt Pistol", "Plasma Pistol", "Bolter", "Bolter", "Stalker Pattern Bolter"], 1
 								]
 							],
 							"wep2": [
 								[
-									["Plasma Pistol", "Combiflamer", "Stalker Pattern Bolter", "Storm Bolter"], 1
+									["Power Sword", "Chainsword", "Power Axe"], 1
 								]
 							]
 						}

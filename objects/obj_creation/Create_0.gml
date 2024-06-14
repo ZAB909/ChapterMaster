@@ -235,13 +235,13 @@ else if (file_exists("chaptersave#1.ini")=false){
 
 if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 	ini_open("chaptersave#1.ini")
-	chapter_id[21]= ini_read_string("Save","chapter_id","Custom");
-	chapter21 = ini_read_string("Save","chapter_name",chapter);
-	icon21= ini_read_real("Save","icon#",icon);
-	   icon_name21= ini_read_string("Save","icon_name","custom");
-	   strength21 = ini_read_real("Save","strength",strength);
+		chapter_id[21]= ini_read_string("Save","chapter_id","Custom");
+		chapter21 = ini_read_string("Save","chapter_name",chapter);
+		icon21= ini_read_real("Save","icon#",icon);
+	   	icon_name21= ini_read_string("Save","icon_name","custom");
+	   	strength21 = ini_read_real("Save","strength",strength);
 	    purity21 = ini_read_real("Save","purity",purity);
-	   stability21= ini_read_real("Save","stability",stability);
+	   	stability21= ini_read_real("Save","stability",stability);
 		cooperation21=ini_read_real("Save","cooperation",cooperation);
 		founding21 = ini_read_real("Save","founding",1);
 		
@@ -296,6 +296,7 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		disposition21[4]=ini_read_real("Creation","inquisition_disposition",disposition[4]);
 		disposition21[5]=ini_read_real("Creation","ecclesiarchy_disposition",disposition[5]);
 		disposition21[7]=ini_read_real("Creation","reserved_disposition",disposition[7]);
+		complex_livery21 = return_json_from_ini("Creation","complex_livery", complex_livery_default());
 		
 		
 		
@@ -308,8 +309,8 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		chapter_master_melee21 = ini_read_real("Creation","chapter_master_melee",chapter_master_melee);
 		chapter_master_ranged21= ini_read_string("Creation","master_ranged",chapter_master_ranged);
 		chapter_master_specialty21=ini_read_string("Creation","master_specialty",chapter_master_specialty);
-		adv21=[1,2,3,4]
-		dis21=[1,2,3,4]
+		adv21=[1,2,3,4];
+		dis21=[1,2,3,4];
 		for(var i =1;i<=4;i++){
 			
 			adv21[i]=ini_read_string("Creation","adv21"+string(i),"")
@@ -317,13 +318,13 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		}
 		
 		for(var i=0;i<=22;i++){
-    role_21[i]= ini_read_string("Save","role_21"+string(i),"Tactical");
-	wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Combat Knife");
-	wep2_21[i]=ini_read_string("Save","wep2_21"+string(i),"Bolter")
-	armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armour");
-	 gear_21[i]= ini_read_string("Save","gear_21"+string(i),"");
-	mobi_21[i]= ini_read_string("Save","mobi_21"+string(i),"");
-}
+		    role_21[i]= ini_read_string("Save","role_21"+string(i),"Tactical");
+			wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Combat Knife");
+			wep2_21[i]=ini_read_string("Save","wep2_21"+string(i),"Bolter")
+			armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armour");
+			 gear_21[i]= ini_read_string("Save","gear_21"+string(i),"");
+			mobi_21[i]= ini_read_string("Save","mobi_21"+string(i),"");
+		}
 stage = 6;
 ini_close();
 }
