@@ -77,8 +77,8 @@ function scr_company_order(company) {
 							break;
 						}
 					} catch( _exception) {
-						show_debug_message("{0}",_exception)
-						show_debug_message("{0},{1}",squad_member,squads[unit.squad].members)
+						show_debug_message("{0}",_exception);
+						unit.squad="none";
 					}
 				}
 				if (!found){unit.squad = "none"}

@@ -86,18 +86,17 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                 switch(i){
                     case 0:
                         ini_open("saves.ini");
-                        var skap=0;
-                        skap = ini_read_real("Data", "tutorial", 0);
+                        var skip_tutorial_option=0;
+                        skip_tutorial_option = ini_read_real("Data", "tutorial", 0);
                         ini_close();
                         cooldown=9999;
                         button=1;
                         
-                        if (skap=1){
+                        if (skip_tutorial_option){
                             obj_main_menu_buttons.fading=1;
                             obj_main_menu_buttons.crap=2;
                             obj_main_menu_buttons.cooldown=9999;
-                        }
-                        if (skap=0){
+                        }else {
                             var pop;
                             pop=instance_create(0,0,obj_popup);
                             pop.size=1;pop.title="Tutorial";
@@ -114,11 +113,11 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                         button=0;   
                         break;                                             
                     case 2:
-                        instance_create(0,0,obj_credits);
+                        /*instance_create(0,0,obj_credits);
                         obj_main_menu.menu=3;
                         fading=0;
                         fade=0;
-                        button=0;                        
+                        button=0;*/             
                         break;
                     case 3:
                         with(obj_cursor){instance_destroy();}
@@ -134,15 +133,16 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
     if (obj_main_menu.tim4>0) and (obj_main_menu.menu!=3) then with(obj_main_menu){
         draw_set_font(fnt_menu);draw_set_halign(fa_center);
         
-        var wfd,xx,yy,wad;wfd="";// xx=1138;yy=532;wad=430;
-        xx=room_width/2;yy=850;wad=800;
+        var wfd="";// xx=1138;yy=532;wad=430;
+        var xx=room_width/2,yy=850,wad=800;
         
         if (word_from_duke!="blank") and (word_from_duke!="") then wfd=word_from_duke;
         if (word_from_duke2!="blank") and (word_from_duke2!="") then wfd=word_from_duke2;
         
         if (wfd!="blank") and (wfd!="") and (obj_main_menu.tim4<400){
             draw_set_alpha((tim4-20)/50);
-            draw_set_color(c_yellow);
+            
+            set_color(c_yellow);
             draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
             draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
             

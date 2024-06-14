@@ -33,6 +33,19 @@ function unit_image(unit_surface) constructor{
             draw_surface_part(u_surface, left+200, top+90, width,height, xx,yy);
         }       
     }
+
+    static draw_part_ext = function(xx, yy,left,top,width,height,xscale, yscale,_background=false, alpha=1){
+        if (_background){
+            draw_rectangle_color_simple(xx-1+left,yy-1+top,xx+1+(width*xscale),yy+(height*yscale)+1,0,c_black);
+            draw_rectangle_color_simple(xx-1+left,yy-1+top,xx+(width*xscale)+1,yy+(height*yscale)+1,1,c_gray);
+            draw_rectangle_color_simple(xx-2+left,yy-2+top,xx+(width*xscale)+2,yy+2+(height*yscale),1,c_black);
+            draw_rectangle_color_simple(xx-3+left,yy-3+top,xx+(width*xscale)+3,yy+3+(height*yscale),1,c_gray);
+        }          
+        if (surface_exists(u_surface)){
+            draw_surface_part_ext(u_surface, left+200, top+90, width,height, xx,yy, xscale, yscale, c_white, alpha);
+        }  
+    }
+
 }
 
 //TODO this is a laxy fix and can be written better
@@ -148,7 +161,7 @@ function scr_draw_unit_image(_background=false){
     draw_clear_alpha(c_black, 0);//RESET surface
     draw_set_font(fnt_40k_14b);
     draw_set_color(c_gray);
-	var xx=__view_get( e__VW.XView, 0 )+0, yy=__view_get( e__VW.YView, 0 )+0, bb="", img=0;
+    var bb="", img=0;
     var blandify = obj_controller.blandify;
     var draw_sequence = [];
     if (name_role()!="") and (base_group=="astartes"){
@@ -180,7 +193,7 @@ function scr_draw_unit_image(_background=false){
         var arm_bypass = false;
         var armour_draw =[];        
         ui_coloring=""; 
-		var specialist_colours=obj_ini.col_special; 
+		specialist_colours=obj_ini.col_special; 
         var specific_armour_sprite = "none";
         var unit_is_sniper = false;
         if (role()=="Chapter Master"){ui_specialist=111;}
@@ -371,7 +384,7 @@ function scr_draw_unit_image(_background=false){
             }
 			
 			// Techmarine
-            else if (ui_specialist=5){
+            else if (ui_specialist=5) and (global.chapter_name!="Iron Hands"){
                 shader_array_set[ShaderType.Body] = Colors.Red;
                 shader_array_set[ShaderType.Helmet] = Colors.Red;
                 shader_array_set[ShaderType.Lens] = Colors.Lime;
@@ -505,7 +518,6 @@ function scr_draw_unit_image(_background=false){
 				armour_sprite=spr_scout_colors2;
                 if (squad!="none"){
                     if (obj_ini.squads[squad].type=="scout_sniper_squad" || weapon_one()=="Sniper Rifle" || weapon_two()=="Sniper Rifle"){
-                        armour_sprite=spr_scout_colors;
                         unit_is_sniper = true;
                     }
                 }
@@ -1225,7 +1237,7 @@ function scr_draw_unit_image(_background=false){
                     draw_sprite(spr_helm_decorations,1,x_surface_offset,y_surface_offset);
                 }
             }
-            if (armour_type==ArmourType.Indomitus && !armour_bypass){
+            else if (armour_type==ArmourType.Indomitus && !armour_bypass){
                 if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset-8);
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
@@ -1235,6 +1247,13 @@ function scr_draw_unit_image(_background=false){
                 }
                 if (role() == obj_ini.role[100][Role.SERGEANT] || role() == obj_ini.role[100][Role.VETERAN_SERGEANT]) {
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
+                }
+            } else if (armour()=="Scout Armour"){
+                var head_mod = body.head.variation%3;
+                if (head_mod == 1){
+                    draw_sprite(spr_scout_heads,0,x_surface_offset,y_surface_offset);
+                } else if (head_mod==2){
+                    draw_sprite(spr_scout_heads,1,x_surface_offset,y_surface_offset);
                 }
             }
 
@@ -1380,8 +1399,13 @@ function scr_draw_unit_image(_background=false){
             } else if (armour_type == ArmourType.Tartaros) {
                 shield_offset_x = -8;
             }
-            if (gear() == "Combat Shield") then draw_sprite (spr_gear_combat_shield, 1, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
-
+            if (gear() == "Combat Shield"){
+                if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]){
+                    draw_sprite (spr_gear_combat_shield, 1, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
+                } else {
+                    draw_sprite (spr_gear_combat_shield, 0, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
+                }
+            }
             // if (braz=1) then draw_sprite(spr_pack_brazier,1,x_surface_offset,y_surface_offset);
             if (armour_type==ArmourType.Dreadnought){
                 draw_sprite(spr_dreadnought_chasis_colors,specialist_colours,x_surface_offset,y_surface_offset);
@@ -1394,7 +1418,7 @@ function scr_draw_unit_image(_background=false){
             } 			          
         }else{
             draw_set_color(c_gray);
-            draw_text(0,0,string_hash_to_newline("Color swap shader#did not compile"));
+            draw_text(0,0,"Color swap shader#did not compile");
         }
         // if (race()!="1"){draw_set_color(38144);draw_rectangle(0,x_surface_offset,y_surface_offset+166,0+231,0);}        
     }

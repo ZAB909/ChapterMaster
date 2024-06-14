@@ -406,7 +406,7 @@ global.weapons={
         "tags":["power", "axe"],
     },    
     "Power Fist": {
-       "abbreviation": "PwrFst",       
+        "abbreviation": "PwrFst",       
         "attack": {
             "standard": 450,
             "master_crafted": 500,
@@ -418,13 +418,46 @@ global.weapons={
             "artifact": 1
         },
         "description": "A large, ceramite clad gauntlet surrounded by an power energy field. Though cumbersome to use, it dishes out tremendous damage to enemies, leaving very little behind.",
-        "melee_hands": 1.1,
+        "melee_hands": 1,
         "ranged_hands": 1,
         "ammo": 0,
         "range": 1,
         "spli": 2,
         "arp": 1,
         "tags":["power", "dual", "fist"],
+    },
+    "Power Fists": {
+        "abbreviation": "PwrFsts", 
+        "attack": {
+            "standard": 900,
+            "master_crafted": 1000,
+            "artifact": 1200
+        },
+        "description": "A large, ceramite clad gauntlets surrounded by power energy fields. Though cumbersome to use, they dish out tremendous damage to enemies, leaving very little behind.",
+        "melee_hands": 2,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 4,
+        "arp": 1,
+        "tags":["power","fist","pair"],
+    },
+    "Boltstorm Gauntlet": {
+        "abbreviation": "BlstGnt", 
+        "attack": {
+            "standard": 450,
+            "master_crafted": 500,
+            "artifact": 600
+        },
+        "description": "The Boltstorm Gauntlet is a Power Fists with an Integrated Bolter, so aside from being reinforced with a crackling power field and able to crush armour, bone and even thick vehicle plating, it is also capable of firing bolts at an astonishing rate",
+        "melee_hands": 2,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 2,
+        "arp": 1,
+        "second_profiles":["Integrated Bolter"],
+        "tags":["power","fist"],
     },
     "Lightning Claw": {
     "abbreviation": "LghtClw",             
@@ -955,77 +988,7 @@ global.weapons={
         "spli": 4,
         "arp": 0,
         "tags":["bolt"]
-    },
-    "Integrated Bolters": {
-        "abbreviation": "IntgBltrs", 
-        "attack": {
-            "standard": 100,
-            "master_crafted": 110,
-            "artifact": 120
-        },
-        "description": "A pair of Bolters that can be built directly into the structure of the vehicle, armor, another weapon or Dreadnought. When used as a weapon, it leaves both hands free, allowing to use any, even a twohanded weapon, efficiently.",
-        "melee_hands": 0,
-        "ranged_hands": 0,
-        "ammo": 40,
-        "range": 12,
-        "spli": 8,
-        "arp": 0,
-        "tags":["bolt"]
-    },
-    "Power Fist with Intergrated Bolters": {
-       "abbreviation": "PwrFstBltr",       
-        "attack": {
-            "standard": 450,
-            "master_crafted": 500,
-            "artifact": 600
-        },
-        "melee_mod": {
-            "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
-        },
-        "description": "This is a Power Fist weapon with bolters integrated into them to give the user ranged capabilities.",
-        "melee_hands": 1.1,
-        "ranged_hands": 1,
-        "ammo": 0,
-        "range": 1,
-        "spli": 3,
-        "arp": 1,
-        "second_profiles":["Integrated Bolters"],
-        "tags":["power", "fist", "bolt"],
-    },    
-    "Power Fists": {
-        "abbreviation": "PwrFists", 
-        "attack": {
-            "standard": 425,
-            "master_crafted": 467.5,
-            "artifact": 510
-        },
-        "description": "While not quite as strong as two Power Fists, these artifacts allow the use of an additional, third weapon.",
-        "melee_hands": 3,
-        "ranged_hands": 0,
-        "ammo": 0,
-        "range": 1,
-        "spli": 2,
-        "arp": 1
-    },
-    "Gauntlets of Ultramar": {
-        "abbreviation": "GntltUltrm", 
-        "attack": {
-            "standard": 900,
-            "master_crafted": 1000,
-            "artifact": 1200
-        },
-        "description": "Two mighty Power Fists with incorporated Bolters that were reclaimed from a fallen Chaos champion, slain during the Gamalia Reclusiam Massacre by the Primarch of the Ultramarines, Roboute Guilliman himself.",
-        "melee_hands": 2.25,
-        "ranged_hands": 2.25,
-        "ammo": 0,
-        "range": 1,
-        "spli": 6,
-        "arp": 1,
-        "second_profiles":["Integrated Bolters"],
-        "tags":["artifact","power","fist","pair"],
-    },
+    }, 
     "Twin Linked Heavy Bolter": {
         "abbreviation": "TwnHvyBltr", 
         "attack": {
@@ -1879,7 +1842,7 @@ global.gear = {
       "armour_value": {
         "standard": 15,
         "master_crafted": 17,
-        "artifact": 19
+        "artifact": 21
       },
       "ranged_mod": {
         "standard": -5,
@@ -1888,8 +1851,8 @@ global.gear = {
       },
       "melee_mod": {
         "standard": 20,
-        "master_crafted": 0,
-        "artifact": 0
+        "master_crafted": 25,
+        "artifact": 30
       },
       "description": "A hastily assembled Power Armor that first started appearing during the Horus Heresy to act as a stopgap while new suits were produced and sent to loyalist legions. It excels in close combat but it has limited sensors for ranged combat.",
       "tags":["power_armour"],

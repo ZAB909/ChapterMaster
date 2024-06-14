@@ -14,10 +14,8 @@ function new_ork_fleet(xx,yy){
 }
 
 function build_new_ork_ships_to_fleet(star, planet){
-    show_debug_message("{0}",star.name)
 
     // Increase ship number for this object?
-    show_debug_message("{0},{1},{2}",capital_number,escort_number,escort_number)
     var rando=irandom(101);
     if (obj_controller.known[eFACTION.Ork]>0) then rando-=10;
     if (star.p_type[planet]=="Forge"){
@@ -28,7 +26,6 @@ function build_new_ork_ships_to_fleet(star, planet){
         rando-=5;
     }
     if (rando<=15){// was 25
-        show_debug_message("true")
         rando=choose(1,1,1,1,1,1,1,3,3,3,3);
         if (capital_number<=0) then rando = 3;
         if (rando=1) then capital_number+=1;

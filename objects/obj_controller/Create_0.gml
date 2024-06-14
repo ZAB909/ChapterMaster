@@ -93,6 +93,7 @@ current_eventing="";
 chaos_rating=0;
 chapter_made = 0;
 obj_cuicons.alarm[1]=1; // Clean up custom icons
+dungeon=false;
 
 diplomacy_pathway = "";
 option_selections=[];
@@ -1746,3 +1747,4 @@ if (vih>=5){
 remov=string_length(string(temp[65])+string(temp[66])+string(temp[67])+string(temp[68])+string(temp[69]))+1;
 
 action_set_alarm(2, 0);
+

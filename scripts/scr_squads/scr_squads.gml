@@ -321,6 +321,55 @@ function unit_squad(squad_type = undefined, company = undefined) constructor{
 		var unit;
 		var highest_exp = 0;
 		var member_length = array_length(members);
+		var captian = false;
+		var favour_stat = "";
+		for (i=0;i<10;i++){
+			unit = fetch_unit([base_company, i]);
+			if (unit.role()==obj_ini.role[100][Role.CAPTAIN]){
+				captain = unit;
+				break;
+			}
+		}
+		/*
+		var stat_favours = {
+			"constitution":0, 
+			"strength":0, 
+			"luck":0,
+			 "dexterity":0,
+			 "wisdom":0,
+			 "piety":0,
+			 "charisma":0,
+			 "technology":0,
+			 "intelligence":0,
+			 "weapon_skill":0, 
+			 "ballistic_skill":0		
+		}
+		if (is_struct(captain)){
+			with (captain){
+				for (var i=0;i<array_length(traits);i++){
+					if (struct_exists(global.trait_list, traits[i])){
+						cur_trait = global.trait_list[$ traits[i]];
+						for (var s=0;s<array_length(global.stat_list)s++){
+							var stat = global.stat_list[s];
+							if (struct_exists(cur_trait, stat)){
+								var trait_stat = cur_trait[$ stat];
+								var trait_stat_val = 0;
+								if (is_array(trait_stat)){
+									trait_stat_val = trait_stat[0];
+								} else {
+									trait_stat_val = trait_stat;
+								}
+								stat_favours[$ stat] += trait_stat_val;
+							}
+						}
+					}
+				}
+				for (var s=0;s<array_length(global.stat_list)s++){
+
+				}
+			}
+		}
+		*/
 		for (i = 0; i < member_length;i++){
 			unit = fetch_unit(members[i]);
 			if (unit.name() == ""){

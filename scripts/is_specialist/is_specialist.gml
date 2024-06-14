@@ -87,6 +87,13 @@ function role_groups(group){
 				roles[Role.VETERAN],
 				 obj_ini.role[100][11],			
 			];
+		case "battle_line":
+			role_list = [
+				obj_ini.role[100][Role.TACTICAL],
+				obj_ini.role[100][Role.DEVASTATOR],
+				obj_ini.role[100][Role.ASSAULT],
+				obj_ini.role[100][Role.SERGEANT],		
+			];			
 			break;
 	}
 	return role_list;
@@ -178,7 +185,10 @@ function is_specialist(unit_role, type="standard", include_trainee=false) {
 			break;
 		case "captain_candidates":
 			specialists = role_groups("captain_candidates");
-			break;			
+			break;
+		case "battle_line":
+			specialists = role_groups("battle_line");
+			break;						
 	}
 
 	return array_contains(specialists,unit_role);
@@ -198,8 +208,12 @@ function collect_role_group(group="standard", location="", opposite=false, searc
 	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
 			unit=fetch_unit([com,i]);
-			if (unit.name()=="") then continue; 	
-			is_special_group = unit.IsSpecialist(group);
+			if (unit.name()=="") then continue;
+			if (is_array(group)){
+				is_special_group = unit.IsSpecialist(group[0], group[1]);
+			} else {
+				is_special_group = unit.IsSpecialist(group);
+			}
 	        if ((is_special_group && !opposite) || (!is_special_group && opposite)){
 	        	if (location==""){
 	        		add=true;
@@ -218,23 +232,6 @@ function collect_role_group(group="standard", location="", opposite=false, searc
 	return units;
 }
 
-function stat_valuator(search_params, unit){
-	match = true;
-	for (var stat = 0;stat<array_length(search_params);stat++){
-		if (search_params[stat][2] =="more"){
-			if (unit[$ search_params[stat][0]] < search_params[stat][1]){
-				match = false;
-				break;
-			}
-		} else if(search_params[stat][2] =="less"){
-				if (unit[$ search_params[stat][0]] > search_params[stat][1]){
-				match = false;
-				break;
-			}           					
-		}
-	}
-	return match;	
-}
 
 function collect_by_religeon(religion, sub_cult="", location=""){
 	var units = [], unit, count=0, add=false;
