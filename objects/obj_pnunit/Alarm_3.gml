@@ -16,8 +16,7 @@ if (obj_ncombat.started=0){
 
 if (obj_ncombat.red_thirst>=2) and (obj_ncombat.battle_over=0){
     if (men>0){
-        var raar,r_roll,miss,r_lost;
-        raar=0;miss="";r_lost=0;
+        var raar=0,miss="",r_lost=0;
         
         repeat(men+dreads){
             raar+=1;r_roll=floor(random(1000))+1;
