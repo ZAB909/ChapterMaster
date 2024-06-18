@@ -1,5 +1,66 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+
+function add_second_profiles_to_stack (weapon,head_role=false, unit="none"){
+    if (array_length(weapon.second_profiles)>0){//for adding in intergrated weaponry
+        var secondary_profile;
+        for (var p=0;p<array_length(weapon.second_profiles);p++){
+
+            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all");
+            if (!is_struct(secondary_profile)) then continue;
+            var wep_index =  find_stack_index(secondary_profile.name, head_role,unit);
+            if (wep_index>-1){
+            	add_data_to_stack(wep_index,secondary_profile);
+            }   
+        }
+    }    
+}
+
+
+function add_data_to_stack (stack_index, weapon, unit_damage=false, head_role=false, unit="none"){
+    if (unit_damage){
+        att[stack_index]+=unit_damage;
+    } else {
+        att[stack_index]+=weapon.attack;
+    }
+    apa[stack_index]=weapon.arp;
+    range[stack_index]=weapon.range;
+    wep_num[stack_index]++;
+    splash[stack_index]=weapon.spli;
+    wep[stack_index]=weapon.name;
+    if (obj_ncombat.started=0) then ammo[stack_index]=weapon.ammo;
+
+    if (unit!="none"){//this stops a potential infinite loop of secondary profiles
+    	add_second_profiles_to_stack(weapon, head_role, unit);
+    }
+}
+
+function find_stack_index (weapon_name, unit="none", head_role=false){
+    final_index = -1;
+    var allow = false;
+    for (var stack_index=1;stack_index<array_length(wep);stack_index++){
+        allow = false
+        if (is_struct(unit)){
+        	allow = (head_role && ( wep_title[stack_index] == unit.role())) && (wep[stack_index]==weapon_name);
+    	}
+        if (!allow){
+            allow = ((wep[stack_index]=="" || (wep[stack_index]==weapon_name && !head_role)) && wep_title[stack_index]=="");
+        }
+
+        if (allow){
+            final_index = stack_index;
+            break;
+        }
+    }
+    return final_index;
+}
+
+function player_head_role_stack(stack_index, unit){
+    wep_title[stack_index]=unit.role();
+    if (!array_contains(wep_solo[stack_index], unit.name())) then array_push(wep_solo[stack_index], unit.name());	
+}
+
+
 function scr_player_combat_weapon_stacks(){
 	if (defenses=1){
 	    var i=0;
@@ -35,7 +96,7 @@ function scr_player_combat_weapon_stacks(){
 
 
 	var i,g=0;men=0;veh=0;dreads=0;
-	for (i=1;i<=20;i++){
+	for (i=1;i<array_length(att);i++){
 	    // dudes[i]="";
 	    dudes_num[i]=0;
 	    // dudes_vehicle[i]=0;
@@ -54,58 +115,6 @@ function scr_player_combat_weapon_stacks(){
 
 	var dreaded=false, unit;
 
-	add_second_profiles_to_stack = function(weapon){
-	    if (array_length(weapon.second_profiles)>0){//for adding in intergrated weaponry
-	        var secondary_profile;
-	        for (var p=0;p<array_length(weapon.second_profiles);p++){
-
-	            secondary_profile = gear_weapon_data("weapon",weapon.second_profiles[p],"all");
-	            if (!is_struct(secondary_profile))then continue;
-	            for (var wep_stack=1;wep_stack<array_length(wep);wep_stack++){
-	                if (wep[wep_stack]==""||wep[wep_stack]==weapon.name){
-	                    add_data_to_stack(wep_stack,secondary_profile)
-	                }
-	            }    
-	        }
-	    }    
-	}
-
-
-	add_data_to_stack = function(stack_index, weapon, unit_damage=false){
-	    if (!unit_damage==false){
-	        att[stack_index]+=unit_damage;
-	    } else {
-	        att[stack_index]+=weapon.attack;
-	    }
-	    apa[stack_index]=weapon.arp;
-	    range[stack_index]=weapon.range;
-	    wep_num[stack_index]++;
-	    splash[stack_index]=weapon.spli;
-	    wep[stack_index]=weapon.name;
-	    if (obj_ncombat.started=0) then ammo[stack_index]=weapon.ammo;
-
-
-	    add_second_profiles_to_stack(weapon)
-	}
-
-	find_stack_index = function(weapon_name, unit, head_role){
-	    final_index = -1;
-	    var allow = false;
-	    for (var stack_index=1;stack_index<array_length(wep);stack_index++){
-	        allow = false
-	        allow = head_role && wep_solo[weapon_stack_index]== unit.role()&& wep[stack_index]==weapon_name;
-	        if (!allow){
-	            allow = ((wep[stack_index]=="" || (wep[stack_index]==weapon_name && !head_role)) && wep_solo[stack_index]=="");
-	        }
-
-	        if (allow){
-	            final_index = stack_index;
-	            break;
-	        }
-	    }
-	    return final_index;
-	}
-
 	var mobi_item;
 	for (g=1;g<array_length(unit_struct);g++){
 	    unit = unit_struct[g];
@@ -115,7 +124,8 @@ function scr_player_combat_weapon_stacks(){
 
 	        if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) then marine_dead[g]=0;
 	        if ((marine_id[g]>0) or (ally[g]=true)) and (unit.hp()>0) and (marine_dead[g]!=1){
-	            var head_role=unit.IsSpecialist("heads");
+	            var head_role = unit.IsSpecialist();
+	
 	            if (unit.hp()>0) then men+=1;
 
 	            if (unit.armour()=="Dreadnought"){
@@ -132,12 +142,11 @@ function scr_player_combat_weapon_stacks(){
 	                    if( mobi_item.has_tag("jump")){
 	                        var stack_index = find_stack_index("hammer_of_wrath" , unit, head_role);
 	                        if (stack_index>-1){
-	                            add_data_to_stack(stack_index,unit.hammer_of_wrath());
+	                            add_data_to_stack(stack_index,unit.hammer_of_wrath(),false, head_role,unit);
 	                            ammo[stack_index] = -1;
-	                            if (head_role){
-	                                wep_title[stack_index]=unit.role();
-	                                wep_solo[stack_index]=unit.name();
-	                            }                        
+			                    if (head_role){
+			                    	player_head_role_stack(stack_index,unit);
+			                    }                       
 	                        }                
 	                    }
 	                }
@@ -188,10 +197,9 @@ function scr_player_combat_weapon_stacks(){
 	                var primary_ranged = unit.ranged_damage_data[3];//collect unit ranged data
 	                var weapon_stack_index = find_stack_index(primary_ranged.name , unit, head_role);
 	                if (weapon_stack_index>-1){
-	                    add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0]);
+	                    add_data_to_stack(weapon_stack_index,primary_ranged,unit.ranged_damage_data[0], head_role,unit);
 	                    if (head_role){
-	                        wep_title[weapon_stack_index]=unit.role();
-	                        wep_solo[weapon_stack_index]=unit.name();
+	                        player_head_role_stack(weapon_stack_index,unit);
 	                    }
 	                }
 
@@ -201,11 +209,10 @@ function scr_player_combat_weapon_stacks(){
 	                if (weapon_stack_index>-1){
 	                    if (range[weapon_stack_index]>1.9) then continue//creates secondary weapon stack for close combat ranged weaponry use
 	                    primary_melee.range=1;
-	                    add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0]);
+	                    add_data_to_stack(weapon_stack_index,primary_melee,unit.melee_damage_data[0], head_role,unit);
 	                    if (head_role){
-	                        wep_title[weapon_stack_index]=unit.role();
-	                        wep_solo[weapon_stack_index]=unit.name();
-	                    }
+	                        player_head_role_stack(weapon_stack_index,unit);
+	                     }
 	                    if (floor(primary_melee.range)<=1 && primary_melee.ammo == 0){
 	                        ammo[weapon_stack_index]=-1; //no ammo limit
 	                    }                    

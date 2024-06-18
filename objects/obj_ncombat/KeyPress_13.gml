@@ -70,7 +70,7 @@ if (started>0){// This might be causing problems?
 }
 
 function reset_combat_message_arrays(){
-    repeat(for var i=0;i<array_length(message);i++){
+    for (var i=0;i<array_length(message);i++){
         message[i]="";
         message_sz[i]=0;
         message_priority[i]=0;
@@ -96,7 +96,7 @@ if (timer_stage=1) or (timer_stage=5){
         // alarm[9]=5;
     }
 
-    if (enemy=6){
+    else if (enemy==6){
         if (instance_exists(obj_enunit)){
             obj_enunit.alarm[1]=2;
             obj_enunit.alarm[0]=3;

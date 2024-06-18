@@ -1727,7 +1727,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//grab generic structs for weapons
 			var _wep1 = get_weapon_one_data();
 			var _wep2 = get_weapon_two_data();
-			//default to fists
+
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
 			if (allegiance==global.chapter_name){
@@ -1909,6 +1909,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					primary_weapon=new equipment_struct({},"");//create blank weapon struct
 					primary_weapon.attack=strength/3;//calculate damage from player fists
 					primary_weapon.name="fists";
+					primary_weapon.range = 1;
+					primary_weapon.ammo = -1;					
 				} else {
 					if (!valid1 && valid2){
 						primary_weapon=_wep2;

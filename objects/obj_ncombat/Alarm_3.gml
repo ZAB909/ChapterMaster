@@ -105,7 +105,9 @@ if ((messages>0) and (messages_shown<8)) and (messages_shown<=100){
         if (message_priority[that]=135) then newline_color="blue";
         if (message_priority[that]=136) then newline_color="blue";
         
-        scr_newtext();messages_shown+=1;largest+=1;
+        scr_newtext();
+        messages_shown+=1;
+        largest+=1;
         message[that]="";message_sz[that]=0;message_priority[that]=0;messages-=1;
     }
     

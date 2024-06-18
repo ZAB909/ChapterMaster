@@ -1,5 +1,8 @@
 
-if (instance_number(obj_cuicons)=0){global.custom_icons=4;instance_create(0,0,obj_cuicons);}
+if (!instance_exists(obj_cuicons)){
+    global.custom_icons=4;
+    instance_create(0,0,obj_cuicons);
+}
 
 global.version="0.9.1.0";
 global.game_seed=0;
