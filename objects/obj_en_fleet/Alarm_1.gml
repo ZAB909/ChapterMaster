@@ -1347,7 +1347,7 @@ if (action="move") and (action_eta<5000){
         
     }*/
     
-    if (action_eta==2) and (owner=eFACTION.Inquisition) {
+    if (action_eta==2) and (owner=eFACTION.Inquisition) && (inquisitor>-1){
     	inquisitor_ship_approaches();
     }else if (action_eta==0) {
         var steh, sta, steh_dist, old_x, old_y;
