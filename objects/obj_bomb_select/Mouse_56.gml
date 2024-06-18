@@ -165,37 +165,6 @@ if (__b__){
         }
     }
 
-    if (obj_controller.cooldown<=0){
-        if point_in_rectangle(mouse_x, mouse_y, cancel_button[0], cancel_button[1], cancel_button[2], cancel_button[3]) || !point_in_rectangle(mouse_x, mouse_y, bomb_window.x1, bomb_window.y1, bomb_window.x2, bomb_window.y2){
-            obj_controller.cooldown=8;
-            with(obj_bomb_select){instance_destroy();}
-            instance_destroy();
-        }
-        if point_in_rectangle(mouse_x, mouse_y, sel_all_button[0], sel_all_button[1], sel_all_button[2], sel_all_button[3]){
-            onceh=0;
-            if (all_sel=0) and (onceh=0){
-                for(var i=1; i<=30; i++){
-                    if (obj_ini.ship[i]!="") and (ship_all[i]==0){
-                        ship_all[i]=1;
-                        ships_selected+=1;
-                    }
-                }
-                onceh=1;
-                all_sel=1;
-            }
-            if (all_sel=1) and (onceh=0){
-                for(var i=1; i<=30; i++){
-                    if (obj_ini.ship[i]!="") and (ship_all[i]==1){
-                        ship_all[i]=0;
-                        ships_selected-=1;
-                    }
-                }
-                onceh=1;
-                all_sel=0;
-            }
-        }
-    }
-    
     // TODO Need to change max_ships to something more meaningful to make sure that SOMETHING is dropping
     if (obj_controller.cooldown<=0){
         if (ships_selected>0) and point_in_rectangle(mouse_x, mouse_y, bombard_button[0], bombard_button[1], bombard_button[2], bombard_button[3]){

@@ -44,8 +44,16 @@ if (max_ships>0)and (instance_exists(obj_star_select)){
     }else if (all_sel==1){
         sel_all_label = "x";
     }
-    sel_all_button = draw_unit_buttons([bomb_window.x2-55, bomb_window.y1+80, bomb_window.x2-40, bomb_window.y1+95],sel_all_label,[1,1],38144,fa_center,fnt_40k_14b)
-
+    var sel_all_button = draw_unit_buttons([bomb_window.x2-55, bomb_window.y1+80, bomb_window.x2-40, bomb_window.y1+95],sel_all_label,[1,1],38144,fa_center,fnt_40k_14b);
+    if (point_and_click(sel_all_button)){
+        for(var i=1; i<=30; i++){
+            if (obj_ini.ship[i]!="") and (ship_all[i]==all_sel){
+                ship_all[i]=!all_sel;
+                ships_selected=all_sel?ships_selected-1:ships_selected+1;
+            }
+        }
+        all_sel=!all_sel;
+    }
     // Draw the current selection
     draw_set_halign(fa_left);
     draw_set_font(fnt_info);
@@ -180,24 +188,29 @@ if (max_ships>0)and (instance_exists(obj_star_select)){
     if (sel!=""){
         bombard_button = draw_unit_buttons([bomb_window.x2-110, bomb_window.y2-40],"Bombard!",[1,1],38144,fa_center,fnt_40k_14b)
     }
-    cancel_button = draw_unit_buttons([bomb_window.x2-180, bomb_window.y2-40],"Cancel",[1,1],38144,fa_center,fnt_40k_14b)
+    var cancel_button = draw_unit_buttons([bomb_window.x2-180, bomb_window.y2-40],"Cancel",[1,1],38144,fa_center,fnt_40k_14b);var
+    if point_and_click(cancel_button) || !point_and_click([bomb_window.x1, bomb_window.y1, bomb_window.x2, bomb_window.y2]){
+        obj_controller.cooldown=8;
+        with(obj_bomb_select){instance_destroy();}
+        instance_destroy();
+    }
 }
 
 var ship_index=0,why=0,num="";
 var buttonSpacingX = 106; // adjust as needed
 var buttonSpacingY = 21; // adjust as needed
 var alpha = 1;
-
+var ship_button_pos;
 // Iterate over the 6 rows
 for (var row = 0; row < 6; row++) {
     // Iterate over the 4 columns in each row
     for (var col = 0; col < 4; col++) {
         // Check if the ship at the current index is not empty
-        while ship_index < array_length_1d(ship) - 1 && ship[ship_index] == "" {
+        while (ship_index < array_length(ship) - 1 && ship[ship_index] == "") {
             ship_index++;
         }
         // Check if ship_index is still within range
-        if (ship_index < array_length_1d(ship)) && ship[ship_index] != "" {
+        if (ship_index < array_length(ship)) && ship[ship_index] != "" {
             // If the ship at the current index is 0, set the drawing alpha to 0.35
             if (ship_all[ship_index] == 0) {
                 var alpha = (0.5);
@@ -208,7 +221,12 @@ for (var row = 0; row < 6; row++) {
             var buttonX = bomb_window.x1 + 20 + col * buttonSpacingX;
             var buttonY = bomb_window.y1 + 110 + row * buttonSpacingY;
             // Draw the unit buttons
-            array_push(ship_buttons, draw_unit_buttons([buttonX, buttonY, buttonX+105, buttonY+20], string_truncate(num, 200), [1,1], 38144, fa_center, fnt_40k_10,alpha));
+            ship_button_pos = draw_unit_buttons([buttonX, buttonY, buttonX+105, buttonY+20], string_truncate(num, 200), [1,1], 38144, fa_center, fnt_40k_10,alpha)
+            if point_and_click(ship_button_pos){
+                ship_all[i + j] = 1 - ship_all[i + j];
+                ships_selected += (ship_all[i + j] == 1) ? 1 : -1;
+            }
+            shipIndex++; // Increment the ship index after each iteration            
         }
         // Move to the next ship
         ship_index++;
