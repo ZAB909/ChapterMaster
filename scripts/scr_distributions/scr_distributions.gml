@@ -12,6 +12,19 @@ function gauss(base, sd){
     return base + sd * x1 * w;
 }
 
+function gauss_negative(base, sd){
+    var x1, x2, w;
+    do {
+        x1 = random_range(-1, 0);
+        x2 = random_range(-1, 0);
+        w = sqr(x1)+sqr(x2);
+    } until (0 < w and w < 1);
+
+    w = sqrt(-2 * ln(w) / w);
+    return base + (sd * x1 * w);
+}
+
+
 function gauss_positive(base, sd){
     var x1, x2, w;
     do {
@@ -23,6 +36,16 @@ function gauss_positive(base, sd){
     w = sqrt(-2 * ln(w) / w);
     return base + (sd * x1 * w);
 }
+
+function skewed_guass(minimum, maximum, average){
+    var skew =choose(0,1);
+    if (skew){
+        return gauss_positive(average, maximum/3.3);
+    } else {
+        return gauss_negative(average, minimum/3.3);
+    }
+}
+
 
 function pareto(base, exponent=1){
     return base * (1 - power(random(1), 1 / (1 + exponent)));
