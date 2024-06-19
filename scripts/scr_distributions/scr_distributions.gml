@@ -38,7 +38,7 @@ function gauss_positive(base, sd){
 }
 
 function skewed_guass(minimum, maximum, average){
-    var skew =choose(0,1);
+    var skew = choose(0,1);
     if (skew){
         return gauss_positive(average, maximum/3.3);
     } else {

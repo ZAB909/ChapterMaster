@@ -2449,8 +2449,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		var armour_weighted_lists = {
 			normal_armour: [["MK7 Aquila", 95], ["MK6 Corvus", 5]],
 			rare_armour: [["MK7 Aquila", 100], ["MK6 Corvus", 30], ["MK8 Errant", 2], ["MK5 Heresy", 2], ["MK4 Maximus", 1], ["MK3 Iron Armour", 1]],
-			quality_armour: [["MK7 Aquila", 50], ["MK6 Corvus", 25], ["MK4 Maximus", 25]],
-			old_armour: [["MK6 Corvus", 30], ["MK8 Errant", 2], ["MK5 Heresy", 2], ["MK4 Maximus", 1], ["MK3 Iron Armour", 1]],
+			quality_armour: [["MK7 Aquila", 30], ["MK6 Corvus", 5], ["MK8 Errant", 5], ["MK4 Maximus", 5]],
+			old_armour: [["MK6 Corvus", 4], ["MK8 Errant", 2], ["MK5 Heresy", 2], ["MK4 Maximus", 1], ["MK3 Iron Armour", 1]],
 		}
 
 		switch(role()){
@@ -2474,7 +2474,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// Command Squads and HQ
 			case obj_ini.role[100][Role.CHAPLAIN]:
 			case obj_ini.role[100][Role.APOTHECARY]:
-			case obj_ini.role[100][Role.TECHMARINE]:
 			case obj_ini.role[100][Role.LIBRARIAN]:
 			// Company marines
 			// case obj_ini.role[100][Role.SCOUT]:
@@ -2492,6 +2491,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					update_armour(choose_weighted(armour_weighted_lists.normal_armour),false,false);
 				}
 				break;
+			case obj_ini.role[100][Role.TECHMARINE]:
+				if (_total_score > 280){
+					update_armour("Artificer Armour",false,false);
+				} else if (_total_score > 180){
+					update_armour(choose_weighted(armour_weighted_lists.quality_armour),false,false);
+				} else if (_total_score > 100){
+					update_armour(choose_weighted(armour_weighted_lists.rare_armour),false,false);
+				} else {
+					update_armour(choose_weighted(armour_weighted_lists.normal_armour),false,false);
+				}
+				break;
 		}
 	}
 
@@ -2500,12 +2510,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 		var _minimum_age = 0;
 		var _maximum_age = 0;
 		var _apply_gauss = false;
-		var _gauss_sd_mod = 6;
+		var _gauss_sd_mod = 2; // The smaller this mod, the bigger is the spread;
 
 		switch(company){
 			case 1:
 				_minimum_age += 75;
-				_maximum_age = 300;
+				_maximum_age += 105;
 				_apply_gauss = true;
 				break;
 			case 2:
@@ -2564,18 +2574,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 			// 1st company only
 			case obj_ini.role[100][Role.VETERAN]:
-				_minimum_age += 35;
+				_minimum_age = 100;
+				_maximum_age = 150;
 				break;
 			case obj_ini.role[100][Role.TERMINATOR]:
-				_minimum_age += 40;
+				_minimum_age = 110;
+				_maximum_age = 160;
 				break;
 			case obj_ini.role[100][Role.VETERAN_SERGEANT]:
-				_minimum_age += 40;
+				_minimum_age = 115;
+				_maximum_age = 165;
 				break;
 			// Command Squads
 			case obj_ini.role[100][Role.CAPTAIN]:
-				_minimum_age += 55;
-				_maximum_age += 65;
+				_minimum_age += 60;
+				_maximum_age += 70;
 				break;
 			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
 				_minimum_age += 50;
@@ -2591,7 +2604,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case obj_ini.role[100][Role.TECHMARINE]:
 			case obj_ini.role[100][Role.LIBRARIAN]:
 				_minimum_age += 70;
-				_maximum_age = 0;
+				_maximum_age += 150;
 				_apply_gauss = true;
 				break;
 			// Company marines
@@ -2638,7 +2651,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 
 	static roll_experience = function() {
 		var _exp = 0;
-		var _company_bonus = 0;
+		// var _company_bonus = 0;
 		var _age_bonus = age();
 		var _gauss_sd_mod = 14;
 
@@ -2702,7 +2715,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			// 	break;
 		// }
 
-		_exp = _age_bonus + _company_bonus;
+		_exp = _age_bonus;
 		_exp = max(0, floor(gauss(_exp, _exp / _gauss_sd_mod)));
 		add_exp(_exp);
 	}
