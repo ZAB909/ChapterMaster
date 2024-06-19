@@ -223,7 +223,7 @@ for (var row = 0; row < 6; row++) {
             var buttonX = bomb_window.x1 + 20 + col * buttonSpacingX;
             var buttonY = bomb_window.y1 + 110 + row * buttonSpacingY;
             // Draw the unit buttons
-            ship_button_pos = draw_unit_buttons([buttonX, buttonY, buttonX+105, buttonY+20], string_truncate(num, 200), [1,1], 38144, fa_center, fnt_40k_10,alpha)
+            ship_button_pos = draw_unit_buttons([buttonX, buttonY, buttonX+105, buttonY+20], string_truncate(num, 200), [1,1], ship_all[ship_index]?38144:c_red, fa_center, fnt_40k_10,alpha)
             if point_and_click(ship_button_pos){
                 ship_all[ship_index] = !ship_all[ship_index];
                 ships_selected = ship_all[ship_index] ?ships_selected+1: ships_selected-1;
