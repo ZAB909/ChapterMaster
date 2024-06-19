@@ -291,7 +291,8 @@ i=0;
                     var last,o;last=0;o=0;
                     repeat(50){
                         if (last=0){
-                            o+=1;artif=false;
+                            o+=1;
+                            artif=false;
                             if (obj_ncombat.post_equipment_lost[o]=marine_mobi[i]){
                                 last=1;
                                 obj_ncombat.post_equipments_lost[o]+=1;

@@ -2431,7 +2431,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
     static has_tags_all = function(search_tags, require_all=false){
         var satisfied=false;
         var wanted_tags_length=array_length(search_tags);
-        for (var i=0;i<array_Length(tags);i++){
+        for (var i=0;i<array_length(tags);i++){
             for (var s=0;s<wanted_tags_length;s++){
                 if (search_tags[s]==tags[i]){
                     array_delete(search_tags,s,1);

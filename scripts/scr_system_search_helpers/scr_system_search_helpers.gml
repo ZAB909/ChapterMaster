@@ -151,9 +151,11 @@ function nearest_star_with_ownership(xx,yy, ownership){
 function adjust_influence(faction, value, planet){
 	p_influence[planet][faction]+=value;
 	var total_influence =  array_reduce(p_influence[planet], array_sum,1);
+	var loop=0;
 	if (total_influence>100){
 		var difference = total_influence-100;
-		while (difference>0){
+		while (difference>0 && loop<100){
+			loop++;
 			for (i=0;i<15;i++){
 				if (p_influence[planet][i]>0){
 					p_influence[planet][i]--;
@@ -162,9 +164,10 @@ function adjust_influence(faction, value, planet){
 			}
 		}
 	} else if (total_influence<0){
-		while (total_influence<0){
+		while (total_influence<0 && loop<100){
+			loop++;
 			for (i=0;i<15;i++){
-				if (p_influence[planet][i]>0){
+				if (p_influence[planet][i]<0){
 					p_influence[planet][i]++;
 					total_influence++;
 				}

@@ -12,14 +12,11 @@ if (obj_ncombat.started=0){
     
     }
     
-    
-    
 }
 
 if (obj_ncombat.red_thirst>=2) and (obj_ncombat.battle_over=0){
     if (men>0){
-        var raar,r_roll,miss,r_lost;
-        raar=0;miss="";r_lost=0;
+        var raar=0,miss="",r_lost=0;
         
         repeat(men+dreads){
             raar+=1;r_roll=floor(random(1000))+1;
@@ -44,7 +41,7 @@ if (obj_ncombat.red_thirst>=2) and (obj_ncombat.battle_over=0){
         if (r_lost>1) then string_replace(miss,"Battle Brother","Battle Brothers");
         
         
-        var woo;woo=string_length(miss);
+        var woo=string_length(miss);
         miss=string_delete(miss,woo-1,2);// remove last
         
         if (string_count(", ",miss)=1){

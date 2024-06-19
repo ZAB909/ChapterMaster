@@ -682,18 +682,10 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
 
 
-
-            old_tags=obj_ini.artifact_tags[arti_index];
-            obj_ini.artifact[arti_index]="";
-            obj_ini.artifact_tags[arti_index]="";
-            obj_ini.artifact_identified[arti_index]=0;
-            obj_ini.artifact_condition[arti_index]=100;
-            obj_ini.artifact_loc[arti_index]="";
-            obj_ini.artifact_sid[arti_index]=0;
-            var arti = obj_ini.artifact_struct[arti_index];
-            arti.unequip_from_unit();
-            obj_ini.artifact_struct[arti_index] = new arti_struct(arti_index);
-            obj_ini.artifact_equipped[arti_index] = false;
+			var old_tags = [];
+			var cur_tags = obj_ini.artifact_tags[arti_index];
+            old_tags=array_copy(old_tags, 0,cur_tags, 0, array_length(cur_tags)-1);
+            delete_artifact(arti_index)
 
             obj_controller.artifacts-=1;
             cooldown=7000;
@@ -705,21 +697,25 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             obj_controller.diplomacy=giveto;
             obj_controller.force_goodbye=-1;
             var the="";
+
             if (giveto!=7) and (giveto!=10) then the="the ";
-            scr_event_log("","Artifact gifted to "+string(the)+string(obj_controller.faction[giveto])+".");
-            var is_daemon = array_contains(old_tags,"Daemon");
-            var is_chaos = array_contains(old_tags,"Chaos");
+
+            scr_event_log("",$"Artifact gifted to {the} {obj_controller.faction[giveto]}.");
+            var is_daemon = array_contains(old_tags,"daemonic");
+            var is_chaos = array_contains(old_tags,"chaos");
             if (inq_hide!=2) then with(obj_controller){
                 if (!is_daemon) or ((diplomacy!=4) and (diplomacy!=5) and (diplomacy!=2)) then scr_dialogue("artifact_thanks");
                 if (is_daemon) and ((diplomacy=4) or (diplomacy=5) or (diplomacy=2)) then scr_dialogue("artifact_daemon");
             }
             if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
 
-            if (string_count("MINOR",old_tags)=0){
-                if (giveto=2) then obj_controller.disposition[2]+=6;
+            if (!array_contains(old_tags,"MINOR")){
+                if (giveto=2) then obj_controller.disposition[eFACTION.Imperium]+=6;
                 if (giveto=3) then obj_controller.disposition[3]+=4;
                 if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;
+
                 if (giveto=4) and (inq_hide=2) then obj_controller.disposition[4]+=2;
+
                 if (giveto=5) and (!is_daemon){
                     obj_controller.disposition[5]+=4;
                     var o=0
@@ -733,35 +729,37 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
             if (giveto=2){
                 if (is_daemon){
-                    var v,ev;v=0;ev=0;repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
-                    obj_controller.event[ev]="imperium_daemon";obj_controller.event_duration[ev]=1;
+                    var v=0,ev=0;
+                    for (var v=1;v<array_length(obj_controller.event);v++){
+                        if (ev=0) and (obj_controller.event[v]="") then ev=v;
+                    }
+                    obj_controller.event[ev]="imperium_daemon";
+                    obj_controller.event_duration[ev]=1;
                     with(obj_star){
-                        if (p_owner[1]=2) then p_heresy[1]+=choose(30,40,50,60);
-                        if (p_owner[2]=2) then p_heresy[2]+=choose(30,40,50,60);
-                        if (p_owner[3]=2) then p_heresy[3]+=choose(30,40,50,60);
-                        if (p_owner[4]=2) then p_heresy[4]+=choose(30,40,50,60);
+                        for(var i=1;i<=planets;i++){
+                            if (p_owner[i]=2) then p_heresy[i]+=choose(30,40,50,60);
+                        }
                     }
                 }
                 if (is_chaos){
                     with(obj_star){
-                        if (p_owner[1]=2) and (p_heresy[1]>0) then p_heresy[1]+=10;
-                        if (p_owner[2]=2) and (p_heresy[2]>0) then p_heresy[2]+=10;
-                        if (p_owner[3]=2) and (p_heresy[3]>0) then p_heresy[3]+=10;
-                        if (p_owner[4]=2) and (p_heresy[4]>0) then p_heresy[4]+=10;
+                        for(var i=1;i<=planets;i++){
+                            if (p_owner[i]=2) and (p_heresy[i]>0) then p_heresy[i]+=10;
+                        }                        
                     }
                 }
             }
-            if (giveto=8){
+            else if (giveto=8){
                 if (is_daemon){
                     with(obj_star){
-                        if (p_owner[1]=8) then p_heresy[1]+=40;
-                        if (p_owner[2]=8) then p_heresy[2]+=40;
-                        if (p_owner[3]=8) then p_heresy[3]+=40;
-                        if (p_owner[4]=8) then p_heresy[4]+=40;
+                        for(var i=1;i<=planets;i++){
+                             if (p_owner[i]=8) then p_heresy[i]+=40;
+                        }                         
                     }
                 }
             }
-            instance_destroy();exit;
+            instance_destroy();
+            exit;
         }
 
     }

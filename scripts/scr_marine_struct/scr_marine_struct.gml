@@ -793,8 +793,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	mobility_item_quality = "standard";
    static update_mobility_item = function(new_mobility_item, from_armoury = true, to_armoury=true, quality="any"){
    		var arti = !is_string(new_mobility_item);
-   		var change_mob=mobility_item()
-   		if (change_mob == new_mobility_item){
+   		var change_mob=mobility_item();
+   		var same_quality = quality == "any" || quality == mobility_item_quality;
+   		if (change_mob == new_mobility_item && same_quality){
    			return "no change";
    		}
 	  	if (from_armoury && new_mobility_item!="" && !arti){
@@ -840,9 +841,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	  	var change_armour=armour();
 	  	var require_carpace=false;
 	  	var armour_list=[];
+	  	var same_quality = quality == "any" || quality == armour_quality;
 	  	var _new_power_armour = array_contains(global.power_armour, new_armour);
 	  	var _old_power_armour = array_contains(global.power_armour, change_armour);
-	   	if ((change_armour == new_armour || ((_old_power_armour && _new_power_armour) && new_armour=="Power Armour"))){
+	   	if ((change_armour == new_armour || ((_old_power_armour && _new_power_armour) && new_armour=="Power Armour")) && same_quality){
 	   		return "no change";
 	   	}
 	  	if (_new_power_armour){
@@ -1404,7 +1406,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	static update_gear = function(new_gear,from_armoury=true, to_armoury=true, quality="any"){
 		var arti = !is_string(new_gear);
 		var change_gear = gear();
-		if (change_gear == new_gear){
+		var same_quality = quality == "any" || quality == gear_quality;
+		if (change_gear == new_gear && same_quality){
 	 		return "no change";
 	 	}
 	  	if (from_armoury) and (new_gear!="") and (!arti){
@@ -1526,12 +1529,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   	var arti = !is_string(new_weapon);
   	var change_wep = weapon_one();
   	var weapon_list = [];
+  	var same_quality = quality == "any" || quality == weapon_one_quality;
     if (new_weapon == "Heavy Ranged"){
     	weapon_list=["Multi-Melta", "Heavy Bolter","Lascannon","Missile Launcher"];
-    	if array_contains(weapon_list, change_wep){
+    	if (array_contains(weapon_list, change_wep) && same_quality) {
     		return "no change";
     	}
-    }else if (change_wep == new_weapon){
+    }else if (change_wep == new_weapon && same_quality){
    		return "no change";
    	}
 
@@ -1559,7 +1563,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   			return viability[1];
   		}
 	}else {
-		quality= quality=="any"?"standard":quality;
+		quality = quality=="any"?"standard":quality;
 	}
 
 	if (change_wep != "") and (to_armoury){
@@ -1591,7 +1595,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
   	static update_weapon_two = function(new_weapon,from_armoury=true, to_armoury=true, quality="any"){
   		var arti = !is_string(new_weapon);
 	   	var change_wep = weapon_two();
-	  	if (change_wep == new_weapon){
+	   	var same_quality = quality == "any" || quality == weapon_two_quality;
+	  	if (change_wep == new_weapon && same_quality){
 	   		return "no change";
 	   	}     	
 	  	if (from_armoury) and (new_weapon!="") && (!arti){
@@ -1602,7 +1607,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 	  			return viability[1];
 	  		}
 		} else {
-			quality= quality=="any"?"standard":quality;
+			quality = quality=="any"?"standard":quality;
 		}
 		if (change_wep != "") and (to_armoury){
 			if (!is_string(weapon_two(true))){
@@ -1727,7 +1732,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			//grab generic structs for weapons
 			var _wep1 = get_weapon_one_data();
 			var _wep2 = get_weapon_two_data();
-			//default to fists
+
 			if (!is_struct(_wep1)) then _wep1 = new equipment_struct({},"");
 			if (!is_struct(_wep2)) then _wep2 = new equipment_struct({},"");
 			if (allegiance==global.chapter_name){
@@ -1909,6 +1914,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					primary_weapon=new equipment_struct({},"");//create blank weapon struct
 					primary_weapon.attack=strength/3;//calculate damage from player fists
 					primary_weapon.name="fists";
+					primary_weapon.range = 1;
+					primary_weapon.ammo = -1;					
 				} else {
 					if (!valid1 && valid2){
 						primary_weapon=_wep2;
