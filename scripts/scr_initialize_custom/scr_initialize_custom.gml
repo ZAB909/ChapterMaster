@@ -2043,6 +2043,89 @@ function scr_initialize_custom() {
 		])
 	}
 
+	if (global.chapter_name == "Dark Angels") {
+		variable_struct_set(st, "terminator_squad", [
+			// Terminator Sergeant
+			[roles.veteran_sergeant, {
+				"max": 1,
+				"min": 1,
+				"role": $"Deathwing {roles.sergeant}",
+				"loadout": {
+					"required": {
+						"wep1": ["Power Sword", 1],
+					},
+				}
+			}],
+			// Terminator
+			[roles.terminator, {
+				"max": 4,
+				"min": 2,
+				"role": $"Deathwing {roles.terminator}",
+				"loadout": {
+					"required": {
+						"wep1": ["", 0],
+						"wep2": [wep2[100, 4], 3],
+					},
+					"option": {
+						"wep1": [
+							[
+								["Power Fist", "Chainfist"], 4
+							],
+						],
+						"wep2": [
+							[
+								["Heavy Flamer", "Heavy Flamer", "Heavy Flamer", "Assault Cannon", "Assault Cannon", "Plasma Cannon", ], 1
+							],
+						],
+					}
+				}
+			}],
+			["type_data", {
+				"display_data": $"Deathwing {roles.terminator} {squad_name}",
+				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+			}]
+		])
+		variable_struct_set(st, "terminator_assault_squad", [
+			// Assault Terminator Sergeant
+			[roles.veteran_sergeant, {
+				"max": 1,
+				"min": 1,
+				"role": $"Deathwing {roles.sergeant}",
+				"loadout": {
+					"required": {
+						"wep1": ["Thunder Hammer", 1],
+						"wep2": ["Storm Shield", 1],
+					},
+				},
+			}],
+			// Assault Terminator
+			[roles.terminator, {
+				"max": 4,
+				"min": 2,
+				"role": $"Deathwing {roles.terminator}",
+				"loadout": {
+					"required": {
+						"wep1": ["Thunder Hammer", 1],
+						"wep2": ["Storm Shield", 1],
+					},
+					"option": {
+						"wep1": [
+							[
+								["Lightning Claw"], 3, {
+									"wep2":"Lightning Claw",
+								}
+							],
+						],
+					}
+				},
+			}, ],
+			["type_data", {
+				"display_data": $"Deathwing {roles.terminator} {squad_name}",
+				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+			}]
+		])
+	}
+
 	var squad_names = struct_get_names(st);
 	for (var st_iter = 0; st_iter < array_length(squad_names); st_iter++) {
 		var s_group = st[$squad_names[st_iter]];
@@ -2749,8 +2832,8 @@ function scr_initialize_custom() {
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		spawn_unit = TTRPG[company][k]
 		spawn_unit.marine_assembling();
-		wep1[company][k] = "Power Fist";
-		wep2[company][k] = "Storm Bolter";
+		wep1[company][k] = "Storm Bolter";
+		wep2[company][k] = "";
 		armour[company][k] = "Terminator Armour";
 		gear[company][k] = gear[101, 15];
 		if (string_count("Crafter", strin) > 0) then armour[company][k] = "Tartaros";
@@ -2880,6 +2963,10 @@ function scr_initialize_custom() {
 		armour[company][k] = "Terminator Armour";
 		if (string_count("Crafter", strin) > 0) then armour[company][k] = "Tartaros";
 		if (terminator <= 0) then armour[company][k] = "MK6 Corvus";
+		if (global.chapter_name == "Dark Angels"){
+			wep1[company][k] = "Heavy Thunder Hammer";
+			wep2[company][k] = "";
+		}
 		if (armour[company][k] = "Terminator") or(armour[company][k] = "Tartaros") then man_size += 1;
 	}
 
