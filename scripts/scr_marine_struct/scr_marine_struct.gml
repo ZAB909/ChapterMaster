@@ -2602,16 +2602,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 				break;
 			// Command Squads
 			case obj_ini.role[100][Role.CAPTAIN]:
-				_minimum_age += 60;
-				_maximum_age += 70;
+				_minimum_age += 80;
+				_maximum_age += 90;
 				break;
 			case obj_ini.role[100][Role.COMPANY_CHAMPION]:
 				_minimum_age += 50;
 				_maximum_age += 60;
 				break;
 			case obj_ini.role[100][Role.ANCIENT]:
-				_minimum_age += 70;
-				_maximum_age += 80;
+				_minimum_age += 90;
+				_maximum_age += 140;
 				break;
 			// Command Squads and HQ
 			case obj_ini.role[100][Role.CHAPLAIN]:
