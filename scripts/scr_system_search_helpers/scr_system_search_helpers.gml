@@ -167,7 +167,7 @@ function adjust_influence(faction, value, planet){
 		while (total_influence<0 && loop<100){
 			loop++;
 			for (i=0;i<15;i++){
-				if (p_influence[planet][i]>0){
+				if (p_influence[planet][i]<0){
 					p_influence[planet][i]++;
 					total_influence++;
 				}

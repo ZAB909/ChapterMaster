@@ -268,7 +268,8 @@ function scr_purge_world(star, planet, action_type, action_score) {
 	if (action_type!=4){
 	    if (isquest=0){// DO EET
 	        txt2=txt1;
-	        star.p_heresy[planet]-=sci2;star.p_influence[planet][eFACTION.Tau]-=sci2;
+	        star.p_heresy[planet]-=sci2;
+	        star.p_influence[planet][eFACTION.Tau]-=sci2;
 	        if (action_type<3) then star.p_population[planet]=pop_after;
 	        if (action_type=3) and (star.p_large[planet]=0) then star.p_population[planet]=pop_after;
         
