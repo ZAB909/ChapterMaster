@@ -2898,8 +2898,6 @@ function scr_initialize_custom() {
 		wep2[company][k] = wep2[101, 4];
 		spawn_unit = TTRPG[company][k]
 		spawn_unit.marine_assembling();
-		armour[company][k] = "Terminator Armour";
-		if (string_count("Crafter", strin) > 0) and(k <= 20) then armour[company][k] = "Tartaros";
 	}
 	repeat(veteran) {
 		k += 1;

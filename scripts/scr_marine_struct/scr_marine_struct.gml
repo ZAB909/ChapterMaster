@@ -2465,7 +2465,6 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			case "Lexicanum":
 			// 1st company only
 			case obj_ini.role[100][Role.VETERAN]:
-			case obj_ini.role[100][Role.TERMINATOR]:
 			case obj_ini.role[100][Role.VETERAN_SERGEANT]:
 			// Command Squads
 			case obj_ini.role[100][Role.CAPTAIN]:
@@ -2500,6 +2499,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 					update_armour(choose_weighted(armour_weighted_lists.rare_armour),false,false);
 				} else {
 					update_armour(choose_weighted(armour_weighted_lists.normal_armour),false,false);
+				}
+				break;
+			case obj_ini.role[100][Role.TERMINATOR]:
+				if (_total_score > 270){
+					update_armour(choose("Tartaros", "Terminator Armour", "Terminator Armour"),false,false);
+				} else if (_total_score > 250){
+					update_armour(choose("Tartaros", "Terminator Armour", "Terminator Armour", "Terminator Armour"),false,false);
+				}else {
+					update_armour("Terminator Armour",false,false);
 				}
 				break;
 		}
