@@ -9,31 +9,6 @@ if (__b__){
     with(obj_star_select){instance_deactivate_object(id);}
 
     var why=0,onceh=0, ship=0;
-    if (obj_controller.cooldown<=0) then {
-        var shipIndex = 0; // Add this line to keep track of the current ship index
-        for (var i = 1; i <= 9; i += 4) {
-            for (var j = 0; j < 4; j++) {
-                if (obj_ini.ship[i + j] != "") {
-                    onceh = 0;
-                    var leftX = xx + j * 117 + 47;
-                    var topY = yy + 107 + why;
-                    var rightX = xx + j * 117 + 161;
-                    var bottomY = yy + 122 + why;
-
-                    if point_in_rectangle(mouse_x, mouse_y, ship_buttons[shipIndex][0], ship_buttons[shipIndex][1], ship_buttons[shipIndex][2], ship_buttons[shipIndex][3]){
-                        if (onceh == 0) {
-                            onceh = 1;
-                            obj_controller.cooldown = 8;
-                            ship_all[i + j] = 1 - ship_all[i + j];
-                            ships_selected += (ship_all[i + j] == 1) ? 1 : -1;
-                        }
-                    }
-                    shipIndex++; // Increment the ship index after each iteration
-                }
-            }
-            why += 18;
-        }
-    }
         
     if (targets>1) and (obj_controller.cooldown<=0) and (mouse_y>=yy+336) and (mouse_y<yy+351){
         if (mouse_x>=xx+309) and (mouse_x<xx+332){

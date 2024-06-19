@@ -188,11 +188,13 @@ if (max_ships>0)and (instance_exists(obj_star_select)){
     if (sel!=""){
         bombard_button = draw_unit_buttons([bomb_window.x2-110, bomb_window.y2-40],"Bombard!",[1,1],38144,fa_center,fnt_40k_14b)
     }
-    var cancel_button = draw_unit_buttons([bomb_window.x2-180, bomb_window.y2-40],"Cancel",[1,1],38144,fa_center,fnt_40k_14b);var
-    if point_and_click(cancel_button) || !point_and_click([bomb_window.x1, bomb_window.y1, bomb_window.x2, bomb_window.y2]){
-        obj_controller.cooldown=8;
-        with(obj_bomb_select){instance_destroy();}
-        instance_destroy();
+    var cancel_button = draw_unit_buttons([bomb_window.x2-180, bomb_window.y2-40],"Cancel",[1,1],38144,fa_center,fnt_40k_14b);
+    if (obj_controller.cooldown<=0){
+        if( point_and_click(cancel_button)){
+            obj_controller.cooldown=8;
+            with(obj_bomb_select){instance_destroy();}
+            instance_destroy();
+        }
     }
 }
 
@@ -223,12 +225,11 @@ for (var row = 0; row < 6; row++) {
             // Draw the unit buttons
             ship_button_pos = draw_unit_buttons([buttonX, buttonY, buttonX+105, buttonY+20], string_truncate(num, 200), [1,1], 38144, fa_center, fnt_40k_10,alpha)
             if point_and_click(ship_button_pos){
-                ship_all[i + j] = 1 - ship_all[i + j];
-                ships_selected += (ship_all[i + j] == 1) ? 1 : -1;
+                ship_all[ship_index] = !ship_all[ship_index];
+                ships_selected = ship_all[ship_index] ?ships_selected+1: ships_selected-1;
             }
-            shipIndex++; // Increment the ship index after each iteration            
+            ship_index++; // Increment the ship index after each iteration            
         }
         // Move to the next ship
-        ship_index++;
     }
 }
