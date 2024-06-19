@@ -334,7 +334,7 @@ function delete_artifact(index){
 	        obj_ini.artifact_condition[index]=0;
 	        obj_ini.artifact_loc[index]="";
 	        obj_ini.artifact_sid[index]=0;
-	        obj_ini.artifact_equipped[arti_index] = false;
+	        obj_ini.artifact_equipped[index] = false;
 	        obj_ini.artifact_struct[index]=new arti_struct(index);
 		}
 		obj_controller.artifacts-=1;

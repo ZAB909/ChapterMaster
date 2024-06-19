@@ -682,8 +682,9 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 
 
 
-
-            old_tags=array_copy(obj_ini.artifact_tags[arti_index]);
+			var old_tags = [];
+			var cur_tags = obj_ini.artifact_tags[arti_index];
+            old_tags=array_copy(old_tags, 0,cur_tags, 0, array_length(cur_tags)-1);
             delete_artifact(arti_index)
 
             obj_controller.artifacts-=1;
@@ -708,7 +709,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             }
             if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
 
-            if (!array_contains(old_tags,"MINOR");){
+            if (!array_contains(old_tags,"MINOR")){
                 if (giveto=2) then obj_controller.disposition[eFACTION.Imperium]+=6;
                 if (giveto=3) then obj_controller.disposition[3]+=4;
                 if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;
@@ -748,7 +749,7 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
                     }
                 }
             }
-            if (giveto=8){
+            else if (giveto=8){
                 if (is_daemon){
                     with(obj_star){
                         for(var i=1;i<=planets;i++){
@@ -757,7 +758,8 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
                     }
                 }
             }
-            instance_destroy();exit;
+            instance_destroy();
+            exit;
         }
 
     }
