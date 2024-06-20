@@ -249,7 +249,7 @@ global.weapons={
         "tags":["chain", "sword"],
     },
     "Power Sword": {
-         "abbreviation": "PwrSwrd",
+        "abbreviation": "PwrSwrd",
         "attack": {
             "standard": 180,
             "master_crafted": 200,
@@ -543,16 +543,39 @@ global.weapons={
     "Power Mace": {
         "abbreviation": "PwrMace",                
         "attack": {
-            "standard": 700,
-            "master_crafted": 800,
-            "artifact": 950
+            "standard": 600,
+            "master_crafted": 700,
+            "artifact": 800
         },
         "melee_mod": {
             "standard": 1.3,
             "master_crafted": 1.3,
             "artifact": 1.3
         },
+        "description": "Commonly referred to as Power Maul, is a blunt weapon surrounded by a power field. It's quite different from the less lethal Shock Maul, which is a similar type of close combat weapon. In the hands of a skilled warrior, the Power Mace is not just a weapon, it's a statement of power and authority in the grim darkness of far future.",
+        "melee_hands": 2.25,
+        "ranged_hands": 2,
+        "ammo": 0,
+        "range": 1,
+        "spli": 10,
+        "arp": 1,
+        "tags":["power", "mace", "siege"],
+        "req_exp":100,
+    },
+    "Mace of Absolution": {
+        "abbreviation": "AbsltMace",                
+        "attack": {
+            "standard": 600,
+            "master_crafted": 700,
+            "artifact": 800
+        },
+        "melee_mod": {
+            "standard": 1.3,
+            "master_crafted": 1.3,
+            "artifact": 1.3,
+        },
         "description": "Wreathed in glowing smoke, these massive weapons are as sinister in aspect as they are lethal in application, and are capable of obliterating even the mightiest heretics in a blaze of killing light.",
+        "special_description": "Dark Angels exclusive",
         "melee_hands": 2.25,
         "ranged_hands": 2,
         "ammo": 0,
@@ -560,7 +583,7 @@ global.weapons={
         "spli": 10,
         "arp": 1,
         "tags":["power", "mace", "siege", "pious"],
-        "req_exp":200,
+        "req_exp":100,
     },
     "Tome":{
         "abbreviation": "Tome",                

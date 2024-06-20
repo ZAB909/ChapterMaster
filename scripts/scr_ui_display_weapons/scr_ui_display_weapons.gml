@@ -33,6 +33,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             "Lightning Claw":spr_weapon_lightning2,
             "Chainfist":spr_weapon_chainfist,
             "Power Mace":spr_weapon_powmace,
+            "Mace of Absolution":spr_weapon_powmace,
             "Boltstorm Gauntlet":spr_weapon_boltstorm_gauntlet,
         }
         var terminator_melee_names=struct_get_names(terminator_melee);
@@ -306,7 +307,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
         ui_spec[left_or_right] = false;
     }
 
-    if ("Power Mace" == equiped_weapon) {
+    if (array_contains(["Power Mace", "Mace of Absolution"], equiped_weapon)) {
         ui_arm[left_or_right] = 0;
     }
 

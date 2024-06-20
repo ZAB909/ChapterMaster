@@ -2751,7 +2751,7 @@ function scr_initialize_custom() {
 		armour[company][k] = armour[101, 2];
 		if global.chapter_name == "Dark Angels" {
 			armour[company][k] = "Terminator Armour";
-			wep1[company][k] = "Power Mace";
+			wep1[company][k] = "Mace of Absolution";
 			wep2[company][k] = "Storm Shield";
 		}
 	}

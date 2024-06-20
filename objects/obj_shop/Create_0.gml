@@ -166,6 +166,26 @@ if (shop = "equipment") {
         item_cost[i] = 0;
     }
     i += 1;
+    item[i] = "Power Mace";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 50;
+    if (research.power_fields[0]>1){
+        forge_cost[i] = 140;
+    }
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    if (global.chapter_name == "Dark Angels"){
+        i += 1;
+        item[i] = "Mace of Absolution";
+        item_stocked[i] = scr_item_count(item[i]);
+        item_cost[i] = 70;
+        if (research.power_fields[0]>1){
+            forge_cost[i] = 160;
+        }
+    }
+    i += 1;
     item[i] = "Lightning Claw";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 90;
