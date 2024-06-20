@@ -205,7 +205,7 @@ global.weapons={
         "range": 1,
         "spli": 6,
         "arp": 0,
-        "tags":["chain", "axe"],
+        "tags":["chain", "axe", "dual"],
     },
     "Company Standard": {
        "abbreviation": "CmpStnd",
@@ -256,9 +256,9 @@ global.weapons={
             "artifact": 240
         },
         "melee_mod": {
-            "standard": 1.1,
+            "standard": 1,
             "master_crafted": 1.1,
-            "artifact": 1.1
+            "artifact": 1.2
         },
         "description": "The most common kind of Power Weapon. When active, the blade becomes sheathed in a lethal haze of disruptive energy that seamlessly cuts through ceramite and flesh.",
         "melee_hands": 1,
@@ -271,23 +271,23 @@ global.weapons={
         "tags":["power", "sword"],
     },
     "Power Spear": {
-         "abbreviation": "PwrSpear",
+        "abbreviation": "PwrSpear",
         "attack": {
-            "standard": 220,
-            "master_crafted": 250,
-            "artifact": 300
+            "standard": 200,
+            "master_crafted": 220,
+            "artifact": 260
         },
         "melee_mod": {
-            "standard": 1.1,
+            "standard": 1,
             "master_crafted": 1.1,
-            "artifact": 1.1
+            "artifact": 1.2
         },
-        "description": "A rare kind of Power Weapon requires great skill to wield. When active, the spearhead becomes sheathed in a lethal haze of disruptive energy.",
-        "melee_hands": 2,
-        "ranged_hands": 1,
+        "description": "A rare kind of Power Weapon, a power blade mounted on the end of a long shaft, requires great skill to wield. When active, the blade becomes sheathed in a lethal haze of disruptive energy and can tear through all manners of material with ease.",
+        "melee_hands": 1,
+        "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
-        "spli": 2,
+        "spli": 6,
         "arp": 1,
         "special_properties": ["Parry"],
         "tags":["power", "spear"],
@@ -364,7 +364,7 @@ global.weapons={
         "tags":["power"],
     },
     "Power Axe": {
-       "abbreviation": "PwrAxe",       
+        "abbreviation": "PwrAxe",       
         "attack": {
             "standard": 190,
             "master_crafted": 220,
@@ -372,8 +372,8 @@ global.weapons={
         },
         "melee_mod": {
             "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
+            "master_crafted": 1.1,
+            "artifact": 1.2
         },
         "description": "This weapon's power systems can be activated with the press of a button to sheathe the axe-head in a lethal haze of disruptive energy. Those fortunate enough to get their hands on two tend to duel-wield them.",
         "melee_hands": 1,
@@ -763,7 +763,7 @@ global.weapons={
         "range": 1,
         "spli": 10,
         "arp": 1,
-        "tags":["dreadnought", "flame", "fist"]
+        "tags":["vehicle", "dreadnought", "flame", "fist"]
     },       
     "Inferno Cannon": {
         "abbreviation": "InfCann",               
@@ -1435,68 +1435,69 @@ global.weapons={
     },
     "Force Staff": {
         "attack": {
-            "standard": 150,
-            "master_crafted": 200,
-            "artifact": 240
+            "standard": 200,
+            "master_crafted": 230,
+            "artifact": 270
         },
-		"melee_mod": {
+        "melee_mod": {
             "standard": 1,
-            "master_crafted": 1,
-            "artifact": 1
+            "master_crafted": 1.1,
+            "artifact": 1.2
         },
         "abbreviation": "FrcStff", 
         "description": "An advanced, psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 1,
         "range": 1,
-        "spli": 30,
+        "spli": 5,
         "arp": 1,
 		"special_description": "Spell Damage +100%",
-        "tags":["psy",]
+        "tags":["force",]
     },
-	    "Force Sword": {
-         "abbreviation": "FrcSwrd",
+	"Force Sword": {
+        "abbreviation": "FrcSwrd",
         "attack": {
-            "standard": 300,
-            "master_crafted": 350,
-            "artifact": 400
+            "standard": 180,
+            "master_crafted": 200,
+            "artifact": 240
         },
         "melee_mod": {
-            "standard": 1.3,
-            "master_crafted": 1.5,
-            "artifact": 2
+            "standard": 1,
+            "master_crafted": 1.1,
+            "artifact": 1.2
         },
         "description": "The Force Sword is a psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
-        "spli": 1,
+        "spli": 4,
         "arp": 1,
-        "special_description": "Parry, Spell damage +25%",
-        "tags":["psy", "sword"],
+        "special_description": "Spell damage +25%",
+        "special_properties": ["Parry"],
+        "tags":["force", "sword"],
 	},
 	"Force Axe": {
-         "abbreviation": "FrcAxe",
+        "abbreviation": "FrcAxe",
         "attack": {
             "standard": 190,
-            "master_crafted": 180,
-            "artifact": 225
+            "master_crafted": 220,
+            "artifact": 260
         },
         "melee_mod": {
-            "standard": 1.3,
-            "master_crafted": 1.5,
-            "artifact": 2
+            "standard": 1,
+            "master_crafted": 1.1,
+            "artifact": 1.2
         },
         "description": "The Force Axe is a psychically-attuned close combat weapon that is only fully effective in the hands of a psyker.",
         "melee_hands": 1,
         "ranged_hands": 0,
         "ammo": 0,
         "range": 1,
-        "spli": 1,
+        "spli": 5,
         "arp": 1,
 		"special_description":  "Able to be dual-wielded, Spell damage +25%",
-        "tags":["psy", "axe", "dual"],
+        "tags":["force", "axe", "dual"],
 	},
      "Twin Linked Lascannon Turret": {
         "attack": {

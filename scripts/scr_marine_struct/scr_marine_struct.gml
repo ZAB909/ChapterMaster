@@ -1951,7 +1951,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			};
 			var basic_wep_string = $"{primary_weapon.name}: {primary_weapon.attack}#";
 			if IsSpecialist("libs"){
-				if (primary_weapon.has_tag("psy") ||_wep2.has_tag("psy")){
+				if (primary_weapon.has_tag("force") ||_wep2.has_tag("force")){
 					var force_modifier = (((weapon_skill/100) * (psionic/10) * (intelligence/10)) + (experience()/1000)+0.1);
 					primary_weapon.attack *= force_modifier;
 					basic_wep_string += $"Active Force Weapon: x{force_modifier}#  Base: 0.10#  WSxPSIxINT: x{(weapon_skill/100)*(psionic/10)*(intelligence/10)}#  EXP: x{experience()/1000}#";

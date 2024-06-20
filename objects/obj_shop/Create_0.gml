@@ -250,6 +250,12 @@ if (shop = "equipment") {
     item_cost[i] = 15;
     i += 1;
     x_mod[i] = 9;
+    item[i] = "Combat Shield";
+    forge_cost[i] = 75;
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 15;
+    i += 1;
+    x_mod[i] = 9;
     item[i] = "Boarding Shield";
     forge_cost[i] = 100;
     item_stocked[i] = scr_item_count(item[i]);
@@ -870,18 +876,6 @@ if (shop = "vehicles") {
     item[i] = "Close Combat Weapon";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 45;
-    if (rene = 1) {
-        nobuy[i] = 1;
-        item_cost[i] = 0;
-    }
-    i += 1;
-    x_mod[i] = 9;
-    item[i] = "Force Staff";
-    item_stocked[i] = scr_item_count(item[i]);
-    if (obj_controller.in_forge){
-        if (research.psi[0]>0) then forge_cost[i] = 500;
-    }
-    item_cost[i] = 80;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
