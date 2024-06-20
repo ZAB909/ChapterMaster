@@ -1220,7 +1220,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine") constructor{
 			}
 			if (instance_exists(obj_controller)){
 				role_history = [[obj_ini.role[company][marine_number], obj_controller.turn]]; //marines_promotion and demotion history
-				marine_ascension = obj_controller.turn; // on what day did turn did this marine begin to exist
+				marine_ascension = ((obj_controller.millenium*1000)+obj_controller.year); // on what day did this marine begin to exist
 			} else {
 				role_history = [[obj_ini.role[company][marine_number], "pre_game"]];
 				marine_ascension = "pre_game"; // on what day did turn did this marine begin to exist

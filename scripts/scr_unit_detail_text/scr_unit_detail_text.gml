@@ -34,7 +34,7 @@ function scr_unit_detail_text(){
 		if (base_group == "astartes"){
 			var ascension_date = marine_ascension;
 			if ascension_date = "pre_game" then ascension_date = "when the chapter was created";
-			unit_data_string += $"{round(age())} years old. Ascended to an Astartes {ascension_date}.";
+			unit_data_string += $"{round(age())} years old. Ascended to an Astartes in the year {ascension_date}.";
 		}
 
 		// Religion text
