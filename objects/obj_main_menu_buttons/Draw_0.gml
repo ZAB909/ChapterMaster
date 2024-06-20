@@ -26,11 +26,11 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_ingame_menu)){
 if (room_get_name(room)="Creation"){
     shader_set(light_dark_shader);
     var yy=y+25,i=1;
-    var height = (20*2);
-    var width = (198*2);
+    var _spr_height = sprite_get_height(spr_mm_butts_small) * 2;
+    var _spr_width = sprite_get_width(spr_mm_butts_small) * 2;
     shader_set_uniform_f(shader_get_uniform(light_dark_shader, "highlight"), 1+hover[0]/10);
-    draw_sprite_ext(spr_mm_butts, 4, x,yy, 2, 2, 0, c_white, 1);
-    if (scr_hit(x,yy, x+width, yy+height)){
+    draw_sprite_ext(spr_mm_butts_small, 1, x,yy, 2, 2, 0, c_white, 1);
+    if (scr_hit(x,yy, x+_spr_width, yy+_spr_height)){
         if (hover[0]<20){
             hover[0]++;
         }
@@ -43,21 +43,21 @@ if (room_get_name(room)="Creation"){
 }
 
 if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!instance_exists(obj_credits)){
-    if (obj_main_menu.tim4>0){
-        draw_set_alpha((oth/40)/4);
-        if (point_distance(mouse_x,mouse_y,24,room_height-24)<=24) and (!instance_exists(obj_ingame_menu)) and (oth>=40){
-            if (instance_exists(obj_cursor)){
-                if (obj_cursor.image_alpha>=1){
-                    draw_set_alpha(1);
-                    if (mouse_left=1) and (cooldown<=0){
-                        instance_create(0,0,obj_ingame_menu);
-                    }
-                }
-            }
-        }
-        draw_sprite_stretched(spr_settings_button,0,0,room_height-48,48,48);
-        draw_set_alpha(1);
-    }
+    // if (obj_main_menu.tim4>0){
+    //     draw_set_alpha((oth/40)/4);
+    //     if (point_distance(mouse_x,mouse_y,24,room_height-24)<=24) and (!instance_exists(obj_ingame_menu)) and (oth>=40){
+    //         if (instance_exists(obj_cursor)){
+    //             if (obj_cursor.image_alpha>=1){
+    //                 draw_set_alpha(1);
+    //                 if (mouse_left=1) and (cooldown<=0){
+    //                     instance_create(0,0,obj_ingame_menu);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     draw_sprite_stretched(spr_settings_button,0,0,room_height-48,48,48);
+    //     draw_set_alpha(1);
+    // }
 
 
     shader_set(light_dark_shader);
@@ -113,11 +113,7 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                         button=0;   
                         break;                                             
                     case 2:
-                        /*instance_create(0,0,obj_credits);
-                        obj_main_menu.menu=3;
-                        fading=0;
-                        fade=0;
-                        button=0;*/             
+                        instance_create(0,0,obj_ingame_menu);         
                         break;
                     case 3:
                         with(obj_cursor){instance_destroy();}

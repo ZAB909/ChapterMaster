@@ -1495,7 +1495,7 @@
     "spli": 3,
     "arp": 1
 },
-"Integrated Bolters": {
+"Integrated Bolter": {
     "attack": {
         "standard": 75,
         "master_crafted": 82.5,
@@ -1521,7 +1521,7 @@
         "master_crafted": 0,
         "artifact": 0
     },
-    "description": "Integrated Bolters are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle, armor, or Dreadnought.",
+    "description": "Integrated Bolter are a set of Bolter weapons that are integrated or built directly into the structure of the vehicle, armor, or Dreadnought.",
     "melee_hands": 0,
     "ranged_hands": 0,
     "ammo": 20,

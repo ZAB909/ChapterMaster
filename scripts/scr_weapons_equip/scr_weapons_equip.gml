@@ -70,7 +70,7 @@ function scr_weapons_equip() {
 			    i+=1;item_name[i]="Heavy Flamer";
 					i+=1;item_name[i]="Hellrifle";
 			    i+=1;item_name[i]="Incinerator";
-			    i+=1;item_name[i]="Integrated Bolters";
+			    i+=1;item_name[i]="Integrated Bolter";
 					i+=1;item_name[i]="Lascannon";
 			    i+=1;item_name[i]="Lascutter";
 			    i+=1;item_name[i]="Meltagun";

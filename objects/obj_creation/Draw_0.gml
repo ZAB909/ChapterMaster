@@ -2024,7 +2024,7 @@ if (slide=6){
     
     
     draw_set_color(38144);draw_set_halign(fa_left);
-    draw_text_transformed(580,118,string_hash_to_newline("Chapter Master Name: "),0.9,0.9,0);draw_set_font(fnt_40k_14b);
+    draw_text_transformed(580,100,string_hash_to_newline("Chapter Master Name: "),0.9,0.9,0);draw_set_font(fnt_40k_14b);
     
 	
     if (text_selected!="cm") or (custom=0) then draw_text_ext(580,144,string_hash_to_newline(string(chapter_master_name)),-1,580);
@@ -2049,44 +2049,53 @@ if (slide=6){
     draw_text_transformed(800,240,string_hash_to_newline("Ranged"),0.6,0.6,0);
     
     
-    var x6,y6,spac,h,it;
-    x6=444;y6=265;spac=25;h=0;it="";
+    var x6,y6,spac;
+    var melee_choice_order = 0;
+    var melee_choice_weapon = "";
+    x6=444;y6=265;spac=25;
     if (custom=0) or (restarted>0) then draw_set_alpha(0.5);
     
-    repeat(8){h+=1;
-        if (h=1) then it="Twin Power Fists";
-		if (h=2) then it="Twin Lightning Claws";
-        if (h=3) then it="Relic Blade";
-        if (h=4) then it="Master Crafted Thunder Hammer";
-        if (h=5) then it="Master Crafted Power Sword";
-        if (h=6) then it="Master Crafted Power Axe";
-        if (h=7) then it="Master Crafted Eviscerator";
-        if (h=8) then it="Master Crafted Force Staff";
+    repeat(8){
+        melee_choice_order+=1;
+        if (melee_choice_order=1) then melee_choice_weapon="Twin Power Fists";
+		if (melee_choice_order=2) then melee_choice_weapon="Twin Lightning Claws";
+        if (melee_choice_order=3) then melee_choice_weapon="Relic Blade";
+        if (melee_choice_order=4) then melee_choice_weapon="Thunder Hammer";
+        if (melee_choice_order=5) then melee_choice_weapon="Power Sword";
+        if (melee_choice_order=6) then melee_choice_weapon="Power Axe";
+        if (melee_choice_order=7) then melee_choice_weapon="Eviscerator";
+        if (melee_choice_order=8) then melee_choice_weapon="Force Staff";
         
-        yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
+        yar=0;if (chapter_master_melee=melee_choice_order) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
             cooldown=8000;var onceh;onceh=0;
-            if (chapter_master_melee=h) and (onceh=0){chapter_master_melee=0;onceh=1;}
-            if (chapter_master_melee!=h) and (onceh=0){chapter_master_melee=h;onceh=1;}
+            if (chapter_master_melee=melee_choice_order) and (onceh=0){chapter_master_melee=0;onceh=1;}
+            if (chapter_master_melee!=melee_choice_order) and (onceh=0){chapter_master_melee=melee_choice_order;onceh=1;}
         }
-        draw_text_transformed(x6+30,y6+4,string_hash_to_newline(it),0.4,0.4,0);
+        draw_text_transformed(x6+30,y6+4,string_hash_to_newline(melee_choice_weapon),0.4,0.4,0);
         y6+=spac;
     }
     
-    x6=800;y6=265;h=0;it="";
-    var ranged_options = ["","Integrated Bolters","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
-    repeat(7){h+=1;
+    x6=800;y6=265;
+    var ranged_choice_order = 0;
+    var ranged_choice_weapon = "";
+    var ranged_options = ["","Boltstorm Gauntlet","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
+    if (array_contains([1, 2, 7], chapter_master_melee)){
+        draw_set_alpha(0.5);
+    }
+    repeat(7){
+        ranged_choice_order += 1;
         yar=0;
-        if (chapter_master_ranged=h) then yar=1;
+        if (chapter_master_ranged=ranged_choice_order) then yar=1;
         draw_sprite(spr_creation_check,yar,x6,y6);
         yar=0;
-        if point_and_click([x6,y6,x6+32,y6+32]) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
+        if point_and_click([x6,y6,x6+32,y6+32]) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)) and (!array_contains([1, 2, 7], chapter_master_melee)){
             cooldown=8000;
             var onceh=0;
-            if (chapter_master_ranged=h) {chapter_master_ranged=0;}
-            else if (chapter_master_ranged!=h) {chapter_master_ranged=h;}
+            if (chapter_master_ranged=ranged_choice_order) {chapter_master_ranged=0;}
+            else if (chapter_master_ranged!=ranged_choice_order) {chapter_master_ranged=ranged_choice_order;}
         }
-        draw_text_transformed(x6+30,y6+4,ranged_options[h],0.4,0.4,0);
+        draw_text_transformed(x6+30,y6+4,ranged_options[ranged_choice_order],0.4,0.4,0);
         y6+=spac;
     }
     
@@ -2144,7 +2153,7 @@ if (slide=6){
     if(custom>0){
 	
 	draw_rectangle(1000,135,1180,170,1)
-	draw_text_transformed(1090,135,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
+	draw_text_transformed(1090,140,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
 	if (scr_hit(1000,135,1180,170)) {
 		tooltip2="Click to save your chapter";
 		tooltip= "Do you want to save your chapter?"

@@ -2161,10 +2161,8 @@ function scr_initialize_custom() {
 	var chapter_master_equip = {}
 	switch (master_melee) {
 		case 1:
-			chapter_master_equip = {
-				"wep1": "Boltstorm Gauntlet",
-				"wep2": "Boltstorm Gauntlet"
-			};
+			chapter_master_equip.wep1 = "Power Fist";
+			chapter_master_equip.wep2 = "Power Fist";
 			break;
 		case 2:
 			chapter_master_equip.wep1 = "Lightning Claw";
@@ -2192,6 +2190,7 @@ function scr_initialize_custom() {
 	}
 	switch (master_ranged) {
 		case 1:
+			chapter_master_equip.wep2 = "Boltstorm Gauntlet";
 			break;
 		case 2:
 			chapter_master_equip.wep2 = "Infernus Pistol";

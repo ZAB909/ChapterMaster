@@ -435,6 +435,7 @@
     {"id":{"name":"spr_weapon_storm","path":"sprites/spr_weapon_storm/spr_weapon_storm.yy",},},
     {"id":{"name":"spr_weapon_stalker","path":"sprites/spr_weapon_stalker/spr_weapon_stalker.yy",},},
     {"id":{"name":"spr_techpriest","path":"sprites/spr_techpriest/spr_techpriest.yy",},},
+    {"id":{"name":"spr_mm_butts_small","path":"sprites/spr_mm_butts_small/spr_mm_butts_small.yy",},},
     {"id":{"name":"spr_crusader","path":"sprites/spr_crusader/spr_crusader.yy",},},
     {"id":{"name":"spr_sororitas","path":"sprites/spr_sororitas/spr_sororitas.yy",},},
     {"id":{"name":"scr_choose_weighted","path":"scripts/scr_choose_weighted/scr_choose_weighted.yy",},},
