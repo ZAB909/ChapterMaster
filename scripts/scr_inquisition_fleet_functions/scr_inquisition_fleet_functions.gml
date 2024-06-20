@@ -280,7 +280,7 @@ if (inspection_type="inspect_world") or (inspection_type="inspect_fleet"){
             var unit;
              for (var g=1;g<array_length(obj_ini.artifact);g++){
                 if (obj_ini.artifact[g]!="" && obj_ini.artifact_loc[i]=that.name){
-                    if (artifact_struct[g].inquisition_disprove() && !obj_controller.und_armouries){
+                    if (obj_ini.artifact_struct[g].inquisition_disprove() && !obj_controller.und_armouries){
                         hurr+=8;
                         demonic+=1;
                     }
