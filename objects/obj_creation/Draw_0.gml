@@ -1889,7 +1889,7 @@ if (slide=5){
         }, 
         {
             t_tip :"Mutated Catalepsean Node",
-            t_tip2: "Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.",
+            t_tip2: "Your Astartes have reduced awareness when tired. Slightly less attack in ranged and melee combat.",
             data : catalepsean,
             mutation_points : 1,
         }, 
