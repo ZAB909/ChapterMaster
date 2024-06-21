@@ -335,14 +335,14 @@ global.trait_list = {
 	"deathworld":{
 		display_name:"Deathworld Born",
 		strength:[2,2,"max"],
-		constitution:[2,2,"max"],
+		constitution:[2,2,],
 		dexterity:[2,2,"max"],
 		weapon_skill:[2,2,"max"],
-		ballistic_skill:[2,-2,"min"],
+		ballistic_skill:[2,-2],
 		wisdom:[2,2,"max"],
 		flavour_text:"Started life on a deathworld. While this has greatly improved their strength and survival abilities, their skills in technology and other advanced fields are reduced",
 		intelligence:-3,
-		technology:[-3,2,"min"],
+		technology:[-3,2],
 		piety:[3,1],
 	},
 	"technophobe":{
@@ -386,6 +386,16 @@ global.trait_list = {
 		charisma : [4, 2, "max"],
 		effect:"Bonus when commanding",		
 	}
+	"feral" : {
+		display_name:"Feral",
+		flavour_text:"Plain Feral viewed as more akin to an animal than a human, with this comes a savage ferocity most often asscociated with those from Deathworlds",
+		wisdom : [2, 2],
+		charisma : [-6, 2, "max"],
+		technology : [-3, 2, "max"],	
+		strength : [5, 1, "max"],
+		weapon_skill : [4, 1, "max"],
+		ballistic_skill : [-3, 1, "min"],
+	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
 	"chapter_master":{
@@ -418,7 +428,9 @@ global.base_stats = { //tempory stats subject to change by anyone that wishes to
 			piety : [30,3],
 			luck :10,
 			technology :[30,3],
-			skills: {weapons:{"bolter":3, "chainsword":3, "ccw":3, "bolt_pistol":3}},
+			skills: {
+				weapons:{
+					"bolter":3, "chainsword":3, "ccw":3, "bolt_pistol":3}},
 			start_gear:{"armour":"power_armour", "wep1":"bolter", "wep2":"chainsword"},
 			base_group : "astartes",
 	},
@@ -1109,12 +1121,33 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			var astartes_trait_dist = [
 				["very_hard_to_kill", [149,148]],
 				["scholar", [99,98]],
+				[
+					"feral", 
+					[199,197],
+					{
+						recruit_world_type: [
+							["Ice", -2],
+							["Lava", -1],
+							["Deathworld", -3],
+							["Forge":50],
+							["Shrine":2]					
+						]
+					}
+				],
 				["brawler", [99,98],{
-						"chapter_name":["Space Wolves",[10,9]]
+						chapter_name:["Space Wolves",[20,19]]
 					}
 				],
 				["brute", [99,98]],
-				["charismatic", [99,98]],
+				[
+					"charismatic", 
+					[99,98],
+					{
+						recruit_world_type: [
+							["Shrine": -1]
+						]
+					}
+				],
 				["skeptic", [99,98]],
 				["blunt", [99,98]],
 				["nimble", [99,98]],
@@ -1124,14 +1157,38 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["cunning", [99,98]],
 				["guardian", [99,98]],
 				["observant", [99,98]],
-				["technophobe", [99,98],{"progenitor":[6,[1000,999]]}],
+				[
+					"technophobe", 
+					[99,98],
+					{
+						"progenitor":[6,[1000,999]],
+						recruit_world_type : [
+							["Ice", -5],
+							["Forge":50]
+						]
+					}
+				],
 				["jaded", [99,98]],
 				["strong", [99,98]],
 				["fast_learner", [149,148]],
-				["feet_floor", [199,198],{"chapter_name":["Space Wolves",[10,7]]}],
+				["feet_floor", 
+					[199,198],
+					{
+						chapter_name:[
+							"Space Wolves",[10,7]
+						]
+					}
+				],
 				["paragon", [999,998]],
 				["warp_touched",[299,298]],
-				["shitty_luck",[99,98],{"disadvantage":["Shitty Luck",[3,2]]}],
+				["shitty_luck",
+					[99,98],
+					{
+						"disadvantage":[
+							"Shitty Luck",[3,2]
+						]
+					}
+				],
 				["lucky",[99,98]],
 				["natural_leader",[199,198]],
 				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,1]]}],
