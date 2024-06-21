@@ -870,8 +870,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	  	var _new_armour_data = gear_weapon_data("armour", new_armour);
 	  	var _old_armour_data = gear_weapon_data(armour(), new_armour);
 
-	  	var _new_power_armour = _new_armour_data.has_tag("power_armour");
-	  	var _old_power_armour = _old_armour_data.has_tag("power_armour");
+	  	if (!is_struct(_new_armour_data) && !arti && new_armour!= "") then return "invalid item";
+
+	  	var _new_power_armour=false;
+	  	var _old_power_armour = false;
+	  	if (is_struct(_new_armour_data)){
+	  		_new_power_armour = _new_armour_data.has_tag("power_armour");
+	  	}
+
+	  	if (is_struct(_old_armour_data)){
+	  		_old_power_armour = _old_armour_data.has_tag("power_armour");
+	  	}	  	
 
 	   	if ((change_armour == new_armour || ((_old_power_armour && _new_power_armour) && new_armour=="Power Armour")) && same_quality){
 	   		return "no change";
@@ -905,7 +914,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
             } 
         }		
 	   		
-	  	if (from_armoury && new_armour!="" && !arti){
+	  	if (from_armoury && new_armour!="" && !arti && is_struct(_new_armour_data)){
 	  		if (scr_item_count(new_armour,quality)>0){
 				var exp_require = _new_armour_data.req_exp;
 	  			if (exp_require>experience()){
