@@ -129,7 +129,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     // Handle one-handed special melee
     if (!sprite_found){
         if (string_count("DUB", equiped_weapon) == 0){
-            if ("Power Fist" == equiped_weapon) {
+            if ("Power Fist" == equiped_weapon || "Boltstorm Gauntlet" == equiped_weapon) {
                 set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
                 sprite_found = !sprite_found;
                 display_type="power_fist";
