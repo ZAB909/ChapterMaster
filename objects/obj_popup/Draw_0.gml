@@ -757,7 +757,7 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
 
             if (target_comp=1) and ((n_wep1="(None)") or (n_wep1="")){n_good1=1;}
             if (target_comp=2) and ((n_wep2="(None)") or (n_wep2="")){n_good2=1;}
-            if (target_comp=3) and ((n_armour="(None)") or (n_armour="")){n_good2=1;}
+            if (target_comp=3) and ((n_armour="(None)") or (n_armour="")){n_good3=1;}
             if (target_comp=4) and ((n_gear="(None)") or (n_gear="")){n_good4=1;}
             if (target_comp=5) and ((n_mobi="(None)") or (n_mobi="")){n_good5=1;}
             // Removed EXIT; from each of these
@@ -798,10 +798,18 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
                         }
                     }            
                 }
-                if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep1="Assault Cannon"){n_good1=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
-                if (string_count("Dreadnought",n_armour)=0) and (n_wep1="Close Combat Weapon"){n_good1=0;warning="Only "+string(obj_ini.role[100][6])+" can use Close Combat Weapons.";}
+                if (is_struct(armour_data)){
+                    if ((!array_contains(armour_data.tags, "terminator")) and (!array_contains(armour_data.tags, "dreadnought"))) and (n_wep1 = "Assault Cannon") {
+                        n_good1 = 0;
+                        warning = "Cannot use Assault Cannons without Terminator/Dreadnought Armour.";
+                    }
+                    if (!array_contains(armour_data.tags, "dreadnought")) and (n_wep1 = "Close Combat Weapon") {
+                        n_good1 = 0;
+                        warning = "Only " + string(obj_ini.role[100][6]) + " can use Close Combat Weapons.";
+                    }
+                }
             }
-             if (target_comp=1) and (is_struct(weapon_two_data)){// Check numbers
+             if (target_comp=2) and (is_struct(weapon_two_data)){// Check numbers
                 req_wep2_num=units;have_wep2_num=0;
                 var i=-1;
                 repeat(array_length(obj_controller.display_unit)){i+=1;
@@ -829,10 +837,18 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
                         }
                     }            
                 }
-                if (string_count("Terminator",n_armour)=0) and (string_count("Dreadnought",n_armour)=0) and (string_count("Tartaros",n_armour)=0) and (n_wep2="Assault Cannon"){n_good2=0;warning="Cannot use Assault Cannons without Terminator/Dreadnought Armour.";}
-                if (string_count("Dreadnought",n_armour)=0) and (n_wep2="Close Combat Weapon"){n_good2=0;warning="Only "+string(obj_ini.role[100][6])+" can use Close Combat Weapons.";}
-                if ((string_count("Terminator",n_armour)>0) or (string_count("Tartaros",n_armour)>0) or (string_count("Dreadnought",n_armour)>0)) and (n_mobi!="") then n_good2=0;
-                if ((string_count("Terminator",o_armour)>0) or (string_count("Tartaros",o_armour)>0) or (string_count("Dreadnought",o_armour)>0)) and (n_mobi!="") then n_good2=0;
+                if (is_struct(armour_data)){
+                    if ((!array_contains(armour_data.tags, "terminator")) and (!array_contains(armour_data.tags, "dreadnought"))) and (n_wep2 = "Assault Cannon") {
+                        n_good2 = 0;
+                        warning = "Cannot use Assault Cannons without Terminator/Dreadnought Armour.";
+                    }
+                    if (!array_contains(armour_data.tags, "dreadnought")) and (n_wep2 = "Close Combat Weapon") {
+                        n_good2 = 0;
+                        warning = "Only " + string(obj_ini.role[100][6]) + " can use Close Combat Weapons.";
+                    }
+                    if ((string_count("Terminator", n_armour) > 0) or(string_count("Tartaros", n_armour) > 0) or(string_count("Dreadnought", n_armour) > 0)) and(n_mobi != "") then n_good2 = 0;
+                    if ((string_count("Terminator", o_armour) > 0) or(string_count("Tartaros", o_armour) > 0) or(string_count("Dreadnought", o_armour) > 0)) and(n_mobi != "") then n_good2 = 0;
+                }
             }
             if (target_comp=3) and (is_struct(armour_data)){// Check numbers
                 req_armour_num=units;

@@ -1735,7 +1735,8 @@ global.gear = {
       },
       "melee_hands":8,
       "ranged_hands":8,      
-      "description": "A massive war-machine that can be piloted by an honored Astarte, who otherwise would have fallen in combat. Some of the Astartes consider this a fate worse than death"
+      "description": "A massive war-machine that can be piloted by an honored Astarte, who otherwise would have fallen in combat. Some of the Astartes consider this a fate worse than death",
+      "tags":["dreadnought"],
     },
     "Tartaros": {
         "abbreviation": "Tartrs", 
