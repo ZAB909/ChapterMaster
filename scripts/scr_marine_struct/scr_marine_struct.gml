@@ -816,7 +816,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
    		}
 	  	if (from_armoury && new_mobility_item!="" && !arti){
 	  		if (scr_item_count(new_mobility_item, quality)>0){
-				var exp_require = gear_weapon_data("weapon", new_mobility_item, "exp", false, quality);
+				var exp_require = gear_weapon_data("weapon", new_mobility_item, "req_exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  				  			
@@ -858,11 +858,16 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	  	var require_carpace=false;
 	  	var armour_list=[];
 	  	var same_quality = quality == "any" || quality == armour_quality;
-	  	var _new_power_armour = array_contains(global.power_armour, new_armour);
-	  	var _old_power_armour = array_contains(global.power_armour, change_armour);
+	  	var _new_armour_data = gear_weapon_data("armour", new_armour);
+	  	var _old_armour_data = gear_weapon_data(armour(), new_armour);
+
+	  	var _new_power_armour = _new_armour_data.has_tag("power_armour");
+	  	var _old_power_armour = _old_armour_data.has_tag("power_armour");
+
 	   	if ((change_armour == new_armour || ((_old_power_armour && _new_power_armour) && new_armour=="Power Armour")) && same_quality){
 	   		return "no change";
 	   	}
+
 	  	if (_new_power_armour){
 	  		require_carpace=true;
 	  		if (new_armour=="Power Armour"){
@@ -893,13 +898,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	   		
 	  	if (from_armoury && new_armour!="" && !arti){
 	  		if (scr_item_count(new_armour,quality)>0){
-				var exp_require = gear_weapon_data("weapon", new_armour, "exp", false, quality);
+				var exp_require = _new_armour_data.req_exp;
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			} 	  			
 		   		quality=scr_add_item(new_armour,-1,quality);
 		   		if (quality == "no_item") then return "no_items";
-		   		quality = quality!=undefined? quality:"standard";
+		   		quality = quality!=undefined ? quality:"standard";
 		    } else {
 				return "no_items";
 		    }
@@ -1427,7 +1432,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	 	}
 	  	if (from_armoury) and (new_gear!="") and (!arti){
 	  		if (scr_item_count(new_gear,quality)>0){
-				var exp_require = gear_weapon_data("gear", new_gear, "exp", false, quality);
+				var exp_require = gear_weapon_data("gear", new_gear, "req_exp", false, quality);
 	  			if (exp_require>experience()){
 	  				return "exp_low";
 	  			}
@@ -1519,7 +1524,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 		viable = true;
 		qual_string = quality;
 		if (scr_item_count(new_weapon, quality)>0){
-			var exp_require = gear_weapon_data("weapon", new_weapon, "exp", false, quality);
+			var exp_require = gear_weapon_data("weapon", new_weapon, "req_exp", false, quality);
 				if (exp_require>experience()){
 					viable = false;
 					qual_string = "exp_low";
