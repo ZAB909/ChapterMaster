@@ -471,6 +471,7 @@
     {"id":{"name":"spr_warp_level_icon","path":"sprites/spr_warp_level_icon/spr_warp_level_icon.yy",},},
     {"id":{"name":"spr_new_banner","path":"sprites/spr_new_banner/spr_new_banner.yy",},},
     {"id":{"name":"spr_new_ui_cover","path":"sprites/spr_new_ui_cover/spr_new_ui_cover.yy",},},
+    {"id":{"name":"scr_unit_spawn_functions","path":"scripts/scr_unit_spawn_functions/scr_unit_spawn_functions.yy",},},
     {"id":{"name":"spr_ui_but_1","path":"sprites/spr_ui_but_1/spr_ui_but_1.yy",},},
     {"id":{"name":"spr_ui_but_2","path":"sprites/spr_ui_but_2/spr_ui_but_2.yy",},},
     {"id":{"name":"spr_ui_but_3","path":"sprites/spr_ui_but_3/spr_ui_but_3.yy",},},
