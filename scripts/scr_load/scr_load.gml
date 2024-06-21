@@ -331,6 +331,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.millenium=ini_read_real("Controller","millenium",0);
 	    //
 	    obj_controller.requisition=ini_read_real("Controller","req",0);
+	    obj_controller.tech_status=ini_read_string("Controller","tech_status","Cult Mechanicus");
 	    //
 	    obj_controller.income=ini_read_real("Controller","income",0);
 	    obj_controller.income_last=ini_read_real("Controller","income_last",0);

@@ -110,7 +110,8 @@ function calculate_research_points(turn_end=false){
     with (obj_controller){
         research_points = 0;
         forge_points = 0;
-        master_craft_chance = 99;
+        master_craft_chance = 0;
+        if (tech_status == "heretics") then master_craft_chance+=5;
         forge_string = $"Forge Production Rate#";
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
@@ -127,7 +128,7 @@ function calculate_research_points(turn_end=false){
                 if (struct_exists(gen_data,"crafter")) then crafters++;
                 if (struct_exists(gen_data,"at_forge")){
                     at_forge++;
-                    master_craft_chance -= (techs[i].experience()/50)
+                    master_craft_chance += (techs[i].experience()/50)
                 }
                 forge_points += forge_point_gen[0];
                 if (techs[i].has_trait("tech_heretic")){
@@ -295,7 +296,7 @@ function forge_queue_logic(){
                         quality_string="";
                         normal_count=0;
                         for (var s=0;s<forge_queue[i].count;s++){
-                            if (irandom(master_craft_chance)==0){
+                            if (master_craft_chance && (irandom(100-master_craft_chance)) == 0){
                                 master_craft_count++;
                             } else {
                                 normal_count++;
@@ -903,7 +904,7 @@ function scr_draw_armentarium(){
         // draw_sprite_ext(spr_forge_points_icon,0,xx+359+string_width(forge_text), yy+410,0.3,0.3,0,c_white,1);
         forge_text += $"Chapter total {obj_ini.role[100, 16]}s: {temp[36]}#";
         forge_text += $"Planetary Forges in operation: {obj_controller.player_forges}#";
-        forge_text += $"Master Craft Forge Chance: {1-((master_craft_chance+1)/100)}#    Assign techmarines to forges to increase Master Craft Chance";
+        forge_text += $"Master Craft Forge Chance: {(master_craft_chance}%#    Assign techmarines to forges to increase Master Craft Chance";
         // forge_text += $"A total of {obj_ini.role[100, 16]}s assigned to Forges: {var}#";
         draw_text_ext(xx+359, yy+410, string_hash_to_newline(forge_text),-1,670);
     }

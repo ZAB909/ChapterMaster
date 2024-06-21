@@ -196,7 +196,7 @@ global.trait_list = {
 		piety:[3,1,"max"],
 		display_name:"Weakness of Flesh",
 		flavour_text:"Perceive living flesh as a weakness and try to cast it aside whatever possible",
-		effect:"faith boosts from bionic replacements"
+		effect:"faith boosts from bionic replacements, better at dealing with Mechanicus"
 	},
 	"zealous_faith":{
 		strength:[1,1,"max"],

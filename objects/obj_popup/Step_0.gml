@@ -1563,6 +1563,7 @@ if (image=="new_forge_master"){
             text="With neither faction receiving your favor it is not long until the BloodLetting begins. Within a month a brutal civil war engulfs the Tech ranks with losses suffered on both sides";
         } else if (press==2){
             text="With your full support the so called 'heretics' who have seen through the lies of the bureaucracy of Mars eliminate those who will not be swayed to see the truth.";
+            obj_controller.tech_status = "heretics";
         } else if(press==3){
             text="The extremists and heretics that have been allowed to grow like a cancer in the Armentarium are rooted out and disposed of.";
         }

@@ -281,6 +281,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","millenium",obj_controller.millenium);
 	    //
 	    ini_write_real("Controller","req",obj_controller.requisition);
+	    ini_write_string("Controller","tech_status",obj_controller.tech_status);
 	    //
 	    ini_write_real("Controller","income",obj_controller.income);
 	    ini_write_real("Controller","income_last",obj_controller.income_last);

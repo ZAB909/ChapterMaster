@@ -1299,7 +1299,7 @@ if (forge_master!="none"){
 } else {
     forge_master_modifier=1.7;
 }
-
+var tech_heretic_modifier =1
  i = 0;
   repeat(array_length(item_cost)-2){
     i += 1;
@@ -1308,10 +1308,19 @@ if (forge_master!="none"){
     }
     if (rene != 1){
 		item_cost[i]*=mechanicus_modifier;
+        if (obj_controller.tech_status=="heretics"){
+            tech_heretic_modifier = 1.05;
+            item_cost[i]*=tech_heretic_modifier
+        }
 	}
 	item_cost[i] *= forge_master_modifier;
     item_cost[i] = ceil(item_cost[i]);
 }
+
+item_cost_tooltip_info = "";
+item_cost_tooltip_info += $"Modifier from forge Master : X{forge_master_modifier}/n"
+item_cost_tooltip_info += $"Mechanicus Relations : X{mechanicus_modifier}/n"
+item_cost_tooltip_info += $"Chapter tech approach (obj_controller.tech_status) : X{tech_heretic_modifier}/n"
 
 
 /* */
