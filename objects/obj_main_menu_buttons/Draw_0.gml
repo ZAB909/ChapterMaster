@@ -82,7 +82,7 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                     hover[i]--;
                 }
             }
-            if (point_and_click([580,y_start, 580+width, y_start+height])){
+            if (point_and_click([580,y_start, 580+width, y_start+height]) and !instance_exists(obj_ingame_menu)){
                 switch(i){
                     case 0:
                         ini_open("saves.ini");
