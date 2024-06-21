@@ -875,7 +875,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	  	var armour_list=[];
 	  	var same_quality = quality == "any" || quality == armour_quality;
 	  	var _new_armour_data = gear_weapon_data("armour", new_armour);
-	  	var _old_armour_data = gear_weapon_data(armour(), new_armour);
+	  	var _old_armour_data = gear_weapon_data("armour", armour);
 
 	  	if (!is_struct(_new_armour_data) && !arti && new_armour!= "") then return "invalid item";
 

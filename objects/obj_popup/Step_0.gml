@@ -277,39 +277,19 @@ if (image="inquisition") and (loc="contraband"){
     demand=0;
     option1="Hand over all Chaos and Daemonic Artifacts";
     option2="Over your dead body";
-    
+    var arti;
     if (press=1){
-        var e,ca,ia;e=0;ca=0;ia=0;
-        repeat(obj_controller.artifacts){e+=1;
-            if (string_count("aemon",obj_ini.artifact_tags[e])>0) or (string_count("haos",obj_ini.artifact_tags[e])>0){
-                obj_ini.artifact[e]="";
-                obj_ini.artifact_tags[e]="";
-                obj_ini.artifact_identified[e]=0;
-                obj_ini.artifact_condition[e]=100;
-                obj_ini.artifact_loc[e]="";
-                obj_ini.artifact_sid[e]=0;
-                obj_controller.artifacts-=1;
-                if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
-            }
-        }
-        
-        var noom1,noom2;noom1=0;noom2=0;
-        noom1=instance_nearest(obj_temp_arti.x,obj_temp_arti.y,obj_star);noom2=noom1.name;
-        repeat(4400){
-            if (ca<=10) and (ca>=0){
-                ia+=1;if (ia=400){ca+=1;ia=1;if (ca=11) then ca=-5;}
-                if (ca>=0) and (ca<11){
-                    if (string(obj_ini.loc[ca,ia])=noom2){
-                        // show_message(string(obj_ini.loc[ca,ia])+" is at the right location");
-                        // show_message("wep1: "+string(obj_ini.wep1[ca,ia])+", wep2: "+string(obj_ini.wep2[ca,ia]));
-                        if (string_count("aemon",obj_ini.wep1[ca,ia])>0) or (string_count("haos",obj_ini.wep1[ca,ia])>0) then obj_ini.wep1[ca,ia]="";
-                        if (string_count("aemon",obj_ini.wep2[ca,ia])>0) or (string_count("haos",obj_ini.wep2[ca,ia])>0) then obj_ini.wep2[ca,ia]="";
-                        if (string_count("aemon",obj_ini.armour[ca,ia])>0) or (string_count("haos",obj_ini.armour[ca,ia])>0) then obj_ini.armour[ca,ia]="";
-                        if (string_count("aemon",obj_ini.mobi[ca,ia])>0) or (string_count("haos",obj_ini.mobi[ca,ia])>0) then obj_ini.mobi[ca,ia]="";
-                        if (string_count("aemon",obj_ini.gear[ca,ia])>0) or (string_count("haos",obj_ini.gear[ca,ia])>0) then obj_ini.gear[ca,ia]="";
-                    }
+        var contraband=[];
+        for (var i=0;i<array_length(obj_ini.artifact_struct);i++){
+            if (obj_ini.artifact!=""){
+                arti=obj_ini.artifact_struct[i];
+                if (arti.inquisition_disaprove()){
+                    array_push(contraband, i);
                 }
             }
+        }
+        for (i=0;i<array_length(contraband);i++){
+            delete_artifact(i);
         }
     }
     

@@ -391,4 +391,14 @@ function get_nearest_player_fleet(nearest_x, nearest_y, is_static=false, is_movi
 }
 
 
+function get_valid_player_ship(){
+	for (var i = 0;i<array_length(obj_ini.ship);i++){
+		if (obj_ini.ship[i] != ""){
+			return i;
+		}
+	}
+	return -1;
+}
+
+
 
