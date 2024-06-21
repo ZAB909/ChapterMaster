@@ -10,8 +10,8 @@ function scr_turn_first() {
 		if (obj_ini.artifact_loc[unload]==""){
 			var valid_ship = get_valid_player_ship();
 			if (valid_ship >-1){
-				obj_ini.artifact_loc[last_artifact] = obj_ini.ship[valid_ship];
-				obj_ini.artifact_sid[last_artifact] = 500+valid_ship;
+				obj_ini.artifact_loc[unload] = obj_ini.ship[valid_ship];
+				obj_ini.artifact_sid[unload] = 500+valid_ship;
 			}
 		}
 	    if (obj_ini.artifact_identified[unload]>0){
