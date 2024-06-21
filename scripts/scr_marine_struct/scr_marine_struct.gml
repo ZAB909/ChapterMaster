@@ -401,8 +401,15 @@ global.trait_list = {
 		wisdom : [2, 2],
 		charisma : [2, 2],
 		weapon_skill : [1,1],
-		flavour_text:"Is known for their impecable honour even in the heat of battle",
+		flavour_text:"Is known for their impeccable honor even in the heat of battle",
 		effect:"If commanding garrison will prevent disposition loss",		
+	},
+	"duelist" : {
+		weapon_skill : [2,2],
+		display_name : "Duelist",
+		flavour_text:"a superlative duelist favoring traditional dueling weaponry",
+		effect:"Bonus to using swords and advantages in duels",
+
 	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -1148,7 +1155,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["scholar", [99,98]],
 				[
 					"feral", 
-					[299,297],
+					[299,296],
 					{
 						recruit_world_type: [
 							["Ice", -2],
@@ -1222,7 +1229,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,1]]}],
 				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,1]]}],
 				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
-				["flesh_is_weak",[1000,999],{"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]}],
+				["flesh_is_weak",[1000,999],{
+						"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]
+					}
+				],
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
 				["crafter",[299,298],{"advantage":["crafter",[199,198]]}],
 				[
@@ -1230,10 +1240,22 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					[299,298],
 					{
 						recruit_world_type: [
-							["Feudal", -4]
+							["Feudal", -9]
 						]						
 					}
 				],
+				[
+					"duelist",
+					[299,298],
+					{
+						chapter_name:[
+							"Black Templars",[199,197]
+						],
+						recruit_world_type: [
+							["Feudal", -9]
+						]						
+					}
+				],				
 			];
 
 			distribute_traits(astartes_trait_dist);
@@ -2033,6 +2055,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					melee_att*=1.1;
 					explanation_string+=$"{global.trait_list.brawler.display_name}: x1.1#";
 				}
+				if (primary_weapon.has_tag("sword") && has_trait("duelist")){
+					melee_att*=1.3;
+					explanation_string+=$"{global.trait_list.duelist.display_name}: x1.3#";
+				}				
 			}
 			var final_attack =  floor((melee_att/100)*primary_weapon.attack);
 			if (secondary_weapon!="none" && !encumbered_melee){
