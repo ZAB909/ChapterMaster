@@ -388,13 +388,21 @@ global.trait_list = {
 	}
 	"feral" : {
 		display_name:"Feral",
-		flavour_text:"Plain Feral viewed as more akin to an animal than a human, with this comes a savage ferocity most often asscociated with those from Deathworlds",
+		flavour_text:"Plain Feral, viewed as more akin to an animal than a human, with this comes a savage ferocity most often asscociated with those from Deathworlds",
 		wisdom : [2, 2],
 		charisma : [-6, 2, "max"],
 		technology : [-3, 2, "max"],	
 		strength : [5, 1, "max"],
 		weapon_skill : [4, 1, "max"],
 		ballistic_skill : [-3, 1, "min"],
+	},
+	"honorable" : {
+		display_name : "Honorable",
+		wisdom : [2, 2],
+		charisma : [2, 2],
+		weapon_skill : [1,1],
+		flavour_text:"Is known for their impecable honour even in the heat of battle",
+		effect:"If commanding garrison will prevent disposition loss",		
 	}
 }
 global.base_stats = { //tempory stats subject to change by anyone that wishes to try their luck
@@ -636,6 +644,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	squad = "none";
 	stat_point_exp_marker = 0;
 	bionics=0;
+	self.other_spawn_data = other_spawn_data;
 	static experience =  function(){
 		return obj_ini.experience[company][marine_number];
 	}//get exp
@@ -943,13 +952,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 		get_unit_size(); //every time armour is changed see if the marines size has changed
 		return "complete";
 	};	
-	static max_health =function(){
+	static max_health =function(base=false){
 		var max_h = 100 * (1+((constitution - 40)*0.025));
-		max_h += gear_weapon_data("armour", armour(), "hp_mod");
-		max_h += gear_weapon_data("gear", gear(), "hp_mod");
-		max_h += gear_weapon_data("mobility", mobility_item(), "hp_mod");
-		max_h += gear_weapon_data("weapon", weapon_one(), "hp_mod");
-		max_h += gear_weapon_data("weapon", weapon_two(), "hp_mod");
+		if (!base){
+			max_h += gear_weapon_data("armour", armour(), "hp_mod");
+			max_h += gear_weapon_data("gear", gear(), "hp_mod");
+			max_h += gear_weapon_data("mobility", mobility_item(), "hp_mod");
+			max_h += gear_weapon_data("weapon", weapon_one(), "hp_mod");
+			max_h += gear_weapon_data("weapon", weapon_two(), "hp_mod");
+		}
 		return max_h;
 	};	
 	static increase_max_health = function(increase){
@@ -1128,12 +1139,12 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["scholar", [99,98]],
 				[
 					"feral", 
-					[199,197],
+					[299,297],
 					{
 						recruit_world_type: [
 							["Ice", -2],
 							["Lava", -1],
-							["Deathworld", -3],
+							["Death", -3],
 							["Forge":50],
 							["Shrine":2]					
 						]
@@ -1195,7 +1206,9 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					}
 				],
 				["lucky",[99,98]],
-				["natural_leader",[199,198]],
+				["natural_leader",
+					[199,198]
+				],
 				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,1]]}],
 				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,1]]}],
 				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,1]]}],
@@ -1203,6 +1216,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["flesh_is_weak",[1000,999],{"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]}],
 				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
 				["crafter",[299,298],{"advantage":["crafter",[199,198]]}],
+				[
+					"honorable",
+					[299,298],
+					{
+						recruit_world_type: [
+							["Feudal": -4]
+						]						
+					}
+				],
 			];
 
 			distribute_traits(astartes_trait_dist);

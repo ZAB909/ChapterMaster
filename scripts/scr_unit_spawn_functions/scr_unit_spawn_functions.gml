@@ -49,15 +49,22 @@ function scr_marine_trait_spawning(distribution_set){
 			if (struct_exists(other_spawn_data, "recruit_world")){
 				var recruit_world_data = [other_spawn_data, "recruit_world"];
 				if (struct_exists(dist_modifiers, "recruit_world_type")){
-					var type_data = dist_modifiers.recruit_world_type
+					var type_data = dist_modifiers.recruit_world_type;
 					for (var t=0;t<array_length(type_data)t++){
-						if (type_data[t][0] == recruit_world_data.type){
+						if (type_data[t][0] == recruit_world_data.planet_type){
 							dist_rate[1] += type_data[t][1];
 						}
 					}
 				}
 				if (struct_exists(dist_modifiers,"trial_type")){
-					
+					if (struct_exists(dist_modifiers, "recruit_trial")){
+						trial_data = dist_modifiers.recruit_trial;
+						for (var t=0;t<array_length(trial_data)t++){
+							if (type_data[t][0] == recruit_world_data.trial_type){
+								dist_rate[1] += type_data[t][1];
+							}
+						}						
+					}
 				}
 			}						
 			if (irandom(dist_rate[0])>dist_rate[1]){
