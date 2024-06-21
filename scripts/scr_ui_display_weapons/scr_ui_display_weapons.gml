@@ -129,17 +129,22 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
     // Handle one-handed special melee
     if (!sprite_found){
         if (string_count("DUB", equiped_weapon) == 0){
-            if ("Power Fist" == equiped_weapon || "Boltstorm Gauntlet" == equiped_weapon) {
-                set_as_melee_onehand_special(spr_weapon_powfist, left_or_right);
-                sprite_found = !sprite_found;
-                display_type="power_fist";
-            }if ("Lightning Claw" == equiped_weapon) {
-                set_as_melee_onehand_special(spr_weapon_lightning1, left_or_right);
-                sprite_found = !sprite_found;
-                display_type="lightning_claw";
-            }   
+            var special_melee ={
+                "Power Fist":spr_weapon_powfist,
+                "Lightning Claw":spr_weapon_lightning1,
+                "Boltstorm Gauntlet":spr_weapon_boltstorm_gauntlet_small,
+            }
+            var special_melee_names=struct_get_names(special_melee);
+            for (var i=0;i<array_length(special_melee_names);i++){
+                if (special_melee_names[i] == equiped_weapon) {
+                    set_as_melee_onehand_special(special_melee[$ special_melee_names[i]],left_or_right)
+                    sprite_found = true;
+                    break;               
+                }
+            }
         }
     }
+
 
     // Handle two-handed melee
     if (!sprite_found){
