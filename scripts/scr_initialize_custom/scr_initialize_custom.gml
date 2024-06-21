@@ -2183,33 +2183,37 @@ function scr_initialize_custom() {
 			break;
 		case 7:
 			chapter_master_equip.wep1 = "Eviscerator";
+			chapter_master_equip.wep2 = "";
 			break;
 		case 8:
 			chapter_master_equip.wep1 = "Force Staff";
 			break;
 	}
-	switch (master_ranged) {
-		case 1:
-			chapter_master_equip.wep2 = "Boltstorm Gauntlet";
-			break;
-		case 2:
-			chapter_master_equip.wep2 = "Infernus Pistol";
-			break;
-		case 3:
-			chapter_master_equip.wep2 = "Plasma Pistol";
-			break;
-		case 4:
-			chapter_master_equip.wep2 = "Plasma Gun";
-			break;
-		case 5:
-			chapter_master_equip.wep2 = "Heavy Bolter";
-			break;
-		case 6:
-			chapter_master_equip.wep2 = "Meltagun";
-			break;
-		case 7:
-			chapter_master_equip.wep2 = "Storm Shield";
-			break;
+
+	if (!array_contains([1,2,7], master_melee)){
+		switch (master_ranged) {
+			case 1:
+				chapter_master_equip.wep2 = "Boltstorm Gauntlet";
+				break;
+			case 2:
+				chapter_master_equip.wep2 = "Infernus Pistol";
+				break;
+			case 3:
+				chapter_master_equip.wep2 = "Plasma Pistol";
+				break;
+			case 4:
+				chapter_master_equip.wep2 = "Plasma Gun";
+				break;
+			case 5:
+				chapter_master_equip.wep2 = "Heavy Bolter";
+				break;
+			case 6:
+				chapter_master_equip.wep2 = "Meltagun";
+				break;
+			case 7:
+				chapter_master_equip.wep2 = "Storm Shield";
+				break;
+		}
 	}
 
 	chapter_master_equip.armour = "Artificer Armour";

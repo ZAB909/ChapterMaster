@@ -2082,6 +2082,7 @@ if (slide=6){
     var ranged_options = ["","Boltstorm Gauntlet","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
     if (array_contains([1, 2, 7], chapter_master_melee)){
         draw_set_alpha(0.5);
+        chapter_master_ranged = 1;
     }
     repeat(7){
         ranged_choice_order += 1;
