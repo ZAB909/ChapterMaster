@@ -214,6 +214,18 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon) {
             }
         }
 
+        if (display_type == "ranged_twohand") {
+            ui_arm[1] = 2;
+            ui_arm[2] = 2;
+            ui_hand[1] = 0;
+            ui_hand[2] = 0;
+            if (current_armor == ArmourType.Indomitus) {
+                ui_ymod[left_or_right] += 15;
+            } else if (current_armor == ArmourType.Tartaros) {
+                ui_ymod[left_or_right] += 33;
+            }
+        }
+
         if (array_contains(["Thunder Hammer", "Chainaxe", "Crozius Arcanum"], equiped_weapon)) {
             ui_hand[left_or_right] = 2;
         }

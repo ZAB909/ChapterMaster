@@ -1340,7 +1340,22 @@ function scr_draw_unit_image(_background=false){
                 else if (armour_type == ArmourType.Indomitus){
                     draw_sprite(spr_terminator_hands,0,x_surface_offset,y_surface_offset);
                 }
+            } else if ui_hand[1] == 2 {
+                if (armour_type == ArmourType.Tartaros){
+                    draw_sprite(spr_terminator_hands,2,x_surface_offset+4,y_surface_offset+13);
+                }
+                else if (armour_type == ArmourType.Indomitus){
+                    draw_sprite(spr_terminator_hands,2,x_surface_offset,y_surface_offset);
+                }
+            } else if ui_hand[1] == 3 {
+                if (armour_type == ArmourType.Tartaros){
+                    draw_sprite(spr_terminator_hands,4,x_surface_offset+4,y_surface_offset+13);
+                }
+                else if (armour_type == ArmourType.Indomitus){
+                    draw_sprite(spr_terminator_hands,4,x_surface_offset,y_surface_offset);
+                }
             }
+
             if ui_hand[2] == 1 {
                 if (armour_type == ArmourType.Tartaros){
                     if (specialist_colours <= 1){
@@ -1362,17 +1377,7 @@ function scr_draw_unit_image(_background=false){
                         draw_sprite_ext(spr_terminator_hands,1,x_surface_offset+spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                 }
-            }
-
-            if ui_hand[1] == 2 {
-                if (armour_type == ArmourType.Tartaros){
-                    draw_sprite(spr_terminator_hands,2,x_surface_offset+4,y_surface_offset+13);
-                }
-                else if (armour_type == ArmourType.Indomitus){
-                    draw_sprite(spr_terminator_hands,2,x_surface_offset,y_surface_offset);
-                }
-            }
-            if ui_hand[2] == 2 {
+            } else if ui_hand[2] == 2 {
                 if (armour_type == ArmourType.Tartaros){
                     if (specialist_colours <= 1){
                         var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
@@ -1393,17 +1398,7 @@ function scr_draw_unit_image(_background=false){
                         draw_sprite_ext(spr_terminator_hands,3,x_surface_offset+spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                 }
-            }
-
-            if ui_hand[1] == 3 {
-                if (armour_type == ArmourType.Tartaros){
-                    draw_sprite(spr_terminator_hands,4,x_surface_offset+4,y_surface_offset+13);
-                }
-                else if (armour_type == ArmourType.Indomitus){
-                    draw_sprite(spr_terminator_hands,4,x_surface_offset,y_surface_offset);
-                }
-            }
-            if ui_hand[2] == 3 {
+            } else if ui_hand[2] == 3 {
                 if (armour_type == ArmourType.Tartaros){
                     if (specialist_colours <= 1){
                         var spr_w = sprite_get_width(spr_terminator_hands) - sprite_get_xoffset(spr_terminator_hands) * 2;
@@ -1424,7 +1419,7 @@ function scr_draw_unit_image(_background=false){
                         draw_sprite_ext(spr_terminator_hands,5,x_surface_offset+spr_w,y_surface_offset,-1,1,0,c_white,1);
                     }
                 }
-            }       
+            }
 
             var shield_offset_x = 0;
             var shield_offset_y = 0;
