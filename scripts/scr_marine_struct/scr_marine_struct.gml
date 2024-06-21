@@ -385,7 +385,7 @@ global.trait_list = {
 		wisdom : [4, 2, "max"],
 		charisma : [4, 2, "max"],
 		effect:"Bonus when commanding",		
-	}
+	},
 	"feral" : {
 		display_name:"Feral",
 		flavour_text:"Plain Feral, viewed as more akin to an animal than a human, with this comes a savage ferocity most often asscociated with those from Deathworlds",
@@ -1145,8 +1145,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 							["Ice", -2],
 							["Lava", -1],
 							["Death", -3],
-							["Forge":50],
-							["Shrine":2]					
+							["Forge",50],
+							["Shrine",2]					
 						]
 					}
 				],
@@ -1160,7 +1160,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					[99,98],
 					{
 						recruit_world_type: [
-							["Shrine": -1]
+							["Shrine", -1]
 						]
 					}
 				],
@@ -1180,7 +1180,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 						"progenitor":[6,[1000,999]],
 						recruit_world_type : [
 							["Ice", -5],
-							["Forge":50]
+							["Forge",50]
 						]
 					}
 				],
@@ -1221,7 +1221,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					[299,298],
 					{
 						recruit_world_type: [
-							["Feudal": -4]
+							["Feudal", -4]
 						]						
 					}
 				],

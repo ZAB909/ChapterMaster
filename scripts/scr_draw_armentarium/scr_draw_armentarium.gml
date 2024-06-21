@@ -904,7 +904,7 @@ function scr_draw_armentarium(){
         // draw_sprite_ext(spr_forge_points_icon,0,xx+359+string_width(forge_text), yy+410,0.3,0.3,0,c_white,1);
         forge_text += $"Chapter total {obj_ini.role[100, 16]}s: {temp[36]}#";
         forge_text += $"Planetary Forges in operation: {obj_controller.player_forges}#";
-        forge_text += $"Master Craft Forge Chance: {(master_craft_chance}%#    Assign techmarines to forges to increase Master Craft Chance";
+        forge_text += $"Master Craft Forge Chance: {master_craft_chance}%#    Assign techmarines to forges to increase Master Craft Chance";
         // forge_text += $"A total of {obj_ini.role[100, 16]}s assigned to Forges: {var}#";
         draw_text_ext(xx+359, yy+410, string_hash_to_newline(forge_text),-1,670);
     }
