@@ -116,11 +116,17 @@ function calculate_research_points(turn_end=false){
         var heretics = [], forge_master=-1, notice_heresy=false, forge_point_gen=[], crafters=0, at_forge=0, gen_data={};
         var tech_locations=[]
         var techs = collect_role_group("forge");
+        var total_techs = array_length(techs);
         for (var i=0; i<array_length(techs); i++){
             if (techs[i].IsSpecialist("heads")){
                 forge_master=i;
             }            
-            if (techs[i].in_jail()) then continue;
+            if (techs[i].in_jail()){
+                array_delete(techs, i, 1);
+                i--;
+                total_techs--;
+                continue;
+            }
             if (techs[i].technology>40 && techs[i].hp() >0){
                 research_points += techs[i].technology-40;
                 forge_point_gen=techs[i].forge_point_generation(true);
