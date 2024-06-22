@@ -417,13 +417,20 @@ function set_as_terminator_melee(sprite, left_or_right) {
 
 function dreadnought_sprite_components(component){
     var components = {
-        "Assualt Cannon" : spr_dread_assault_cannon,
-        "Lascannon" : spr_dread_lascannon,
+        "Assault Cannon" : spr_dread_assault_cannon,
+        "Lascannon" : spr_dread_plasma_cannon,
         "Close Combat Weapon":spr_dread_claw,
         "Twin Linked Heavy Bolter":spr_dread_heavy_bolter,
         "Plasma Cannon" : spr_dread_plasma_cannon,
         "Autocannon" : spr_dread_autocannon,
-        "Missile Launcher" :spr_dread_missile
+        "Missile Launcher" :spr_dread_missile,
+        "Dreadnought Lightning Claw": spr_dread_claw,
+        "CCW Heavy Flamer": spr_dread_claw,
+        "Dreadnought Power Claw": spr_dread_claw,
+        "Inferno Cannon": spr_dread_plasma_cannon,
+        "Multi-Melta": spr_dread_plasma_cannon,
+        "Twin Linked Lascannon": spr_dread_lascannon,
+       "Heavy Conversion Beam Projector": spr_dread_plasma_cannon,
     };
     if (struct_exists(components, component)){
         return components[$ component]
