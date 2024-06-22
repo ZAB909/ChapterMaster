@@ -30,8 +30,8 @@
   "nineSlice": null,
   "origin": 9,
   "parent": {
-    "name": "Marine Viewer",
-    "path": "folders/Sprites/Marine Viewer.yy",
+    "name": "arms_hands",
+    "path": "folders/Sprites/Marine Viewer/arms_hands.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
