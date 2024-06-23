@@ -152,23 +152,29 @@ function set_player_fleet_image(){
     image_index=min(ii,9);	
 }
 
-function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_frigate = true, exclude_esscort = true){
+function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_frigates = true, exclude_escorts = true){
 	var all_ships = [];
 	var i;
 	if (fleet=="none"){
-		for (i=1; i<=capital_number;i++){
-			if (i>=0 && i < array_length(capital_num)){
-				array_push(all_ships, capital_num[i]);
+		if (!exclude_capitals){
+			for (i=1; i<=capital_number;i++){
+				if (i>=0 && i < array_length(capital_num)){
+					array_push(all_ships, capital_num[i]);
+				}
 			}
 		}
-		for (i=1; i<=frigate_number;i++){
-			if (i>=0 && i < array_length(frigate_num)){
-				array_push(all_ships, frigate_num[i]);
+		if (!exclude_frigates){
+			for (i=1; i<=frigate_number;i++){
+				if (i>=0 && i < array_length(frigate_num)){
+					array_push(all_ships, frigate_num[i]);
+				}
 			}
 		}
-		for (i=1; i<=escort_number;i++){
-			if (i>=0 && i < array_length(escort_num)){
-				array_push(all_ships, escort_num[i]);
+		if (!exclude_escorts){
+			for (i=1; i<=escort_number;i++){
+				if (i>=0 && i < array_length(escort_num)){
+					array_push(all_ships, escort_num[i]);
+				}
 			}
 		}			
 	} else {

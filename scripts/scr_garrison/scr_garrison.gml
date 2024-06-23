@@ -13,7 +13,7 @@ function disposition_description_chart(dispo){
 		return "Very Friendly";
 	}else if (dispo<90){
 		return "Excellent";
-	}else if (dispo<100){
+	}else if (dispo<=100){
 		return "Unquestionable";
 	}
 }

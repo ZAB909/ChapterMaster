@@ -4,7 +4,7 @@
 // right here check for artifacts to be moved
 
 if (capital_number=0) then exit;
-var  c, good;c=0;good=0;
+var  c=0,good=0;
 var capital_id;
 var capital_list = fleet_full_ship_array(, ,true,true);
 for(var i=0;i<array_length(capital_list);i++)// Find the healthiest capital ship
