@@ -826,6 +826,17 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
    static update_mobility_item = function(new_mobility_item, from_armoury = true, to_armoury=true, quality="any"){
    		var arti = !is_string(new_mobility_item);
    		var change_mob=mobility_item();
+   		if (new_mobility_item != ""){
+   			var arm_data = get_armour_data();
+   			if (arm_data.has_tag("terminator")){
+   				return "incompatible with terminator";
+   			}
+   			var core_type = arti ? obj_ini.artifact[new_mobility_item] : new_mobility_item;
+   			//TODO move to tag system
+   			if (core_type=="Jump Pack" && !arm_data.has_tag("power_armour")){
+   				return "requires power armour";
+   			}
+   		}
    		var same_quality = quality == "any" || quality == mobility_item_quality;
    		if (change_mob == new_mobility_item && same_quality){
    			return "no change";
