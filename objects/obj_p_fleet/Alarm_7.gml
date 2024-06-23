@@ -7,7 +7,7 @@ if (capital_number=0) then exit;
 var  c=0,good=0;
 var capital_id;
 var capital_list = fleet_full_ship_array(, ,true,true);
-for(var i=0;i<array_length(capital_list);i++)// Find the healthiest capital ship
+for(var i=0;i<array_length(capital_list);i++){// Find the healthiest capital ship
     capital_id = capital_list[i];
     if (obj_ini.ship[capital_id] == "") then continue
     if (obj_ini.ship_hp[capital_id]>good){

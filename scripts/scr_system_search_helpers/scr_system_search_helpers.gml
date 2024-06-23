@@ -356,6 +356,13 @@ function is_dead_star(star="none"){
 	return dead_star;
 }
 
+function scr_create_space_hulk(xx,yy){
+	var hulk = instance_create(xx,yy,obj_star); 
+    hulk.space_hulk=1;
+    hulk.p_type[1]="Space Hulk";
+    hulk.name=global.name_generator.generate_hulk_name();	
+    return hulk;
+}
 //function scr_get_player_fleets() {
 //	var player_fleets = [];
 //	with(obj_p_fleet){

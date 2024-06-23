@@ -233,8 +233,9 @@ function scr_random_event(execute_now) {
 		}
 		var marine=marine_and_company[1];
 		var company=marine_and_company[0];
+		var unit = fetch_unit(marine_and_company);
 		var role=obj_ini.role[company][marine];
-		var text = string(role)+" "+string(obj_ini.name[company][marine]);
+		var text = unit.name_role();
 		var company_text = scr_convert_company_to_string(company);
 		if(company_text != ""){
 			company_text = "("+company_text+")";
@@ -282,21 +283,20 @@ function scr_random_event(execute_now) {
 			if(tries_to_place_space_hulk >= 50)
 			{
 				// its possible for there to be no good spot for the space hulk at a star, if there are too many stars in close proximity
-				debugl("RE: Space Hulk, couldn't find a spot for the spacehulk at the " +star_id.name +" system");
+				debugl($"RE: Space Hulk, couldn't find a spot for the spacehulk at the {star_id.name} system");
 				exit;	
 			}
-			var spaceHulk = instance_create(spaceHulkX,spaceHulkY,obj_star); 
-	        spaceHulk.space_hulk=1;
-	        spaceHulk.p_type[1]="Space Hulk";
-	        spaceHulk.name=global.name_generator.generate_hulk_name();
-	        if (own=1){
-				scr_alert("red","space_hulk","The Space Hulk "+string(spaceHulk.name)+" appears near the "+string(star_id.name)+" system.",spaceHulkX,spaceHulkY);
+			try{
+				var spaceHulk = scr_create_space_hulk(spaceHulkX,spaceHulkY);
+				
+				scr_alert(own?"red":"green","space_hulk",$"The Space Hulk {spaceHulk.name} appears near the {star_id.name} system.",spaceHulkX,spaceHulkY);
+
+				scr_event_log("",$"The Space Hulk {spaceHulk.name} appears near the {star_id.name} system.",star_id.name);
+		        evented = true;
 			}
-			else{ 
-				scr_alert("green","space_hulk","The Space Hulk "+string(spaceHulk.name)+" appears near the "+string(star_id.name)+" system.",spaceHulkX,spaceHulkY);
+			catch(_exception){
+				show_debug_message("{0} \n hulk error",_exception);
 			}
-			scr_event_log("","The Space Hulk "+string(spaceHulk.name)+" appears near the "+string(star_id.name)+" system.");
-	        evented = true;
 		}
 	}
 	
