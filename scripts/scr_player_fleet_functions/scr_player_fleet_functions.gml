@@ -152,7 +152,7 @@ function set_player_fleet_image(){
     image_index=min(ii,9);	
 }
 
-function fleet_full_ship_array(fleet="none"){
+function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_frigate = true, exclude_esscort = true){
 	var all_ships = [];
 	var i;
 	if (fleet=="none"){

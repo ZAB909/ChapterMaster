@@ -146,7 +146,9 @@ if (image="debug_banshee") and (cooldown<=0){
                 else with(flit1){instance_destroy();}
                 onceh=1;
             }
-            if (onceh=0) and (!instance_exists(flit1)) and (instance_exists(flit2)){if (point_distance(x,y,flit2.x,flit2.y)<=40) then with(flit2){instance_destroy();}onceh=1;}
+            if (onceh=0) and (!instance_exists(flit1)) and (instance_exists(flit2)){
+                if (point_distance(x,y,flit2.x,flit2.y)<=40) then with(flit2){instance_destroy();}onceh=1;
+            }
             if (onceh=0) and (instance_exists(flit1)) and (!instance_exists(flit2)){if (point_distance(x,y,flit1.x,flit1.y)<=40) then with(flit1){instance_destroy();}onceh=1;}
             
             instance_destroy();
@@ -175,7 +177,6 @@ if (image="chaos_messenger") and (title="Chaos Meeting"){
         }
         if (option1!=""){
             if (press=1){
-                remove_planet_problem()
                 with(obj_star){
                     var i=0;
                     repeat(planets){
@@ -289,12 +290,20 @@ if (image="inquisition") and (loc="contraband"){
             }
         }
         for (i=0;i<array_length(contraband);i++){
-            delete_artifact(i);
+            delete_artifact(contraband[i]);
         }
+        obj_controller.cooldown=10;option1="";
+        option2="";
+        loc="";
+        text="All Chaos and Daemonic Artifacts present have been handed over to the Inquisitor.  They remain seething, but your destruction has been stalled.  Or so mission_star imagine.";
+        exit;        
     }
     
-    if (press=1){obj_controller.cooldown=10;option1="";option2="";loc="";text="All Chaos and Daemonic Artifacts present have been handed over to the Inquisitor.  They remain seething, but your destruction has been stalled.  Or so mission_star imagine.";exit;}
-    if (press=2){obj_controller.cooldown=10;if (number!=0) then obj_turn_end.alarm[1]=4;instance_destroy();}
+    if (press=2){
+        obj_controller.cooldown=10;
+        if (number!=0) then obj_turn_end.alarm[1]=4;
+        instance_destroy();
+    }
 }
 
 
