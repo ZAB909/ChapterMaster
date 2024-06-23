@@ -578,13 +578,18 @@ function scr_initialize_custom() {
 	hunters = 0;
 
 	recruiting_type = obj_creation.recruiting;
-	aspirant_trial = obj_creation.aspirant_trial;
+	recruit_trial = obj_creation.aspirant_trial;
 	recruiting_name = obj_creation.recruiting_name;
 	home_type = obj_creation.homeworld;
 	home_name = obj_creation.homeworld_name;
 	fleet_type = obj_creation.fleet_type;
 
-
+	var start_spawn_data = {
+		recruit_data : {
+			recruit_world : recruiting_type,
+			aspirant_trial :obj_creation.aspirant_trial
+		}
+	}
 
 	// if not custom
 

@@ -57,6 +57,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Creation","folderPath":"folders/Sprites/Creation.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Groundside","folderPath":"folders/Sprites/Groundside.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Marine Viewer","folderPath":"folders/Sprites/Marine Viewer.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"arms_hands","folderPath":"folders/Sprites/Marine Viewer/arms_hands.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"bionics","folderPath":"folders/Sprites/Marine Viewer/bionics.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"body_types","folderPath":"folders/Sprites/Marine Viewer/body_types.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"deprecated","folderPath":"folders/Sprites/Marine Viewer/body_types/deprecated.yy",},
@@ -89,7 +90,6 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"UI","folderPath":"folders/Sprites/UI.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Tile Sets","folderPath":"folders/Tile Sets.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Timelines","folderPath":"folders/Timelines.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"arms_hands","folderPath":"folders/Sprites/Marine Viewer/arms_hands.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"custom_icons_help.txt","CopyToMask":153157610357391598,"filePath":"datafiles/icons",},
@@ -926,6 +926,7 @@
     {"id":{"name":"scr_trade","path":"scripts/scr_trade/scr_trade.yy",},},
     {"id":{"name":"scr_trade_add","path":"scripts/scr_trade_add/scr_trade_add.yy",},},
     {"id":{"name":"scr_trade_dep","path":"scripts/scr_trade_dep/scr_trade_dep.yy",},},
+    {"id":{"name":"scr_unit_equip_functions","path":"scripts/scr_unit_equip_functions/scr_unit_equip_functions.yy",},},
     {"id":{"name":"scr_demand","path":"scripts/scr_demand/scr_demand.yy",},},
     {"id":{"name":"spr_if_mk5_helm","path":"sprites/spr_if_mk5_helm/spr_if_mk5_helm.yy",},},
     {"id":{"name":"scr_dialogue","path":"scripts/scr_dialogue/scr_dialogue.yy",},},
