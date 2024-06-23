@@ -90,7 +90,7 @@ function scr_purge_world(star, planet, action_type, action_score) {
 
 	    if (isquest=1){
 	        if (thequest="cleanse") and (action_score>=20){
-	        	remove_planet_problem(thequest);
+	        	remove_planet_problem(planet,thequest,star);
             
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
