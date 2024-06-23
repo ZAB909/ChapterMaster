@@ -157,17 +157,17 @@ function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_fri
 	var i;
 	if (fleet=="none"){
 		for (i=1; i<=capital_number;i++){
-			if (i>=0 && i < array_length(obj_ini.ship_location)){
+			if (i>=0 && i < array_length(capital_num)){
 				array_push(all_ships, capital_num[i]);
 			}
 		}
 		for (i=1; i<=frigate_number;i++){
-			if (i>=0 && i < array_length(obj_ini.ship_location)){
+			if (i>=0 && i < array_length(frigate_num)){
 				array_push(all_ships, frigate_num[i]);
 			}
 		}
 		for (i=1; i<=escort_number;i++){
-			if (i>=0 && i < array_length(obj_ini.ship_location)){
+			if (i>=0 && i < array_length(escort_num)){
 				array_push(all_ships, escort_num[i]);
 			}
 		}			
