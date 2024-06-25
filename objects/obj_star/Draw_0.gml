@@ -94,7 +94,7 @@ draw_set_halign(fa_center);
 draw_set_font(fnt_cul_14);
 draw_set_alpha(1);
 var scale = obj_controller.zoomed ? 2 : 1;
-if (!global.load && obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h)) {
+if (!global.load && obj_controller.zoomed || rectangle_in_rectangle(x-60, y+5, x+60 , y-40, x1, y1, w, h)) {
     if (garrison){
         draw_sprite(spr_new_resource,3,x-30,y+15);
         if (scr_hit(x-40,y+10,x-10,y+35)){
@@ -135,11 +135,6 @@ if (!global.load && obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_
     } else {
         draw_surface_ext(star_tag_surface, x-(64*scale), y, scale, scale, 1, c_white, 1);
     }
-} else {
-	//ui_node.deactivate();
-}
-if (ui_node!=noone && global.load==0){
-    //ui_node.render(x,y);
 }
 draw_set_valign(fa_top)
 

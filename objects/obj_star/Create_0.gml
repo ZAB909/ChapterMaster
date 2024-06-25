@@ -107,9 +107,3 @@ global.star_name_colors = [
 	#AD5272, //why 12 is skipped in general, we will never know
 	#80FF00 // Sleepy robots
 ]
-
-if (instance_exists(obj_controller)){
-//	star_ui_name_node()
-} else {
-	ui_node=noone;
-}
