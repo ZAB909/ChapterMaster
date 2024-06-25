@@ -119,6 +119,7 @@ if (!global.load && obj_controller.zoomed || rectangle_in_rectangle(x-60, y+5, x
                 try{
                     scr_image("force",-50,0,0,0,0);
                     var faction_sprite = obj_img.force[owner];
+                     draw_sprite_ext(faction_sprite,faction_index,xx+(panel_width/2)-30,yy+25, 0.60, 0.60, 0, c_white, 1);
                 } catch(_exception){
                     show_debug_message("{0}", _exception);
                 }
