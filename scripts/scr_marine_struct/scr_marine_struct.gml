@@ -2396,7 +2396,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			// case obj_ini.role[100][Role.VETERAN_SERGEANT]:
 			// Command Squads
 			// case obj_ini.role[100][Role.CAPTAIN]:
-			// case obj_ini.role[100][Role.COMPANY_CHAMPION]:
+			// case obj_ini.role[100][Role.CHAMPION]:
 			// case obj_ini.role[100][Role.ANCIENT]:
 			// Command Squads and HQ
 			// case obj_ini.role[100][Role.CHAPLAIN]:

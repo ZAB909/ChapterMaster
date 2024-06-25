@@ -457,7 +457,7 @@ function scr_ui_settings() {
     
 	    draw_text(xx+66,yy+359,"Captain");
 	    draw_text(xx+66,yy+386,"Standard Bearer");
-	    draw_text(xx+66,yy+413,"Company Champion");
+	    draw_text(xx+66,yy+413,"Champion");
 	    draw_text(xx+66,yy+440,"Chaplain");
 	    draw_text(xx+66,yy+467,"Apothecary");
 	    draw_text(xx+66,yy+494,"Librarian");

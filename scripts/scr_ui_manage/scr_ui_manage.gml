@@ -255,7 +255,7 @@ function scr_ui_manage() {
 		                				break;
 									case "champion_promote":
 			                			unit = display_unit[i];
-			                			unit.update_role(obj_ini.role[100][Role.COMPANY_CHAMPION]);
+			                			unit.update_role(obj_ini.role[100][Role.CHAMPION]);
 		
 										with (obj_ini){
 			                				scr_company_order(unit.company);
@@ -870,7 +870,7 @@ function scr_ui_manage() {
 							};
 							var candidates = collect_role_group("standard", "", true,search_params);
 							group_selection(candidates,{
-								purpose:$"{scr_roman_numerals()[managing-1]} Company Champion Candidates",
+								purpose:$"{scr_roman_numerals()[managing-1]} Champion Candidates",
 								purpose_code : "champion_promote",
 								number:1,
 								system:managing,

@@ -216,7 +216,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,6]="";
     obj_controller.r_gear[i,6]="";
     
-    obj_controller.r_role[i,7]="Company Champion";
+    obj_controller.r_role[i,7]="Champion";
     obj_controller.r_wep1[i,7]="Power Sword";
     obj_controller.r_wep2[i,7]="Bolt Pistol";
     obj_controller.r_armour[i,7]="Power Armour";

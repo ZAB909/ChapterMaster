@@ -132,7 +132,7 @@ function scr_restart_variables(saved_game) {
 			obj_restart_vars.r_gear[i,6]="";
         
 	        obj_restart_vars.r_race[i,7]=1;
-	        obj_restart_vars.r_role[i,7]="Company Champion";
+	        obj_restart_vars.r_role[i,7]="Champion";
 			obj_restart_vars.r_wep1[i,7]="Power Sword";
 			obj_restart_vars.r_wep2[i,7]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,7]="Power Armour";
@@ -369,7 +369,7 @@ function scr_restart_variables(saved_game) {
 			obj_controller.r_gear[i,6]="";
         
 	        obj_controller.r_race[i,7]=1;
-	        obj_controller.r_role[i,7]="Company Champion";
+	        obj_controller.r_role[i,7]="Champion";
 			obj_controller.r_wep1[i,7]="Power Sword";
 			obj_controller.r_wep2[i,7]="Bolt Pistol";
 	        obj_controller.r_armour[i,7]="Power Armour";

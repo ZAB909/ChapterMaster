@@ -241,7 +241,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
                     if (unit.squad!="none"){
                         squad = obj_ini.squads[unit.squad];
                         switch(squad.formation_place){
-                            case "assualt":
+                            case "assault":
                                 col = obj_controller.bat_assault_column;
                                 column_decided=true;
                                 break;

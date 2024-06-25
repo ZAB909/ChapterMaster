@@ -684,7 +684,7 @@ function scr_draw_unit_image(_background=false){
                 } else if (armour()=="MK4 Maximus"){
                     specific_helm = spr_generic_sgt_mk4;
                     specific_armour_sprite = spr_mk4_colors;
-                    if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
+                    if (array_contains(["Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
                         /*if (global.chapter_name=="Ultramarines"){
                             armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
@@ -760,7 +760,7 @@ function scr_draw_unit_image(_background=false){
                     }                    
                 } else if (unit_armour=="Artificer Armour"){
                     specific_armour_sprite = spr_artificer_colors;
-                    if (array_contains(["Company Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
+                    if (array_contains(["Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
                         if (global.chapter_name=="Ultramarines"){
                             armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
@@ -1227,7 +1227,7 @@ function scr_draw_unit_image(_background=false){
             }
             // Draw Custom Helmets
             if (armour_type==ArmourType.Normal && !armour_bypass){
-                if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
+                if (role() == obj_ini.role[100][Role.CHAMPION]) {
                     if (armour()!="MK3 Iron Armour"){
                         draw_sprite(spr_special_helm,0,x_surface_offset,y_surface_offset);
                     }
@@ -1242,7 +1242,7 @@ function scr_draw_unit_image(_background=false){
                 }
             }
             else if (armour_type==ArmourType.Indomitus && !armour_bypass){
-                if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]) {
+                if (role() == obj_ini.role[100][Role.CHAMPION]) {
                     draw_sprite(spr_laurel,0,x_surface_offset,y_surface_offset-8);
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
                 }
@@ -1430,7 +1430,7 @@ function scr_draw_unit_image(_background=false){
                 shield_offset_x = -8;
             }
             if (gear() == "Combat Shield"){
-                if (role() == obj_ini.role[100][Role.COMPANY_CHAMPION]){
+                if (role() == obj_ini.role[100][Role.CHAMPION]){
                     draw_sprite (spr_gear_combat_shield, 1, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);
                 } else {
                     draw_sprite (spr_gear_combat_shield, 0, x_surface_offset + shield_offset_x, y_surface_offset + shield_offset_y);

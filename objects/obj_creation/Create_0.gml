@@ -464,7 +464,7 @@ color_to_pauldron21="Red";
 	mobi_21[i,6]="";
 	
     race_21[i,7]=1;
-    role_21[i,7]="Company Champion";
+    role_21[i,7]="Champion";
     wep1_21[i,7]="Power Sword";
     wep2_21[i,7]="Bolt Pistol";
     armour_21[i,7]="Power Armour";
@@ -718,7 +718,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     armour[i,6]="Dreadnought";
 
     race[i,7]=1;
-    role[i,7]="Company Champion";
+    role[i,7]="Champion";
     wep1[i,7]="Power Sword";
     wep2[i,7]="Bolt Pistol";
     armour[i,7]="Power Armour";
