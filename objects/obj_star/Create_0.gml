@@ -23,7 +23,7 @@ storm=0;
 storm_image=0;
 trader=0;
 visited=0;
-stored_owner = 0;
+stored_owner = -1;
 star_surface = 0;
 
 // sets up default planet variables
@@ -109,7 +109,7 @@ global.star_name_colors = [
 ]
 
 if (instance_exists(obj_controller)){
-	star_ui_name_node()
+//	star_ui_name_node()
 } else {
 	ui_node=noone;
 }

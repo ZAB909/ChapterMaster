@@ -1288,6 +1288,7 @@ function scr_load(argument0, argument1) {
 	    obj_saveload.alarm[1]=30;
 	    obj_controller.invis=false;
 	    global.load=0;
+	    scr_image("force",-50,0,0,0,0);
 	    debugl("Loading slot "+string(argument1)+" completed");
 	}
 

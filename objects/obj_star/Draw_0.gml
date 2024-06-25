@@ -85,27 +85,61 @@ if (owner==1){
 //ad hoc way of determining whether stuff is in view or not...needs work
 
 
-var cam = view_get_camera(view_current)
-var x1 = camera_get_view_x(cam)
-var y1 = camera_get_view_y(cam)
-var w = x1 + camera_get_view_width(view_current)
-var h = y1 + camera_get_view_height(view_current)
-
+var cam = view_get_camera(view_current);
+var x1 = camera_get_view_x(cam);
+var y1 = camera_get_view_y(cam);
+var w = x1 + camera_get_view_width(view_current);
+var h = y1 + camera_get_view_height(view_current);
+draw_set_halign(fa_center);
+draw_set_font(fnt_cul_14);
 draw_set_alpha(1);
-
-if (obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h)) {
-	ui_node.activate();
+var scale = obj_controller.zoomed ? 2 : 1;
+if (!global.load && obj_controller.zoomed || rectangle_in_rectangle(ui_node.gui_x, ui_node.gui_y, ui_node.gui_x + ui_node.width , ui_node.gui_y + ui_node.height, x1, y1, w, h)) {
     if (garrison){
         draw_sprite(spr_new_resource,3,x-30,y+15);
         if (scr_hit(x-40,y+10,x-10,y+35)){
             tooltip_draw("Marine Garrison in system");
         }
     }
+    if (point_in_rectangle(mouse_x, mouse_y,x-128,y, x+128, y+80) && obj_controller.zoomed){
+        scale = 3.5;
+    }    
+    if (stored_owner != owner){
+        star_tag_surface = surface_create(256, 128);
+        var xx=64;
+        var yy=0;
+        surface_set_target(star_tag_surface);
+        var panel_width = string_width(name) + 60;
+        if (owner != eFACTION.Player ){
+            var faction_sprite = obj_img.force[owner];
+            var faction_index = 0;
+            var faction_colour = global.star_name_colors[owner];
+            draw_sprite_general(spr_p_name_bg, 0, 0, 0, string_width(name) + 60, 32, xx-(panel_width/2), yy+30, 1, 1, 0, faction_colour, faction_colour, faction_colour, faction_colour, 1);
+            draw_sprite_ext(faction_sprite,faction_index,xx+(panel_width/2)-30,yy+25, 0.60, 0.60, 0, c_white, 1);
+        } else {
+            scr_shader_initialize();
+            var main_color = make_colour_from_array(obj_controller.body_colour_replace);
+            var pauldron_color = make_colour_from_array(obj_controller.pauldron_colour_replace);
+            draw_sprite_general(spr_p_name_bg, 0, 0, 0, string_width(name) + 60, 32, xx-(panel_width/2), yy+30, 1, 1, 0, main_color, main_color, pauldron_color, pauldron_color, 1);
+            var faction_sprite = obj_img.creation[1];
+            var faction_index = obj_ini.icon;
+            draw_sprite_ext(faction_sprite,faction_index,xx+(panel_width/2)-30,yy+30, 0.2, 0.2, 0, c_white, 1);
+            //context.set_vertical_gradient(main_color, pauldron_color);
+            //draw_text_ext_transformed_color(gx + xoffset,gy + yoffset,text,sep,owner.width,xscale,yscale,angle ,col1, col2, col3, col4, alpha);
+        }
+        draw_set_color(c_white);
+        draw_text(xx, yy+33, name)
+        surface_reset_target();
+        stored_owner = owner;
+        draw_surface_ext(star_tag_surface, x-(64*scale), y, scale, scale, 1, c_white, 1);
+    } else {
+        draw_surface_ext(star_tag_surface, x-(64*scale), y, scale, scale, 1, c_white, 1);
+    }
 } else {
-	ui_node.deactivate();
+	//ui_node.deactivate();
 }
-if (ui_node!=noone &&  global.load==0){
-    ui_node.render(x,y);
+if (ui_node!=noone && global.load==0){
+    //ui_node.render(x,y);
 }
 draw_set_valign(fa_top)
 
