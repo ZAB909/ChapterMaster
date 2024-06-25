@@ -2726,12 +2726,12 @@ function scr_initialize_custom() {
 		o += 1;
 		if (obj_creation.adv[o] = "Brothers, All") then chapter_option = 1;
 	}
-	if (chapter_option = 1) then _honour_guard_count += 20;
-	if (progenitor = 0) and(obj_creation.custom = 0) then _honour_guard_count += 10;
+	if (chapter_option = 1) then _honour_guard_count += 10;
+	if (progenitor = 0) and (obj_creation.custom = 0) then _honour_guard_count += 6;
 	if (_honour_guard_count == 0) {
 		_honour_guard_count = 3
 	}
-	for (i = 0; i < min(_honour_guard_count, 20); i++) {
+	for (i = 0; i < min(_honour_guard_count, 10); i++) {
 		k += 1;
 		commands += 1;
 		man_size += 1;
