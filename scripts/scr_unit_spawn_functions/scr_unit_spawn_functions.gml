@@ -127,7 +127,7 @@ function scr_marine_spawn_age(){
 			_maximum_age = 300;
 			_apply_gauss = true;
 			break;
-		case obj_ini.role[100][Role.HONOR_GUARD]:
+		case obj_ini.role[100][Role.HONOUR_GUARD]:
 			_minimum_age = 140;
 			_maximum_age = 200;
 			_apply_gauss = true;
@@ -235,7 +235,7 @@ function scr_marine_spawn_armour(){
 		// case "Forge Master":
 		// case "Master of Sanctity":
 		// case "Master of the Apothecarion":
-		// case obj_ini.role[100][Role.HONOR_GUARD]:
+		// case obj_ini.role[100][Role.HONOUR_GUARD]:
 		case "Codiciery":
 		case "Lexicanum":
 		// 1st company only

@@ -151,8 +151,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    company_title[4]="Defenders of Ultramar"; company_title[5]="Wardens of the Eastern Fringe"; company_title[6]="Brethren of the Forge";
 		company_title[7]="Defenders of Caeserean"; company_title[8]="Honourblades"; company_title[9]="Stormbringers";
 		company_title[10]="The Scions of Ultramar";
-		
-		
+
 	}
 	//Waiting on new disadv to give anymore adv.
   if (argument0="Imperial Fists"){founding="N/A";points=150;

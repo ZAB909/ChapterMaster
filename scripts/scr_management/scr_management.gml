@@ -95,7 +95,7 @@ function scr_management(argument0) {
 			num[i] = 0;
 			nam[i] = "";
 		}
-	    nam[2]=role_names[Role.HONOR_GUARD];
+	    nam[2]=role_names[Role.HONOUR_GUARD];
 
 	    for (var i = 1; i <= 200; i++) {
 			unit = fetch_unit([0,i]);
@@ -103,14 +103,14 @@ function scr_management(argument0) {
 				num[1] += 1;
 				if (nam[1] == "") then nam[1] = unit.name();
 			}
-			if (unit.role() == role_names[Role.HONOR_GUARD]) then num[2] += 1;
+			if (unit.role() == role_names[Role.HONOUR_GUARD]) then num[2] += 1;
 		}
 		
 
 	    // if (num[2]=0) then nam[2]="Strategic Staff";// reserved for co-master alien or something
 		
 	    // if (num[2]>0) {
-		// 	nam[2]=string(num)+"x "+string(role_names[Role.HONOR_GUARD]);
+		// 	nam[2]=string(num)+"x "+string(role_names[Role.HONOUR_GUARD]);
 		// 	nam[3]="Strategic Staff";
 		// 	num[3]=1;
 		// }
@@ -131,8 +131,8 @@ function scr_management(argument0) {
 	    obj_managment_panel.italic[1]=1; obj_managment_panel.bold[q]=1;
 		instance_activate_object(obj_managment_panel);
     
-	    // ll=0;ll2=0;repeat(200){ll2++;if (obj_ini.role[company,ll2]=role_names[Role.HONOR_GUARD]) then ll++;}
-	    // if (ll>0) then temp[3]=string(ll)+"x "+string(role_names[Role.HONOR_GUARD]);
+	    // ll=0;ll2=0;repeat(200){ll2++;if (obj_ini.role[company,ll2]=role_names[Role.HONOUR_GUARD]) then ll++;}
+	    // if (ll>0) then temp[3]=string(ll)+"x "+string(role_names[Role.HONOUR_GUARD]);
     
 	
     

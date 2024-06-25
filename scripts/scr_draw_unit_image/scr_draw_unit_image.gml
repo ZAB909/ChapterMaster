@@ -199,7 +199,7 @@ function scr_draw_unit_image(_background=false){
         // Dark Angels
         if (global.chapter_name=="Dark Angels"){
             // Honour guard
-            if (role() == obj_ini.role[100][Role.HONOR_GUARD]) then ui_coloring="deathwing";
+            if (role() == obj_ini.role[100][Role.HONOUR_GUARD]) then ui_coloring="deathwing";
             // Deathwing
             else if (company == 1) {
                 ui_coloring="deathwing";
@@ -412,7 +412,7 @@ function scr_draw_unit_image(_background=false){
                     if (role() != obj_ini.role[100][Role.APOTHECARY]){
                         shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
                     }
-                    if (role() != obj_ini.role[100][Role.HONOR_GUARD]){
+                    if (role() != obj_ini.role[100][Role.HONOUR_GUARD]){
                         shader_array_set[ShaderType.Trim] = Colors.Light_Caliban_Green;
                     }
                 }

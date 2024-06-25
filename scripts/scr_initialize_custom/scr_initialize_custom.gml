@@ -1,6 +1,6 @@
 enum Role {
 	CHAPTER_MASTER = 1,
-	HONOR_GUARD = 2,
+	HONOUR_GUARD = 2,
 	VETERAN = 3,
 	TERMINATOR = 4,
 	CAPTAIN = 5,
@@ -1197,7 +1197,7 @@ function scr_initialize_custom() {
 	for (i = 100; i < 103; i++) { // gear 
 		role[i, 2] = "Honour Guard";
 		wep1[i, 2] = "Power Sword";
-		wep2[i, 2] = "Storm Bolter";
+		wep2[i, 2] = "Bolter";
 		armour[i, 2] = "Artificer Armour";
 		mobi[i, 2] = "";
 		gear[i, 2] = "";
@@ -1326,7 +1326,7 @@ function scr_initialize_custom() {
 
 	var roles = {
 		chapter_master: role[100][1],
-		honor_guard: role[100][2],
+		honour_guard: role[100][2],
 		veteran: role[100][3],
 		terminator: role[100][4],
 		captain: role[100][5],
@@ -2718,7 +2718,7 @@ function scr_initialize_custom() {
 	}
 
 	// Honour Guard
-	var hong = 0,
+	var _honour_guard_count = 0,
 		chapter_option, o, unit;
 	o = 0;
 	chapter_option = 0;
@@ -2726,12 +2726,12 @@ function scr_initialize_custom() {
 		o += 1;
 		if (obj_creation.adv[o] = "Brothers, All") then chapter_option = 1;
 	}
-	if (chapter_option = 1) then hong += 20;
-	if (progenitor = 0) and(obj_creation.custom = 0) then hong += 10;
-	if (hong == 0) {
-		hong = 3
+	if (chapter_option = 1) then _honour_guard_count += 20;
+	if (progenitor = 0) and(obj_creation.custom = 0) then _honour_guard_count += 10;
+	if (_honour_guard_count == 0) {
+		_honour_guard_count = 3
 	}
-	for (i = 0; i < min(hong, 20); i++) {
+	for (i = 0; i < min(_honour_guard_count, 20); i++) {
 		k += 1;
 		commands += 1;
 		man_size += 1;
@@ -2739,7 +2739,7 @@ function scr_initialize_custom() {
 		spawn_unit = TTRPG[company][k];
 		race[company][k] = 1;
 		loc[company][k] = home_name;
-		role[company][k] = roles.honor_guard;
+		role[company][k] = roles.honour_guard;
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		spawn_unit.marine_assembling();
 		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist"));
@@ -2753,7 +2753,7 @@ function scr_initialize_custom() {
 		]);
 		wep2[company][k] = wep2[101, 2];
 		armour[company][k] = armour[101, 2];
-		if global.chapter_name == "Dark Angels" {
+		if (global.chapter_name == "Dark Angels") {
 			armour[company][k] = "Terminator Armour";
 			wep1[company][k] = "Mace of Absolution";
 			wep2[company][k] = "Storm Shield";

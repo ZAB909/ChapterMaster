@@ -2387,7 +2387,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 			// case "Forge Master":
 			// case "Master of Sanctity":
 			// case "Master of the Apothecarion":
-			// case obj_ini.role[100][Role.HONOR_GUARD]:
+			// case obj_ini.role[100][Role.HONOUR_GUARD]:
 			// case "Codiciery":
 			// case "Lexicanum":
 			// 1st company only
