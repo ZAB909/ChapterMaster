@@ -184,7 +184,7 @@ function scr_draw_unit_image(_background=false){
         var specific_armour_sprite = "none";
         var unit_is_sniper = false;
         if (role()=="Chapter Master"){ui_specialist=111;}
-        // Honor Guard
+        // Honour Guard
         else if (role()==obj_ini.role[100,2]){ui_specialist=14;}
         // Chaplain
         else if (is_specialist(role(),"chap",true)){ui_specialist=1;}

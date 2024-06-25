@@ -178,8 +178,8 @@ function scr_ui_settings() {
 					tooltip2="You and your advisors will be placed within this section.  It is strongly advisable you give them backup in this same column.";
 				}
 	            if (theh.unit_id=2){
-					tooltip="Honor Guard";
-					tooltip2="Any Honor Guard within your Headquarters will be placed here.  The best place for them within the formation depends on loadout.";
+					tooltip="Honour Guard";
+					tooltip2="Any Honour Guard within your Headquarters will be placed here.  The best place for them within the formation depends on loadout.";
 				}
 	            if (theh.unit_id=3){
 					tooltip="Librarians";

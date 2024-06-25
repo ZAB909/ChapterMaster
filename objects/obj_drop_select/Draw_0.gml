@@ -124,8 +124,8 @@ draw_set_font(fnt_40k_14);draw_set_color(c_gray);draw_set_alpha(1);
 
 var sel;sel="";
 if (master=1) then sel+="Chapter Master "+string(obj_ini.master_name)+", ";
-if (honor>1) then sel+=string(honor)+" Honor Guard, ";
-if (honor=1) then sel+="1 Honor Guard, ";
+if (honor>1) then sel+=string(honor)+" Honour Guard, ";
+if (honor=1) then sel+="1 Honour Guard, ";
 if (capts>1) then sel+=string(capts)+" Captains, ";
 if (capts=1) then sel+="1 Captain, ";
 if (champions>1) then sel+=string(champions)+" Champions, ";

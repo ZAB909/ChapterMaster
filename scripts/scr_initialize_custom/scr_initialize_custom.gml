@@ -1195,7 +1195,7 @@ function scr_initialize_custom() {
 	}
 
 	for (i = 100; i < 103; i++) { // gear 
-		role[i, 2] = "Honor Guard";
+		role[i, 2] = "Honour Guard";
 		wep1[i, 2] = "Power Sword";
 		wep2[i, 2] = "Storm Bolter";
 		armour[i, 2] = "Artificer Armour";
@@ -2717,7 +2717,7 @@ function scr_initialize_custom() {
 		spawn_unit.marine_assembling();
 	}
 
-	// Honor Guard
+	// Honour Guard
 	var hong = 0,
 		chapter_option, o, unit;
 	o = 0;

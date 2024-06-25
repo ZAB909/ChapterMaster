@@ -423,7 +423,7 @@ color_to_pauldron21="Red";
 		i=100
 	repeat(3){i+=1;// First is for the correct slot, second is for default
 	race_21[i,2]=1;
-    role_21[i,2]="Honor Guard";
+    role_21[i,2]="Honour Guard";
     wep1_21[i,2]="Power Sword";
     wep2_21[i,2]="Bolter";
     armour_21[i,2]="Artificer Armour";
@@ -573,7 +573,7 @@ advantage_tooltip[i]="Boarding other ships is routine for the chapter.  Your inf
 advantage[i]="Bolter Drilling";
 advantage_tooltip[i]="Bolter drills are sacred to your chapter; all marines have increased attack with Bolter weaponry.";i+=1;
 advantage[i]="Brothers, All";
-advantage_tooltip[i]="Your chapter places great emphasis on camradery and loyalty.  You start with a well-equip Honor Guard.";i+=1;
+advantage_tooltip[i]="Your chapter places great emphasis on camradery and loyalty.  You start with a well-equip Honour Guard.";i+=1;
 advantage[i]="Comrades in Arms";
 advantage_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;
 advantage[i]="Crafters";
@@ -687,7 +687,7 @@ ye=103;i=-1;repeat(51){i+=1;
 i=99;
 repeat(3){i+=1;// First is for the correct slot, second is for default
     race[i,2]=1;
-    role[i,2]="Honor Guard";
+    role[i,2]="Honour Guard";
     wep1[i,2]="Power Sword";
     wep2[i,2]="Bolter";
     armour[i,2]="Artificer Armour";
