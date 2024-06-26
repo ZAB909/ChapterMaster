@@ -193,29 +193,26 @@ function scr_draw_unit_image(_background=false){
                     var _arm_spr = spr_terminator_arms;
                     break;
             }
-            for (var i = 1; i <= 2; i++) {
-                if (ui_arm[i] > 0){
-                    var _spr_index = (ui_arm[i] - 1) * 2;
+            for (var right_left = 1; right_left <= 2; right_left++) {
+                // Draw bionic arms
+                if (ui_arm[right_left] == 1 && armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")){
+                    var bionic_arm = body[$ (right_left == 1 ? "right_arm" : "left_arm")][$ "bionic"];
+                    var _spr_w = sprite_get_width(spr_bionics_arm) - sprite_get_xoffset(spr_bionics_arm) * 2;
+                    var bionic_spr_index = bionic_arm.variant;
+                    if (right_left == 2) {
+                        bionic_spr_index += (specialist_colours >= 2) ? 1 : 0;
+                        draw_sprite_ext(spr_bionics_arm, bionic_spr_index, offset_x + _spr_w, offset_y, -1, 1, 0, c_white, 1);
+                    } else {
+                        draw_sprite(spr_bionics_arm, bionic_spr_index, offset_x, offset_y);
+                    }
+                } else if (ui_arm[right_left] > 0){
+                    var _spr_index = (ui_arm[right_left] - 1) * 2;
                     var _spr_w = sprite_get_width(_arm_spr) - sprite_get_xoffset(_arm_spr) * 2;
-                    if (i == 2) {
+                    if (right_left == 2) {
                         _spr_index += (specialist_colours >= 2) ? 1 : 0;
                         draw_sprite_ext(_arm_spr, _spr_index, offset_x + _spr_w, offset_y, -1, 1, 0, c_white, 1);
                     } else {
                         draw_sprite(_arm_spr, _spr_index, offset_x, offset_y);
-                    }
-                }
-                // Draw bionic arms
-                if (ui_arm[i] == 1){
-                    if (armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (i == 1 ? "right_arm" : "left_arm")], "bionic")) {
-                        var bionic_arm = body[$ (i == 1 ? "right_arm" : "left_arm")][$ "bionic"];
-                        var _spr_w = sprite_get_width(spr_bionics_arm) - sprite_get_xoffset(spr_bionics_arm) * 2;
-                        var bionic_spr_index = bionic_arm.variant;
-                        if (i == 2) {
-                            bionic_spr_index += (specialist_colours >= 2) ? 1 : 0;
-                            draw_sprite_ext(spr_bionics_arm, bionic_spr_index, offset_x + _spr_w, offset_y, -1, 1, 0, c_white, 1);
-                        } else {
-                            draw_sprite(spr_bionics_arm, bionic_spr_index, offset_x, offset_y);
-                        }
                     }
                 }
             }
