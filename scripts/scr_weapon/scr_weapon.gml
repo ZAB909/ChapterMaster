@@ -516,7 +516,7 @@ global.weapons = {
 		"spli": 10,
 		"arp": 1,
 		"tags": ["power", "hammer", "siege"],
-		"req_exp": 140,
+		"req_exp": 100,
 	},
 	"Heavy Thunder Hammer": {
 		"abbreviation": "HvyThndHmr",
@@ -538,7 +538,7 @@ global.weapons = {
 		"spli": 15,
 		"arp": 1,
 		"tags": ["heavy_melee", "power", "hammer", "siege"],
-		"req_exp": 140,
+		"req_exp": 100,
 	},
 	"Power Mace": {
 		"abbreviation": "PwrMace",
@@ -1712,7 +1712,7 @@ global.gear = {
 			"ranged_hands": 2,
 			"description": "Terminator Armour is the strongest and most powerful armour designed by humanity, available only to the veterans of the Adeptus Astartes. The Indomitus Pattern is the most widespread and versatile pattern as of M41.",
 			"tags": ["terminator"],
-			"req_exp": 90,
+			"req_exp": 100,
 		},
 		"Dreadnought": {
 			"abbreviation": "Drdnght",
@@ -1757,7 +1757,7 @@ global.gear = {
 			"ranged_hands": 2,
 			"description": "This pattern is possibly considered the most advanced form of Terminator Armour, providing greater mobility for the wearer compared to the Indomitus with no loss in durability. In the M41 considered to be incredibly rare with wars being fought to secure more suits.",
 			"tags": ["terminator"],
-			"req_exp": 90,
+			"req_exp": 100,
 		},
 		"Cataphractii Pattern Terminator": {
 			"abbreviation": "Catphr",
@@ -1780,7 +1780,7 @@ global.gear = {
 			"ranged_hands": 2,
 			"description": "Among the first issued to the Space Marine Legions. Having additional plating and shield generators installed within the shoulder pads resulted in severe straining of the suit's exoskeleton and reduced the wearer's maneuverability, leading to its decline among some legions.",
 			"tags": ["terminator"],
-			"req_exp": 90,
+			"req_exp": 100,
 		},
 		"Ork Armour": {
 			"abbreviation": "OrkArm",
