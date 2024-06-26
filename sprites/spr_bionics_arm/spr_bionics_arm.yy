@@ -2,7 +2,7 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_bionics_arm",
-  "bbox_bottom": 107,
+  "bbox_bottom": 105,
   "bbox_left": 17,
   "bbox_right": 47,
   "bbox_top": 74,
@@ -13,9 +13,9 @@
   "edgeFiltering": false,
   "For3D": false,
   "frames": [
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"13bc6f12-bba8-46c4-ab50-4dd56958c339",},
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"b4205d25-7e33-4674-b147-f3b92c355ee8",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"bab2ac30-c835-4ecd-96bc-27157d7aa3be",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"84a7b5b5-20ae-4ce6-97aa-ab04171d8b21",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"877ceb9f-ddfa-4d0f-b1ec-9645c08f711a",},
     {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"d3462996-9ddf-47bc-81b0-e2fde6cd6446",},
   ],
   "gridX": 0,
@@ -23,7 +23,7 @@
   "height": 232,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"a2bf5e8a-558e-44ea-919a-70d631db3563","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"9b0962d1-9e03-4c2d-a749-3e90ee6c8cf2","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
@@ -57,9 +57,9 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"13bc6f12-bba8-46c4-ab50-4dd56958c339","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"6d5a67dd-c415-44e9-bc7a-cbbfc8e19b9c","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"b4205d25-7e33-4674-b147-f3b92c355ee8","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"ca8addf0-dafa-4948-b1e7-44190a4a81a1","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"bab2ac30-c835-4ecd-96bc-27157d7aa3be","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"39eb7eec-26cc-4886-a0ba-182eee6f5865","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"bab2ac30-c835-4ecd-96bc-27157d7aa3be","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"39eb7eec-26cc-4886-a0ba-182eee6f5865","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"84a7b5b5-20ae-4ce6-97aa-ab04171d8b21","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"40585f99-788d-4944-b0d4-7f3a79524016","IsCreationKey":false,"Key":1.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"877ceb9f-ddfa-4d0f-b1ec-9645c08f711a","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"589225da-a222-4072-9870-8063d45bffe7","IsCreationKey":false,"Key":2.0,"Length":1.0,"Stretch":false,},
             {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"d3462996-9ddf-47bc-81b0-e2fde6cd6446","path":"sprites/spr_bionics_arm/spr_bionics_arm.yy",},},},"Disabled":false,"id":"ca31ccd2-4d61-4c0a-9fd5-104aa9778ae0","IsCreationKey":false,"Key":3.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
