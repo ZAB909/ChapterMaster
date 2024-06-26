@@ -50,7 +50,6 @@ if (type=99){
         if (obj_controller.known[i]>1){
             draw_text(xx+740,yy+120+spacer,$"{scr_faction_string_name(i)} ({ch}{obj_controller.disposition[2]})");
             draw_text(xx+740,yy+140+spacer,$"{obj_controller.faction_title[i]}");
-            {obj_controller.faction_title[i]}
             iter++;
         } else {
             continue;
@@ -147,7 +146,7 @@ if (type=99){
                     }
                 }
             }
-             (is_chaos){
+            if (is_chaos){
                 with(obj_star){
                     for(var i=1;i<=planets;i++){
                         if (p_owner[i]=2) and (p_heresy[i]>0) then p_heresy[i]+=10;

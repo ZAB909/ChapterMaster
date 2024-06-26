@@ -104,7 +104,7 @@ if (!global.load && obj_controller.zoomed || rectangle_in_rectangle(x-60, y+5, x
     if (point_in_rectangle(mouse_x, mouse_y,x-128,y, x+128, y+80) && obj_controller.zoomed){
         scale = 3.5;
     }    
-    if (stored_owner != owner){
+    if (stored_owner != owner || !surface_exists(star_tag_surface)){
         star_tag_surface = surface_create(256, 128);
         var xx=64;
         var yy=0;
