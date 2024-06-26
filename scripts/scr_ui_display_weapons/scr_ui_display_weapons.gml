@@ -278,6 +278,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         ui_arm[2] = 1;
         ui_hand[1] = 3;
         ui_hand[2] = 2;
+        hand_on_top[2]=true;
     }
 
     // Flip the ui_xmod for offhand

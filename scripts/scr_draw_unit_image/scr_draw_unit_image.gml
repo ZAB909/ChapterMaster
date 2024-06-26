@@ -157,7 +157,6 @@ function scr_draw_unit_image(_background=false){
             if (ui_hand[right_left] > 0){
                 var _spr_index = (ui_hand[right_left] - 1) * 2;
                 var _spr_w = sprite_get_width(_hand_spr) - sprite_get_xoffset(_hand_spr) * 2;
-
                 if (right_left == 2) {
                     _spr_index += (specialist_colours >= 2) ? 1 : 0;
                     draw_sprite_ext(_hand_spr, _spr_index, offset_x + _spr_w, offset_y, -1, 1, 0, c_white, 1);
@@ -380,7 +379,7 @@ function scr_draw_unit_image(_background=false){
                 scr_ui_display_weapons(1,armour(),weapon_one(), armour_type);
             }
             
-            if (weapon_two()!="") and (ui_force_both==false){
+            if (weapon_two()!="") and (ui_twoh[1]==false){
                 scr_ui_display_weapons(2,armour(),weapon_two(), armour_type);
             }
         }
