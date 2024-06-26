@@ -243,67 +243,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         }
     }
 
-    // Fix graphics for tremi/tartaros weapons
-    // if (display_type == "power_fist") {
-    //     if (current_armor != ArmourType.Normal) {
-    //         ui_arm[left_or_right] = false;
-    //         weapon_on_top[left_or_right] = true;
-    //     }
-        // if (current_armor == "Terminator Armour") and(left_or_right == 1) {
-        //     ui_xmod[left_or_right] = -3;
-        //     ui_ymod[left_or_right] = 10;
-        //     fix_left = 8;
-        //     ui_weapon[left_or_right] = spr_weapon_powfist3;
-        //     clear = true;
-        // }
-        // if (current_armor == "Terminator Armour") and(left_or_right == 2) {
-        //     ui_xmod[left_or_right] = 2;
-        //     ui_ymod[left_or_right] = 10;
-        //     fix_right = 8;
-        //     ui_weapon[left_or_right] = spr_weapon_powfist3;
-        //     clear = true;
-        // }
-        // if (current_armor == "Tartaros") and(left_or_right == 1) {
-        //     ui_xmod[left_or_right] = 0;
-        //     ui_ymod[left_or_right] = 10;
-        //     fix_left = 8;
-        //     ui_weapon[left_or_right] = spr_weapon_powfist3;
-        //     clear = true;
-        // }
-        // if (current_armor == "Tartaros") and(left_or_right == 2) {
-        //     ui_xmod[left_or_right] = -1;
-        //     ui_ymod[left_or_right] = 10;
-        //     fix_right = 8;
-        //     ui_weapon[left_or_right] = spr_weapon_powfist3;
-        //     clear = true;
-        // }
-    // }
-    // if (display_type == "lightning_claw") {
-    //     if (current_armor == ArmourType.Normal && left_or_right == 1) {
-    //         ui_xmod[left_or_right] += 11;
-    //     }
-    //     if (current_armor == ArmourType.Normal && left_or_right == 2) {
-    //         ui_xmod[left_or_right] -= 8;
-    //     }
-        // if (current_armor != ArmourType.Normal) {
-        //     ui_arm[left_or_right] = false;
-        //     weapon_on_top[left_or_right] = true;
-        // }
-        // if (current_armor == "Terminator Armour") and(left_or_right == 1) {
-        //     ui_xmod[left_or_right] = -3;
-        //     ui_ymod[left_or_right] = 10;
-        //     fix_left = 8.1;
-        //     ui_weapon[left_or_right] = spr_weapon_lightning2;
-        //     clear = true;
-        // }
-        // if (current_armor == "Terminator Armour") and(left_or_right == 2) {
-        //     ui_xmod[left_or_right] = 2;
-        //     ui_ymod[left_or_right] = 10;
-        //     fix_right = 8.1;
-        //     ui_weapon[left_or_right] = spr_weapon_lightning2;
-        //     clear = true;
-        // }
-    // }
     if (display_type == "terminator_melee") {
         if (array_contains(["Mace of Absolution"], equiped_weapon)) {
             ui_hand[left_or_right] = 5;
@@ -318,13 +257,11 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
             ui_weapon[left_or_right] = spr_weapon_storm2;
         }
         ui_arm[left_or_right] = 2;
-        weapon_on_top[left_or_right] = true;
         ui_spec[left_or_right] = false;
     }
     if ("Boarding Shield" == equiped_weapon) {
         ui_weapon[left_or_right] = spr_weapon_boarding;
         ui_arm[left_or_right] = 2;
-        weapon_on_top[left_or_right] = true;
         ui_spec[left_or_right] = false;
     }
 
@@ -353,7 +290,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
 function set_as_normal_ranged(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 1;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = false;
     display_type = "normal_ranged";
 }
@@ -363,7 +299,6 @@ function set_as_ranged_assault(sprite, left_or_right) {
     display_type = "ranged_assault";
     ui_arm[left_or_right] = 0;
     ui_hand[left_or_right] = 0;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = true;
 }
 
@@ -374,7 +309,6 @@ function set_as_ranged_twohand(sprite, left_or_right) {
     ui_arm[2] = 0;
     ui_hand[1] = 0;
     ui_hand[2] = 0;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = true;
     ui_twoh[left_or_right] = true;
 }
@@ -383,7 +317,6 @@ function set_as_special_ranged(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 0;
     ui_hand[left_or_right] = 0;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = true;
     display_type = "special_ranged";
 }
@@ -392,7 +325,6 @@ function set_as_terminator_ranged(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 2;
     ui_hand[left_or_right] = 0;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = true;
     display_type = "terminator_ranged";
 }
@@ -401,7 +333,6 @@ function set_as_melee_onehand(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 0;
     ui_hand[left_or_right] = 0;
-    weapon_on_top[left_or_right] = true;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     display_type = "melee_onehand";
@@ -410,7 +341,6 @@ function set_as_melee_onehand(sprite, left_or_right) {
 function set_as_melee_onehand_special(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 1;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = true;
     display_type = "melee_onehand";
 }
@@ -420,7 +350,6 @@ function set_as_melee_twohand(sprite, left_or_right) {
     display_type = "melee_twohand";
     ui_arm[1] = 0;
     ui_arm[2] = 0;
-    weapon_on_top[left_or_right] = true;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     ui_twoh[left_or_right] = true;
@@ -429,7 +358,6 @@ function set_as_melee_twohand(sprite, left_or_right) {
 function set_as_terminator_melee(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 1;
-    weapon_on_top[left_or_right] = true;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     display_type = "terminator_melee";
@@ -438,7 +366,6 @@ function set_as_terminator_melee(sprite, left_or_right) {
 function set_as_terminator_fist(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     ui_arm[left_or_right] = 1;
-    weapon_on_top[left_or_right] = true;
     ui_spec[left_or_right] = true;
     display_type = "terminator_fist";
 }

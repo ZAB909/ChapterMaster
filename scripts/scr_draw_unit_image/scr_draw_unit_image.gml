@@ -240,8 +240,6 @@ function scr_draw_unit_image(_background=false){
         ui_arm[2]=1;
         ui_hand[1]=1;
         ui_hand[2]=1;
-        weapon_on_top[1]=true;
-        weapon_on_top[2]=true;
         hand_on_top[1]=false;
         hand_on_top[2]=false;
         ui_spec[1]=false;
@@ -676,26 +674,6 @@ function scr_draw_unit_image(_background=false){
             if (ui_specialist=3) and (armour()!="") and (back_type == BackType.None){
                 if (armour()=="Terminator Armour") then draw_sprite(spr_gear_apoth,0,x_surface_offset,y_surface_offset-22); // for terminators
                 else draw_sprite(spr_gear_apoth,0,x_surface_offset,y_surface_offset-6); // for normal power armour
-            }
-            
-            // Draw weapons bellow torso/legs
-            if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (weapon_on_top[1]==false){
-                if (ui_twoh[1]==false) and (ui_twoh[2]==false) then draw_sprite(ui_weapon[1],0,ui_xmod[1],ui_ymod[1]);
-                if (ui_twoh[1]==true){
-                    if (specialist_colours<=1) then draw_sprite(ui_weapon[1],0,ui_xmod[1],ui_ymod[1]);
-                    if (specialist_colours>=2) then draw_sprite(ui_weapon[1],3,ui_xmod[1],ui_ymod[1]);
-                    if (ui_force_both==true){
-                        if (specialist_colours<=1) then draw_sprite(ui_weapon[1],0,ui_xmod[1],ui_ymod[1]);
-                        if (specialist_colours>=2) then draw_sprite(ui_weapon[1],1,ui_xmod[1],ui_ymod[1]);
-                    }
-                }
-            }
-            if (ui_weapon[2]!=0) and (weapon_on_top[2]==false) and (sprite_exists(ui_weapon[2])) and ((ui_twoh[1]==false || ui_force_both==true)){
-                if (ui_spec[2]==false) then draw_sprite(ui_weapon[2],1,x_surface_offset+ui_xmod[2],y_surface_offset+ui_ymod[2]);
-                if (ui_spec[2]==true){
-                    if (specialist_colours<=1) then draw_sprite(ui_weapon[2],2,x_surface_offset+ui_xmod[2],y_surface_offset+ui_ymod[2]);
-                    if (specialist_colours>=2) then draw_sprite(ui_weapon[2],3,x_surface_offset+ui_xmod[2],y_surface_offset+ui_ymod[2]);
-                }
             }
         
             if (armour_type==ArmourType.None){            
@@ -1342,8 +1320,8 @@ function scr_draw_unit_image(_background=false){
                 if (!hand_on_top[i]) then draw_unit_hands(x_surface_offset, y_surface_offset, armour_type, specialist_colours, hide_bionics, i);
             }
 
-            // // Draw weapons above torso/legs
-            if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])) and (weapon_on_top[1]==true){
+            // // Draw weapons
+            if (ui_weapon[1]!=0) and (sprite_exists(ui_weapon[1])){
                 if (ui_twoh[1]==false) and (ui_twoh[2]==false){
                     draw_sprite(ui_weapon[1],0,x_surface_offset+ui_xmod[1],y_surface_offset+ui_ymod[1]);                  
                 }
@@ -1356,7 +1334,7 @@ function scr_draw_unit_image(_background=false){
                     }
                 }
             }
-            if (ui_weapon[2]!=0) and (weapon_on_top[2]==true) and (sprite_exists(ui_weapon[2])) and ((ui_twoh[1]==false || ui_force_both==true)){
+            if (ui_weapon[2]!=0) and (sprite_exists(ui_weapon[2])) and ((ui_twoh[1]==false || ui_force_both==true)){
                 if (ui_spec[2]==false){
                     draw_sprite(ui_weapon[2],1,x_surface_offset+ui_xmod[2],y_surface_offset+ui_ymod[2]);
                 }
