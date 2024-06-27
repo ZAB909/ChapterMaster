@@ -103,13 +103,13 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
             instance_activate_object(obj_star);
             obj_controller.x=ii.x;obj_controller.y=ii.y;// show=current_battle;
             
-            strin[1]=string(pfleet.capital_number);
-            strin[2]=string(pfleet.frigate_number);
-            strin[3]=string(pfleet.escort_number);
+            strin[1]=string(p_fleet.capital_number);
+            strin[2]=string(p_fleet.frigate_number);
+            strin[3]=string(p_fleet.escort_number);
             // pull health values here
-            strin[4]=string(pfleet.capital_health);
-            strin[5]=string(pfleet.frigate_health);
-            strin[6]=string(pfleet.escort_health);
+            strin[4]=string(p_fleet.capital_health);
+            strin[5]=string(p_fleet.frigate_health);
+            strin[6]=string(p_fleet.escort_health);
             
             // pull enemy ships here
             
@@ -157,76 +157,75 @@ if (player_fleet>0) and (imperial_fleet+mechanicus_fleet+inquisitor_fleet+eldar_
                     }
                 }
             }
-        }
         
 
-        obj_controller.cooldown=8000;
-        
-        // Start battle here
-        
-        combating=1;
-        
-        instance_deactivate_all(true);
-        instance_activate_object(obj_controller);
-        instance_activate_object(obj_ini);
-        // instance_activate_object(battle_object[current_battle]);
-        instance_activate_object(pfleet);
-        instance_activate_object(obj_star);
-        
-        instance_create(0,0,obj_fleet);
-        obj_fleet.star_name=target.name;
-        // 
-        obj_fleet.enemy[1]=enemy_fleet[1];
-        obj_fleet.enemy_status[1]=-1;
-        
-        obj_fleet.en_capital[1]=ecap[1];
-        obj_fleet.en_frigate[1]=efri[1];
-        obj_fleet.en_escort[1]=eesc[1];
-        
-        // Plug in all of the enemies first
-        // And then plug in the allies after then with their status set to positive
-        
-        if (chaos_space_marine_count){
-            obj_fleet.csm_exp=1;
-        }
-        if (khorne_count){
-            obj_fleet.csm_exp=2;
-        }
-        
-        
-        for (var i=0;i<target.planets;i++){
-             if (planet_feature_bool(target.p_feature[i], P_features.Monastery) == 1) then obj_fleet.player_lasers=target.p_lasers[i];
-        }
-        instance_deactivate_object(obj_star);
-        
-        
-        
-        
-        
-        // 
-        
-        var fleet_ships = fleet_full_ship_array(pfleet);
-        var p_ship_id;
-        for (i=0;i<array_length(fleet_ships);i++){
-            p_ship_id = fleet_ships[i];
-            if (obj_ini.ship[p_ship_id] != ""){
-                obj_fleet.fighting[p_ship_id] = 1;
+            obj_controller.cooldown=8000;
+            
+            // Start battle here
+            
+            combating=1;
+            
+            instance_deactivate_all(true);
+            instance_activate_object(obj_controller);
+            instance_activate_object(obj_ini);
+            // instance_activate_object(battle_object[current_battle]);
+            instance_activate_object(p_fleet);
+            instance_activate_object(obj_star);
+            
+            instance_create(0,0,obj_fleet);
+            obj_fleet.star_name=target.name;
+            // 
+            obj_fleet.enemy[1]=enemy_fleet[1];
+            obj_fleet.enemy_status[1]=-1;
+            
+            obj_fleet.en_capital[1]=ecap[1];
+            obj_fleet.en_frigate[1]=efri[1];
+            obj_fleet.en_escort[1]=eesc[1];
+            
+            // Plug in all of the enemies first
+            // And then plug in the allies after then with their status set to positive
+            
+            if (chaos_space_marine_count){
+                obj_fleet.csm_exp=1;
             }
-        }
+            if (khorne_count){
+                obj_fleet.csm_exp=2;
+            }
+            
+            
+            for (var i=0;i<target.planets;i++){
+                 if (planet_feature_bool(target.p_feature[i], P_features.Monastery) == 1) then obj_fleet.player_lasers=target.p_lasers[i];
+            }
+            instance_deactivate_object(obj_star);
+            
+            
+            
+            
+            
+            // 
+            
+            var fleet_ships = fleet_full_ship_array(p_fleet);
+            var p_ship_id;
+            for (i=0;i<array_length(fleet_ships);i++){
+                p_ship_id = fleet_ships[i];
+                if (obj_ini.ship[p_ship_id] != ""){
+                    obj_fleet.fighting[p_ship_id] = 1;
+                }
+            }
 
-        // instance_deactivate_object(battle_object[current_battle]);
-        instance_deactivate_object(pfleet);
+            // instance_deactivate_object(battle_object[current_battle]);
+            instance_deactivate_object(p_fleet);
+            
+            
+            
+            obj_controller.combat=1;
+            obj_fleet.player_started=1;
+            obj_fleet.pla_fleet=p_fleet;
+            obj_fleet.ene_fleet=target;
+            
         
         
-        
-        obj_controller.combat=1;
-        obj_fleet.player_started=1;
-        obj_fleet.pla_fleet=pfleet;
-        obj_fleet.ene_fleet=target;
-        
-        
-        
-        
+        }
     }
 }
 
