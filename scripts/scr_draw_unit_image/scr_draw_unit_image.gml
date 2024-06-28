@@ -199,6 +199,9 @@ function scr_draw_unit_image(_background=false){
                     var _arm_spr = spr_pa_arms;
                     break;
             }
+            if (armour() == "Artificer Armour"){ //todo: refactor this
+                _arm_spr = spr_pa_arms_ornate;
+            }
             for (var right_left = 1; right_left <= 2; right_left++) {
                 // Draw bionic arms
                 if (ui_arm[right_left] == 1 && armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")){
@@ -255,7 +258,7 @@ function scr_draw_unit_image(_background=false){
         ui_back=true;
         ui_force_both=false;
         ui_specialist=0;
-        ttrim=0;
+        pauldron_trim=0;
         var armour_bypass = false;
         var hide_bionics = false;
         var robes_bypass = false;
@@ -430,7 +433,7 @@ function scr_draw_unit_image(_background=false){
             */
             var shader_array_set = array_create(8, -1);
         
-            ttrim=obj_controller.trim;
+            pauldron_trim=obj_controller.trim;
 			specialist_colours=obj_ini.col_special;
 			
 			// Chaplain
@@ -440,13 +443,13 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.Lens] = Colors.Red;
                 shader_array_set[ShaderType.Trim] = Colors.Dark_Gold;
                 shader_array_set[ShaderType.RightPauldron] = Colors.Black;
-                ttrim=1;
+                pauldron_trim=1;
                 specialist_colours=0;
                 if (global.chapter_name == "Dark Angels") {
                     shader_array_set[ShaderType.Trim] = Colors.Copper;
                     if (role() == "Master of Sanctity") {
                         shader_array_set[ShaderType.Helmet] = Colors.Caliban_Green;
-                        ttrim=0;
+                        pauldron_trim=0;
                     }
                 }
             }
@@ -457,7 +460,7 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.Helmet] = Colors.White;
                 shader_array_set[ShaderType.Lens] = Colors.Red;
                 shader_array_set[ShaderType.RightPauldron] = Colors.White;
-                ttrim=0;
+                pauldron_trim=0;
                 specialist_colours=0;
             }
 			
@@ -468,7 +471,7 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.Lens] = Colors.Lime;
                 shader_array_set[ShaderType.Trim] = Colors.Silver;
                 shader_array_set[ShaderType.RightPauldron] = Colors.Red;
-                ttrim=1;
+                pauldron_trim=1;
                 specialist_colours=0;
             }
 
@@ -479,11 +482,27 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.Lens] = Colors.Cyan;
                 shader_array_set[ShaderType.Trim] = Colors.Gold;
                 shader_array_set[ShaderType.RightPauldron] = Colors.Dark_Ultramarine;
-                ttrim=1;
+                pauldron_trim=1;
                 specialist_colours=0;
             }
 			
-			// Death Company
+			// Honour Guard
+            else if (ui_specialist=14){
+                pauldron_trim=0;
+                specialist_colours=0;
+                // Blood Angels
+                if (ui_coloring="gold"){
+                    shader_array_set[ShaderType.Body] = Colors.Gold;
+                    shader_array_set[ShaderType.Helmet] = Colors.Gold;
+                    shader_array_set[ShaderType.LeftPauldron] = Colors.Gold;
+                    shader_array_set[ShaderType.Trim] = Colors.Gold;
+                // Ultramarines
+                } else if (global.chapter_name == "Ultramarines"){
+                    shader_array_set[ShaderType.Helmet] = Colors.Sanguine_Red;
+                }
+            }
+
+			// Blood Angels Death Company Marines
             else if (ui_specialist=15){
                 shader_array_set[ShaderType.Body] = Colors.Black;
                 shader_array_set[ShaderType.Helmet] = Colors.Black;
@@ -492,11 +511,11 @@ function scr_draw_unit_image(_background=false){
                 shader_array_set[ShaderType.Trim] = Colors.Black;
                 shader_array_set[ShaderType.RightPauldron] = Colors.Black;
                 shader_array_set[ShaderType.Weapon] = Colors.Dark_Red;
-                ttrim=0;
+                pauldron_trim=0;
                 specialist_colours=0;
             }
 			
-			// Deathwing
+			// Dark Angels Deathwing
             if (ui_coloring == "deathwing"){
                 if !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.LIBRARIAN], obj_ini.role[100][Role.TECHMARINE]], role()){
                     shader_array_set[ShaderType.Body] = Colors.Deathwing;
@@ -511,11 +530,11 @@ function scr_draw_unit_image(_background=false){
                     shader_array_set[ShaderType.RightPauldron] = Colors.Deathwing;
                 }
                 shader_array_set[ShaderType.LeftPauldron] = Colors.Deathwing;
-                ttrim=0;
+                pauldron_trim=0;
                 specialist_colours=0;
             }
             
-			// Ravenwing
+			// Dark Angels Ravenwing
             if (ui_coloring="ravenwing"){
                 if !array_contains([obj_ini.role[100][Role.CHAPLAIN],obj_ini.role[100][Role.LIBRARIAN], obj_ini.role[100][Role.TECHMARINE],obj_ini.role[100][Role.APOTHECARY]], role()){
                     shader_array_set[ShaderType.Body] = Colors.Black;
@@ -525,25 +544,15 @@ function scr_draw_unit_image(_background=false){
                     shader_array_set[ShaderType.RightPauldron] = Colors.Black;
                 }
                 shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
-                ttrim=0;
+                pauldron_trim=0;
                 specialist_colours=0;
             }
 
 			// Dark Angels Captains
-            if (global.chapter_name == "Dark Angels" && role() == obj_ini.role[100][5] && ui_coloring != "deathwing"){
+            if (global.chapter_name == "Dark Angels" && role() == obj_ini.role[100][Role.CAPTAIN] && company != 1){
                 shader_array_set[ShaderType.RightPauldron] = Colors.Dark_Red;
                 shader_array_set[ShaderType.Helmet] = Colors.Deathwing;
-                ttrim=0;
-                specialist_colours=0;
-            }
-
-			// Blood Angels
-            else if (ui_coloring="gold"){
-                shader_array_set[ShaderType.Body] = Colors.Gold;
-                shader_array_set[ShaderType.Helmet] = Colors.Gold;
-                shader_array_set[ShaderType.LeftPauldron] = Colors.Gold;
-                shader_array_set[ShaderType.Trim] = Colors.Gold;
-                ttrim=0;
+                pauldron_trim=0;
                 specialist_colours=0;
             }
 
@@ -551,7 +560,7 @@ function scr_draw_unit_image(_background=false){
             if (global.chapter_name == "Blood Angels" && role() == obj_ini.role[100][Role.SERGEANT]){
                 shader_array_set[ShaderType.LeftPauldron] = Colors.Black;
                 shader_array_set[ShaderType.RightPauldron] = Colors.Black;
-                ttrim=0;
+                pauldron_trim=0;
                 specialist_colours=0;
             }
 
@@ -833,9 +842,9 @@ function scr_draw_unit_image(_background=false){
                     specific_armour_sprite = spr_artificer_colors;
                     if (array_contains(["Champion",obj_ini.role[100][2],obj_ini.role[100][5]], role())){
                         if (global.chapter_name=="Ultramarines"){
-                            armour_draw=[spr_ultra_honor_guard,body.torso.armour_choice];
+                            armour_draw=[spr_ultra_honor_guard2,body.torso.armour_choice];
                             armour_bypass=true;
-                            draw_sprite(spr_ultra_honor_guard,2,x_surface_offset,y_surface_offset);
+                            draw_sprite(spr_ultra_honor_guard2,2,x_surface_offset,y_surface_offset);
                         } else {
                             armour_draw=[spr_generic_honor_guard,body.torso.armour_choice];
                             armour_bypass=true;
@@ -953,8 +962,8 @@ function scr_draw_unit_image(_background=false){
                     }
                     // Draw pauldron trim
                     if (specific_armour_sprite != "none"){
-                        if (ttrim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,x_surface_offset,y_surface_offset);
-                        if (ttrim==0 && specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,x_surface_offset,y_surface_offset);
+                        if (pauldron_trim==0 && specialist_colours<=1) then draw_sprite(specific_armour_sprite,4,x_surface_offset,y_surface_offset);
+                        if (pauldron_trim==0 && specialist_colours>=2) then draw_sprite(specific_armour_sprite,5,x_surface_offset,y_surface_offset);
                     }
                 } else if (array_length(armour_draw)){
                     draw_sprite(armour_draw[0], armour_draw[1],x_surface_offset,y_surface_offset);
@@ -1071,11 +1080,11 @@ function scr_draw_unit_image(_background=false){
                     robes_hood_bypass = true;
                     if (array_contains(obj_ini.adv,"Daemon Binders") && blandify==0 && psy_hood<7){
 						robes_bypass = true;
-                        if (ttrim=1){
+                        if (pauldron_trim=1){
 							draw_sprite(spr_gear_hood2,0,x_surface_offset-2,y_surface_offset-11);
 							draw_sprite(spr_binders_robes,0,x_surface_offset-2,y_surface_offset-11);
 						}
-                        if (ttrim==0){
+                        if (pauldron_trim==0){
 							draw_sprite(spr_gear_hood2,1,x_surface_offset-2,y_surface_offset-11);
 							draw_sprite(spr_binders_robes,1,x_surface_offset-2,y_surface_offset-11);
 						}
