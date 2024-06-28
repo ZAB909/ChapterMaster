@@ -1186,9 +1186,9 @@ function scr_draw_unit_image(_background=false){
 
                                 case "left_leg":
                                     if (armour_type == ArmourType.Normal) {
-                                        var sprite_num = 3;
+                                        var sprite_num = 2;
                                         if (specialist_colours >= 2) {
-                                            sprite_num = 4;
+                                            sprite_num = 3;
                                         }
                                         if (bionic.variant == 0) {
                                             draw_sprite(spr_bionics_leg_2, sprite_num, x_surface_offset, y_surface_offset)
