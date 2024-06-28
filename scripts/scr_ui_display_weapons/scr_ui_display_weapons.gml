@@ -190,7 +190,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
     }
 
     // Offset weapon sprites meant for normal power armor but used on terminators
-    if (current_armor_type != ArmourType.Normal && !array_contains(["terminator_ranged", "terminator_melee","terminator_fist"],display_type)){
+    if (current_armor_type = ArmourType.Terminator && !array_contains(["terminator_ranged", "terminator_melee","terminator_fist"],display_type)){
         ui_ymod[left_or_right] -= 20;
         if (display_type == "normal_ranged") {
             if (current_armor == "Terminator Armour") {
@@ -351,6 +351,8 @@ function set_as_melee_twohand(sprite, left_or_right) {
     display_type = "melee_twohand";
     ui_arm[1] = 0;
     ui_arm[2] = 0;
+    ui_hand[1] = 0;
+    ui_hand[2] = 0;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     ui_twoh[left_or_right] = true;

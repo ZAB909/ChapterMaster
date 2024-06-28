@@ -446,6 +446,7 @@
     {"id":{"name":"spr_da_mk6","path":"sprites/spr_da_mk6/spr_da_mk6.yy",},},
     {"id":{"name":"spr_save_data","path":"sprites/spr_save_data/spr_save_data.yy",},},
     {"id":{"name":"spr_new_mm","path":"sprites/spr_new_mm/spr_new_mm.yy",},},
+    {"id":{"name":"spr_scout_arms","path":"sprites/spr_scout_arms/spr_scout_arms.yy",},},
     {"id":{"name":"spr_rock_bg","path":"sprites/spr_rock_bg/spr_rock_bg.yy",},},
     {"id":{"name":"spr_weapon_grav_gun","path":"sprites/spr_weapon_grav_gun/spr_weapon_grav_gun.yy",},},
     {"id":{"name":"spr_ingame_menu","path":"sprites/spr_ingame_menu/spr_ingame_menu.yy",},},

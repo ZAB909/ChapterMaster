@@ -98,6 +98,7 @@ function set_shader_color(shaderType, colorIndex) {
 // Define armour types
 enum ArmourType {
     Normal,
+    Scout,
     Terminator,
     Dreadnought,
     None
@@ -147,11 +148,12 @@ function scr_draw_unit_image(_background=false){
             var offset_x = x_surface_offset;
             var offset_y = y_surface_offset;
             switch(armour_type){
-                case ArmourType.Normal:
-                    var _hand_spr = spr_pa_hands;
-                    break;
                 case ArmourType.Terminator:
                     var _hand_spr = spr_terminator_hands;
+                    break;
+                default:
+                case ArmourType.Normal:
+                    var _hand_spr = spr_pa_hands;
                     break;
             }
             if (ui_hand[right_left] > 0){
@@ -182,15 +184,19 @@ function scr_draw_unit_image(_background=false){
     }
     
     function draw_unit_arms(x_surface_offset, y_surface_offset, armour_type, specialist_colours, hide_bionics){
-        if (armour_type == ArmourType.Normal || armour_type == ArmourType.Terminator){
+        if (array_contains([ArmourType.Normal,ArmourType.Terminator, ArmourType.Scout], armour_type)){
             var offset_x = x_surface_offset;
             var offset_y = y_surface_offset;
             switch(armour_type){
-                case ArmourType.Normal:
-                    var _arm_spr = spr_pa_arms;
-                    break;
                 case ArmourType.Terminator:
                     var _arm_spr = spr_terminator_arms;
+                    break;
+                case ArmourType.Scout:
+                    var _arm_spr = spr_scout_arms;
+                    break;
+                case ArmourType.Normal:
+                default:
+                    var _arm_spr = spr_pa_arms;
                     break;
             }
             for (var right_left = 1; right_left <= 2; right_left++) {
@@ -198,7 +204,7 @@ function scr_draw_unit_image(_background=false){
                 if (ui_arm[right_left] == 1 && armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")){
                     var bionic_arm = body[$ (right_left == 1 ? "right_arm" : "left_arm")][$ "bionic"];
                     var _spr_w = sprite_get_width(spr_bionics_arm) - sprite_get_xoffset(spr_bionics_arm) * 2;
-                    var bionic_spr_index = bionic_arm.variant;
+                    var bionic_spr_index = bionic_arm.variant * 2;
                     if (right_left == 2) {
                         bionic_spr_index += (specialist_colours >= 2) ? 1 : 0;
                         draw_sprite_ext(spr_bionics_arm, bionic_spr_index, offset_x + _spr_w, offset_y, -1, 1, 0, c_white, 1);
@@ -355,6 +361,9 @@ function scr_draw_unit_image(_background=false){
         }
 
         switch(unit_armour){
+            case "Scout Armour":
+                armour_type = ArmourType.Scout;
+                break;
             case "Terminator Armour":
             case "Tartaros":
                 armour_type = ArmourType.Terminator;
@@ -588,7 +597,7 @@ function scr_draw_unit_image(_background=false){
         
 			
 			
-            if (armour()=="Scout Armour"){
+            if (armour_type == ArmourType.Scout){
 				if (slow>0) then slow=10;
 				armour_sprite=spr_scout_colors2;
                 if (squad!="none"){
@@ -721,7 +730,7 @@ function scr_draw_unit_image(_background=false){
 
                 var specific_helm = false;
                 var helm_draw=[0,0];
-                if (armour()=="Scout Armour"){
+                if (armour_type == ArmourType.Scout){
                     if (unit_is_sniper = true){
                         draw_sprite(spr_marine_head,skin_color,x_surface_offset,y_surface_offset);
                         draw_sprite(spr_scout_colors,11,x_surface_offset,y_surface_offset);// Scout Sniper Cloak
@@ -1238,7 +1247,7 @@ function scr_draw_unit_image(_background=false){
                 if (role() == obj_ini.role[100][Role.SERGEANT] || role() == obj_ini.role[100][Role.VETERAN_SERGEANT]) {
                     draw_sprite(spr_helm_decorations,0,x_surface_offset,y_surface_offset-10);
                 }
-            } else if (armour()=="Scout Armour"){
+            } else if (armour_type == ArmourType.Scout){
                 var head_mod = body.head.variation%3;
                 if (head_mod == 1){
                     draw_sprite(spr_scout_heads,0,x_surface_offset,y_surface_offset);
@@ -1272,7 +1281,7 @@ function scr_draw_unit_image(_background=false){
                 var robe_offset_y = 0;
                 var hood_offset_x = 0;
                 var hood_offset_y = 0;
-                if (array_contains(["Scout Armour"], armour())) {
+                if (armour_type == ArmourType.Scout) {
                     robe_offset_x = 1;
                     robe_offset_y = 10;
                     hood_offset_x = 1;
@@ -1290,7 +1299,7 @@ function scr_draw_unit_image(_background=false){
                 }              
             }
 
-            if (armour_sprite==spr_scout_colors2){
+            if (armour_type == ArmourType.Scout){
                 ui_ymod[1]+=7;
                 ui_ymod[2]+=7;
             }
