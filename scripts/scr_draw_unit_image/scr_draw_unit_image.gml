@@ -171,7 +171,7 @@ function scr_draw_unit_image(_background=false){
                 if (armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")) {
                     var bionic_hand = body[$ (right_left == 1 ? "right_arm" : "left_arm")][$ "bionic"];
                     var _spr_w = sprite_get_width(spr_bionics_hand) - sprite_get_xoffset(spr_bionics_hand) * 2;
-                    var bionic_spr_index = bionic_hand.variant;
+                    var bionic_spr_index = bionic_hand.variant * 2;
                     if (right_left == 2) {
                         bionic_spr_index += (specialist_colours >= 2) ? 1 : 0;
                         draw_sprite_ext(spr_bionics_hand, bionic_spr_index, offset_x + _spr_w, offset_y, -1, 1, 0, c_white, 1);
