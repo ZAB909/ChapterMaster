@@ -117,7 +117,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
             "Eldar Power Sword":spr_weapon_eldsword,
             "Power Spear":spr_weapon_powspear,
             "Thunder Hammer":spr_weapon_thhammer,
-            "Relic Blade":spr_weapon_relbla,
             "Power Axe":spr_weapon_powaxe,
 			"Crozius Arcanum":spr_weapon_crozarc,
             "Chainaxe":spr_weapon_chaxe,
@@ -162,6 +161,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         var heavy_melee ={
             "Eviscerator":spr_weapon_evisc,
             "Heavy Thunder Hammer":spr_weapon_hthhammer,
+            "Relic Blade":spr_weapon_relic_blade,
         }
         var heavy_melee_names=struct_get_names(heavy_melee);
         for (var i=0;i<array_length(heavy_melee_names);i++){
@@ -227,6 +227,13 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
 
     if (array_contains(["Thunder Hammer"], equiped_weapon)) {
         hand_variant[left_or_right] = 2;
+    }
+
+    if (array_contains(["Relic Blade"], equiped_weapon)) {
+        hand_variant[1] = 4;
+        hand_variant[2] = 3;
+        hand_on_top[1]=true;
+        hand_on_top[2]=true;
     }
 
     // Adjust weapon sprites meant for normal power armor but used on terminators
