@@ -4,7 +4,7 @@
   "name": "spr_pa_hands",
   "bbox_bottom": 126,
   "bbox_left": 0,
-  "bbox_right": 48,
+  "bbox_right": 49,
   "bbox_top": 0,
   "bboxMode": 0,
   "collisionKind": 1,
@@ -31,7 +31,7 @@
   "height": 232,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"884d1359-d965-47fc-b560-2c259f1326fd","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"338834a4-901b-4352-9793-54779febde8d","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,

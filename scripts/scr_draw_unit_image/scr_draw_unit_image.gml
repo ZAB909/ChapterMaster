@@ -156,8 +156,8 @@ function scr_draw_unit_image(_background=false){
                     var _hand_spr = spr_pa_hands;
                     break;
             }
-            if (ui_hand[right_left] > 0){
-                var _spr_index = (ui_hand[right_left] - 1) * 2;
+            if (hand_variant[right_left] > 0){
+                var _spr_index = (hand_variant[right_left] - 1) * 2;
                 var _spr_w = sprite_get_width(_hand_spr) - sprite_get_xoffset(_hand_spr) * 2;
                 if (right_left == 2) {
                     _spr_index += (specialist_colours >= 2) ? 1 : 0;
@@ -167,7 +167,7 @@ function scr_draw_unit_image(_background=false){
                 }
             }
             // Draw bionic hands
-            if (ui_hand[right_left] == 1){
+            if (hand_variant[right_left] == 1){
                 if (armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")) {
                     var bionic_hand = body[$ (right_left == 1 ? "right_arm" : "left_arm")][$ "bionic"];
                     var _spr_w = sprite_get_width(spr_bionics_hand) - sprite_get_xoffset(spr_bionics_hand) * 2;
@@ -204,7 +204,7 @@ function scr_draw_unit_image(_background=false){
             }
             for (var right_left = 1; right_left <= 2; right_left++) {
                 // Draw bionic arms
-                if (ui_arm[right_left] == 1 && armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")){
+                if (arm_variant[right_left] == 1 && armour_type == ArmourType.Normal && !hide_bionics && struct_exists(body[$ (right_left == 1 ? "right_arm" : "left_arm")], "bionic")){
                     var bionic_arm = body[$ (right_left == 1 ? "right_arm" : "left_arm")][$ "bionic"];
                     var _spr_w = sprite_get_width(spr_bionics_arm) - sprite_get_xoffset(spr_bionics_arm) * 2;
                     var bionic_spr_index = bionic_arm.variant * 2;
@@ -214,8 +214,8 @@ function scr_draw_unit_image(_background=false){
                     } else {
                         draw_sprite(spr_bionics_arm, bionic_spr_index, offset_x, offset_y);
                     }
-                } else if (ui_arm[right_left] > 0){
-                    var _spr_index = (ui_arm[right_left] - 1) * 2;
+                } else if (arm_variant[right_left] > 0){
+                    var _spr_index = (arm_variant[right_left] - 1) * 2;
                     var _spr_w = sprite_get_width(_arm_spr) - sprite_get_xoffset(_arm_spr) * 2;
                     if (right_left == 2) {
                         _spr_index += (specialist_colours >= 2) ? 1 : 0;
@@ -241,10 +241,10 @@ function scr_draw_unit_image(_background=false){
     if (name_role()!="") and (base_group=="astartes"){
         ui_weapon[1]=spr_weapon_blank;
         ui_weapon[2]=spr_weapon_blank;
-        ui_arm[1]=1;
-        ui_arm[2]=1;
-        ui_hand[1]=1;
-        ui_hand[2]=1;
+        arm_variant[1]=1;
+        arm_variant[2]=1;
+        hand_variant[1]=1;
+        hand_variant[2]=1;
         hand_on_top[1]=false;
         hand_on_top[2]=false;
         ui_spec[1]=false;

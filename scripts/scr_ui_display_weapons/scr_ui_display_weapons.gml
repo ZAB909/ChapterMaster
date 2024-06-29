@@ -190,7 +190,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
 
     if (display_type == "terminator_melee") {
         if (array_contains(["Mace of Absolution"], equiped_weapon)) {
-            ui_hand[left_or_right] = 5;
+            hand_variant[left_or_right] = 5;
         }
     }
 
@@ -201,33 +201,32 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         else {
             ui_weapon[left_or_right] = spr_weapon_storm2;
         }
-        ui_arm[left_or_right] = 2;
+        arm_variant[left_or_right] = 2;
         ui_spec[left_or_right] = false;
     }
     if ("Boarding Shield" == equiped_weapon) {
         ui_weapon[left_or_right] = spr_weapon_boarding;
-        ui_arm[left_or_right] = 2;
+        arm_variant[left_or_right] = 2;
         ui_spec[left_or_right] = false;
     }
 
     if (array_contains(["Power Mace", "Mace of Absolution"], equiped_weapon)) {
-        ui_arm[left_or_right] = 0;
+        arm_variant[left_or_right] = 0;
     }
 
     if ("Company Standard" == equiped_weapon) {
-        ui_hand[left_or_right] = 0;
+        hand_variant[left_or_right] = 0;
     }
 
     if ("Autocannon" == equiped_weapon) {
-        ui_arm[1] = 0;
-        ui_arm[2] = 1;
-        ui_hand[1] = 6;
-        ui_hand[2] = 4;
+        arm_variant[1] = 0;
+        arm_variant[2] = 1;
+        hand_variant[1] = 6;
         hand_on_top[2]=true;
     }
 
     if (array_contains(["Thunder Hammer"], equiped_weapon)) {
-        ui_hand[left_or_right] = 2;
+        hand_variant[left_or_right] = 2;
     }
 
     // Adjust weapon sprites meant for normal power armor but used on terminators
@@ -244,8 +243,8 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
             }
         }
         if (display_type == "melee_onehand" && equiped_weapon != "Company Standard") {
-            ui_arm[left_or_right] = 2;
-            ui_hand[left_or_right] = 2;
+            arm_variant[left_or_right] = 2;
+            hand_variant[left_or_right] = 2;
             if (current_armor == "Terminator Armour") {
                 ui_xmod[left_or_right] -= 18;
                 ui_ymod[left_or_right] += 24;
@@ -256,10 +255,10 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         }
 
         if (display_type == "melee_twohand") {
-            ui_arm[1] = 2;
-            ui_arm[2] = 2;
-            ui_hand[1] = 3;
-            ui_hand[2] = 4;
+            arm_variant[1] = 2;
+            arm_variant[2] = 2;
+            hand_variant[1] = 3;
+            hand_variant[2] = 4;
             if (current_armor == "Terminator Armour") {
                 ui_ymod[left_or_right] += 25;
             } else if (current_armor == "Tartaros") {
@@ -268,10 +267,10 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         }
 
         if (display_type == "ranged_twohand") {
-            ui_arm[1] = 2;
-            ui_arm[2] = 2;
-            ui_hand[1] = 0;
-            ui_hand[2] = 0;
+            arm_variant[1] = 2;
+            arm_variant[2] = 2;
+            hand_variant[1] = 0;
+            hand_variant[2] = 0;
             if (current_armor == "Terminator Armour") {
                 ui_ymod[left_or_right] += 15;
             } else if (current_armor == "Tartaros") {
@@ -280,7 +279,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         }
 
         if (array_contains(["Thunder Hammer", "Chainaxe", "Power Axe", "Crozius Arcanum"], equiped_weapon)) {
-            ui_hand[left_or_right] = 3;
+            hand_variant[left_or_right] = 3;
         }
     }
 
@@ -293,7 +292,7 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
 
 function set_as_normal_ranged(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 1;
+    arm_variant[left_or_right] = 1;
     ui_spec[left_or_right] = false;
     display_type = "normal_ranged";
 }
@@ -301,42 +300,42 @@ function set_as_normal_ranged(sprite, left_or_right) {
 function set_as_ranged_assault(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     display_type = "ranged_assault";
-    ui_arm[left_or_right] = 0;
-    ui_hand[left_or_right] = 0;
+    arm_variant[left_or_right] = 0;
+    hand_variant[left_or_right] = 0;
     ui_spec[left_or_right] = true;
 }
 
 function set_as_ranged_twohand(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     display_type = "ranged_twohand";
-    ui_arm[1] = 0;
-    ui_arm[2] = 0;
-    ui_hand[1] = 0;
-    ui_hand[2] = 0;
+    arm_variant[1] = 0;
+    arm_variant[2] = 0;
+    hand_variant[1] = 0;
+    hand_variant[2] = 0;
     ui_spec[left_or_right] = true;
     ui_twoh[left_or_right] = true;
 }
 
 function set_as_special_ranged(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 0;
-    ui_hand[left_or_right] = 0;
+    arm_variant[left_or_right] = 0;
+    hand_variant[left_or_right] = 0;
     ui_spec[left_or_right] = true;
     display_type = "special_ranged";
 }
 
 function set_as_terminator_ranged(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 2;
-    ui_hand[left_or_right] = 0;
+    arm_variant[left_or_right] = 2;
+    hand_variant[left_or_right] = 0;
     ui_spec[left_or_right] = true;
     display_type = "terminator_ranged";
 }
 
 function set_as_melee_onehand(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 0;
-    ui_hand[left_or_right] = 0;
+    arm_variant[left_or_right] = 0;
+    hand_variant[left_or_right] = 0;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     display_type = "melee_onehand";
@@ -344,7 +343,7 @@ function set_as_melee_onehand(sprite, left_or_right) {
 
 function set_as_normal_fist(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 1;
+    arm_variant[left_or_right] = 1;
     ui_spec[left_or_right] = true;
     display_type = "normal_fist";
 }
@@ -352,10 +351,10 @@ function set_as_normal_fist(sprite, left_or_right) {
 function set_as_melee_twohand(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
     display_type = "melee_twohand";
-    ui_arm[1] = 0;
-    ui_arm[2] = 0;
-    ui_hand[1] = 0;
-    ui_hand[2] = 0;
+    arm_variant[1] = 0;
+    arm_variant[2] = 0;
+    hand_variant[1] = 0;
+    hand_variant[2] = 0;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     ui_twoh[left_or_right] = true;
@@ -363,7 +362,7 @@ function set_as_melee_twohand(sprite, left_or_right) {
 
 function set_as_terminator_melee(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 1;
+    arm_variant[left_or_right] = 1;
     hand_on_top[left_or_right]=true;
     ui_spec[left_or_right] = true;
     display_type = "terminator_melee";
@@ -371,7 +370,7 @@ function set_as_terminator_melee(sprite, left_or_right) {
 
 function set_as_terminator_fist(sprite, left_or_right) {
     ui_weapon[left_or_right] = sprite;
-    ui_arm[left_or_right] = 1;
+    arm_variant[left_or_right] = 1;
     ui_spec[left_or_right] = true;
     display_type = "terminator_fist";
 }

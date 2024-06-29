@@ -23,6 +23,7 @@
   "height": 272,
   "HTile": false,
   "layers": [
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"66d899f0-585a-4030-a5a2-ef609d560ae4","blendMode":0,"displayName":"pasteLayer","isLocked":false,"opacity":100.0,"visible":true,},
     {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"cb494c49-00cb-493b-af38-95df8d096948","blendMode":0,"displayName":"pasteLayer","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
