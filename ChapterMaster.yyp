@@ -1063,6 +1063,7 @@
     {"id":{"name":"scr_has_disadv","path":"scripts/scr_has_disadv/scr_has_disadv.yy",},},
     {"id":{"name":"obj_ncombat","path":"objects/obj_ncombat/obj_ncombat.yy",},},
     {"id":{"name":"spr_ultra_honor_guard2","path":"sprites/spr_ultra_honor_guard2/spr_ultra_honor_guard2.yy",},},
+    {"id":{"name":"spr_weapon_relic_blade","path":"sprites/spr_weapon_relic_blade/spr_weapon_relic_blade.yy",},},
     {"id":{"name":"obj_centerline","path":"objects/obj_centerline/obj_centerline.yy",},},
     {"id":{"name":"obj_pnunit","path":"objects/obj_pnunit/obj_pnunit.yy",},},
     {"id":{"name":"obj_enunit","path":"objects/obj_enunit/obj_enunit.yy",},},
