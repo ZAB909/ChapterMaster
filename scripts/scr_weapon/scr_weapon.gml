@@ -635,18 +635,19 @@ global.weapons = {
 			"artifact": 1000
 		},
 		"melee_mod": {
-			"standard": 1.3,
-			"master_crafted": 1.3,
-			"artifact": 1.3
+			"standard": 1,
+			"master_crafted": 1.1,
+			"artifact": 1.2
 		},
-		"description": "Ancient Blades of various origins smited through arcane forging or lost techniques, these blades are deadly beyond belief. These peerless blades slice through ceramite and flesh with ease.",
-		"melee_hands": 1,
-		"ranged_hands": 0,
+		"description": "Ancient Blades of various origins smithed through arcane forging or lost techniques, these blades are deadly beyond belief. These peerless blades slice through ceramite and flesh with ease.",
+		"melee_hands": 2,
+		"ranged_hands": 1,
 		"ammo": 0,
 		"range": 1,
-		"spli": 3,
+		"spli": 8,
 		"arp": 1,
-		"tags": ["arcane", "sword"],
+		"special_properties": ["Parry"],
+		"tags": ["power", "sword"],
 	},
 	"Bolt Pistol": {
 		"abbreviation": "BltPstl",
