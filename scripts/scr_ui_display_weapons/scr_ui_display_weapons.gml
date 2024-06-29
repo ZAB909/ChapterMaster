@@ -229,13 +229,6 @@ function scr_ui_display_weapons(left_or_right, current_armor, equiped_weapon, cu
         hand_variant[left_or_right] = 2;
     }
 
-    if (array_contains(["Relic Blade"], equiped_weapon)) {
-        hand_variant[1] = 4;
-        hand_variant[2] = 3;
-        hand_on_top[1]=true;
-        hand_on_top[2]=true;
-    }
-
     // Adjust weapon sprites meant for normal power armor but used on terminators
     if (current_armor_type == ArmourType.Terminator && !array_contains(["terminator_ranged", "terminator_melee","terminator_fist"],display_type)){
         ui_ymod[left_or_right] -= 20;
