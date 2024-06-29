@@ -2325,7 +2325,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     break;
                 case "spli":
                     if (spli>0){
-                        item_desc_tooltip += $"Attack Count: {spli}#"
+                        item_desc_tooltip += $"Max Kills: {spli}#"
                     }
                     break;
                 case "ranged_mod":
