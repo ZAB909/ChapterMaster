@@ -262,6 +262,7 @@ function new_player_ship(type, start_loc="home"){
             if (array_contains(obj_ini.ship,new_name)) then new_name="";
         } else {break};
     }
+    if (start_loc == "home") then start_loc = obj_ini.home_name;
    obj_ini.ship[index]=new_name;
     obj_ini.ship_uid[index]=floor(random(99999999))+1;
     obj_ini.ship_owner[index]=1; //TODO: determine if this means the player or not
@@ -394,6 +395,10 @@ function get_nearest_player_fleet(nearest_x, nearest_y, is_static=false, is_movi
 		}
 	}
 	return chosen_fleet;	
+}
+
+function clear_ship_arrays(i){
+
 }
 
 

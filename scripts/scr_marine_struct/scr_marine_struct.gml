@@ -2160,7 +2160,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				location_id = location_type; //planet_number marine is on
 				location_type = location_types.planet; //state marine is on planet
 				if (obj_ini.loc[company][marine_number] == "home"){
-					obj_ini.loc[company][marine_number] = obj_ini.home_name
+					obj_ini.loc[company][marine_number] = obj_ini.home_name;
 				}
 				location_name = obj_ini.loc[company][marine_number]; //system marine is in
 			} else {

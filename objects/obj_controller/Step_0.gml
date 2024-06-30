@@ -672,7 +672,7 @@ if (unload>0){
     
     var unit,company, unit_id;
     for(var q=0; q<array_length(display_unit); q++){
-        if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
+        if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1) and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
             unit=display_unit[q];
             if (!is_struct(unit)) then continue;

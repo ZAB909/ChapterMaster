@@ -867,7 +867,6 @@
     {"id":{"name":"scr_company_load","path":"scripts/scr_company_load/scr_company_load.yy",},},
     {"id":{"name":"spr_ba_mk6_helm","path":"sprites/spr_ba_mk6_helm/spr_ba_mk6_helm.yy",},},
     {"id":{"name":"scr_load_all","path":"scripts/scr_load_all/scr_load_all.yy",},},
-    {"id":{"name":"scr_load_decide_loc","path":"scripts/scr_load_decide_loc/scr_load_decide_loc.yy",},},
     {"id":{"name":"scr_ui_advisors","path":"scripts/scr_ui_advisors/scr_ui_advisors.yy",},},
     {"id":{"name":"scr_ui_diplomacy","path":"scripts/scr_ui_diplomacy/scr_ui_diplomacy.yy",},},
     {"id":{"name":"scr_ui_popup","path":"scripts/scr_ui_popup/scr_ui_popup.yy",},},

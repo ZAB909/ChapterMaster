@@ -640,17 +640,18 @@ function load_selection(){
 }
 
 function unload_selection(){
-    if (man_size>0) and (sel_loading>=1) and (!instance_exists(obj_star_select)) 
+	show_debug_message("{0},{1},{2}",obj_controller.selecting_ship,man_size,selecting_location);
+    if (man_size>0) and (obj_controller.selecting_ship>=1) and (!instance_exists(obj_star_select)) 
     and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (selecting_location!="Warp"){
         cooldown=8000;
         var boba=0;
-        var unload_star = star_by_name(obj_ini.ship_location[obj_controller.selecting_ship]);
+        var unload_star = star_by_name(selecting_location);
         if (unload_star != "none"){
             if (unload_star.space_hulk!=1){
                 boba=instance_create(unload_star.x,unload_star.y,obj_star_select);
                 boba.loading=1;
                 // selecting location is the ship right now; get it's orbit location
-                boba.loading_name=obj_ini.ship_location[selecting_ship];
+                boba.loading_name=selecting_location;
                 boba.depth=self.depth-50;
                 // sel_uid=obj_ini.ship_uid[selecting_ship];
                 scr_company_load(obj_ini.ship_location[selecting_ship]);
