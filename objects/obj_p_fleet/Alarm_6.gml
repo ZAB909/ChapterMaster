@@ -19,18 +19,6 @@ with(obj_ini){scr_ini_ship_cleanup();}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 var i,t,yep;
 
 i=0;repeat(8){i+=1;t=0;yep=0;
