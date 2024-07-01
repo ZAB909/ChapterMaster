@@ -21,6 +21,12 @@ function scr_trial_data(){
 				base : 0.3,
 			},
 			seed_waste : 0.1,
+			corruption :{
+				base : [10,20],
+				planets :{
+
+				}
+			}			
 			long_description :$"THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the {role_data[Role.TECHMARINE]}s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.",
 		},
 		{
@@ -125,6 +131,12 @@ function scr_trial_data(){
 					Lava :0.3,
 				}			
 			},
+			corruption :{
+				base : [0,-10],
+				planets :{
+
+				}
+			}
 			long_description :$"What better way to cultivate astartes than to raise them from youth?  The capable children of our recruitment targets are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s {role_data[Role.APOTHECARY]}s and {role_data[Role.CHAPLAIN]} to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.",									
 		},						
 	]
