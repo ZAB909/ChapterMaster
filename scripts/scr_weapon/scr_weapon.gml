@@ -516,7 +516,7 @@ global.weapons = {
 		"spli": 10,
 		"arp": 1,
 		"tags": ["power", "hammer", "siege"],
-		"req_exp": 140,
+		"req_exp": 100,
 	},
 	"Heavy Thunder Hammer": {
 		"abbreviation": "HvyThndHmr",
@@ -538,7 +538,7 @@ global.weapons = {
 		"spli": 15,
 		"arp": 1,
 		"tags": ["heavy_melee", "power", "hammer", "siege"],
-		"req_exp": 140,
+		"req_exp": 100,
 	},
 	"Power Mace": {
 		"abbreviation": "PwrMace",
@@ -635,18 +635,19 @@ global.weapons = {
 			"artifact": 1000
 		},
 		"melee_mod": {
-			"standard": 1.3,
-			"master_crafted": 1.3,
-			"artifact": 1.3
+			"standard": 1,
+			"master_crafted": 1.1,
+			"artifact": 1.2
 		},
-		"description": "Ancient Blades of various origins smited through arcane forging or lost techniques, these blades are deadly beyond belief. These peerless blades slice through ceramite and flesh with ease.",
-		"melee_hands": 1,
-		"ranged_hands": 0,
+		"description": "Ancient Blades of various origins smithed through arcane forging or lost techniques, these blades are deadly beyond belief. These peerless blades slice through ceramite and flesh with ease.",
+		"melee_hands": 2,
+		"ranged_hands": 1,
 		"ammo": 0,
 		"range": 1,
-		"spli": 3,
+		"spli": 8,
 		"arp": 1,
-		"tags": ["arcane", "sword"],
+		"special_properties": ["Parry"],
+		"tags": ["power", "sword"],
 	},
 	"Bolt Pistol": {
 		"abbreviation": "BltPstl",
@@ -1712,7 +1713,7 @@ global.gear = {
 			"ranged_hands": 2,
 			"description": "Terminator Armour is the strongest and most powerful armour designed by humanity, available only to the veterans of the Adeptus Astartes. The Indomitus Pattern is the most widespread and versatile pattern as of M41.",
 			"tags": ["terminator"],
-			"req_exp": 90,
+			"req_exp": 100,
 		},
 		"Dreadnought": {
 			"abbreviation": "Drdnght",
@@ -1757,7 +1758,7 @@ global.gear = {
 			"ranged_hands": 2,
 			"description": "This pattern is possibly considered the most advanced form of Terminator Armour, providing greater mobility for the wearer compared to the Indomitus with no loss in durability. In the M41 considered to be incredibly rare with wars being fought to secure more suits.",
 			"tags": ["terminator"],
-			"req_exp": 90,
+			"req_exp": 100,
 		},
 		"Cataphractii Pattern Terminator": {
 			"abbreviation": "Catphr",
@@ -1780,7 +1781,7 @@ global.gear = {
 			"ranged_hands": 2,
 			"description": "Among the first issued to the Space Marine Legions. Having additional plating and shield generators installed within the shoulder pads resulted in severe straining of the suit's exoskeleton and reduced the wearer's maneuverability, leading to its decline among some legions.",
 			"tags": ["terminator"],
-			"req_exp": 90,
+			"req_exp": 100,
 		},
 		"Ork Armour": {
 			"abbreviation": "OrkArm",
@@ -2325,7 +2326,7 @@ function equipment_struct(item_data, core_type,quality="none") constructor{
                     break;
                 case "spli":
                     if (spli>0){
-                        item_desc_tooltip += $"Attack Count: {spli}#"
+                        item_desc_tooltip += $"Max Kills: {spli}#"
                     }
                     break;
                 case "ranged_mod":

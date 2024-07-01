@@ -356,6 +356,38 @@ function is_dead_star(star="none"){
 	return dead_star;
 }
 
+function scr_create_space_hulk(xx,yy){
+	var hulk = instance_create(xx,yy,obj_star); 
+    hulk.space_hulk=1;
+    hulk.p_type[1]="Space Hulk";
+    hulk.name=global.name_generator.generate_hulk_name();	
+    return hulk;
+}
+
+function scr_faction_string_name(faction){
+	name = "";
+	switch (faction){
+		case eFACTION.Imperium:
+			name = "Imperium";
+			break;
+		case eFACTION.Mechanicus:
+			name = "Mechanicus";
+			break;
+		case eFACTION.Inquisition:
+			name = "Inquisition";
+			break;
+		case eFACTION.Ecclesiarchy:
+			name = "Ecclesiarchy";
+			break;	
+		case eFACTION.Eldar:
+			name = "Eldar";
+			break;	
+		case eFACTION.Tau:
+			name = "Tau";
+			break;																
+	}
+	return name;
+}
 //function scr_get_player_fleets() {
 //	var player_fleets = [];
 //	with(obj_p_fleet){

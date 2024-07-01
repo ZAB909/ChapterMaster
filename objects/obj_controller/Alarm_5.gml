@@ -49,9 +49,7 @@ if (faction_gender[eFACTION.Chaos]==1) and (faction_defeated[eFACTION.Chaos]==0)
 instance_activate_object(obj_star);
 
 // ** Build new Imperial Ships **
-with(obj_temp6){instance_destroy();}
-with(obj_temp5){instance_destroy();}
-with(obj_temp4){instance_destroy();}
+
 imp_ships=0;
 with(obj_en_fleet){
     if (owner==eFACTION.Imperium){
@@ -60,29 +58,32 @@ with(obj_en_fleet){
         obj_controller.imp_ships+=escort_number/4;
     }
 }
+var imperium_worlds=[];
+var mechanicus_worlds=[];
+
 with(obj_star){
     //empty object simply acts as a counter for the number of imperial systems
     if (owner == eFACTION.Imperium){
-        instance_create(x,y,obj_temp6)
+        array_push(imperium_worlds, id);
     }else if (owner == eFACTION.Mechanicus){
-        instance_create(x,y,obj_temp5)
+        array_push(mechanicus_worlds, id);
     }
     //unknown function of temp5 same as temp6 but for mechanicus worlds
     if (space_hulk==1) or (craftworld==1){x-=20000;y-=20000;}
 }
 // Former: var sha;sha=instance_number(obj_temp6)*1.3;
-var sha=instance_number(obj_temp6)*0.65;// new
+var mechanicus_world_total = array_length(mechanicus_worlds);
 
-with(obj_temp6){instance_destroy();}
+var ship_allowance=array_length(imperium_worlds)*(0.65+(mechanicus_world_total*3));// new
 
         /*in order for new ships to spawn the number of total imperial ships must be smaller than 
          one third of the total imperial star systems*/
-if (instance_number(obj_temp5)>0) and (imp_ships<sha){
+if (mechanicus_world_total>0) and (imp_ships<ship_allowance){
     var rando=irandom(100)+1, rando2=choose(1,2,2,3,3,3);
-    var forge=instance_nearest(random(room_width),random(room_height),obj_temp5);
+    var forge=mechanicus_worlds[irandom(mechanicus_world_total-1)];
     
     //the less mechanicus forge worlds the less likely to spawn a new fleet
-    if (rando<=(12)*instance_number(obj_temp5)){
+    if (rando<=(12)*mechanicus_world_total){
         var new_defense_fleet=instance_create(forge.x,forge.y,obj_en_fleet);
         new_defense_fleet.owner= eFACTION.Imperium;
         new_defense_fleet.sprite_index=spr_fleet_imperial;
@@ -98,11 +99,10 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
             break;
         }
         new_defense_fleet.trade_goods="merge";
-        with(obj_temp5){instance_destroy();}
 		
-		var system_4 = []
-		var system_3 = []
-		var system_other = []
+		var system_4 = [];
+		var system_3 = [];
+		var system_other = [];
 		
         with(obj_star) {
             if (x>10) and (y>10) and ((owner==eFACTION.Imperium) or (owner==eFACTION.Mechanicus)){
@@ -120,12 +120,12 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
 					eFACTION.Tyranids,
 					eFACTION.Chaos,
 					eFACTION.Necrons
-				]
+				];
 				
 				system_fleet_elements = array_reduce(fleet_types, function(prev, curr) {
-					return present_fleet[prev] + present_fleet[curr]
-				})
-				var coords = {x,y}
+					return prev + present_fleet[curr]
+				});
+				var coords = [x,y];
 				
                 if (system_fleet_elements==0) {
                     switch(planets){
@@ -139,36 +139,39 @@ if (instance_number(obj_temp5)>0) and (imp_ships<sha){
 							if (p_type[1]!="Dead") {
 								array_push(system_other, coords)//instance_create(x,y,obj_temp4);
 							}
+                            break;
                     }
-                }
+                };
             }
         }
 		
-        var targeted=undefined;
+        var targeted=false;
+        var target;
 		//shuffle the contents, if any
-		array_shuffle_ext(system_4)
-		array_shuffle_ext(system_3)
-		array_shuffle_ext(system_other)
+		array_shuffle_ext(system_4);
+		array_shuffle_ext(system_3);
+		array_shuffle_ext(system_other);
 
-        if (bool(targeted)) {
-			targeted = array_pop(system_4)
+        if (targeted) {
+			target = array_pop(system_4)
+            targeted=true;
 		}
-		if (bool(targeted)) {
-			targeted = array_pop(system_3)
+		if (targeted) {
+			target = array_pop(system_3)
+            targeted=true;
 		}
-		if (bool(targeted)) {
-			targeted = array_pop(system_other)
+		if (targeted) {
+			target = array_pop(system_other)
+            targeted=true;
 		}
 
-        if (bool(targeted)){ 
-            new_defense_fleet.action_x=targeted.x;
-            new_defense_fleet.action_y=targeted.y;
-            new_defense_fleet.alarm[4]=1;
+        if (targeted){ 
+            new_defense_fleet.action_x=target.x;
+            new_defense_fleet.action_y=target.y;
+            with (new_defense_fleet){
+                set_fleet_movement()
+            }
         }
-        
-        with(obj_temp6){instance_destroy();}
-        with(obj_temp5){instance_destroy();}
-		with(obj_temp4){instance_destroy();}
     }
 }
 

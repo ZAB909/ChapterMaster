@@ -92,7 +92,7 @@ function scr_restart_variables(saved_game) {
 		// 100 is defaults, 101 is the allowable starting equipment
 		for(var i=100; i<103; i++){
 	        obj_restart_vars.r_race[i,2]=1;
-	        obj_restart_vars.r_role[i,2]="Honor Guard";
+	        obj_restart_vars.r_role[i,2]="Honour Guard";
 			obj_restart_vars.r_wep1[i,2]="Power Sword";
 			obj_restart_vars.r_wep2[i,2]="Bolter";
 	        obj_restart_vars.r_armour[i,2]="Artificer Armour";
@@ -132,7 +132,7 @@ function scr_restart_variables(saved_game) {
 			obj_restart_vars.r_gear[i,6]="";
         
 	        obj_restart_vars.r_race[i,7]=1;
-	        obj_restart_vars.r_role[i,7]="Company Champion";
+	        obj_restart_vars.r_role[i,7]="Champion";
 			obj_restart_vars.r_wep1[i,7]="Power Sword";
 			obj_restart_vars.r_wep2[i,7]="Bolt Pistol";
 	        obj_restart_vars.r_armour[i,7]="Power Armour";
@@ -329,7 +329,7 @@ function scr_restart_variables(saved_game) {
 		// 100 is defaults, 101 is the allowable starting equipment
 		for(var i=100; i<103; i++){
 	        obj_controller.r_race[i,2]=1;
-	        obj_controller.r_role[i,2]="Honor Guard";
+	        obj_controller.r_role[i,2]="Honour Guard";
 			obj_controller.r_wep1[i,2]="Power Sword";
 			obj_controller.r_wep2[i,2]="Bolter";
 	        obj_controller.r_armour[i,2]="Artificer Armour";
@@ -369,7 +369,7 @@ function scr_restart_variables(saved_game) {
 			obj_controller.r_gear[i,6]="";
         
 	        obj_controller.r_race[i,7]=1;
-	        obj_controller.r_role[i,7]="Company Champion";
+	        obj_controller.r_role[i,7]="Champion";
 			obj_controller.r_wep1[i,7]="Power Sword";
 			obj_controller.r_wep2[i,7]="Bolt Pistol";
 	        obj_controller.r_armour[i,7]="Power Armour";
@@ -593,7 +593,7 @@ function scr_restart_variables(saved_game) {
 		for(var i=100; i<103; i++){
 	        
 			race[i,2]=1;
-			role[i,2]="Honor Guard";
+			role[i,2]="Honour Guard";
 			wep1[i,2]="Power Sword";
 			wep2[i,2]="Bolter";
 			armour[i,2]="Artificer Armour";

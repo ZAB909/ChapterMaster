@@ -1,11 +1,11 @@
 enum Role {
 	CHAPTER_MASTER = 1,
-	HONOR_GUARD = 2,
+	HONOUR_GUARD = 2,
 	VETERAN = 3,
 	TERMINATOR = 4,
 	CAPTAIN = 5,
 	DREADNOUGHT = 6,
-	COMPANY_CHAMPION = 7,
+	CHAMPION = 7,
 	TACTICAL = 8,
 	DEVASTATOR = 9,
 	ASSAULT = 10,
@@ -1200,9 +1200,9 @@ function scr_initialize_custom() {
 	}
 
 	for (i = 100; i < 103; i++) { // gear 
-		role[i, 2] = "Honor Guard";
+		role[i, 2] = "Honour Guard";
 		wep1[i, 2] = "Power Sword";
-		wep2[i, 2] = "Storm Bolter";
+		wep2[i, 2] = "Bolter";
 		armour[i, 2] = "Artificer Armour";
 		mobi[i, 2] = "";
 		gear[i, 2] = "";
@@ -1235,7 +1235,7 @@ function scr_initialize_custom() {
 		mobi[i, 6] = "";
 		gear[i, 6] = "";
 
-		role[i, 7] = "Company Champion";
+		role[i, 7] = "Champion";
 		wep1[i, 7] = "Power Sword";
 		wep2[i, 7] = "Bolt Pistol";
 		armour[i, 7] = "Power Armour";
@@ -1331,7 +1331,7 @@ function scr_initialize_custom() {
 
 	var roles = {
 		chapter_master: role[100][1],
-		honor_guard: role[100][2],
+		honour_guard: role[100][2],
 		veteran: role[100][3],
 		terminator: role[100][4],
 		captain: role[100][5],
@@ -1434,6 +1434,7 @@ function scr_initialize_custom() {
 			[roles.champion, {
 				"max": 1,
 				"min": 0,
+				"role": $"Company {roles.champion}"
 			}],
 			[roles.apothecary, {
 				"max": 1,
@@ -1467,7 +1468,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"Command {squad_name}",
-				"formation_options": ["command", "terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["command", "terminator", "veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		],
 
@@ -1476,7 +1477,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{roles.sergeant} {roles.terminator}",
+				"role": $"{roles.terminator} {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["Power Sword", 1],
@@ -1508,7 +1509,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"{roles.terminator} {squad_name}",
-				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["terminator", "veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		],
 
@@ -1517,7 +1518,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{roles.sergeant} Assault {roles.terminator}",
+				"role": $"Assault {roles.terminator} {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["Thunder Hammer", 1],
@@ -1548,7 +1549,7 @@ function scr_initialize_custom() {
 			}, ],
 			["type_data", {
 				"display_data": $"{roles.terminator} Assault {squad_name}",
-				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["terminator", "veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		],
 
@@ -1585,7 +1586,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{roles.sergeant} Sternguard",
+				"role": $"Sternguard {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": [wep1[100, 3], 1],
@@ -1595,7 +1596,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"Sternguard {roles.veteran} {squad_name}",
-				"formation_options": ["veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		],
 
@@ -1638,7 +1639,7 @@ function scr_initialize_custom() {
 			[roles.veteran_sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"{roles.sergeant} Vanguard",
+				"role": $"Vanguard {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["Relic Blade", 1],
@@ -1649,7 +1650,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"Vanguard {roles.veteran} {squad_name}",
-				"formation_options": ["veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		],
 
@@ -1679,7 +1680,7 @@ function scr_initialize_custom() {
 			[roles.sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Devastator {roles.sergeant}",
+				"role": $"{roles.devastator} {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"mobi": ["", 1],
@@ -1731,7 +1732,7 @@ function scr_initialize_custom() {
 			[roles.sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Tactical {roles.sergeant}",
+				"role": $"{roles.tactical} {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["", 0],
@@ -1753,7 +1754,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"{roles.tactical} {squad_name}",
-				"formation_options": ["tactical", "assualt", "devastator", "scout"],
+				"formation_options": ["tactical", "assault", "devastator", "scout"],
 			}]
 		],
 
@@ -1783,7 +1784,7 @@ function scr_initialize_custom() {
 			[roles.sergeant, {
 				"max": 1,
 				"min": 1,
-				"role": $"Assualt {roles.sergeant}",
+				"role": $"{roles.assault} {roles.sergeant}",
 				"loadout": {
 					"required": {
 						"wep1": ["", 0],
@@ -1806,7 +1807,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"{roles.assault} {squad_name}",
-				"formation_options": ["assualt"],
+				"formation_options": ["assault"],
 			}]
 		],
 
@@ -1848,7 +1849,7 @@ function scr_initialize_custom() {
 							]
 						}
 					},
-					"role": $"{roles.sergeant} {roles.scout}",
+					"role": $"{roles.scout} {roles.sergeant}",
 				}],
 			["type_data", {
 				"display_data": $"{roles.scout} {squad_name}",
@@ -1875,7 +1876,7 @@ function scr_initialize_custom() {
 							],
 						}
 					},
-					"role": $"{roles.scout} Sharpshooter",
+					"role": $"{roles.scout} Sniper",
 				}],
 			[roles.sergeant, {
 					"max": 1,
@@ -1886,7 +1887,7 @@ function scr_initialize_custom() {
 							"wep2": ["Combat Knife", 1]
 						},
 					},
-					"role": $"{roles.sergeant} Sharpshooter",
+					"role": $"Sniper {roles.sergeant}",
 				}
 			],
 			["type_data", {
@@ -2087,7 +2088,7 @@ function scr_initialize_custom() {
 			}],
 			["type_data", {
 				"display_data": $"Deathwing {roles.terminator} {squad_name}",
-				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["terminator", "veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		])
 		variable_struct_set(st, "terminator_assault_squad", [
@@ -2126,7 +2127,7 @@ function scr_initialize_custom() {
 			}, ],
 			["type_data", {
 				"display_data": $"Deathwing {roles.terminator} {squad_name}",
-				"formation_options": ["terminator", "veteran", "assualt", "devastator", "scout", "tactical"],
+				"formation_options": ["terminator", "veteran", "assault", "devastator", "scout", "tactical"],
 			}]
 		])
 	}
@@ -2721,8 +2722,8 @@ function scr_initialize_custom() {
 		spawn_unit.marine_assembling();
 	}
 
-	// Honor Guard
-	var hong = 0,
+	// Honour Guard
+	var _honour_guard_count = 0,
 		chapter_option, o, unit;
 	o = 0;
 	chapter_option = 0;
@@ -2730,12 +2731,12 @@ function scr_initialize_custom() {
 		o += 1;
 		if (obj_creation.adv[o] = "Brothers, All") then chapter_option = 1;
 	}
-	if (chapter_option = 1) then hong += 20;
-	if (progenitor = 0) and(obj_creation.custom = 0) then hong += 10;
-	if (hong == 0) {
-		hong = 3
+	if (chapter_option = 1) then _honour_guard_count += 10;
+	if (progenitor = 0) and (obj_creation.custom = 0) then _honour_guard_count += 6;
+	if (_honour_guard_count == 0) {
+		_honour_guard_count = 3
 	}
-	for (i = 0; i < min(hong, 20); i++) {
+	for (i = 0; i < min(_honour_guard_count, 10); i++) {
 		k += 1;
 		commands += 1;
 		man_size += 1;
@@ -2743,7 +2744,7 @@ function scr_initialize_custom() {
 		spawn_unit = TTRPG[company][k];
 		race[company][k] = 1;
 		loc[company][k] = home_name;
-		role[company][k] = roles.honor_guard;
+		role[company][k] = roles.honour_guard;
 		name[company][k] = global.name_generator.generate_space_marine_name();
 		spawn_unit.marine_assembling();
 		spawn_unit.add_trait(choose("guardian", "champion", "observant", "perfectionist"));
@@ -2757,7 +2758,7 @@ function scr_initialize_custom() {
 		]);
 		wep2[company][k] = wep2[101, 2];
 		armour[company][k] = armour[101, 2];
-		if global.chapter_name == "Dark Angels" {
+		if (global.chapter_name == "Dark Angels") {
 			armour[company][k] = "Terminator Armour";
 			wep1[company][k] = "Mace of Absolution";
 			wep2[company][k] = "Storm Shield";
@@ -2958,7 +2959,7 @@ function scr_initialize_custom() {
 
 		k += 1;
 		man_size += 1;
-		TTRPG[company][k] = new TTRPG_stats("chapter", company, k); // Company Champion
+		TTRPG[company][k] = new TTRPG_stats("chapter", company, k); // Champion
 		race[company][k] = 1;
 		loc[company][k] = home_name;
 		role[company][k] = roles.champion;
@@ -3505,7 +3506,7 @@ function scr_initialize_custom() {
 			wep2[company][k] = wep2[101, 11];
 
 			k += 1;
-			man_size += 1; // Company Champion
+			man_size += 1; // Champion
 			race[company][k] = 1;
 			TTRPG[company][k] = new TTRPG_stats("chapter", company, k);
 			loc[company][k] = home_name;

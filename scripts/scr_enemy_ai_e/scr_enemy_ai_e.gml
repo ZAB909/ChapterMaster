@@ -632,7 +632,7 @@ function scr_enemy_ai_e() {
                     // by default it takes 72 turns (6 years) to train
 
                     var planet_type_recruit_chance = {
-                        "hive" : 40,
+                        "Hive" : 40,
                         "Temperate" : 20,
                         "Feudal" : 20,
                         "Forge" : 15,

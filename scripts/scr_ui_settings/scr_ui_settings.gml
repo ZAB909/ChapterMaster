@@ -178,8 +178,8 @@ function scr_ui_settings() {
 					tooltip2="You and your advisors will be placed within this section.  It is strongly advisable you give them backup in this same column.";
 				}
 	            if (theh.unit_id=2){
-					tooltip="Honor Guard";
-					tooltip2="Any Honor Guard within your Headquarters will be placed here.  The best place for them within the formation depends on loadout.";
+					tooltip="Honour Guard";
+					tooltip2="Any Honour Guard within your Headquarters will be placed here.  The best place for them within the formation depends on loadout.";
 				}
 	            if (theh.unit_id=3){
 					tooltip="Librarians";
@@ -457,7 +457,7 @@ function scr_ui_settings() {
     
 	    draw_text(xx+66,yy+359,"Captain");
 	    draw_text(xx+66,yy+386,"Standard Bearer");
-	    draw_text(xx+66,yy+413,"Company Champion");
+	    draw_text(xx+66,yy+413,"Champion");
 	    draw_text(xx+66,yy+440,"Chaplain");
 	    draw_text(xx+66,yy+467,"Apothecary");
 	    draw_text(xx+66,yy+494,"Librarian");

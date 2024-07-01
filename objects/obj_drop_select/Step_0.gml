@@ -36,7 +36,7 @@ if (refresh_raid!=0){
                          if (unit.IsSpecialist("rank_and_file")) then bikes++;
                     }
                     
-                    if (unit.role()="Company Champion"){
+                    if (unit.role()="Champion"){
                         champions+=1;
                     }else if (unit.role()=obj_ini.role[100][2]) { honor+=1;}
                     else if (unit.role()=obj_ini.role[100][4]) { terminators+=1;}
@@ -79,7 +79,7 @@ if (refresh_raid!=0){
                     if (unit.role()=obj_ini.role[100][2]) and ((raid_vet=0) or (remove=1)){fighting[comp][i]=0;honor-=1;}
                     if (unit.role()=obj_ini.role[100][4]) and ((raid_term=0) or (remove=1)){fighting[comp][i]=0;terminators-=1;}
                     if (unit.role()=obj_ini.role[100][5]) and ((raid_vet=0) or (remove=1)){fighting[comp][i]=0;capts-=1;}
-                    if (unit.role()="Company Champion") and ((raid_vet=0) or (remove=1)){fighting[comp][i]=0;champions-=1;}
+                    if (unit.role()="Champion") and ((raid_vet=0) or (remove=1)){fighting[comp][i]=0;champions-=1;}
                     
                     if (unit.role()="Chapter Master") and ((raid_spec=0) or (remove=1)){fighting[comp][i]=0;master=0;}
                     if (unit.role()="Master of Sanctity") and ((raid_spec=0) or (remove=1)){fighting[comp][i]=0;chaplains-=1}
@@ -120,7 +120,7 @@ if (refresh_raid!=0){
                     if (unit.role()=obj_ini.role[100][2]) and (raid_vet=1){fighting[comp][i]=1;honor+=1;}
                     if (unit.role()=obj_ini.role[100][4]) and (raid_term=1){fighting[comp][i]=1;terminators+=1;}
                     if (unit.role()=obj_ini.role[100][5]) and (raid_vet=1){fighting[comp][i]=1;capts+=1;}
-                    if (unit.role()="Company Champion") and (raid_vet=1){fighting[comp][i]=1;champions+=1;}
+                    if (unit.role()="Champion") and (raid_vet=1){fighting[comp][i]=1;champions+=1;}
                     
                     if (unit.role()="Chapter Master") and (raid_spec=1){fighting[comp][i]=1;master=1;}
                     if (unit.role()="Master of Sanctity") and (raid_spec=1){fighting[comp][i]=1;chaplains+=1}
@@ -160,7 +160,7 @@ if (refresh_raid!=0){
                         if (unit.role()=obj_ini.role[100][12]) then bikes-=1;
                     }
                     
-                    if (unit.role()="Company Champion") then champions-=1;
+                    if (unit.role()="Champion") then champions-=1;
                     if (unit.role()=obj_ini.role[100][2]) then honor-=1;
                     if (unit.role()=obj_ini.role[100][4]) then terminators-=1;
                     if (unit.role()=obj_ini.role[100][5]) then capts-=1;

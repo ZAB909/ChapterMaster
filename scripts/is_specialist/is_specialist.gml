@@ -60,8 +60,7 @@ function role_groups(group){
 	            "Codiciery",
 	            "Lexicanum",
 	            obj_ini.role[100][11],
-	            "Company Champion",
-	            "Champion"
+	            obj_ini.role[100][7],
 	        ]; 
 	        break;
 	    case "dreadnoughts":
@@ -81,7 +80,7 @@ function role_groups(group){
 			role_list = [
 				roles[Role.SERGEANT], //sergeant
 				roles[Role.VETERAN_SERGEANT],
-				roles[Role.COMPANY_CHAMPION],				
+				roles[Role.CHAMPION],				
 				roles[Role.CAPTAIN],								
 				roles[Role.TERMINATOR],				
 				roles[Role.VETERAN],

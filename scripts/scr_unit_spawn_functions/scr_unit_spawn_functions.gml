@@ -127,7 +127,7 @@ function scr_marine_spawn_age(){
 			_maximum_age = 300;
 			_apply_gauss = true;
 			break;
-		case obj_ini.role[100][Role.HONOR_GUARD]:
+		case obj_ini.role[100][Role.HONOUR_GUARD]:
 			_minimum_age = 140;
 			_maximum_age = 200;
 			_apply_gauss = true;
@@ -158,7 +158,7 @@ function scr_marine_spawn_age(){
 			_minimum_age += 80;
 			_maximum_age += 90;
 			break;
-		case obj_ini.role[100][Role.COMPANY_CHAMPION]:
+		case obj_ini.role[100][Role.CHAMPION]:
 			_minimum_age += 50;
 			_maximum_age += 60;
 			break;
@@ -235,7 +235,7 @@ function scr_marine_spawn_armour(){
 		// case "Forge Master":
 		// case "Master of Sanctity":
 		// case "Master of the Apothecarion":
-		// case obj_ini.role[100][Role.HONOR_GUARD]:
+		// case obj_ini.role[100][Role.HONOUR_GUARD]:
 		case "Codiciery":
 		case "Lexicanum":
 		// 1st company only
@@ -243,7 +243,7 @@ function scr_marine_spawn_armour(){
 		case obj_ini.role[100][Role.VETERAN_SERGEANT]:
 		// Command Squads
 		case obj_ini.role[100][Role.CAPTAIN]:
-		case obj_ini.role[100][Role.COMPANY_CHAMPION]:
+		case obj_ini.role[100][Role.CHAMPION]:
 		case obj_ini.role[100][Role.ANCIENT]:
 		// Command Squads and HQ
 		case obj_ini.role[100][Role.CHAPLAIN]:
@@ -441,7 +441,7 @@ function scr_marine_game_spawn_constructions(){
 				bionic_count = choose(0,0,0,0,1)
 			}
 			break;	
-		case obj_ini.role[100][Role.COMPANY_CHAMPION]:
+		case obj_ini.role[100][Role.CHAMPION]:
 			if(old_guard>=80 || company == 1){
 				bionic_count = choose(0,0,1,2,3)
 			} else{

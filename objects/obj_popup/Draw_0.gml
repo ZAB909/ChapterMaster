@@ -25,7 +25,7 @@ if (type=99){
     draw_set_alpha(1);
     exit;
 }else if  ((type=9) or (type=9.1)) and (instance_exists(obj_controller)){
-    draw_sprite(spr_planet_screen,0,xx+231,yy+112);
+    draw_sprite(spr_planet_screen,0,xx+231+314,yy+112);
     draw_set_font(fnt_40k_14);
     draw_set_halign(fa_center);
     draw_set_color(c_gray);
@@ -33,56 +33,146 @@ if (type=99){
     var ch="",inq_hide=0;
     if (type==9){
         if (array_contains(obj_ini.artifact_tags[obj_controller.menu_artifact], "inq")){
-            var i=0;
-            repeat(10){i+=1;
-                if (obj_controller.quest[i]="artifact_loan") then inq_hide=1;
-                if (obj_controller.quest[i]="artifact_return") then inq_hide=2;
+            if (array_contains(obj_controller.quest, "artifact_loan")) then inq_hide=1;
+            if (array_contains(obj_controller.quest, "artifact_loan")) then inq_hide=2;
+        }
+    }
+    var iter=0, spacer=0;;
+    for (var i=2;i<=8;i++){
+        draw_set_font(fnt_40k_14);
+        draw_set_halign(fa_center);
+        draw_set_color(c_gray);
+         draw_set_alpha(0.33);
+        if (i==7) then continue;
+        if (obj_controller.known[i]) then  draw_set_alpha(1);
+        spacer =(iter*40);
+        ch = obj_controller.disposition[i] > 0?"+":"-";
+        if (obj_controller.known[i]>1){
+            draw_text(xx+740,yy+120+spacer,$"{scr_faction_string_name(i)} ({ch}{obj_controller.disposition[2]})");
+            draw_text(xx+740,yy+140+spacer,$"{obj_controller.faction_title[i]}");
+            iter++;
+        } else {
+            continue;
+        }
+        draw_line(xx+239+420,yy+150+spacer,xx+398+420,yy+150+spacer);
+        if (mouse_x>=xx+240+420) and (mouse_x<=xx+387+420){
+            if (mouse_y>=yy+121+spacer) and (mouse_y<=yy+149+spacer) and (obj_controller.known[i]>1){
+                if (i==eFACTION.Inquisition){
+                    if ((inq_hide!=2) and (inq_hide==1)) then continue;
+                }
+                draw_set_alpha(0.33);
+                draw_set_color(c_gray);
+                draw_rectangle(xx+340+420,yy+121+spacer,xx+398+420,yy+149+spacer,0);
+                if( mouse_check_button_pressed(mb_left)){
+                    giveto=i;
+                }
             }
         }
     }
-    
-    if (obj_controller.disposition[2]>0) then ch="+";
-    if (obj_controller.known[eFACTION.Imperium]>1) then draw_text(xx+740,yy+120,string_hash_to_newline("Imperium ("+string(ch)+string(obj_controller.disposition[2])+")#"+string(obj_controller.faction_title[2])));
-    draw_line(xx+239+420,yy+150,xx+398+420,yy+150);
-    ch="";
-    if (obj_controller.disposition[3]>0) then ch="+";
-    if (obj_controller.known[eFACTION.Mechanicus]>1) then draw_text(xx+740,yy+150,string_hash_to_newline("Mechanicus ("+string(ch)+string(obj_controller.disposition[3])+")#"+string(obj_controller.faction_title[3])));
-    draw_line(xx+239+420,yy+180,xx+398+420,yy+180);
-    ch="";
-    if (obj_controller.disposition[4]>0) then ch="+";
-    if ((obj_controller.known[eFACTION.Inquisition]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_text(xx+740,yy+180,string_hash_to_newline("Inquisition ("+string(ch)+string(obj_controller.disposition[4])+")#"+string(obj_controller.faction_title[4])));
-    draw_line(xx+239+420,yy+210,xx+398+420,yy+210);
-    ch="";
-    if (obj_controller.disposition[5]>0) then ch="+";
-    if (obj_controller.known[eFACTION.Ecclesiarchy]>1) then draw_text(xx+740,yy+210,string_hash_to_newline("Ecclesiarchy ("+string(ch)+string(obj_controller.disposition[5])+")#"+string(obj_controller.faction_title[5])));
-    draw_line(xx+239+420,yy+240,xx+398+420,yy+240);
-    ch="";
-    if (obj_controller.disposition[6]>0) then ch="+";
-    if (obj_controller.known[eFACTION.Eldar]>1) then draw_text(xx+740,yy+240,string_hash_to_newline("Eldar ("+string(ch)+string(obj_controller.disposition[6])+")#"+string(obj_controller.faction_title[6])));
-    draw_line(xx+239+420,yy+270,xx+398+420,yy+270);
-    ch="";
-    if (obj_controller.disposition[8]>0) then ch="+";
-    if (obj_controller.known[eFACTION.Tau]>1) then draw_text(xx+740,yy+270,string_hash_to_newline("Tau ("+string(ch)+string(obj_controller.disposition[8])+")#"+string(obj_controller.faction_title[8])));
-    draw_line(xx+239+420,yy+300,xx+398+420,yy+300);
-    
-    if (mouse_x>=xx+240+420) and (mouse_x<=xx+387+420){
-        draw_set_alpha(0.33);draw_set_color(c_gray);
-        if (mouse_y>=yy+121) and (mouse_y<=yy+149) and (obj_controller.known[eFACTION.Imperium]>1) then draw_rectangle(xx+340+420,yy+121,xx+398+420,yy+149,0);
-        if (mouse_y>=yy+151) and (mouse_y<=yy+179) and (obj_controller.known[eFACTION.Mechanicus]>1) then draw_rectangle(xx+340+420,yy+151,xx+398+420,yy+179,0);
-        if (mouse_y>=yy+181) and (mouse_y<=yy+209) and ((obj_controller.known[eFACTION.Inquisition]>1) or (inq_hide=2)) and (inq_hide!=1) then draw_rectangle(xx+340,yy+181,xx+398+420,yy+209,0);
-        if (mouse_y>=yy+211) and (mouse_y<=yy+239) and (obj_controller.known[eFACTION.Ecclesiarchy]>1) then draw_rectangle(xx+340+420,yy+211,xx+398+420,yy+239,0);
-        if (mouse_y>=yy+241) and (mouse_y<=yy+269) and (obj_controller.known[eFACTION.Eldar]>1) then draw_rectangle(xx+340+420,yy+241,xx+398+420,yy+269,0);
-        if (mouse_y>=yy+271) and (mouse_y<=yy+299) and (obj_controller.known[eFACTION.Tau]>1) then draw_rectangle(xx+340+420,yy+271,xx+398+420,yy+299,0);
-    }
-    
     draw_set_alpha(1);
     draw_set_color(38144);
-    draw_text(xx+740,yy+326,string_hash_to_newline("[Cancel]"));
+    if (point_and_click(draw_unit_buttons([xx+700,yy+370],"Cancel",[1,1],c_red))){
+        obj_controller.cooldown=8000;
+        instance_destroy();
+        exit;
+    }
+    if (giveto>0) and (type=9){
+        var arti_index = obj_controller.menu_artifact;
+
+        /*var e=0;
+        repeat(50){e+=1;
+            if (obj_controller.fest_display=arti_index) then obj_controller.fest_display=0;
+
+            /*if (obj_ini.artifact_tags[obj_controller.menu_artifact]=obj_controller.recent_keyword[e]){
+                obj_controller.recent_keyword[e]="";obj_controller.recent_type[e]="";
+                obj_controller.recent_turn[e]=0;obj_controller.recent_number[e]=0;
+                scr_recent("artifact_gifted",obj_controller.recent_keyword,giveto);
+                scr_recent("","",0);
+            }
+        }*/
+        var artifact_struct = obj_ini.artifact_struct[arti_index];
+        var cur_tags = obj_ini.artifact_tags[arti_index];
+
+        obj_controller.artifacts-=1;
+
+        obj_controller.cooldown=10;
+        if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
+
+        obj_controller.menu=20;
+        obj_controller.diplomacy=giveto;
+        obj_controller.force_goodbye=-1;
+        var the="";
+
+        if (giveto!=7) and (giveto!=10) then the="the ";
+
+        scr_event_log("",$"Artifact gifted to {the} {obj_controller.faction[giveto]}.");
+        var is_daemon = artifact_struct.has_tag("daemonic");
+        var is_chaos = artifact_struct.has_tag("chaos");
+        if (inq_hide!=2) then with(obj_controller){
+            if (!is_daemon) or ((diplomacy!=4) and (diplomacy!=5) and (diplomacy!=2)) then scr_dialogue("artifact_thanks");
+            if (is_daemon) and ((diplomacy=4) or (diplomacy=5) or (diplomacy=2)) then scr_dialogue("artifact_daemon");
+        }
+        if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
+
+        if (artifact_struct.has_tag("MINOR")){
+            if (giveto=eFACTION.Imperium) then obj_controller.disposition[eFACTION.Imperium]+=6;
+            if (giveto=3) then obj_controller.disposition[3]+=4;
+            if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;
+
+            if (giveto=4) and (inq_hide=2) then obj_controller.disposition[4]+=2;
+
+            if (giveto=5) and (!is_daemon){
+                obj_controller.disposition[5]+=4;
+                var o=0
+                if (array_contains(obj_ini.adv, "Reverent Guardians")) then obj_controller.disposition[5]+=2;
+            }
+            if (giveto=6) then obj_controller.disposition[6]+=3;
+            if (giveto=8) then obj_controller.disposition[8]+=4;
+        }
+
+        // Need to modify ^^^^ based on if it is chaos or daemonic
+
+        if (giveto=2){
+            if (is_daemon){
+                var v=0,ev=0;
+                for (var v=1;v<array_length(obj_controller.event);v++){
+                    if (ev=0) and (obj_controller.event[v]="") then ev=v;
+                }
+                obj_controller.event[ev]="imperium_daemon";
+                obj_controller.event_duration[ev]=1;
+                with(obj_star){
+                    for(var i=1;i<=planets;i++){
+                        if (p_owner[i]=2) then p_heresy[i]+=choose(30,40,50,60);
+                    }
+                }
+            }
+            if (is_chaos){
+                with(obj_star){
+                    for(var i=1;i<=planets;i++){
+                        if (p_owner[i]=2) and (p_heresy[i]>0) then p_heresy[i]+=10;
+                    }                        
+                }
+            }
+            obj_controller.disposition[2]+=4;
+        }
+        else if (giveto=8){
+            if (is_daemon){
+                with(obj_star){
+                    for(var i=1;i<=planets;i++){
+                         if (p_owner[i]=8) then p_heresy[i]+=40;
+                    }                         
+                }
+            }
+        }
+        delete_artifact(arti_index);
+        instance_destroy();
+        exit;
+    }    
 }
 
-var zm=0;
-if (instance_exists(obj_controller)) then zm=obj_controller.zoomed;
-if ((zm=0) and (type<=4)) or (type=98){
+var zoom=0;
+if (instance_exists(obj_controller)) then zoom=obj_controller.zoomed;
+if ((zoom=0) and (type<=4)) or (type=98){
     
     var widd,image_bot;
     image_bot=0;
@@ -588,7 +678,7 @@ xx=__view_get( e__VW.XView, 0 );
 yy=__view_get( e__VW.YView, 0 );
 
 // Changing Equipment
-if (zm=0) and (type=6) and (instance_exists(obj_controller)){
+if (zoom=0) and (type=6) and (instance_exists(obj_controller)){
     draw_set_color(0);draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     
     draw_set_font(fnt_40k_14b);
@@ -975,7 +1065,7 @@ if (zm=0) and (type=6) and (instance_exists(obj_controller)){
 }
 
 // ** Promoting **
-if (zm=0) and (type==5) and (instance_exists(obj_controller)){
+if (zoom=0) and (type==5) and (instance_exists(obj_controller)){
 
     draw_set_color(0);
     draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
@@ -1150,7 +1240,7 @@ if (zm=0) and (type==5) and (instance_exists(obj_controller)){
 }
 
 // ** Transfering **
-if (zm=0) and (type=5.1) and (instance_exists(obj_controller)){
+if (zoom=0) and (type=5.1) and (instance_exists(obj_controller)){
     draw_set_color(0);
     draw_rectangle(xx+1006,yy+143,xx+1577,yy+518,0);
     

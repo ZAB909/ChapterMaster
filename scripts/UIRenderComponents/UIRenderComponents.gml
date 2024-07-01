@@ -86,7 +86,7 @@ function UITextRendererComponent(owner, name) : UIRenderComponent(owner, name) c
 			draw_set_halign(halign)
 		}
 		
-		draw_text_ext_transformed_color(gx + xoffset,gy + yoffset,text,sep,owner.width,xscale,yscale,angle ,col1, col2, col3, col4, alpha)
+		draw_text_ext_transformed_color(gx + xoffset,gy + yoffset,text,sep,owner.width,xscale,yscale,angle ,col1, col2, col3, col4, alpha);
 		/*
 		if orig_halign != halign || orig_valign != valign {
 			draw_set_valign(orig_valign)

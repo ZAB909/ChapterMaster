@@ -36,7 +36,7 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
                 
 	                if (obj_ini.role[comp][i]="Chapter Master"){master=1;ship_use[argument2]+=1;}
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][2]) then honor+=1;
-	                if (obj_ini.role[comp][i]="Company Champion") then champions+=1;
+	                if (obj_ini.role[comp][i]="Champion") then champions+=1;
                 
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][5]) then capts+=1;
 	                if (obj_ini.role[comp][i]="Master of Sanctity") then chaplains+=1;
@@ -98,7 +98,7 @@ function scr_drop_fiddle(argument0, argument1, argument2, argument3) {
                             
 	                if (obj_ini.role[comp][i]="Chapter Master"){master=0;ship_use[argument2]-=1;}
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][2]) then honor-=1;
-	                if (obj_ini.role[comp][i]="Company Champion") then champions-=1;
+	                if (obj_ini.role[comp][i]="Champion") then champions-=1;
                 
 	                if (obj_ini.role[comp][i]=obj_ini.role[100][5]) then capts-=1;
 	                if (obj_ini.role[comp][i]="Master of Sanctity") then chaplains-=1;

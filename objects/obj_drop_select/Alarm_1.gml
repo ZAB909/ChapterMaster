@@ -70,7 +70,7 @@ repeat(11){co+=1;i=0;
                 if (unit.role()="Chapter Master") then l_master+=1;
                 if (unit.role()=obj_ini.role[100][2]) then l_honor+=1;
                 if (unit.role()=obj_ini.role[100][5]) then l_capts+=1;
-                if (unit.role()="Company Champion") then l_champions+=1;
+                if (unit.role()="Champion") then l_champions+=1;
                 
                 if (string_count("Bike",obj_ini.role[co][i])=0) or (attack=0){
                     if (obj_ini.role[co][i]=obj_ini.role[100][11]) then l_mahreens+=1;

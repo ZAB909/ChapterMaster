@@ -181,7 +181,7 @@ obj_controller.restart_stability=0;
 // ** Sets default equipement for roles **
 // 100 is defaults, 101 is the allowable starting equipment
 for(var i=100; i<103; i++){
-    obj_controller.r_role[i,2]="Honor Guard";
+    obj_controller.r_role[i,2]="Honour Guard";
     obj_controller.r_wep1[i,2]="Power Sword";
     obj_controller.r_wep2[i,2]="Bolter";
     obj_controller.r_armour[i,2]="Artificer Armour";
@@ -216,7 +216,7 @@ for(var i=100; i<103; i++){
     obj_controller.r_mobi[i,6]="";
     obj_controller.r_gear[i,6]="";
     
-    obj_controller.r_role[i,7]="Company Champion";
+    obj_controller.r_role[i,7]="Champion";
     obj_controller.r_wep1[i,7]="Power Sword";
     obj_controller.r_wep2[i,7]="Bolt Pistol";
     obj_controller.r_armour[i,7]="Power Armour";
@@ -430,7 +430,7 @@ unit_bio=false;
 view_squad=false;
 company_report=false;
 company_data = {};
-ttrim=0;
+pauldron_trim=0;
 last_unit=[0,0];
 ui_coloring=""; 
 ui_melee_penalty=0;
@@ -1497,7 +1497,7 @@ if (lexa>0) then temp[njm]+=", "+string(lexa)+" Lexicanum.";
 vih=string_pos(",",temp[njm]);
 temp[njm]=string_delete(temp[njm],vih,1);
 
-if (honoh>0) then temp[njm]+="  You have an Honor Guard which contains "+string(honoh)+" souls.";
+if (honoh>0) then temp[njm]+="  You have an Honour Guard which contains "+string(honoh)+" souls.";
 for(var company=0; company<10; company++){
     njm+=1;
     com+=1;

@@ -418,7 +418,8 @@ function scr_draw_management_unit(selected, yy=0, xx=0, draw=true){
                 selecting_location=ma_loc[selected];
                 selecting_ship=ma_lid[selected];
                 selecting_planet=ma_wid[selected];
-			}    		
+			}
+			ma_loc[selected] = selecting_location;
     		var unit_man_size = is_man ? unit.get_unit_size() : scr_unit_size("",ma_role[selected],true);
     		if (man_sel[selected]){
     			man_size+=unit_man_size;

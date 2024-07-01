@@ -152,7 +152,7 @@ function set_player_fleet_image(){
     image_index=min(ii,9);	
 }
 
-function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_frigates = true, exclude_escorts = true){
+function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_frigates = false, exclude_escorts = false){
 	var all_ships = [];
 	var i;
 	if (fleet=="none"){
@@ -262,6 +262,7 @@ function new_player_ship(type, start_loc="home"){
             if (array_contains(obj_ini.ship,new_name)) then new_name="";
         } else {break};
     }
+    if (start_loc == "home") then start_loc = obj_ini.home_name;
    obj_ini.ship[index]=new_name;
     obj_ini.ship_uid[index]=floor(random(99999999))+1;
     obj_ini.ship_owner[index]=1; //TODO: determine if this means the player or not
@@ -395,7 +396,6 @@ function get_nearest_player_fleet(nearest_x, nearest_y, is_static=false, is_movi
 	}
 	return chosen_fleet;	
 }
-
 
 function get_valid_player_ship(){
 	for (var i = 0;i<array_length(obj_ini.ship);i++){

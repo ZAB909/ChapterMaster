@@ -325,17 +325,17 @@ function corrupt_artifact_collectors(last_artifact){
 }
 
 function delete_artifact(index){
-	if (!(index>=array_length(obj_ini.artifact))){
+	if ((index<array_length(obj_ini.artifact))){
 		with (obj_ini){
-			obj_ini.artifact_struct[index].unequip_from_unit();
-	        obj_ini.artifact[index]="";
-	        obj_ini.artifact_tags[index]=[];
-	        obj_ini.artifact_identified[index]=0;
-	        obj_ini.artifact_condition[index]=0;
-	        obj_ini.artifact_loc[index]="";
-	        obj_ini.artifact_sid[index]=0;
-	        obj_ini.artifact_equipped[index] = false;
-	        obj_ini.artifact_struct[index]=new arti_struct(index);
+			artifact_struct[index].unequip_from_unit();
+	        artifact[index]="";
+	        artifact_tags[index]=[];
+	        artifact_identified[index]=0;
+	        artifact_condition[index]=0;
+	        artifact_loc[index]="";
+	        artifact_sid[index]=0;
+	        artifact_equipped[index] = false;
+	        artifact_struct[index]=new arti_struct(index);
 		}
 		obj_controller.artifacts-=1;
 	}

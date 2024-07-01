@@ -42,7 +42,7 @@ function scr_company_struct(comp) constructor{
 					captain = unit;
 				} else if (unit.role() == role_set[Role.ANCIENT]){
 					ancient = unit;
-				} else if (unit.role() == role_set[Role.COMPANY_CHAMPION]){
+				} else if (unit.role() == role_set[Role.CHAMPION]){
 					champion = unit;
 				}
 			}
