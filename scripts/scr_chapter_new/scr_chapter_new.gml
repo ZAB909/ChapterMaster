@@ -45,7 +45,7 @@ function scr_chapter_new(argument0) {
 	if (argument0="Dark Angels"){founding="N/A";points=150;
 	    selected_chapter=1;chapter=argument0;icon=1;icon_name="da";founding=0;fleet_type=1;strength=10;purity=8;stability=10;cooperation=5;
 	    homeworld="Dead";homeworld_name="The Rock";recruiting="Death";recruiting_name="Kimmeria";
-	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Survival of the Fittest";
+	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial=eTrials.SURVIVAL;
 	    adv[1]="Enemy: Fallen";dis[1]="Never Forgive";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Caliban Green";color_to_secondary="Caliban Green";color_to_trim="Grey";
@@ -88,7 +88,7 @@ function scr_chapter_new(argument0) {
 if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=2;chapter=argument0;icon=2;icon_name="ws";founding=0;fleet_type=1;strength=5;purity=10;stability=8;cooperation=5;
 	    homeworld="Feudal";homeworld_name="Chogoris";
-	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Survival of the Fittest";discipline="rune Magick";
+	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial=eTrials.SURVIVAL;discipline="rune Magick";
 		adv[1]="Lightning Warriors";adv[2]="Brothers, All";adv[3]="Melee Enthusiasts";dis[1]="Splintered";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="White";color_to_secondary="White";color_to_trim="Red";
@@ -127,7 +127,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	if (argument0="Ultramarines"){founding="N/A";points=150;
 	    selected_chapter=7;chapter=argument0;icon=7;icon_name="um";founding=0;fleet_type=1;strength=5;purity=10;stability=10;cooperation=10;
 	    homeworld="Temperate";homeworld_name="Macragge";recruiting="Death";recruiting_name="Parmenio";
-	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial="Exposure";
+	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=3;aspirant_trial=eTrials.EXPOSURE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Ultramarine";color_to_secondary="Dark Ultramarine";color_to_trim="Gold";
 	    color_to_pauldron="Dark Ultramarine";color_to_pauldron2="Dark Ultramarine";color_to_lens="Red";
@@ -158,7 +158,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		selected_chapter=4;chapter=argument0;icon=4;icon_name="if";founding=0;fleet_type=1;strength=6;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Siege Masters";
 		homeworld="Ice";homeworld_name="Inwit";recruiting="Hive";recruiting_name="Necromunda";
-		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Survival of the Fittest";
+		homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial=eTrials.SURVIVAL;
 
 		color_to_main="Gold";color_to_secondary="Gold";color_to_trim="Red";color_to_pauldron="Gold"
 		color_to_pauldron2="Gold";color_to_lens="Red";color_to_weapon="Black"
@@ -194,7 +194,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=3;chapter=argument0;icon=3;icon_name="sw";founding=0;fleet_type=1;strength=10;purity=8;stability=5;cooperation=4;
 	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";dis[2]="Suspicious";
 	    homeworld="Ice";homeworld_name="Fenris";
-	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial="Exposure";discipline="rune Magick";
+	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=2;aspirant_trial=eTrials.EXPOSURE;discipline="rune Magick";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Fenrisian Grey";color_to_secondary="Fenrisian Grey";color_to_trim="Dark Gold";
 	    color_to_pauldron="Dark Gold";color_to_pauldron2="Dark Gold";color_to_lens="Red";
@@ -243,7 +243,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=5;chapter=argument0;icon=5;icon_name="ba";founding=0;fleet_type=1;strength=5;purity=9;stability=9;cooperation=7;
 	    adv[1]="Melee Enthusiasts";dis[1]="Black Rage";
 	    homeworld="Desert";homeworld_name="Baal";
-	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial="Blood Duel";
+	    homeworld_exists=1;recruiting_exists=0;homeworld_rule=3;aspirant_trial=eTrials.BLOODDUEL;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
 	    color_to_pauldron="Sanguine Red";color_to_pauldron2="Sanguine Red";color_to_lens="Lime";
@@ -278,7 +278,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=6;chapter=argument0;icon=6;icon_name="ih";founding=0;fleet_type=1;strength=5;purity=8;stability=8;cooperation=2;
 	    adv[1]="Tech-Brothers";adv[2]="Slow and Purposeful";dis[1]="Splintered";dis[2]="Suspicious";
 	    homeworld="Lava";homeworld_name="Medusa";homeworld_exists=1;recruiting_exists=0;
-	    homeworld_rule=3;aspirant_trial="Knowledge of Self";
+	    homeworld_rule=3;aspirant_trial=eTrials.KNOWLEDGE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
@@ -315,7 +315,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    selected_chapter=8;chapter=argument0;icon=8;icon_name="sl";founding=0;fleet_type=1;strength=2;purity=8;stability=8;cooperation=10;
 	    adv[1]="Crafters";adv[2]="Slow and Purposeful";
 	    homeworld="Lava";homeworld_name="Nocturne";homeworld_exists=1;recruiting_exists=0;
-	    homeworld_rule=1;aspirant_trial="Apprenticeship";discipline="pyromancy";
+	    homeworld_rule=1;aspirant_trial=eTrials.APPRENTICESHIP;discipline="pyromancy";
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Firedrake Green";color_to_secondary="Firedrake Green";color_to_trim="Dark Gold";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Red";
@@ -350,7 +350,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 		selected_chapter=9;chapter=argument0;icon=9;icon_name="rg";founding=0;fleet_type=1;strength=5;purity=8;stability=4;cooperation=5;
 	    adv[1]="Ambushers";adv[2]="Melee Enthusiasts";dis[1]="Splintered";
 	    homeworld="Dead";homeworld_name="Deliverance";homeworld_exists=1;recruiting_exists=1;
-	    homeworld_rule=1;aspirant_trial="Exposure";
+	    homeworld_rule=1;aspirant_trial=eTrials.EXPOSURE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Dark Red";
@@ -385,7 +385,7 @@ if (argument0="White Scars"){founding="N/A";points=150;
 	    adv[1]="Melee Enthusiasts";adv[2]="Kings of Space";adv[3]="Reverent Guardians";adv[4]="Brothers, All";dis[1]="Psyker Intolerant";dis[2]="Suspicious";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting_name=global.name_generator.generate_star_name();
-		aspirant_trial="Apprenticeship";
+		aspirant_trial=eTrials.APPRENTICESHIP;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Black";color_to_secondary="Black";color_to_trim="Silver";
 	    color_to_pauldron2="White";color_to_pauldron="White";color_to_lens="Dark Red";
@@ -416,7 +416,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    adv[1]="Paragon";adv[2]="Siege Masters";adv[3]="Boarders";adv[4]="Enemy: Fallen";dis[1]="Suspicious";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_rule=0;aspirant_trial="Challenge";
+	    homeworld_rule=0;aspirant_trial=eTrials.CHALLENGE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Lightest Brown";color_to_secondary="Lightest Brown";color_to_trim="Light Brown";
 	    color_to_pauldron2="Dark Red";color_to_pauldron="Dark Red";color_to_lens="Red";
@@ -453,7 +453,7 @@ if (argument0="Minotaurs"){founding=10;points=450;
 	    homeworld="Dead";homeworld_name="Aurelia";flagship_name="Omnis Arcanum";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting="Death";recruiting_name="Trontiux";
-	    homeworld_rule=0;aspirant_trial="Knowledge of Self";
+	    homeworld_rule=0;aspirant_trial=eTrials.KNOWLEDGE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Sanguine Red";color_to_secondary="Sanguine Red";color_to_trim="Lighter Black";
 	    color_to_pauldron2="Bone";color_to_pauldron="Bone";color_to_lens="Lime";
@@ -475,7 +475,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 		selected_chapter=13;chapter=argument0;icon=4;icon_name="cf";founding=4;fleet_type=1;strength=2;purity=7;stability=10;cooperation=8;
 		adv[1]="Bolter Drilling";adv[2]="Enemy: Orks";dis[1]="Sieged";
 		homeworld="Agri";homeworld_name="Rynn's World";
-		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial="Challenge"
+		homeworld_exists=1;recruiting_exists=0;homeworld_rule=1;aspirant_trial=eTrials.CHALLENGE
 		color_to_main="Blue";color_to_secondary="Blue";color_to_trim="White";color_to_pauldron="Blue"
 		color_to_pauldron2="Blue";color_to_lens="Red";color_to_weapon="Black"
 		hapothecary="Curien Droga";hchaplain="Marqol Tomasi";clibrarian="Eustace Mendoza";fmaster="Javier Adon";
@@ -507,7 +507,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    homeworld="Dead";homeworld_name="Entymion";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_rule=0;aspirant_trial="Challenge";
+	    homeworld_rule=0;aspirant_trial=eTrials.CHALLENGE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Purple";color_to_secondary="Purple";color_to_trim="Dark Gold";
 	    color_to_pauldron2="Purple";color_to_pauldron="Purple";color_to_lens="Red";
@@ -534,7 +534,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    homeworld="Dead";homeworld_name="Lacrima Vex";
 	    homeworld_exists=0;recruiting_exists=1;
 	    recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_rule=0;aspirant_trial="Challenge";
+	    homeworld_rule=0;aspirant_trial=eTrials.CHALLENGE;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Yellow";color_to_secondary="Yellow";color_to_trim="Dark Gold";
 	    color_to_pauldron2="Yellow";color_to_pauldron="Yellow";color_to_lens="Red";
@@ -561,7 +561,7 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    selected_chapter=135;chapter=argument0;icon=0;icon_name="eye";founding=0;scr_icon("");
 	    fleet_type=1;strength=1;purity=10;stability=7;cooperation=8;
 	    homeworld="Forge";homeworld_name="Ariana Prime";recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
-	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial="Apprenticeship";
+	    homeworld_exists=1;recruiting_exists=1;homeworld_rule=2;aspirant_trial=eTrials.APPRENTICESHIP;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main="Dark Red";color_to_secondary="Black";color_to_trim="Copper";
 	    color_to_pauldron="Black";color_to_pauldron2="Black";color_to_lens="Sanguine Red";
@@ -602,14 +602,26 @@ if (argument0="Crimson Fists"){founding="N/A";points=150;
 	    fleet_type=fleet_type21;
 		strength=strength21;
 		purity=purity21;
-		stability=stability21;cooperation=cooperation21;
-	    homeworld=homeworld21;homeworld_name=homeworld_name21;recruiting=recruiting_world21;recruiting_name=recruiting_name21;
-	    homeworld_exists=homeworld_rule21;recruiting_exists=recruiting_exists21;homeworld_rule=homeworld_rule21;aspirant_trial=aspirant_trial21;discipline=discipline21;
+		stability=stability21;
+		cooperation=cooperation21;
+	    homeworld=homeworld21;
+	    homeworld_name=homeworld_name21;
+	    recruiting=recruiting_world21;
+	    recruiting_name=recruiting_name21;
+	    homeworld_exists=homeworld_rule21;
+	    recruiting_exists=recruiting_exists21;
+	    homeworld_rule=homeworld_rule21;
+	    aspirant_trial=aspirant_trial21;
+	    discipline=discipline21;
 	    // Pauldron2: Left, Pauldron: Right
 	    color_to_main=color_to_main21;
-		color_to_secondary=color_to_secondary21;color_to_trim=color_to_trim21;
-	    color_to_pauldron2=color_to_pauldron2_21;color_to_paulrdon=color_to_pauldron21;color_to_lens=color_to_lens21;
-	    color_to_weapon=color_to_weapon21;col_special=col_special21;trim=trim21;
+		color_to_secondary=color_to_secondary21;
+		color_to_trim=color_to_trim21;
+	    color_to_pauldron2=color_to_pauldron2_21;
+	    color_to_paulrdon=color_to_pauldron21;
+	    color_to_lens=color_to_lens21;
+	    color_to_weapon=color_to_weapon21;
+	    col_special=col_special21;trim=trim21;
 	    hapothecary=hapothecary21;
 	    hchaplain=hchaplain21;
 	    clibrarian=clibrarian21;

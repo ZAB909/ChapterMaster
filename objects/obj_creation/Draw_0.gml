@@ -1019,7 +1019,7 @@ if (slide=3){
     draw_line(445,457,1125,457);
     
     // homeworld_rule=0;
-    // aspirant_trial="Blood Duel";
+    // aspirant_trial=eTrials.BLOODDUEL;
     
     draw_set_halign(fa_left);
     
@@ -1047,9 +1047,9 @@ if (slide=3){
     }
     
     var trial_data = scr_trial_data();
-    var currnet_trial = trial_data[aspirant_trial];
+    var current_trial = trial_data[aspirant_trial];
     draw_text_transformed(750,480,"Aspirant Trial",0.6,0.6,0);
-    draw_text_transformed(780,512,currnet_trial.name,0.5,0.5,0);
+    draw_text_transformed(780,512,current_trial.name,0.5,0.5,0);
     
     var asp_info;
     asp_info = scr_compile_trial_bonus_string(current_trial);
@@ -1066,7 +1066,7 @@ if (slide=3){
         if (point_and_click([700,502,700+32,502+32]) and (cooldown<=0)){
             var onceh=0;cooldown=8000;
             aspirant_trial++;
-            if (aspirant_trial>array_length(asp_info)){
+            if (aspirant_trial>array_length(trial_data)){
                 aspirant_trial=0
             }
         }
@@ -1076,7 +1076,7 @@ if (slide=3){
             var onceh=0;cooldown=8000;
             aspirant_trial--;
             if (aspirant_trial<0){
-                aspirant_trial = array_length(asp_info)-1;
+                aspirant_trial = array_length(trial_data)-1;
             }
         }
     }
@@ -1662,9 +1662,9 @@ if (slide=4){
 		draw_sprite(spr_creation_check,yar,860,645+80);yar=0;
     	if (scr_hit(860,645+80,1005,765+80)) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Scouts";tooltip2="Check to have your Scouts split across ships in the fleet.";}
     	if (scr_hit(860,645+80,860+32,645+32+80)) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
-    		 cooldown=8000;var onceh;onceh=0;
-    		 if (load_to_ships[1]=0) and (onceh=0){load_to_ships[1]=1;onceh=1;}
-     		 if (load_to_ships[1]=1) and (onceh=0){load_to_ships[1]=0;onceh=1;}   		 
+    		 cooldown=8000;
+             var onceh;onceh=0;
+             load_to_ships[1] = !load_to_ships[1];  		 
     	}
     	draw_text_transformed(860+30,645+4+80,string_hash_to_newline("Distribute Scouts"),0.4,0.4,0);	
 	

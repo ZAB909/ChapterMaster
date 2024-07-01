@@ -244,7 +244,7 @@ function scr_load(argument0, argument1) {
 
 	    obj_controller.recruiting_worlds=ini_read_string("Controller","recruiting_worlds","");
 	    obj_controller.recruiting=ini_read_real("Controller","recruiting",0);
-	    obj_controller.recruit_trial=ini_read_string("Controller","trial","Blood Duel");
+	    obj_controller.recruit_trial=ini_read_string("Controller","trial",eTrials.BLOODDUEL);
 	    obj_controller.recruits=ini_read_real("Controller","recruits",0);
 	    obj_controller.recruit_last=ini_read_real("Controller","recruit_last",0);
 

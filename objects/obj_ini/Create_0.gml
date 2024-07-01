@@ -15,6 +15,7 @@ strin2="";
 tolerant=0;
 companies=10;
 progenitor=0;
+aspirant_trial = 0;
 
 load_to_ships=[2,0,0];
 if (instance_exists(obj_creation)){load_to_ships=obj_creation.load_to_ships;}

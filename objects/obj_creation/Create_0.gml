@@ -86,7 +86,7 @@ flagship_name=global.name_generator.generate_imperial_ship_name();
 recruiting_exists=1;
 homeworld_exists=1;
 homeworld_rule=1;
-aspirant_trial="Blood Duel";
+aspirant_trial=eTrials.BLOODDUEL;
 discipline="default";
 
 battle_cry="For the Emperor";
@@ -253,7 +253,7 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		homeworld_exists21 = ini_read_real("Save","home_worldexists",homeworld_exists);
 		recruiting_exists21= ini_read_real("Save","recruiting_exists",recruiting_exists);
 		homeworld_rule21= ini_read_real("Save","home_world_rule",homeworld_rule);
-		aspirant_trial21=ini_read_string("Save","aspirant_trial",aspirant_trial);
+		aspirant_trial21=ini_read_real("Save","aspirant_trial",aspirant_trial);
 		discipline21=ini_read_string("Save","discipline",discipline);
 		
 		color_to_main21= ini_read_string("Controller","main_color","Red");

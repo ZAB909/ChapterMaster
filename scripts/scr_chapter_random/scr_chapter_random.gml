@@ -25,7 +25,7 @@ function scr_chapter_random(argument0) {
 	recruiting="Death";recruiting_name=global.name_generator.generate_star_name();
 	flagship_name=global.name_generator.generate_imperial_ship_name();
 	recruiting_exists=1;homeworld_exists=1;
-	homeworld_rule=1;aspirant_trial="Blood Duel";
+	homeworld_rule=1;aspirant_trial=eTrials.BLOODDUEL;
 	discipline="default";battle_cry="For the Emperor";
 
 	main_color=1;secondary_color=1;trim_color=1;

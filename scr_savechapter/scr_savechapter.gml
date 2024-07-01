@@ -27,7 +27,7 @@ function savechapter(){
 		ini_write_real("Save","home_worldexists",homeworld_exists);
 		ini_write_real("Save","recruiting_exists",recruiting_exists);
 		ini_write_real("Save","home_world_rule",homeworld_rule);
-		ini_write_string("Save","aspirant_trial",aspirant_trial);
+		ini_write_real("Save","aspirant_trial",aspirant_trial);
 		
 		ini_write_string("Controller","main_color",col[main_color]);
 	    ini_write_string("Controller","secondary_color",col[secondary_color]);

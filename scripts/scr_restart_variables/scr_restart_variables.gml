@@ -29,7 +29,7 @@ function scr_restart_variables(saved_game) {
 	    // show_message("A: "+string(obj_restart_vars.restart_dis[1]));
     
 	    obj_restart_vars.restart_recruiting_type=recruiting_type;
-	    obj_restart_vars.restart_trial=aspirant_trial;
+	    obj_restart_vars.restart_trial=0;
 	    obj_restart_vars.restart_recruiting_name=recruiting_name;
 	    obj_restart_vars.restart_home_type=home_type;
 	    obj_restart_vars.restart_home_name=home_name;

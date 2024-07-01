@@ -795,7 +795,7 @@ audien_topic[14]="";
 // ** Sets default recruiting vars **
 recruits=0;
 recruiting_worlds="";
-recruit_trial="Blood Duel";
+recruit_trial=eTrials.BLOODDUEL;
 recruit_last=0;
 
 recruit_name[0]="";

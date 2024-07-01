@@ -1045,7 +1045,7 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				],
 				[
 					"scholar", 
-					[150,148]
+					[150,148],
 					{
 						recruit_world_type: [
 							["Feudal", -1],

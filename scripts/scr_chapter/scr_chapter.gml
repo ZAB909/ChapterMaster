@@ -40,7 +40,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=15;ecclesiarchy_disposition=15;other1_disposition=11;other1="";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Blood Duel";
+	    recruit_trial=eTrials.BLOODDUEL;
 	    company_title[1]="Deathwing";company_title[2]="Ravenwing";
 	}
 	if (chosen_chapter="Duke Test"){founding="N/A";
@@ -60,7 +60,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=15;ecclesiarchy_disposition=15;other1_disposition=11;other1="";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Blood Duel";
+	    recruit_trial=eTrials.BLOODDUEL;
 	    company_title[1]="Deathwing";company_title[2]="Ravenwing";
 	}
 
@@ -95,7 +95,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=15;ecclesiarchy_disposition=13;other1_disposition=12;other1="Imperial Fists";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";psy_powers="rune Magick";
     
-	    recruit_trial="Exposure";
+	    recruit_trial=eTrials.EXPOSURE;
 	    company_title[1]="Champions of Fenris";
 	    company_title[2]="The Bloodmaws";
 	    company_title[3]="The Seawolves";
@@ -178,7 +178,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=16;ecclesiarchy_disposition=15;other1_disposition=11;other1="";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Blood Duel";
+	    recruit_trial=eTrials.BLOODDUEL;
 	    company_title[1]="Archangels";
 	    company_title[2]="The Blooded";
 	    company_title[3]="Ironhelms";
@@ -210,7 +210,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=14;ecclesiarchy_disposition=12;other1_disposition=15;other1="";other2_disposition=18;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Knowledge of Self";
+	    recruit_trial=eTrials.KNOWLEDGE;
 	    company_title[1]="Clan Avernii";
 	    company_title[2]="Clan Garrsak";
 	    company_title[3]="Clan Felg";
@@ -243,7 +243,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=16;ecclesiarchy_disposition=15;other1_disposition=12;other1="Imperial Fists";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Exposure";
+	    recruit_trial=eTrials.EXPOSURE;
 	    company_title[1]="Warriors of Ultramar";
 	    company_title[2]="Guardians of the Temple";
 	    company_title[3]="Scourge of the Xenos";
@@ -271,7 +271,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=16;ecclesiarchy_disposition=15;other1_disposition=11;other1="Iron Hands";other2_disposition=15;other2="Mechanicus";
 	    mutations=1;mutations_selected=1;mutation="secretions";secretions=1;psy_powers="pyromancy";
     
-	    recruit_trial="Apprenticeship";
+	    recruit_trial=eTrials.APPRENTICESHIP;
 	    company_title[1]="The Firedrakes";
 	}
 
@@ -326,7 +326,7 @@ function scr_chapter(chosen_chapter) {
 	    mutations=0;mutations_selected=0;mutation="";chapter_year=908;
 	    // Badab Sector, need custom map
     
-	    recruit_trial="Challenge";
+	    recruit_trial=eTrials.CHALLENGE;
 	}
 
 

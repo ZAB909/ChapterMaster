@@ -659,7 +659,7 @@ function scr_enemy_ai_e() {
                     // This is the area has trial types that don't care about planet type 
                     // xp is given in a latter if loop
 
-                    if (obj_controller.recruit_trial = "Blood Duel") { // blood duel is most numerous, but not great with gene seed
+                    if (obj_controller.recruit_trial = eTrials.BLOODDUEL) { // blood duel is most numerous, but not great with gene seed
                         months_to_neo -= choose(24, 24, 36, 36, 36, 48);
                         new_recruit_corruption += choose(10, 15, 20);
                         recruit_chance -= choose(0.7, 0.7, 0.8, 0.8, 0, 8, 0.9);
@@ -675,18 +675,18 @@ function scr_enemy_ai_e() {
                             }
                         }
                     }
-                    else if (obj_controller.recruit_trial = "Challenge") {
+                    else if (obj_controller.recruit_trial = eTrials.CHALLENGE) {
                         new_recruit_corruption += choose(1, 2, 3)
                         months_to_neo -= choose(-6, 0, 6);
                     }
-                    else if (obj_controller.recruit_trial = "Exposure") {
+                    else if (obj_controller.recruit_trial = eTrials.EXPOSURE) {
                         new_recruit_corruption += choose(1, 2, 3)
                     }
-                    else if (obj_controller.recruit_trial = "Knowledge of Self") { // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
+                    else if (obj_controller.recruit_trial = eTrials.KNOWLEDGE) { // less time heavy than apprenticeship. Good on temperates (ppl are educated there idk)
                         months_to_neo += choose(18, 24, 24, 24, 36, 36);
                         new_recruit_corruption -= choose(4, 6, 8)
                     }
-                    else if (obj_controller.recruit_trial = "Apprenticeship") { // the "I don't need any more astartes but have money to spend" one
+                    else if (obj_controller.recruit_trial = eTrials.APPRENTICESHIP) { // the "I don't need any more astartes but have money to spend" one
                         months_to_neo += choose(48, 60);
                         new_recruit_corruption -= 10;
                     }
@@ -717,19 +717,19 @@ function scr_enemy_ai_e() {
                         }
 
 
-                        if (obj_controller.recruit_trial = "Hunting the Hunter") {
+                        if (obj_controller.recruit_trial = eTrials.HUNTING) {
                             if (p_type[run] = "Desert") or(p_type[run] = "Ice") or(p_type[run] == "Death") {
                                 new_recruit_exp += irandom(13) + 7;
                             }
                         }
 
-                        if (obj_controller.recruit_trial = "Exposure") {
+                        if (obj_controller.recruit_trial = eTrials.EXPOSURE) {
                             if (p_type[run] == "Desert") or(p_type[run] == "Ice") or(p_type[run] == "Death") or(p_type[run] == "Lava") or(p_type[run] == "Forge") {
                                 months_to_neo -= choose(12, 12, 12, 24, 24, 36);
                             }
                         }
 
-                        if (obj_controller.recruit_trial = "Survival of the Fittest") {
+                        if (obj_controller.recruit_trial = eTrials.SURVIVAL) {
                             if (p_type[run] = "Desert") or(p_type[run] = "Ice") or(p_type[run] = "Death") or(p_type[run] = "Lava") {
                                 recruit_chance -= choose(0.7, 0.8, 0.8, 0.8, 0.9);
                             }
@@ -737,20 +737,20 @@ function scr_enemy_ai_e() {
                                 recruit_chance -= choose(0.5, 0.6, 0.6, 0.7, 0.7, 0.8)
                             }
                         }
-                        if (obj_controller.recruit_trial = "Challenge") {
+                        if (obj_controller.recruit_trial = eTrials.CHALLENGE) {
                             new_recruit_exp += choose(0, 0, 0, 0, 0, 0, 0, 0, 10, 20);
                             scr_alert("green", "owner", "A worthy aspirant has risen to the rank of Neophyte, doing quite well against the challenger Astartes.", 0, 0);
                         }
 
 
-                        if (obj_controller.recruit_trial = "Apprenticeship") {
+                        if (obj_controller.recruit_trial = eTrials.APPRENTICESHIP) {
                             if (p_type[run] = "Lava") {
                                 recruit_chance -= choose(0.5, 0.6, 0.6, 0.7, 0.7);
                             } // nocturne gaming
                             new_recruit_exp += irandom(5) + 34;
                         }
 
-                        if (obj_controller.recruit_trial = "Knowledge of Self") {
+                        if (obj_controller.recruit_trial = eTrials.KNOWLEDGE) {
                             if (p_type[run] = "Temperate") then new_recruit_exp += irandom(5) + 5; // this is the only one that gives bonus for temperates
                             new_recruit_exp += irandom(10) + 15;
                         }
