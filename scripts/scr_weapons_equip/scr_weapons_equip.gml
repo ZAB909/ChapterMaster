@@ -42,7 +42,7 @@ function scr_weapons_equip() {
 				item_name[1]="(None)";
 				item_name[2]="(any)";
 				var valid=3;
-				for (i=1;i<array_length(obj_ini.equipment);i++){
+				for (i=0;i<array_length(obj_ini.equipment);i++){
 					if (obj_popup.master_crafted==1){
 						if (!array_contains(obj_ini.equipment_quality[i],"master_crafted")){
 							continue;
@@ -88,7 +88,7 @@ function scr_weapons_equip() {
 				item_name[1]="(None)";
 				item_name[2]="(any)";
 				var valid=3;				
-				for (i=1;i<array_length(obj_ini.equipment);i++){
+				for (i=0;i<array_length(obj_ini.equipment);i++){
 					if (obj_popup.master_crafted==1){
 						if (!array_contains(obj_ini.equipment_quality[i],"master_crafted")){
 							continue;
@@ -133,7 +133,7 @@ function scr_weapons_equip() {
 			item_name[2]="(any)";
 			var valid=3;
 			if (standard_equip){
-				for (i=1;i<array_length(obj_ini.equipment);i++){
+				for (i=0;i<array_length(obj_ini.equipment);i++){
 					if (obj_popup.master_crafted==1){
 						if (!array_contains(obj_ini.equipment_quality[i],"master_crafted")){
 							continue;
@@ -177,7 +177,7 @@ function scr_weapons_equip() {
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;		
-			for (i=1;i<array_length(obj_ini.equipment);i++){
+			for (i=0;i<array_length(obj_ini.equipment);i++){
 				if (obj_popup.master_crafted==1){
 					if (!array_contains(obj_ini.equipment_quality[i],"master_crafted")){
 						continue;
@@ -329,7 +329,7 @@ function scr_weapons_equip() {
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;		
-			for (i=1;i<array_length(obj_ini.equipment);i++){
+			for (i=0;i<array_length(obj_ini.equipment);i++){
 				equip_data = gear_weapon_data("armour", obj_ini.equipment[i]);
 				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0){
 					item_name[valid]=equip_data.name;
@@ -365,7 +365,7 @@ function scr_weapons_equip() {
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;		
-			for (i=1;i<array_length(obj_ini.equipment);i++){
+			for (i=0;i<array_length(obj_ini.equipment);i++){
 				equip_data=gear_weapon_data("gear", obj_ini.equipment[i]);
 				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0  && !equip_data.has_tag("vehicle")){
 					item_name[valid]=equip_data.name;
@@ -389,7 +389,7 @@ function scr_weapons_equip() {
 			item_name[1]="(None)";
 			item_name[2]="(any)";
 			var valid=3;		
-			for (i=1;i<array_length(obj_ini.equipment);i++){
+			for (i=0;i<array_length(obj_ini.equipment);i++){
 				equip_data=gear_weapon_data("mobility", obj_ini.equipment[i]);
 				if (is_struct(equip_data) && obj_ini.equipment_number[i]>0  && !equip_data.has_tag("vehicle")){
 					item_name[valid]=equip_data.name;
