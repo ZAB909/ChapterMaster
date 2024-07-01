@@ -26,8 +26,8 @@ function scr_trial_data(){
 				planets :{
 
 				}
-			}			
-			long_description :$"THE BLOOD DUEL?  HAT DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the {role_data[Role.TECHMARINE]}s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.",
+			},		
+			long_description :$"THE BLOOD DUEL?  HA DO I EVEN NEED TO EXPLAIN, CHAPTER MASTER?  ASPIRANTS ENTER.  NEOPHYTES LEAVE.  Those worthy of serving the Emperor are rewarded justly and those merely pretending at glory are lost in the BLOOD AND THUNDER of the dome.  Do not be alarmed at the carnage.  The Apothecarium has become quite adept at rebuilding those fit to serve.  The others are given to the {role_data[Role.TECHMARINE]}s.  The mind is a terrible thing to waste and the Emperor does hate waste.  Not every man is useful as an Astartes but every man is useful.",
 		},
 		{
 			name : "Hunting the Hunter",
@@ -42,20 +42,29 @@ function scr_trial_data(){
 					Death : [7,10]
 				}
 			},
+			recruit_count_modifier : {
+				base : 1,
+				planets : {
+					Ice :2,
+					Desert : 1.25,
+					Death : 3,
+					Feudal : 1.5
+				}				
+			},
 			long_description :$"To be an Astartes is to be a hunter of xenos, of traitors, of heretics, and of all those that dare defy the Emperor.  What better way to test the worthiness of Aspirants than to have to them hunt the most dangerous predator to be found on their planet?  Such a task requires a combination of wits and cunning, in addition to raw martial skill.  When they have received the blessed geneseed and become full battle brothers, they will hunt across the stars with bolter and chainsword. For now, let them hunt with nothing more than a spear and their wits.",				
 		},
 		{
-			name : "Survival eTrials",
+			name : "Survival of the Fittest",
 			train_time : {
 				base : [72, 80],
 			},
 			recruit_count_modifier : {
 				base : 0.0,
 				planets : {
-					Ice :0.3,
-					Desert : 0.3,
-					Death : 0.3,
-					Feudal : 0.5
+					Ice :3,
+					Desert : 3,
+					Death : 3,
+					Feudal : 3
 				}
 			},
 			exp_bonus : {
@@ -126,9 +135,9 @@ function scr_trial_data(){
 				base: [35, 40],
 			},
 			recruit_count_modifier : {
-				base : 0.0,
+				base : 1,
 				planets : {
-					Lava :0.3,
+					Lava :2,
 				}			
 			},
 			corruption :{
@@ -136,7 +145,7 @@ function scr_trial_data(){
 				planets :{
 
 				}
-			}
+			},
 			long_description :$"What better way to cultivate astartes than to raise them from youth?  The capable children of our recruitment targets are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s {role_data[Role.APOTHECARY]}s and {role_data[Role.CHAPLAIN]} to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.",									
 		},						
 	]
@@ -147,19 +156,60 @@ function scr_compile_trial_bonus_string(trial_data){
 	var  train_time_string = function(tarray){
 		return $"{tarray[0]/12} - {tarray[1]/12}" ;
 	}
+	var  exp_bonus_string = function(tarray){
+		if (tarray[0] == 0 && tarray[1]==0){
+			tarray[1]=5;
+		}
+		return $"{tarray[0]} - {tarray[1]}" ;
+	}	
 	if (struct_exists(trial_data,"train_time")){
 		var train_time_data = trial_data.train_time;
-		bonus_string+=$"years training : {train_time_string(train_time_data.base)}";
+		bonus_string+=$"years training : {train_time_string(train_time_data.base)}#";
 		if (struct_exists(train_time_data, "planets")){
 			var planets = struct_get_names(train_time_data.planets);
 			for (var i=0;i<array_length(planets);i++){
-				bonus_string += $"   {planets[i]} : {train_time_string(train_time_data.planets[$ planets[i]])}"
+				bonus_string += $"   {planets[i]} : {train_time_string(train_time_data.planets[$ planets[i]])}#";
 			}
 		}
+		bonus_string+= "#";
 	}
 	if (struct_exists(trial_data,"recruit_count_modifier")){
-
+		var recruit_count_data = trial_data.recruit_count_modifier;
+		bonus_string+=$"Recruit Success Chance : X{recruit_count_data.base}#";
+		if (struct_exists(recruit_count_data, "planets")){
+			var planets = struct_get_names(recruit_count_data.planets);
+			for (var i=0;i<array_length(planets);i++){
+				bonus_string += $"   {planets[i]} : X{recruit_count_data.planets[$ planets[i]]}#";
+			}
+		}
+		bonus_string+= "#";
 	}
+	if (struct_exists(trial_data,"exp_bonus")){
+		var exp_bonus = trial_data.exp_bonus;
+		bonus_string+=$"Experience Bonus : {exp_bonus_string(exp_bonus.base)}#";
+		if (struct_exists(exp_bonus, "planets")){
+			var planets = struct_get_names(exp_bonus.planets);
+			for (var i=0;i<array_length(planets);i++){
+				bonus_string += $"   {planets[i]} : {exp_bonus_string(exp_bonus.planets[$ planets[i]])}#";
+			}
+		}
+		bonus_string+= "#";
+	}
+	if (struct_exists(trial_data,"seed_waste")){
+		bonus_string+=$"{trial_data.seed_waste*100}% of gene-seed wastage per turn#"
+		bonus_string+= "#";
+	}
+	if (struct_exists(trial_data,"corruption")){
+		var corruption_bonus = trial_data.corruption;
+		bonus_string+=$"Corruption Effect : {exp_bonus_string(corruption_bonus.base)}#";
+		if (struct_exists(corruption_bonus, "planets")){
+			var planets = struct_get_names(corruption_bonus.planets);
+			for (var i=0;i<array_length(planets);i++){
+				bonus_string += $"   {planets[i]} : {exp_bonus_string(corruption_bonus.planets[$ planets[i]])}#";
+			}
+		}
+		bonus_string+= "#";
+	}	
 	return bonus_string;
 }
 
@@ -171,12 +221,11 @@ function set_up_recruitment_view(){
 	    click=1;
 	    recruit_list_pane = new data_slate();
 	    recruit_list_pane.inside_method = function(){
-	    	yy+40
 		    var xx=__view_get( e__VW.XView, 0 )+0;
-		    var yy=__view_get( e__VW.YView, 0 )+0;
+		    var yy=__view_get( e__VW.YView, 0 )+0+60;
 		    draw_set_font(fnt_40k_30b);
 		    draw_set_halign(fa_center);
-		    draw_text_transformed(xx + 1262, yy + 70, "Neophytes", 0.6, 0.6, 0);
+		    draw_text_transformed(xx + 1242, yy + 70, "Neophytes", 0.6, 0.6, 0);
 
 		    if (recruit_name[0] != "") {
 		        draw_set_font(fnt_40k_14);
@@ -244,6 +293,7 @@ function scr_draw_recruit_advisor(){
     draw_set_color(c_gray);
     draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
     draw_line(xx + 326 + 16, yy + 480, xx + 887 + 16, yy + 480);
+    var lower_middle_box = [xx+326, yy+480, xx+887, yy+828];
     draw_set_alpha(0.75);
     draw_set_color(0);
     draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
@@ -418,10 +468,25 @@ function scr_draw_recruit_advisor(){
     yyy = string_height_ext(string_hash_to_newline(cur_trial.long_description), -1, 536) + yy + 545;
 
     draw_text_ext(xx + 336 + 16, yy + 545, string_hash_to_newline(cur_trial.long_description), -1, 536);
-    draw_text_ext(xx + 336 + 16, yy + 565 + string_height_ext(string_hash_to_newline(cur_trial.long_description), -1, 536), string_hash_to_newline(string(scr_compile_trial_bonus_string(cur_trial))), -1, 536);
 
     draw_sprite(spr_arrow, 0, xx + 494, yy + 515);
     draw_sprite(spr_arrow, 1, xx + 717, yy + 515);
     recruit_list_pane.draw(xx + 940, yy + 66, 0.72);
+    left_panel.inside_method = function(){
+	    var xx=__view_get( e__VW.XView, 0 )+0;
+	    var yy=__view_get( e__VW.YView, 0 )+0;
+	    draw_set_halign(fa_left);
+	    draw_set_font(fnt_40k_14);
+    	if (left_panel.percent_cut>90){
+	    var trial_data = scr_trial_data();
+	    var cur_trial = trial_data[recruit_trial];    		
+    		draw_text_ext(xx + 20 + 16, yy + 120 , string_hash_to_newline(scr_compile_trial_bonus_string(cur_trial)), -1, 280);
+    	}
+    }
+    if (scr_hit(lower_middle_box)){
+    	left_panel.percent_mod_draw_cut(xx + 10, yy + 38, 0.38, 1, 6);
+    } else {
+    	left_panel.percent_mod_draw_cut(xx + 10, yy + 38, 0.38, 1, -6);
+    }
 }
 

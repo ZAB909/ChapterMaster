@@ -36,7 +36,7 @@ switch(owner){
 
 }
 // 
-var scale = obj_controller.zoomed ? 5 : 1;
+var scale = obj_controller.zoomed ? 3.5 : 1;
 if (obj_controller.zoomed=0) then draw_text_transformed(x,y-32,ppp,scale,scale,0);
     
 draw_circle(x,y,12,0);
@@ -60,18 +60,17 @@ if (owner  = eFACTION.Player) and (instance_nearest(x,y,obj_p_fleet).action=""){
                 }
             }
         }
-        var sys, sys_dist, mine, connected;
-        sys_dist=9999;connected=0;
+        var sys_dist=9999,connected=0;
         
         with(obj_star){
             if (p_type[1]="Craftworld") and (obj_controller.known[eFACTION.Eldar]=0) then instance_deactivate_object(id);
         }
 
-        sys=instance_nearest(mouse_x,mouse_y,obj_star);
+        var sys=instance_nearest(mouse_x,mouse_y,obj_star);
         sys_dist=point_distance(mouse_x,mouse_y,sys.x,sys.y);
         act_dist=point_distance(x,y,sys.x,sys.y);
         
-        mine=instance_nearest(x,y,obj_star);
+        var mine=instance_nearest(x,y,obj_star);
         if (mine.buddy=sys) then connected=1;
         if (sys.buddy=mine) then connected=1;
         

@@ -644,11 +644,29 @@ function scr_enemy_ai_e() {
                         "Death" : 10,
                         "Lava" : 7,
                     }
+
+                    var recruit_chance_total = 0;
                     var planet_type = p_type[run];
                     if (struct_exists(planet_type_recruit_chance, planet_type)){
-                        if (recruit_chance <= planet_type_recruit_chance[$ planet_type]){
-                            aspirant = 1;
+                        recruit_chance_total = planet_type_recruit_chance[$ planet_type];
+                        if (struct_exists(recruit_type, "recruit_count_modifier")){
+                            var modded=false;
+                            var count_mod = recruit_type.recruit_count_modifier;
+                            if (struct_exists(exp_bonus_data, "planets")){
+                                if (struct_exists(count_mod.planets, planet_type)){
+                                    recruit_chance_total*=(count_mod.planets[$planet_type]);
+                                    modded=true;
+                                }
+                            }
+                            if (!modded){
+                                recruit_chance_total*=count_mod.base;
+                            }
                         }
+                    }
+
+                    var planet_type = p_type[run];
+                    if (recruit_chance<=recruit_chance_total){
+                        aspirant = true;
                     }
 
                     // if a planet type has less than half it's max pop, you get 20% less spacey marines
@@ -690,7 +708,7 @@ function scr_enemy_ai_e() {
                         if (struct_exists(exp_bonus_data, "planets")){
                             if (struct_exists(train_time_data.planets, planet_type)){
                                 new_recruit_exp += irandom_range(exp_bonus_data.planets[$planet_type][0], exp_bonus_data.planets[$planet_type][1]);
-                                chosen_exp = tru;
+                                chosen_exp = trim_colour_replace;
                             }
                         }
                         if (!chosen_exp){
@@ -716,7 +734,6 @@ function scr_enemy_ai_e() {
 
                         // gets the next empty recruit space on the array
                         var new_recruit_exp = irandom(5);
-                        
                         if (new_recruit_exp >= 40) then new_recruit_exp = 38;// we don't want immediate battle bros
 
                         for (var i=0;i<array_length(obj_controller.recruit_training);i++) {
