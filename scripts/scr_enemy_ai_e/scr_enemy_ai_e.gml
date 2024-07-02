@@ -611,10 +611,10 @@ function scr_enemy_ai_e() {
             }
 
             if (planet_feature_bool(p_feature[run], P_features.Recruiting_World) == 1) and(obj_controller.gene_seed > 0) and(p_owner[run] <= 5) and(obj_controller.faction_status[p_owner[run]] != "War") {
-                if (_planet_population >= 50) {
+                if (_planet_population >= 50 && obj_controller.recruiting) {
                     // Commenting this for now, looks like debug code
                     //scr_alert("green","owner", "Recruitment is slowed due to lack of population on our recruitment worlds",0,0);
-                    var recruit_type = scr_trial_data()[obj_controller.recruit_trial];
+                    var recruit_type = scr_trial_data(obj_controller.recruit_trial);
                     if (p_large[run] = 0) then p_population[run] -= 1;
 
                     var recruit_chance = 999;

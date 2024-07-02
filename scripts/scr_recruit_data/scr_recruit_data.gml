@@ -9,7 +9,7 @@ enum eTrials{
 	num
 }
 
-function scr_trial_data(){
+function scr_trial_data(wanted=-1){
 	var role_data = instance_exists(obj_ini)? obj_ini.role[100] : obj_creation.role[100];
 	var data = [
 		{
@@ -149,7 +149,11 @@ function scr_trial_data(){
 			long_description :$"What better way to cultivate astartes than to raise them from youth?  The capable children of our recruitment targets are apprenticed to our battle brothers.  Beneath their steady guidance the Aspirants spend several years learning the art of the smith.  The most able are judged by our Chapter’s {role_data[Role.APOTHECARY]}s and {role_data[Role.CHAPLAIN]} to deem if they are compatible with gene-seed implantation.  If so, the Aspirant’s trial culminates in hunting and slaying a massive beast.  Only the brightest and bravest are added to our ranks.",									
 		},						
 	]
-	return data;
+	if (wanted>-1){
+		return data[wanted];
+	} else {
+		return data;
+	}
 }
 function scr_compile_trial_bonus_string(trial_data){
 	var bonus_string = "";
@@ -164,51 +168,51 @@ function scr_compile_trial_bonus_string(trial_data){
 	}	
 	if (struct_exists(trial_data,"train_time")){
 		var train_time_data = trial_data.train_time;
-		bonus_string+=$"years training : {train_time_string(train_time_data.base)}#";
+		bonus_string+=$"years training : {train_time_string(train_time_data.base)}\n";
 		if (struct_exists(train_time_data, "planets")){
 			var planets = struct_get_names(train_time_data.planets);
 			for (var i=0;i<array_length(planets);i++){
-				bonus_string += $"   {planets[i]} : {train_time_string(train_time_data.planets[$ planets[i]])}#";
+				bonus_string += $"   {planets[i]} : {train_time_string(train_time_data.planets[$ planets[i]])}\n";
 			}
 		}
-		bonus_string+= "#";
+		bonus_string+= "\n";
 	}
 	if (struct_exists(trial_data,"recruit_count_modifier")){
 		var recruit_count_data = trial_data.recruit_count_modifier;
-		bonus_string+=$"Recruit Success Chance : X{recruit_count_data.base}#";
+		bonus_string+=$"Recruit Success Chance : X{recruit_count_data.base}\n";
 		if (struct_exists(recruit_count_data, "planets")){
 			var planets = struct_get_names(recruit_count_data.planets);
 			for (var i=0;i<array_length(planets);i++){
-				bonus_string += $"   {planets[i]} : X{recruit_count_data.planets[$ planets[i]]}#";
+				bonus_string += $"   {planets[i]} : X{recruit_count_data.planets[$ planets[i]]}\n";
 			}
 		}
-		bonus_string+= "#";
+		bonus_string+= "\n";
 	}
 	if (struct_exists(trial_data,"exp_bonus")){
 		var exp_bonus = trial_data.exp_bonus;
-		bonus_string+=$"Experience Bonus : {exp_bonus_string(exp_bonus.base)}#";
+		bonus_string+=$"Experience Bonus : {exp_bonus_string(exp_bonus.base)}\n";
 		if (struct_exists(exp_bonus, "planets")){
 			var planets = struct_get_names(exp_bonus.planets);
 			for (var i=0;i<array_length(planets);i++){
-				bonus_string += $"   {planets[i]} : {exp_bonus_string(exp_bonus.planets[$ planets[i]])}#";
+				bonus_string += $"   {planets[i]} : {exp_bonus_string(exp_bonus.planets[$ planets[i]])}\n";
 			}
 		}
-		bonus_string+= "#";
+		bonus_string+= "\n";
 	}
 	if (struct_exists(trial_data,"seed_waste")){
-		bonus_string+=$"{trial_data.seed_waste*100}% of gene-seed wastage per turn#"
-		bonus_string+= "#";
+		bonus_string+=$"{trial_data.seed_waste*100}% of gene-seed wastage per turn\n"
+		bonus_string+= "\n";
 	}
 	if (struct_exists(trial_data,"corruption")){
 		var corruption_bonus = trial_data.corruption;
-		bonus_string+=$"Corruption Effect : {exp_bonus_string(corruption_bonus.base)}#";
+		bonus_string+=$"Corruption Effect : {exp_bonus_string(corruption_bonus.base)}\n";
 		if (struct_exists(corruption_bonus, "planets")){
 			var planets = struct_get_names(corruption_bonus.planets);
 			for (var i=0;i<array_length(planets);i++){
-				bonus_string += $"   {planets[i]} : {exp_bonus_string(corruption_bonus.planets[$ planets[i]])}#";
+				bonus_string += $"   {planets[i]} : {exp_bonus_string(corruption_bonus.planets[$ planets[i]])}\n";
 			}
 		}
-		bonus_string+= "#";
+		bonus_string+= "\n";
 	}	
 	return bonus_string;
 }
@@ -322,7 +326,7 @@ function scr_draw_recruit_advisor(){
         draw_set_font(fnt_40k_14);
     }
 
-    if (menu_adept = 0) then blurp = "Hail " + string(obj_ini.name[0, 1]) + "!  You asked for a report?##";
+    if (menu_adept = 0) then blurp = "Hail " + string(obj_ini.name[0, 1]) + "!  You asked for a report?\n\n";
 
     if (obj_ini.doomed = 0) {
         if (recruits <= 0) and(marines >= 1000) then blurp += "Our Chapter currently has no Neophytes- we are at maximum strength and do not require more marines.  ";
@@ -331,23 +335,23 @@ function scr_draw_recruit_advisor(){
         if (recruits = 1) then blurp += $"Our Chapter currently has one recruit being trained.  The Neophyte's name is {recruit_name[0]} and they are scheduled to become a battle brother in " + string(recruit_training[0] + recruit_distance[0]) + " months' time.  ";
         if (recruits > 1) then blurp += $"Our Chapter currently has {recruits} recruits being trained.  {recruit_name[0]} is the next scheduled Neophyte to become a battle brother in " + string(recruit_training[0] + recruit_distance[0]) + " months' time.  ";
         if (gene_seed > 0) {
-            if (recruiting = 0) and(marines >= 1000) then blurp += "##Recruitment" + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
-            if (recruiting = 0) and(marines < 1000) then blurp += "##Recruitment " + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers.  ";
+            if (recruiting = 0) and(marines >= 1000) then blurp += "\n\nRecruitment" + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers... though this would violate the Codex Astartes.  ";
+            if (recruiting = 0) and(marines < 1000) then blurp += "\n\nRecruitment " + recruitment_rates[recruiting] + ".  You must only give me the word and I can begin further increasing our numbers.  ";
 
-            if (recruiting>0 && recruiting < 3) then blurp += $"##Recruitment {recruitment_rates[recruiting]}.  With an increase of funding I could vastly increase the rate.  ";
-            else if (recruiting = 3) then blurp += $"##Recruitment {recruitment_rates[recruiting] }  ";
+            if (recruiting>0 && recruiting < 3) then blurp += $"\n\nRecruitment {recruitment_rates[recruiting]}.  With an increase of funding I could vastly increase the rate.  ";
+            else if (recruiting = 3) then blurp += $"\n\nRecruitment {recruitment_rates[recruiting] }  ";
             else if (recruiting>=4){
-                blurp += $"##Recruitment {recruitment_rates[recruiting]}- give me the word when we have enough Neophytes being trained.  ";
+                blurp += $"\n\nRecruitment {recruitment_rates[recruiting]}- give me the word when we have enough Neophytes being trained.  ";
             }
         }
     }
 
     if (obj_ini.doomed = 1) {
-        blurp += "Our chapter's mutation currently makes us unable to recruit new Neophytes.  We are doomed to a slowe demise unless the Apothecaries can fix it.##";
+        blurp += "Our chapter's mutation currently makes us unable to recruit new Neophytes.  We are doomed to a slowe demise unless the Apothecaries can fix it.\n\n";
     }
 
     if (gene_seed = 0) {
-        blurp += "We have no more gene-seed in our vaults and cannot create more neophytes as a result.  Something must be done, Chapter Master.##";
+        blurp += "We have no more gene-seed in our vaults and cannot create more neophytes as a result.  Something must be done, Chapter Master.\n\n";
     }
 
     if (recruiting > 0) and(string_count("|", obj_controller.recruiting_worlds) = 1) then blurp += "Our Chapter is recruiting from one world- " + string(obj_ini.recruiting_name) + ".  Perhaps we should speak with a planetary governor to acquire another.";
