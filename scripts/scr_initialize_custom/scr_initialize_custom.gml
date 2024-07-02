@@ -458,6 +458,7 @@ function progenitor_map(){
 
 function scr_initialize_custom() {
 
+
 	progenitor = obj_creation.founding;
 	successors = obj_creation.successors;
 	homeworld_rule = obj_creation.homeworld_rule;
@@ -583,19 +584,6 @@ function scr_initialize_custom() {
 	home_type = obj_creation.homeworld;
 	home_name = obj_creation.homeworld_name;
 	fleet_type = obj_creation.fleet_type;
-
-	var start_spawn_data = {
-		recruit_data : {
-			recruit_world : recruiting_type,
-			aspirant_trial :obj_creation.aspirant_trial
-		}
-	}
-
-	// if not custom
-
-
-	// if not custom
-
 
 	if (obj_creation.fleet_type != 1) {
 		battle_barges = 1;
@@ -1366,38 +1354,6 @@ function scr_initialize_custom() {
 		ranged_weapons: [["Bolter", 10], ["Storm Bolter", 3], ["Combiflamer", 2], ["Plasma Pistol", 1]],
 		pistols: [["Bolt Pistol", 5], ["Plasma Pistol", 1]],
 	}
-
-	//made all the exp buffs sort into neat little structs so theyre easier to dev and player modify
-	//value 1 = mean, value 10 = sd
-	company_spawn_buffs = [
-		[35, 5],
-		[130, 10],
-		[110, 10],
-		[105, 10],
-		[95, 10],
-		[80, 15],
-		[65, 5],
-		[55, 5],
-		[45, 5],
-		[35, 5],
-		[3, 4]
-	]
-	role_spawn_buffs = {}
-	variable_struct_set(role_spawn_buffs, roles.captain, [70, 40]);
-	variable_struct_set(role_spawn_buffs, roles.terminator, [30, 10]);
-	variable_struct_set(role_spawn_buffs, roles.veteran, [10, 5]);
-	variable_struct_set(role_spawn_buffs, roles.chaplain, [25, 10]);
-	variable_struct_set(role_spawn_buffs, roles.apothecary, [25, 10]);
-	variable_struct_set(role_spawn_buffs, roles.techmarine, [25, 10]);
-	variable_struct_set(role_spawn_buffs, roles.librarian, [25, 10]);
-	variable_struct_set(role_spawn_buffs, roles.ancient, [30, 30]);
-	variable_struct_set(role_spawn_buffs, roles.champion, [40, 5]);
-	variable_struct_set(role_spawn_buffs, roles.tactical, [5, 2]);
-	variable_struct_set(role_spawn_buffs, roles.assault, [2, 1]);
-	variable_struct_set(role_spawn_buffs, roles.devastator, [1, 1]);
-	variable_struct_set(role_spawn_buffs, roles.scout, 0);
-
-
 	/*
 		squad guidance
 			define a role that can exist in a squad by defining [<role>, {

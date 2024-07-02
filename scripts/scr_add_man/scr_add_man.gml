@@ -120,6 +120,7 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	    if (man_role="Ork Sniper") or (man_role="Flash Git") then obj_ini.name[target_company][good]=global.name_generator.generate_ork_name();
 	    if (man_role="Sister of Battle") or (man_role="Sister Hospitaler") then obj_ini.name[target_company][good]=global.name_generator.generate_imperial_name(false);
     
+    	//TODO bring this inline with the rest of the code base
     
 	    // Weapons
 	    if (choice_weapons=obj_ini.role[100][12]){wep2=obj_ini.wep2[100,12];wep1=obj_ini.wep1[100,12];arm=obj_ini.armour[100,12];}
@@ -207,7 +208,13 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 	    }
     
 	    if (!array_contains(non_marine_roles,man_role)){
-			unit= new TTRPG_stats("chapter", target_company, good);
+			unit= new TTRPG_stats("chapter", target_company, good, {
+					recruit_data : {
+						recruit_world : obj_ini.recruiting_type,
+						aspirant_trial : obj_ini.recruit_trial			
+					}
+				}
+			);
 			unit.corruption=corruption
 			unit.roll_age(); // Age here
 			marines+=1;
@@ -215,7 +222,9 @@ function scr_add_man(man_role, target_company, choice_armour, choice_weapons, ch
 		obj_ini.TTRPG[target_company][good] = unit;
 
 		unit.allocate_unit_to_fresh_spawn(home_spot);
-	    with(obj_ini){scr_company_order(target_company);}
+	    with(obj_ini){
+	    	scr_company_order(target_company);
+	    }
 	}
 
 }

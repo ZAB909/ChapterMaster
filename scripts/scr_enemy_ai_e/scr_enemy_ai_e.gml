@@ -32,9 +32,9 @@ function scr_enemy_ai_e() {
     }
 
     if (present_fleet[1] > 0) { // Battle1 is reserved for player battles
-        if (present_fleet[2] > 0) and(obj_controller.faction_status[2] = "War") then battle = 1;
-        if (present_fleet[3] > 0) and(obj_controller.faction_status[3] = "War") then battle = 1;
-        if (present_fleet[6] > 0) and(obj_controller.faction_status[6] = "War") then battle = 1;
+        if (present_fleet[2] > 0) and (obj_controller.faction_status[2] = "War") then battle = 1;
+        if (present_fleet[3] > 0) and (obj_controller.faction_status[3] = "War") then battle = 1;
+        if (present_fleet[6] > 0) and (obj_controller.faction_status[6] = "War") then battle = 1;
         if (present_fleet[7] > 0) then battle = 1;
         if (present_fleet[8] > 0) and(obj_controller.faction_status[8] = "War") then battle = 1;
         if (present_fleet[9] > 0) then battle = 1;
@@ -597,7 +597,7 @@ function scr_enemy_ai_e() {
         halfpop = p_max_population[run] / 2;
 
         if (array_length(p_feature[run]) != 0) {
-            if (planet_feature_bool(p_feature[run], P_features.Recruiting_World) == 1) and(obj_controller.gene_seed = 0) and(obj_controller.recruiting > 0) {
+            if (planet_feature_bool(p_feature[run], P_features.Recruiting_World) == 1) and(obj_controller.gene_seed = 0) and (obj_controller.recruiting > 0) {
                 obj_controller.recruiting = 0;
                 obj_controller.income_recruiting = 0;
                 scr_alert("red", "recruiting", "The Chapter has run out of gene-seed!", 0, 0);
@@ -652,7 +652,7 @@ function scr_enemy_ai_e() {
                         if (struct_exists(recruit_type, "recruit_count_modifier")){
                             var modded=false;
                             var count_mod = recruit_type.recruit_count_modifier;
-                            if (struct_exists(exp_bonus_data, "planets")){
+                            if (struct_exists(count_mod, "planets")){
                                 if (struct_exists(count_mod.planets, planet_type)){
                                     recruit_chance_total*=(count_mod.planets[$planet_type]);
                                     modded=true;
@@ -762,14 +762,13 @@ function scr_enemy_ai_e() {
                     ml = 32;
                     build_rate = 4;
                     build_rate2 = 6;
-
-                    if (string_count("Siege Masters", obj_ini.strin) > 0) {
+                    if (scr_has_adv("Siege Masters")){
                         md = 300;
                         ms = 400;
                         ml = 48;
                         build_rate2 = 5;
                     }
-                    if (string_count("Crafters", obj_ini.strin) > 0) or(string_count("Crafters", obj_ini.strin) > 0) {
+                    if (scr_has_adv("Crafters")){
                         build_rate = 3;
                         if (choose(0, 1) = 1) {
                             if (p_silo[run] < ms) then p_silo[run] += 1;

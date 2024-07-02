@@ -651,7 +651,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 	squad = "none";
 	stat_point_exp_marker = 0;
 	bionics=0;
-	self.other_spawn_data = other_spawn_data;
+	spawn_data = other_spawn_data;
+	if (faction=="chapter" && !struct_exists(spawn_data, "recruit_data")){
+		spawn_data.recruit_data = {
+			recruit_world : obj_ini.recruiting_type,
+			aspirant_trial : obj_ini.recruit_trial			
+		};
+	}
 	static experience =  function(){
 		return obj_ini.experience[company][marine_number];
 	}//get exp
@@ -1029,7 +1035,21 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					}				
 
 				],
-				["very_hard_to_kill", [149,148]],
+				[	
+					"very_hard_to_kill", 
+					[149,148],
+					{
+						recruit_world_type: [
+							["Ice", -1],
+							["Lava", -4],
+							["Death", -4],
+						],
+						recruit_trial : [
+							[eTrials.EXPOSURE, -3],
+							[eTrials.SURVIVAL, -1]
+						]
+					}					
+				],
 				[
 					"harshborn",
 					[149,147],
@@ -1090,7 +1110,15 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["recluse", [99,98]],
 				["perfectionist", [99,98]],
 				["observant", [99,98]],
-				["cunning", [99,98]],
+				[
+					"cunning", 
+					[99,98],
+					{
+						recruit_world_type: [
+							["Hive", -2],				
+						]
+					}					
+				],
 				["guardian", [99,98]],
 				["observant", [99,98]],
 				[
@@ -1100,7 +1128,8 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 						"progenitor":[6,[1000,999]],
 						recruit_world_type : [
 							["Ice", -5],
-							["Forge",50]
+							["Death", -2],
+							["Forge",50],
 						]
 					}
 				],
@@ -1129,7 +1158,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["natural_leader",
 					[199,198]
 				],
-				["slow_and_purposeful",[99,98],{"advantage":["Slow and Purposeful",[3,1]]}],
+				[
+					"slow_and_purposeful",
+					[99,98],
+					{
+						"advantage":["Slow and Purposeful",[3,1]]
+					}
+				],
 				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,1]]}],
 				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,1]]}],
 				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
