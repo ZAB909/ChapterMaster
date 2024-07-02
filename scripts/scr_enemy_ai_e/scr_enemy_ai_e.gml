@@ -708,7 +708,7 @@ function scr_enemy_ai_e() {
                         if (struct_exists(exp_bonus_data, "planets")){
                             if (struct_exists(train_time_data.planets, planet_type)){
                                 new_recruit_exp += irandom_range(exp_bonus_data.planets[$planet_type][0], exp_bonus_data.planets[$planet_type][1]);
-                                chosen_exp = trim_colour_replace;
+                                chosen_exp = true;
                             }
                         }
                         if (!chosen_exp){
