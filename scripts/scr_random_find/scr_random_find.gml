@@ -6,9 +6,9 @@ function scr_random_find(owner, is_planet, ship_action, feature) {
 		var stars = [];
 		with(obj_star){
 			var no_owner = owner == 0;
-	        var has_correct_owner = no_owner || owner == p_owner[1] || owner == p_owner[2] || owner == p_owner[3] || owner == p_owner[4];// && storm==0; this is from the duke code, it checks for no warp storms
+	        var has_correct_owner = no_owner || array_contains(p_owner,owner);// && storm==0; this is from the duke code, it checks for no warp storms
 			var no_feature = feature == "";
-			var has_correct_feature = no_feature || feature == p_feature[1] || feature == p_feature[2] || feature == p_feature[3] || feature == p_feature[4];
+			var has_correct_feature = no_feature || array_contains(p_feature,feature);
 			if (has_correct_owner && has_correct_feature){
 				array_push(stars,id);
 	        }

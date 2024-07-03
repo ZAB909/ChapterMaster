@@ -10,8 +10,8 @@ slate_panel.inside_method = function(){
     var xx=__view_get( e__VW.XView, 0 )+0;
     var yy=__view_get( e__VW.YView, 0 )+0;
     draw_set_halign(fa_left);
-    draw_text(xx+962,yy+159,string_hash_to_newline("Name"));
-    draw_text(xx+962.5,yy+159.5,string_hash_to_newline("Name"));
+    draw_text(xx+962,yy+159,"Name");
+    draw_text(xx+962.5,yy+159.5,"Name");
     if (shop!="production"){
         draw_text(xx+1280,yy+159,string_hash_to_newline("Stocked"));
         draw_text(xx+1280.5,yy+159.5,string_hash_to_newline("Stocked"));

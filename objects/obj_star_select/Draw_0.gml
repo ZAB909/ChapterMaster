@@ -70,7 +70,7 @@ if (mouse_check_button(mb_left)){
                     
                 }
 
-                if (feature!=""){
+                if (!is_string(feature)){
                     if (scr_hit(
                         feature.main_slate.XX,
                         feature.main_slate.YY,

@@ -107,7 +107,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         company=manag
     }
     if (type=5.1) and (cooldown<=0) and (company!=target_comp) and (target_comp!=-1){
-        cooldown=999;obj_controller.cooldown=8000;
+        cooldown=999;
+        obj_controller.cooldown=8000;
 
         var mahreens=0,w=0,god=0,vehi=0,god2=0;
 
