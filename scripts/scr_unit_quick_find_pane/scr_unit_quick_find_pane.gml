@@ -727,7 +727,7 @@ function planet_selection_action(){
 	            obj_controller.selecting_planet=i+1;
 	            var sel_plan = obj_controller.selecting_planet;
 	            var planet_is_allies = scr_is_planet_owned_by_allies(target, sel_plan);
-	            var garrison_issue = (!planet_is_allies || target.p_pdf[sel_plan]>0);
+	            var garrison_issue = (!planet_is_allies || target.p_pdf[sel_plan]<1);
 	            if (garrison_assignment && (garrison_issue && mission=="garrison")){
                 	planet_draw = c_red;
                 	tooltip_draw("Can't garrison on non-friendly planet with no PDF");	            	
