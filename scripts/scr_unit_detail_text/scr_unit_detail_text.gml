@@ -38,7 +38,7 @@ function scr_unit_detail_text(){
 			if (struct_exists(spawn_data, "recruit_data")){
 				var recruit_data = spawn_data.recruit_data;
 				unit_data_string+="\n";
-				unit_data_string += $"they were recruited from a {recruit_data.recruit_world} World, and was chosen as potential candidate for the chapter by way of a {recruit_data.aspirant_trial} Trial";
+				unit_data_string += $"they were recruited from a {recruit_data.recruit_world} World, and was chosen as potential candidate for the chapter by way of a {scr_trial_data(recruit_data.aspirant_trial).name} Trial";
 			}
 		}
 

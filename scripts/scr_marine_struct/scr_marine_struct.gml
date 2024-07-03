@@ -1094,13 +1094,25 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 						chapter_name:["Space Wolves",[20,19]]
 					}
 				],
-				["brute", [99,98]],
+				[
+					"brute", 
+					[99,98],
+					{
+						recruit_world_type: [
+							["Ice", -1],
+							["Lava", -1],
+							["Death", -1],				
+						]
+					}					
+				],
 				[
 					"charismatic", 
 					[99,98],
 					{
 						recruit_world_type: [
-							["Shrine", -1]
+							["Shrine", -3],
+							["Temperate", -2],
+							["Agri", -2]
 						]
 					}
 				],
@@ -1108,15 +1120,26 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				["blunt", [99,98]],
 				["nimble", [99,98]],
 				["recluse", [99,98]],
-				["perfectionist", [99,98]],
+				[	
+					"perfectionist", 
+					[99,98],
+					{
+						recruit_trial : [
+							[eTrials.KNOWLEDGE, -3],
+						]	
+					}				
+				],
 				["observant", [99,98]],
 				[
 					"cunning", 
 					[99,98],
 					{
 						recruit_world_type: [
-							["Hive", -2],				
-						]
+							["Hive", -4],				
+						],
+						recruit_trial : [
+							[eTrials.HUNTING, -3],
+						]						
 					}					
 				],
 				["guardian", [99,98]],
@@ -1135,7 +1158,10 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				],
 				["jaded", [99,98]],
 				["strong", [99,98]],
-				["fast_learner", [149,148]],
+				[
+					"fast_learner", 
+					[149,148]
+				],
 				["feet_floor", 
 					[199,198],
 					{
@@ -1156,7 +1182,13 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 				],
 				["lucky",[99,98]],
 				["natural_leader",
-					[199,198]
+					[199,198],
+					{
+						recruit_world_type: [
+							["Temperate", -2],
+							["Shrine", -4],
+						]						
+					}
 				],
 				[
 					"slow_and_purposeful",
@@ -1166,20 +1198,70 @@ function TTRPG_stats(faction, comp, mar, class = "marine", other_spawn_data={}) 
 					}
 				],
 				["melee_enthusiast",[99,98],{"advantage":["Melee Enthusiasts",[3,1]]}],
-				["lightning_warriors",[99,98],{"advantage":["Lightning Warriors",[3,1]]}],
-				["zealous_faith",[99,98],{"chapter_name":["Black Templars",[3,2]]}],
-				["flesh_is_weak",[1000,999],{
-						"chapter_name":["Iron Hands",[10,9],"required"],"progenitor":[6,[10,9],"required"]
+				[
+					"lightning_warriors",
+					[99,98],
+					{
+						"advantage":[
+							"Lightning Warriors",[3,1]
+						]
 					}
 				],
-				["tinkerer",[199,198],{"chapter_name":["Iron Hands",[49,47]]}],
-				["crafter",[299,298],{"advantage":["crafter",[199,198]]}],
+				[
+					"zealous_faith",
+					[99,98],
+					{
+						"chapter_name":[
+							"Black Templars",
+							[300,200]
+						],
+						recruit_world_type: [
+							["Shrine", -15]
+						]						
+					}
+				],
+				["flesh_is_weak",[1000,999],{
+						chapter_name:["Iron Hands",[1000,600],"required"],
+						progenitor:[6,[1000,800],"required"],
+						recruit_world_type: [
+							["Forge", -300],
+							["Lava", -15],
+						],						
+					}
+				],
+				[
+					"tinkerer",
+					[199,198],
+					{
+						chapter_name:["Iron Hands",[49,47]],
+						recruit_world_type: [
+							["Forge", -15],
+							["Hive", -7],
+						],
+					}
+				],
+				[
+					"crafter",
+					[299,298],
+					{
+						advantage:["crafter",[299,297]],
+						recruit_world_type: [
+							["Forge", -2],
+							["Lava", -2],
+						],
+						recruit_trial : [
+							[eTrials.APPRENTICESHIP, -1],
+						]												
+					}					
+				],
 				[
 					"honorable",
 					[299,298],
 					{
 						recruit_world_type: [
-							["Feudal", -9]
+							["Feudal", -9],
+							["Temperate", -3],
+							["Desert", -9],
 						]						
 					}
 				],
