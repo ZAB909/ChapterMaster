@@ -715,18 +715,14 @@ function scr_load(argument0, argument1) {
 	    obj_ini.forbidden_unit2=ini_read_string("Ini","forbidden_unit2","Error");
 	    obj_ini.forbidden_unit3=ini_read_string("Ini","forbidden_unit3","Error");
 	    //
-	    var g;g=-1;
+	    var g=-1;
 	    repeat(150){g+=1;
 	        obj_ini.equipment[g]=ini_read_string("Ini","equipment"+string(g),"");
 	        obj_ini.equipment_type[g]=ini_read_string("Ini","equipment_type"+string(g),"");
 	        obj_ini.equipment_number[g]=ini_read_real("Ini","equipment_number"+string(g),0);
 	        obj_ini.equipment_condition[g]=ini_read_real("Ini","equipment_condition"+string(g),0);
 	        obj_ini.equipment_quality[g]=ini_read_string("Ini","equipment_quality"+string(g),"");
-	        if (obj_ini.equipment_quality[g]!=""){
-	        	obj_ini.equipment_quality[g] = json_parse(base64_decode(obj_ini.equipment_quality[g]));
-	        } else {
-	        	obj_ini.equipment_quality[g]=[];
-	        }
+	        obj_ini.equipment_quality[g] = return_json_from_ini("Ini", $"equipment_quality{g}", []);
 
 	        if (g<=20){
 	        	obj_ini.artifact[g]=ini_read_string("Ini","artifact"+string(g),"");
