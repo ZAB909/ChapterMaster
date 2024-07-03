@@ -1048,7 +1048,7 @@ if (slide=3){
         
         yar=homeworld_rule==3;
         draw_sprite(spr_creation_check,yar,445,576);
-        if (scr_hit(445,576,445+32,576+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=3){cooldown=8000;homeworld_rule=3;}
+        if (point_and_click([445,576,445+32,576+32])) and (custom>1) and (homeworld_rule!=3){cooldown=8000;homeworld_rule=3;}
         if (scr_hit(445,576,670,576+32)){
             tooltip="Planetary Governer";
             tooltip2="You personally take the rule of the Planetary Governer, ruling over your homeworld with an iron fist.  Your every word and directive, be they good or bad, are absolute law.";
@@ -1991,7 +1991,7 @@ if (slide=5){
     draw_text(650,600,string_hash_to_newline("Ecclesiarchy ("+string(disposition[5])+")"));
     draw_text(650,625,string_hash_to_newline("Inquisition ("+string(disposition[4])+")"));
     if (founding!=0) then draw_text(650,650,string_hash_to_newline("Progenitor ("+string(disposition[1])+")"));
-    draw_text(650,675,string_hash_to_newline("Adeptus Astartes ("+string(disposition[6])+")"));
+    draw_text(650,675,"Adeptus Astartes ("+string(disposition[6])+")");
     
     draw_rectangle(655,552,1150,567,1);
     draw_rectangle(655,552+25,1150,567+25,1);
