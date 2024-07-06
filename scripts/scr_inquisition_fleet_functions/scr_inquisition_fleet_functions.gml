@@ -323,7 +323,7 @@ if (inspection_type="inspect_world") or (inspection_type="inspect_fleet"){
                    geh=0;
                     i=0;
                     if (obj_ini.artifact[g]!="" && array_contains(player_ships, obj_ini.artifact_sid[g]-500)){
-                        if (artifact_struct[g].inquisition_disprove() && !obj_controller.und_armouries){
+                        if (obj_ini.artifact_struct[g].inquisition_disprove() && !obj_controller.und_armouries){
                             hurr+=8;
                             demonic+=1;
                         }
@@ -332,9 +332,9 @@ if (inspection_type="inspect_world") or (inspection_type="inspect_fleet"){
                 i=0;geh=0;good=0;
                 var unit;
                 if (player_inspection_fleet.hurssy>0) then hurr+=player_inspection_fleet.hurssy;
-            
-                for (var ca=0;ca<11;ca++){
-                    for (var ia=0;ia<500;ia++){
+                var ca, ia;
+                for (ca=0;ca<11;ca++){
+                    for (ia=0;ia<array_length(obj_ini.role[ca]);ia++){
 
                         unit = fetch_unit([ca,ia]);
                         if (unit.name()=="") then continue;
