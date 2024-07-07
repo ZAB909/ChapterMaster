@@ -42,93 +42,115 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	// loot="artifact";
 
 	if (loot="req"){// Requisition
-	    var reqi;reqi=round(random_range(30,60)+1)*10;
+	    var reqi=round(random_range(30,60)+1)*10;
 	    obj_controller.requisition+=reqi;
-    
-	    var pop;pop=instance_create(0,0,obj_popup);
-	    pop.image="ancient_ruins";pop.title="Ancient Ruins: Resources";
+   
+	    var pop=instance_create(0,0,obj_popup);
+	    pop.image="ancient_ruins";
+	    pop.title="Ancient Ruins: Resources";
 	    pop.text="My lord, your battle brothers have located several precious minerals and supplies within the ancient ruins.  Everything was taken and returned to the ship, granting "+string(reqi)+" Requisition.";
 	}
-	if (loot="artifact"){
-	    scr_add_artifact("random","random",4,loc,sihd+500);
-	    var i,last_artifact;
-	    i=0;last_artifact=0;
-	    repeat(100){if (last_artifact=0){i+=1;if (obj_ini.artifact[i]="") then last_artifact=i-1;}}
+	else if (loot="artifact"){
+	    var last_artifact = scr_add_artifact("random","random",4,loc,sihd+500);
     
 	    scr_event_log("","Artifact recovered from Ancient Ruins.");
-	    var pop;pop=instance_create(0,0,obj_popup);
-	    pop.image="ancient_ruins";pop.title="Ancient Ruins: Artifact";
+	    var pop=instance_create(0,0,obj_popup);
+	    pop.image="ancient_ruins";
+	    pop.title="Ancient Ruins: Artifact";
 	    pop.text="An Artifact has been found within the ancient ruins.  It appears to be a "+string(obj_ini.artifact[last_artifact])+" but should be brought to the Lexicanum and identified posthaste.";
 	    with(obj_star_select){instance_destroy();}
 	    with(obj_fleet_select){instance_destroy();}
-	    with(obj_temp4){instance_destroy();}
 	}
 
-	if (loot="stc"){
+	else if (loot="stc"){
 	    scr_add_stc_fragment();// STC here
-	    var pop;pop=instance_create(0,0,obj_popup);
-	    pop.image="ancient_ruins";pop.title="Ancient Ruins: STC Fragment";
+	    var pop;
+	    pop=instance_create(0,0,obj_popup);
+	    pop.image="ancient_ruins";
+	    pop.title="Ancient Ruins: STC Fragment";
 	    pop.text="Praise the Omnissiah, an STC Fragment has been retrieved from the ancient ruins and safely stowed away.  It is ready to be decrypted or gifted at your convenience.";
 	    scr_event_log("","STC Fragment recovered from Ancient Ruins.");
 	}
-	if (loot="gear"){
+	else if (loot="gear"){
 	    var wep1,wen1,wep2,wen2,wep3,wen3;
 	    wep1="";wen1=0;wep2="";wen2=0;wep3="";wen3=0;
 
 	    if (ruins_type<=2) or (ruins_type>=10){
-	        wep1=choose("Power Fist","Chainfist","Power Axe","Power Sword");wen1=choose(2,3,4,5);
-	        wep2=choose("Flamer","Meltagun","Combiflamer","Sniper Rifle");wen2=choose(3,4,5,6,7,8);
-	        wep3=choose("Missile Launcher","Heavy Bolter","Lascannon","Plasma Pistol");wen3=choose(1,2,3);
-	    }if (ruins_type=3){
-			wep1=choose("Terminator Armour");wen1=choose(1,2);
-	        wep2=choose("Bionics");wen2=choose(5,6,7);
-	        wep3=choose("Narthecium","Psychic Hood","Rosarius");wen3=choose(1);
+	        wep1=choose("Power Fist","Chainfist","Power Axe","Power Sword");
+	        wen1=choose(2,3,4,5);
+	        wep2=choose("Flamer","Meltagun","Combiflamer","Sniper Rifle");
+	        wen2=choose(3,4,5,6,7,8);
+	        wep3=choose("Missile Launcher","Heavy Bolter","Lascannon","Plasma Pistol");
+	        wen3=choose(1,2,3);
+	    }else if (ruins_type=3){
+			wep1=choose("Terminator Armour");
+			wen1=choose(1,2);
+	        wep2=choose("Bionics");
+	        wen2=choose(5,6,7);
+	        wep3=choose("Narthecium","Psychic Hood","Rosarius");
+	        wen3=choose(1);
 	    }
-		if (ruins_type=4){
+		else if (ruins_type=4){
 			wep1=choose("MK4 Maximus");wen1=choose(2,3);
 	        wep2=choose("MK6 Corvus");wen2=choose(4,5,6);
 	        wep3=choose("MK8 Errant");wen3=choose(1,2);
 	    }
-	    if (ruins_type=5){
-	        wep1=choose("Eviscerator","Underslung Flamer");wen1=choose(2,3,4,5);
-	        wep2=choose("Flamer","Meltagun","Combiflamer");wen2=choose(3,4,5,6,7,8);
+	    else if (ruins_type=5){
+	        wep1=choose("Eviscerator","Underslung Flamer");
+	        wen1=choose(2,3,4,5);
+	        wep2=choose("Flamer","Meltagun","Combiflamer");
+	        wen2=choose(3,4,5,6,7,8);
 	        wep3=choose("Heavy Flamer","Heavy Bolter","Plasma Pistol");wen3=choose(1,2,3);
 	    }
-	    if (ruins_type=6){
-	        wep1=choose("Eldar Power Sword","Power Spear");wen1=choose(1,2);
-	        wep2=choose("Storm Shield","Twin Linked Bolters");wen2=choose(1,2);
-	        wep3=choose("Archeotech Laspistol","Plasma Pistol");wen3=choose(1,2);
+	    else if (ruins_type=6){
+	        wep1=choose("Eldar Power Sword","Power Spear");
+	        wen1=choose(1,2);
+	        wep2=choose("Storm Shield","Twin Linked Bolters");
+	        wen2=choose(1,2);
+	        wep3=choose("Archeotech Laspistol","Plasma Pistol");
+	        wen3=choose(1,2);
 	    }
-		if (ruins_type=7){
-			wep1=choose("Autocannon");wen1=choose(1,2);
-	        wep2=choose("Heavy Bolters","Twin Linked Heavy Bolter");wen2=choose(1,2,3);
-	        wep3=choose("Twin Linked Lascannon","Lascannon");wen3=choose(1,2);
-	    }if (ruins_type=8){
-			wep1=choose("Iron Halo");wen1=choose(1,2);
-	        wep2=choose("Company Standard");wen2=choose(1);
-	        wep3=choose("Master Servo Arms");wen3=choose(1);
+		else if (ruins_type=7){
+			wep1=choose("Autocannon");
+			wen1=choose(1,2);
+	        wep2=choose("Heavy Bolters","Twin Linked Heavy Bolter");
+	        wen2=choose(1,2,3);
+	        wep3=choose("Twin Linked Lascannon","Lascannon");
+	        wen3=choose(1,2);
+	    }else if (ruins_type=8){
+			wep1=choose("Iron Halo");
+			wen1=choose(1,2);
+	        wep2=choose("Company Standard");
+	        wen2=choose(1);
+	        wep3=choose("Master Servo Arms");
+	        wen3=choose(1);
 	    }
 		
     
 	    scr_add_item(wep1,wen1);scr_add_item(wep2,wen2);scr_add_item(wep3,wen3);
     
-	    var pop;pop=instance_create(0,0,obj_popup);
-	    pop.image="ancient_ruins";pop.title="Ancient Ruins: Gear";
+	    var pop;
+	    pop=instance_create(0,0,obj_popup);
+	    pop.image="ancient_ruins";
+	    pop.title="Ancient Ruins: Gear";
 	    pop.text="These ruins were once an armoury. We found some weapons and pieces of wargear.  "+string(wen1)+"x "+string(wep1)+", "+string(wen2)+"x "+string(wep2)+", and "+string(wen3)+"x "+string(wep3)+" have been added to the Armamentarium.";
 	}
-	if (loot="gene_seed"){// Requisition
-	    var gene,pop;gene=floor(random_range(20,40))+1;pop=instance_create(0,0,obj_popup);
-	    pop.image="geneseed_lab";pop.title="Ancient Ruins: Gene-seed";
+	else if (loot="gene_seed"){// Requisition
+	    var gene,pop;gene=floor(random_range(20,40))+1;
+	    pop=instance_create(0,0,obj_popup);
+	    pop.image="geneseed_lab";
+	    pop.title="Ancient Ruins: Gene-seed";
 	    pop.text="My lord, your battle brothers have located a hidden, fortified laboratory within the ruins.  Contained are a number of bio-vaults with astartes gene-seed; "+string(gene)+" in number.  Your marines are not able to determine the integrity or origin.";
 	    pop.option1="Add the gene-seed to chapter vaults.";
 	    pop.option2="Salvage the laboratory for requisition.";
 	    pop.option3="Leave the laboratory as is.";
 	    pop.estimate=gene;
 	}
-	if (loot="bunker"){// Bunker
+	else if (loot="bunker"){// Bunker
 	    var gene,pop;gene=floor(random_range(20,40))+1;
 	    pop=instance_create(0,0,obj_popup);
-	    pop.image="ruins_bunker";pop.title="Ancient Ruins: Bunker Network";
+	    pop.image="ruins_bunker";
+	    pop.title="Ancient Ruins: Bunker Network";
 	    pop.text="Your battle brothers have found several entrances into an ancient bunker network.  Its location has been handed over to the PDF.  The planet's defense rating has increased to ";
 	    pop.text+=string(min(star_system.p_fortified[planet]+1,5))+".  ";
 	    if (star_system.p_fortified[planet]<5) then pop.text+="("+string(star_system.p_fortified[planet])+"+1)";
@@ -136,10 +158,13 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    star_system.p_fortified[planet]=min(star_system.p_fortified[planet]+1,5);
 	}
 	else if (loot="fortress"){// Fortress
-	    var gene,pop;gene=floor(random_range(20,40))+1;
+	    var pop,gene=floor(random_range(20,40))+1;
 	    pop=instance_create(0,0,obj_popup);
 	    pop.image="ruins_fort";
 	    pop.title="Ancient Ruins: Fortress";
+	    pop.planet = planet;
+	    pop.feature = _feature;
+	    pop.star_system = star_system;
 	    pop.text="Praise the Emperor! We have found a massive, ancient fortress in needs of repairs. The gun batteries are rusted, and the walls are covered in moss with huge hole in it. Such a pity that such a majestic building is now a pale shadow of its former glory.  It is possible to repair the structure.  What is thy will?";
 	    pop.option1="Repair the fortress to boost defenses.  (1000 Req)";
 	    pop.option2="Salvage raw materials from the fortress.";
@@ -154,7 +179,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	}
 
 
-	_ruins.ruins_explored()
+	_ruins.ruins_explored();
 	// star_system.p_feature[planet]="Ancient Ruins|";
 
 	}

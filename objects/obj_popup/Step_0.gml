@@ -353,7 +353,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
             obj_controller.event[ev]="governor_assassination_2|"+string(new_target.name)+"|"+string(planet)+"|";
             obj_controller.event_duration[ev]=(choose(1,2)*6)+choose(-3,-2,-1,0,1,2,3);
         }
-        text="All of the successors for "+string(new_target.name)+" "+scr_roman(planet)+" are removed or otherwise made indisposed.  Paperwork is slightly altered.  Rather than any sort of offical one of your Chapter Serfs is installed as the Planetary Governor.  The planet is effectively under your control.";
+        $text="All of the successors for planet_numeral_name(planet,new_target) are removed or otherwise made indisposed.  Paperwork is slightly altered.  Rather than any sort of offical one of your Chapter Serfs is installed as the Planetary Governor.  The planet is effectively under your control.";
         if (new_target.p_first[planet]!=3) then new_target.p_owner[planet]=1;
         option1="";option2="";option3="";
         with(obj_temp4){instance_destroy();}
@@ -389,20 +389,22 @@ if (image="ruins_fort"){
         option1="";
         option2="";
         option3="";
-        var obj=obj_temp4.obj;
-        text+=string(obj.p_fortified[obj_temp4.num])+"+";
-        text+=string(5-obj.p_fortified[obj_temp4.num])+")";
-        obj.p_fortified[obj_temp4.num]=max(obj.p_fortified[obj_temp4.num],5);
-        with(obj_temp4){instance_destroy();}
-        cooldown=15;exit;
+        text+=string(star_system.p_fortified[planet])+"+";
+        text+=string(5-star_system.p_fortified[planet])+")";
+        star_system.p_fortified[planet]=max(star_system.p_fortified[planet],5);
+        cooldown=15;
+        exit;
     }
     if (press=2){
-        var req;req=floor(random_range(200,500))+1;
-        image="";text="Much of the fortress is demolished in order to salvage adamantium and raw materials.  The opration has yielded "+string(req)+" requisition.";
-        option1="";option2="";option3="";
+        var req=floor(random_range(200,500))+1;
+        image="";
+        text="Much of the fortress is demolished in order to salvage adamantium and raw materials.  The opration has yielded "+string(req)+" requisition.";
+        option1="";
+        option2="";
+        option3="";
         obj_controller.requisition+=req;
-        with(obj_temp4){instance_destroy();}
-        cooldown=15;exit;
+        cooldown=15;
+        exit;
     }
     
     /*

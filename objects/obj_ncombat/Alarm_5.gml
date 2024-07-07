@@ -1,37 +1,40 @@
 
 // Final Screen
-
-var part1,part2,part3,part4,part5,part6,part7,part8,part9,part10;
-part1="";part2="";part3="";part4="";part9="";
-part5="";part6="";part7="";part8="";part10="";
+var part1="",part2="",part3="",part4="",part9="";
+var part5="",part6="",part7="",part8="",part10="";
 battle_over=1;
 
 alarm[8]=999999;
-
+ var line_break = "------------------------------------------------------------------------------";
 // show_message("Final Deaths: "+string(final_deaths));
 
 
 // check for wounded marines here to finish off, if defeated defending
-
+var roles = obj_ini.role[100];
 
 if (final_deaths+final_command_deaths>0){
-    part1="Marines Lost: "+string(final_deaths+final_command_deaths);
-    if (apoth=1) then part1+=" ("+string(obj_ini.role[100][15])+" prevented the death of "+string(units_saved)+")";
-    if (apoth>1) then part1+=" ("+string(obj_ini.role[100][15])+"s prevented the death of "+string(units_saved)+")";
-    if (injured>0) then part8="Marines Critically Injured: "+string(injured);
+    part1=$"Marines Lost: {final_deaths+final_command_deaths}";
+    if(apoth){
+        part1+=" ({roles[Role.APOTHECARY]}{apoth>1?"s":""} prevented the death of {units_saved})";
+    }
+    if (injured>0) then part8=$"Marines Critically Injured: {injured}";
     
-    var i;i=0;
+    var i=0;
     for (var i=1;i<array_length(post_unit_lost);i++){
             if (post_unit_lost[i]!="") and (post_units_lost[i]>0) and (post_unit_veh[i]=0){
-            part2+=string(post_units_lost[i])+"x "+string(post_unit_lost[i])+", ";
+            part2+=$"{post_units_lost[i]}x {post_unit_lost[i]},";
         }
     }
     part2=string_delete(part2,string_length(part2)-1,2);part2+=".";i=0;
     
     if (injured>0){newline=part8;scr_newtext();}
-    newline=part1;scr_newtext();
-    newline=part2;newline_color="red";scr_newtext();
-    newline=" ";scr_newtext();
+    newline=part1;
+    scr_newtext();
+    newline=part2;
+    newline_color="red";
+    scr_newtext();
+    newline=" ";
+    scr_newtext();
 }
 
 if (instance_exists(obj_temp4)){
@@ -43,39 +46,44 @@ if (instance_exists(obj_temp4)){
 seed_saved=(min(seed_max,apoth*40))-gene_penalty;
 if (string_count("Doom",obj_ini.strin2)>0) then seed_saved=0;
 if (seed_saved>0) then obj_controller.gene_seed+=seed_saved;
-if (string_count("Doom",obj_ini.strin2)>0){
-    part3="Chapter Mutation prevents retrieving Gene-Seed.  "+string(seed_max)+" Gene-Seed lost.";
-    newline=part3;scr_newtext();
-    newline=" ";scr_newtext();
-}else if (apoth=0) and (string_count("Doom",obj_ini.strin2)=0){
-    part3="No able-bodied "+string(obj_ini.role[100][15])+".  "+string(seed_max)+" Gene-Seed lost.";
+
+if (string_count("Doom",obj_ini.strin2)>0) &&  (!apoth){
+    part3=$"Chapter Mutation prevents retrieving Gene-Seed.  {seed_max} Gene-Seed lost.";
+    newline=part3;
+    scr_newtext();
+    newline=" ";
+    scr_newtext();
+}else if (!apoth) and (string_count("Doom",obj_ini.strin2)=0){
+    part3=$"No able-bodied {roles[Role.APOTHECARY]}.  {seed_max} Gene-Seed lost.";
     newline=part3;scr_newtext();
     newline=" ";scr_newtext();
 }else if (apoth>0) and (final_deaths+final_command_deaths>0) and (string_count("Doom",obj_ini.strin2)=0){
-    part3="Gene-Seed Recovered: "+string(seed_saved)+" (";
-    if (seed_saved>0) then part3+=string(round((seed_saved/seed_max)*100));
-    if (seed_saved=0) then part3+="0";
-    part3+="%)";
-    newline=part3;scr_newtext();
-    newline=" ";scr_newtext();
+    part3=$"Gene-Seed Recovered: {seed_saved}(";
+    part3 += seed_saved ? $"{round((seed_saved/seed_max)*100))}" : "0";
+    part3 += "%)";
+    newline=part3;
+    scr_newtext();
+    newline=" ";
+    scr_newtext();
 }
 
 
 if (red_thirst>2){
-    var voodoo;voodoo="";
+    var voodoo="";
 
     if (red_thirst=3) then voodoo="1 Battle Brother lost to the Red Thirst.";
     if (red_thirst>3) then voodoo=string(red_thirst-2)+" Battle Brothers lost to the Red Thirst.";
     
-    newline=voodoo;newline_color="red";scr_newtext();
+    newline=voodoo;newline_color="red";
+    scr_newtext();
     newline=" ";scr_newtext();
 }
 
 
 if (vehicle_deaths>0){
     part4="Vehicles Lost: "+string(vehicle_deaths);
-    if (techma=1) then part4+=" ("+string(obj_ini.role[100][16])+" prevented the destruction of "+string(vehicles_saved)+")";
-    if (techma>1) then part4+=" ("+string(obj_ini.role[100][16])+"s prevented the destruction of "+string(vehicles_saved)+")";
+    if (techma=1) then part4+=" ("+string(roles[16])+" prevented the destruction of "+string(vehicles_saved)+")";
+    if (techma>1) then part4+=" ("+string(roles[16])+"s prevented the destruction of "+string(vehicles_saved)+")";
     
     var i;i=0;
     repeat(30){i+=1;
@@ -130,24 +138,28 @@ if (slime>0){
     
     s1="Slime has short-circuited and destroyed "+string(slime);
     
-    repeat(11){i+=1;
-        if (mucra[i]=1){compan_slime+=1;s3+=string(i)+", ";}
+    for (var i=0;i<=10;i++){
+        if (mucra[i]){
+            compan_slime+=1;
+            s3+=$"{i}, ";
+        }
     }
     
-    if (compan_slime<=1){s2=" suits of Power Armour.  Company ";s4=" has been effected.";}
-    if (compan_slime>1){s2=" suits of Power Armour.  Companies ";s4=" have been effected.";}
-    if (slime=1) then s2=string_replace(s2,"suits ","suit ");
+    s2=" {slime==1?"suit":"suits"} of Power Armour.  {compan_slime>1?"Companies":company} {s4} has been effected."};
     
     s3=string_delete(s3,string_length(s3)-1,2);
     
-    newline=s1+s2+s3+s4;newline_color="red";scr_newtext();
-    newline=" ";scr_newtext();
+    newline=s1+s2+s3+s4;
+    newline_color="red";
+    scr_newtext();
+    newline=" ";
+    scr_newtext();
 }
 
 instance_activate_object(obj_star);
 
 
-var lowf;lowf=true;
+var lowf=true;
 if (battle_special="tyranid_org") then lowf=false;
 if (string_count("_attack",battle_special)>0) then lowf=false;
 if (battle_special="ship_demon") then lowf=false;
@@ -166,8 +178,9 @@ if (fortified>0) and (!instance_exists(obj_nfort)) and (lowf=true){
     if (battle_id=3) then part9+=" III";
     if (battle_id=4) then part9+=" IV";
     if (battle_id=5) then part9+=" V";
-    part9+=" has decreased to "+string(fortified-1)+" ("+string(fortified)+"-1)";
-    newline=part9;scr_newtext();
+    part9+=$" has decreased to {fortified-1} ({fortified}-1)";
+    newline=part9;
+    scr_newtext();
     battle_object.p_fortified[battle_id]-=1;
 }
 
@@ -183,17 +196,26 @@ if (fortified>0) and (!instance_exists(obj_nfort)) and (lowf=true){
 
 
 if (defeat=0) and (battle_special="space_hulk"){
-    var en_power,loot,dicey,ex;
-    en_power=0;loot=0;dicey=floor(random(100))+1;ex=0;
+    var en_power=0,loot=0,dicey=floor(random(100))+1,ex=0;
 
-    if (enemy=7){en_power=battle_object.p_orks[battle_id];battle_object.p_orks[battle_id]-=1;}
-    if (enemy=9){en_power=battle_object.p_tyranids[battle_id];battle_object.p_tyranids[battle_id]-=1;}
-    if (enemy=10){en_power=battle_object.p_traitors[battle_id];battle_object.p_traitors[battle_id]-=1;}
+    if (enemy=7){
+        en_power=battle_object.p_orks[battle_id];
+        battle_object.p_orks[battle_id]-=1;
+    }
+    else if (enemy=9){
+        en_power=battle_object.p_tyranids[battle_id];
+        battle_object.p_tyranids[battle_id]-=1;
+    }
+    else if (enemy=10){
+        en_power=battle_object.p_traitors[battle_id];
+        battle_object.p_traitors[battle_id]-=1;
+    }
 
     part10="Space Hulk Exploration at ";
     ex=min(100,100-((en_power-1)*20));
     part10+=string(ex)+"%";
-    newline=part10;if (ex=100) then newline_color="red";scr_newtext();
+    newline=part10;if (ex=100) then newline_color="red";
+    scr_newtext();
 
     if (string_count("Shitty",obj_ini.strin2)>0) then dicey=dicey*1.5;
     // show_message("Roll Under: "+string(en_power*10)+", Roll: "+string(dicey));
@@ -301,34 +323,34 @@ if (defeat=0) and (npowers=true){
     }
 
 
-    if (obj_controller.blood_debt=1) and (defeat=0){
+    if ((obj_controller.blood_debt=1) and (defeat=0) && en_power>0){
+        var final_pow = min(en_power, 6)-1;
         if (enemy=6) or (enemy=9) or (enemy=11) or (enemy=13){
-            if (en_power=1){obj_controller.penitent_current+=25;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=2){obj_controller.penitent_current+=62;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=3){obj_controller.penitent_current+=95;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=4){obj_controller.penitent_current+=190;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=5){obj_controller.penitent_current+=375;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=6){obj_controller.penitent_current+=750;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
+            obj_controller.penitent_turn=0;
+            obj_controller.penitent_turnly=0;
+            var penitent_crusade_chart = [25,62,95,190,375,750];
+
+            var final_pow = min(en_power, 6)-1;
+            obj_controller.penitent_current+=penitent_crusade_chart[final_pow];
+
         }
-        if (enemy=7) or (enemy=8) or (enemy=10){
-            if (en_power=1){obj_controller.penitent_current+=25;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=2){obj_controller.penitent_current+=50;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=3){obj_controller.penitent_current+=75;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=4){obj_controller.penitent_current+=150;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=5){obj_controller.penitent_current+=300;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=6){obj_controller.penitent_current+=600;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
-            if (en_power=7){obj_controller.penitent_current+=1500;obj_controller.penitent_turn=0;obj_controller.penitent_turnly=0;}
+        else if (enemy=7) or (enemy=8) or (enemy=10){
+            obj_controller.penitent_turn=0;
+            obj_controller.penitent_turnly=0;
+            var final_pow = min(en_power, 7)-1;
+            var penitent_crusade_chart = [25,50,75,150,300,600, 1500];         
+             obj_controller.penitent_current+=penitent_crusade_chart[final_pow];
         }
     }
 
     if (enemy=5){battle_object.p_sisters[battle_id]=new_power;}
-    if (enemy=6){battle_object.p_eldar[battle_id]=new_power;}
-    if (enemy=7){battle_object.p_orks[battle_id]=new_power;}
-    if (enemy=8){battle_object.p_tau[battle_id]=new_power;}
-    if (enemy=9){battle_object.p_tyranids[battle_id]=new_power;}
-    if (enemy=10){battle_object.p_traitors[battle_id]=new_power;}
-    if (enemy=11){battle_object.p_chaos[battle_id]=new_power;}
-    if (enemy=13){battle_object.p_necrons[battle_id]=new_power;}
+    else if (enemy=6){battle_object.p_eldar[battle_id]=new_power;}
+    else if (enemy=7){battle_object.p_orks[battle_id]=new_power;}
+    else if (enemy=8){battle_object.p_tau[battle_id]=new_power;}
+    else if (enemy=9){battle_object.p_tyranids[battle_id]=new_power;}
+    else if (enemy=10){battle_object.p_traitors[battle_id]=new_power;}
+    else if (enemy=11){battle_object.p_chaos[battle_id]=new_power;}
+    else if (enemy=13){battle_object.p_necrons[battle_id]=new_power;}
 
     if (enemy!=2) and (string_count("cs_meeting_battle",battle_special)=0){
         part10+=" Forces on "+string(battle_loc);
@@ -337,7 +359,7 @@ if (defeat=0) and (npowers=true){
         if (battle_id=3) then part10+=" III";
         if (battle_id=4) then part10+=" IV";
         if (battle_id=5) then part10+=" V";
-        part10+=" have decreased to "+string(new_power)+" ("+string(en_power)+"-"+string(en_power-new_power)+")";
+        part10+=$" have decreased to {new_power} ({en_power} {en_power-new_power})";
         newline=part10;scr_newtext();
 
         if (new_power<=0) and (en_power>0) then battle_object.p_raided[battle_id]=1;
@@ -356,7 +378,9 @@ if (defeat=0) and (npowers=true){
 
 
     if (enemy=8) and (ethereal>0) and (defeat=0){
-        newline="Tau Ethereal Captured";newline_color="yellow";scr_newtext();
+        newline="Tau Ethereal Captured";
+        newline_color="yellow";
+        scr_newtext();
     }
     
     if (enemy=13) and (battle_object.p_necrons[battle_id]<3) and (awake_tomb_world(battle_object.p_feature[battle_id])== 1){
@@ -415,8 +439,8 @@ if (defeat=0) and (npowers=true){
 }
 if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
     // show_message(string(captured_gaunt));
-    if (captured_gaunt=1) then newline=string(captured_gaunt)+" Gaunt organism have been captured.";
-    if (captured_gaunt>1) or (captured_gaunt=0) then newline=string(captured_gaunt)+" Gaunt organisms have been captured.";
+    if (captured_gaunt=1) then newline=captured_gaunt+" Gaunt organism have been captured.";
+    if (captured_gaunt>1) or (captured_gaunt=0) then newline=captured_gaunt+" Gaunt organisms have been captured.";
     scr_newtext();
 
     if (captured_gaunt>0){
@@ -442,14 +466,18 @@ if (defeat=0) and (enemy=9) and (battle_special="tyranid_org"){
 }
 
 
-newline="------------------------------------------------------------------------------";scr_newtext();
-newline="------------------------------------------------------------------------------";scr_newtext();
+newline=line_break;
+scr_newtext();
+newline=line_break;
+scr_newtext();
 
-if (((leader=1)) or ((battle_special="world_eaters") and (obj_controller.faction_defeated[10]=0))) and (defeat=0){
+if (((leader)) or ((battle_special="world_eaters") and (!obj_controller.faction_defeated[10]))) and (!defeat){
     var nep;nep=false;
     newline="The enemy Leader has been killed!";newline_color="yellow";scr_newtext();
-    newline="------------------------------------------------------------------------------";scr_newtext();
-    newline="------------------------------------------------------------------------------";scr_newtext();
+    newline=line_break;
+    scr_newtext();
+    newline=line_break;
+    scr_newtext();
     instance_activate_object(obj_event_log);
     if (enemy=5) then scr_event_log("","Enemy Leader Assassinated: Ecclesiarchy Prioress");
     if (enemy=6) then scr_event_log("","Enemy Leader Assassinated: Eldar Farseer");
@@ -465,8 +493,8 @@ var endline,inq_eated;endline=1;
 inq_eated=false;
 
 
-if (obj_ini.omophagea=1){
-    var eatme;eatme=floor(random(100))+1;
+if (obj_ini.omophagea){
+    var eatme=floor(random(100))+1;
     if (enemy=13) or (enemy=9) or (battle_special="ship_demon") then eatme+=100;
     if (enemy=10) and (battle_object.p_traitors[battle_id]=7) then eatme+=200;
 
@@ -474,7 +502,11 @@ if (obj_ini.omophagea=1){
     if (thirsty>0) then eatme-=(thirsty*6);if (really_thirsty>0) then eatme-=(really_thirsty*15);
     if (string_count("Shitty",obj_ini.strin2)=1) then eatme-=10;
 
-    if (allies>0){obj_controller.disposition[2]-=choose(1,0,0);obj_controller.disposition[4]-=choose(0,0,1);obj_controller.disposition[5]-=choose(0,0,1);}
+    if (allies>0){
+        obj_controller.disposition[2]-=choose(1,0,0);
+        obj_controller.disposition[4]-=choose(0,0,1);
+        obj_controller.disposition[5]-=choose(0,0,1);
+    }
     if (present_inquisitor>0) then obj_controller.disposition[4]-=2;
 
     if (eatme<=25){endline=0;
@@ -485,13 +517,13 @@ if (obj_ini.omophagea=1){
             newline+=choose("  Bone snaps and pops.","  Strange-colored blood squirts from between his teeth.","  Veins and tendons squish wetly.");
         }
         if (thirsty>0) and (really_thirsty=0){
-            var ran;ran=choose(1,2);
+            var ran=choose(1,2);
             newline="One of your Death Company marines slowly makes his way towards the fallen enemies, as if in a spell.  Once close enough the helmet is removed and he begins shoveling parts of their carcasses into his mouth.";
             newline="A marine is observing and communicating with a Death Company marine, to ensure they are responsive, when that Death Company marine drops down and suddenly begins shoveling parts of enemy corpses into his mouth.";
             newline+=choose("  Bone snaps and pops.","  Strange-colored blood squirts from between his teeth.","  Veins and tendons squish wetly.");
         }
         if (really_thirsty>0){
-            newline="One of your Death Company "+string(obj_ini.role[100][6])+" blitzes to the fallen enemy lines.  Massive mechanical hands begin to rend and smash at the fallen corpses, trying to squeeze their flesh and blood through the sarcophogi opening.";
+            newline=$"One of your Death Company {roles[6]} blitzes to the fallen enemy lines.  Massive mechanical hands begin to rend and smash at the fallen corpses, trying to squeeze their flesh and blood through the sarcophogi opening.";
         }
 
         newline+="  Almost at once most of the present "+string(global.chapter_name)+" follow suite, joining in and starting a massive feeding frenzy.  The sight is gruesome to behold.";
@@ -499,28 +531,40 @@ if (obj_ini.omophagea=1){
 
 
         // check for pdf/guardsmen
-        eatme=floor(random(100))+1;if (string_count("Shitty",obj_ini.strin2)=1) then eatme-=10;
+        eatme=floor(random(100))+1;
+        if (array_contains(obj_ini.dis,"Shitty Luck")) then eatme-=10;
         if (eatme<=10) and (allies>0){
             obj_controller.disposition[2]-=2;
-            if (allies=1){newline="Local PDF have been eaten!";newline_color="red";scr_newtext();}
-            if (allies=2){newline="Local Guardsmen have been eaten!";newline_color="red";scr_newtext();}
+            if (allies=1){
+                newline="Local PDF have been eaten!";
+                newline_color="red";scr_newtext();
+            }
+            else if (allies=2){
+                newline="Local Guardsmen have been eaten!";
+                newline_color="red";
+                scr_newtext();
+            }
         }
 
         // check for inquisitor
-        eatme=floor(random(100))+1;if (string_count("Shitty",obj_ini.strin2)=1) then eatme-=5;
+        eatme=floor(random(100))+1;
+        if (array_contains(obj_ini.dis,"Shitty Luck")) then eatme-=5;
         if (eatme<=40) and (present_inquisitor=1){
-            var thatta,thatta2,remove,i;thatta=0;remove=0;i=0;
-            obj_controller.disposition[4]-=10;inq_eated=true;
+            var thatta=0,remove=0,i=0;
+            obj_controller.disposition[4]-=10;
+            inq_eated=true;
             instance_activate_object(obj_en_fleet);
 
             if (instance_exists(inquisitor_ship)){
-                repeat(2){scr_loyalty("Inquisitor Killer","+");}
+                repeat(2){
+                    scr_loyalty("Inquisitor Killer","+");
+                }
                 if (obj_controller.loyalty>=85) then obj_controller.last_world_inspection-=44;
                 if (obj_controller.loyalty>=70) and (obj_controller.loyalty<85) then obj_controller.last_world_inspection-=32;
                 if (obj_controller.loyalty>=50) and (obj_controller.loyalty<70) then obj_controller.last_world_inspection-=20;
                 if (obj_controller.loyalty<50) then scr_loyalty("Inquisitor Killer","+");
 
-                var msg,msg2,i,remove;msg="";msg2="";i=0;remove=0;
+                var msg="",msg2="",i=0,remove=0;
                 // if (string_count("Inqis",inquisitor_ship.trade_goods)>0) then show_message("B");
                 if (inquisitor_ship.inquisitor>0){
                     var inquis_name = obj_controller.inquisitor[inquisitor_ship.inquisitor];
@@ -529,7 +573,8 @@ if (obj_ini.omophagea=1){
                     remove=obj_controller.inquisitor[inquisitor_ship.inquisitor];
                     scr_event_log("red",$"Your Astartes consume {msg}.");
                 }
-                newline_color="red";scr_newtext();
+                newline_color="red";
+                scr_newtext();
                 if (obj_controller.inquisitor_type[remove]="Ordo Hereticus") then scr_loyalty("Inquisitor Killer","+");
 
                 i=remove;
@@ -548,18 +593,21 @@ if (obj_ini.omophagea=1){
                 }
 
                 instance_activate_object(obj_turn_end);
-                if (obj_controller.known[eFACTION.Inquisition]<3) and (!instance_exists(obj_turn_end)){
-                    var pip;pip=instance_create(0,0,obj_popup);
-                    pip.title="Inquisitor Killed";pip.text=msg;pip.image="inquisition";pip.cooldown=30;
-                    pip.title="EXCOMMUNICATUS TRAITORUS";
-                    pip.text="The Inquisition has noticed your uncalled CONSUMPTION of "+string(msg)+" and declared your chapter Excommunicatus Traitorus.";
-                    instance_deactivate_object(obj_popup);
-                    obj_controller.alarm[8]=1;
-                    scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
-                }
-                if (obj_controller.known[eFACTION.Inquisition]<3) and (instance_exists(obj_turn_end)){
-                    scr_popup("Inquisitor Killed","The Inquisition has noticed your uncalled CONSUMPTION of "+string(msg)+" and declared your chapter Excommunicatus Traitorus.","inquisition","");
-                    obj_controller.alarm[8]=1;scr_event_log("red","EXCOMMUNICATUS TRAITORUS");
+                if (obj_controller.known[eFACTION.Inquisition]<3){
+                    scr_event_log("red","EXCOMMUNICATUS TRAITORUS");  
+                    obj_controller.alarm[8]=1;   
+                    if ((!instance_exists(obj_turn_end))){
+                        var pip;pip=instance_create(0,0,obj_popup);
+                        pip.title="Inquisitor Killed";
+                        pip.text=msg;
+                        pip.image="inquisition";
+                        pip.cooldown=30;
+                        pip.title="EXCOMMUNICATUS TRAITORUS";
+                        pip.text=$"The Inquisition has noticed your uncalled CONSUMPTION of {msg} and declared your chapter Excommunicatus Traitorus.";
+                        instance_deactivate_object(obj_popup);
+                    } else {
+                        scr_popup("Inquisitor Killed",$"The Inquisition has noticed your uncalled CONSUMPTION of {msg} and declared your chapter Excommunicatus Traitorus.","inquisition","");                   
+                    }
                 }
                 instance_deactivate_object(obj_turn_end);
 
@@ -574,12 +622,16 @@ if (obj_ini.omophagea=1){
 }
 
 if (inq_eated=false) and (obj_ncombat.sorcery_seen>=2){
-    scr_loyalty("Use of Sorcery","+");newline="Inquisitor "+string(obj_controller.inquisitor[1])+" witnessed your Chapter using sorcery.";
+    scr_loyalty("Use of Sorcery","+");
+    newline="Inquisitor "+string(obj_controller.inquisitor[1])+" witnessed your Chapter using sorcery.";
     scr_event_log("green",string(newline));scr_newtext();
 }
 
 if (exterminatus>0) and (dropping!=0){
-    newline="Exterminatus has been succesfully placed.";newline_color="yellow";endline=0;scr_newtext();
+    newline="Exterminatus has been succesfully placed.";
+    newline_color="yellow";
+    endline=0;
+    scr_newtext();
 }
 
 instance_activate_object(obj_star);
@@ -597,20 +649,30 @@ if (obj_ini.fleet_type!=1) and (defeat==1) and (dropping==0){
 	    if (obj_controller.und_gene_vaults=0) then newline="Your Fortress Monastery has been raided.  "+string(obj_controller.gene_seed)+" Gene-Seed has been destroyed or stolen.";
 	    if (obj_controller.und_gene_vaults>0) then newline="Your Fortress Monastery has been raided.  "+string(floor(obj_controller.gene_seed/10))+" Gene-Seed has been destroyed or stolen.";
 
-	    scr_event_log("red",string(newline), battle_object.name);
+	    scr_event_log("red",newline, battle_object.name);
 	    instance_activate_object(obj_event_log);
 	    newline_color="red";scr_newtext();
 
 	    var lasers_lost,defenses_lost,silos_lost;
 	    lasers_lost=0;defenses_lost=0;silos_lost=0;
 
-	    if (player_defenses>0){defenses_lost=round(player_defenses*0.75);}
-	    if (battle_object.p_silo[obj_ncombat.battle_id]>0){silos_lost=round(battle_object.p_silo[obj_ncombat.battle_id]*0.75);}
-	    if (battle_object.p_lasers[obj_ncombat.battle_id]>0){lasers_lost=round(battle_object.p_lasers[obj_ncombat.battle_id]*0.75);}
+	    if (player_defenses>0){
+            defenses_lost=round(player_defenses*0.75);
+        }
+	    if (battle_object.p_silo[obj_ncombat.battle_id]>0){
+            silos_lost=round(battle_object.p_silo[obj_ncombat.battle_id]*0.75);
+        }
+	    if (battle_object.p_lasers[obj_ncombat.battle_id]>0){
+            lasers_lost=round(battle_object.p_lasers[obj_ncombat.battle_id]*0.75);
+        }
 
 	    if (player_defenses<30) then defenses_lost=player_defenses;
-	    if (battle_object.p_silo[obj_ncombat.battle_id]<30){silos_lost=battle_object.p_silo[obj_ncombat.battle_id];}
-	    if (battle_object.p_lasers[obj_ncombat.battle_id]<8){lasers_lost=battle_object.p_lasers[obj_ncombat.battle_id];}
+	    if (battle_object.p_silo[obj_ncombat.battle_id]<30){
+            silos_lost=battle_object.p_silo[obj_ncombat.battle_id];
+        }
+	    if (battle_object.p_lasers[obj_ncombat.battle_id]<8){
+            lasers_lost=battle_object.p_lasers[obj_ncombat.battle_id];
+        }
 
 	    var percent;percent=0;newline="";
 	    if (defenses_lost>0){
@@ -620,7 +682,7 @@ if (obj_ini.fleet_type!=1) and (defeat==1) and (dropping==0){
 	    if (silos_lost>0){
 	        percent=round((silos_lost/battle_object.p_silo[obj_ncombat.battle_id])*100);
 	        if (defenses_lost>0) then newline+="  ";
-	        newline+=string(silos_lost)+" Missile Silos have been lost ("+string(percent)+"%).";
+	        newline+=string(silos_lost)+$" Missile Silos have been lost ({percent}%).";
 	    }
 	    if (lasers_lost>0){
 	        percent=round((lasers_lost/battle_object.p_lasers[obj_ncombat.battle_id])*100);
@@ -636,7 +698,13 @@ if (obj_ini.fleet_type!=1) and (defeat==1) and (dropping==0){
 	    endline=0;
 
 	    if (obj_controller.und_gene_vaults=0){
-	        obj_controller.gene_seed=0;var w;w=0;repeat(120){w+=1;if (obj_ini.slave_batch_num[w]>0){obj_ini.slave_batch_num[w]=0;obj_ini.slave_batch_eta[w]=0;}}
+	        obj_controller.gene_seed=0;
+            for (var w=0;w<array_length(obj_ini.slave_batch_num);w++){
+                if (obj_ini.slave_batch_num[w]>0){
+                    obj_ini.slave_batch_num[w]=0;
+                    obj_ini.slave_batch_eta[w]=0;
+                }
+            }
 	    }
 	    if (obj_controller.und_gene_vaults>0) then obj_controller.gene_seed-=floor(obj_controller.gene_seed/10);
 	}
@@ -645,8 +713,10 @@ instance_deactivate_object(obj_star);
 instance_deactivate_object(obj_turn_end);
 
 if (endline=0){
-    newline="------------------------------------------------------------------------------";scr_newtext();
-    newline="------------------------------------------------------------------------------";scr_newtext();
+    newline=line_break;
+    scr_newtext();
+    newline=line_break;
+    scr_newtext();
 }
 
 
