@@ -20,24 +20,24 @@ if (instance_exists(obj_controller)){
         with(obj_temp3){instance_destroy();}
         obj_controller.temp[2000]=obj_turn_end.battle_location[obj_turn_end.current_battle];
         with(obj_star){if (name=obj_controller.temp[2000]) then instance_create(x,y,obj_temp3);}
-        var that;that=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
-        with(obj_temp3){instance_destroy();}
+        var that=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star);
+
         obj_controller.temp[2001]=real(that.id);
         obj_controller.temp[2002]=real(obj_turn_end.battle_opponent[obj_turn_end.current_battle]);
-        
-        with(obj_temp2){instance_destroy();}with(obj_temp3){instance_destroy();}with(obj_temp4){instance_destroy();}
+
+        var cap_total=0,frig_total=0,escort_total=0;
         with(obj_en_fleet){
             if (orbiting=obj_controller.temp[2001]) and (owner=obj_controller.temp[2002]){
-                if (capital_number>0) then repeat(capital_number){instance_create(x,y,obj_temp2);}
-                if (frigate_number>0) then repeat(frigate_number){instance_create(x,y,obj_temp3);}
-                if (escort_number>0) then repeat(escort_number){instance_create(x,y,obj_temp4);}
+                cap_total += capital_number;
+                frig_total += frigate_number;
+                escort_total += escort_number;
             }
         }
         
-        en_strength+=instance_number(obj_temp2)*4;
-        en_strength+=instance_number(obj_temp3)*2;
-        en_strength+=instance_number(obj_temp4);
-        with(obj_temp2){instance_destroy();}with(obj_temp3){instance_destroy();}with(obj_temp4){instance_destroy();}
+        en_strength+=cap_total*4;
+        en_strength+=frig_total*2;
+        en_strength+=escort_total;
+
         
         ratio=9999;if (p_strength>0) and (en_strength>0){ratio=(en_strength/p_strength)*100;}
         

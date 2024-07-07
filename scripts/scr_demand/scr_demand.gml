@@ -112,7 +112,10 @@ function scr_demand(argument0) {
     
 	    if (argument0=1){// Requisition
 	        rull=floor(random(10))+1;
-	        if (rull>resistance){requisition+=150;worked=true;}
+	        if (rull>resistance){
+	        	requisition+=150;
+	        	worked=true;
+	        }
 	        if (rull<=resistance){worked=false;}
 	    }
 	    if (argument0=2){// useful info

@@ -464,7 +464,9 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                 menu=0;
                 force_goodbye=0;
                 cooldown=8;
-                if (trading_artifact==2) and (instance_exists(obj_temp4)){obj_temp4.alarm[2]=1;}// 135 this might not be needed
+                if (trading_artifact==2) and (instance_exists(obj_temp4)){
+                    obj_temp4.alarm[2]=1;
+                }// 135 this might not be needed
                 trading_artifact=0;
                 with(obj_popup){
                     obj_temp4.alarm[1]=1;

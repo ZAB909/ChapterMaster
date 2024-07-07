@@ -130,14 +130,14 @@ if (mechanicus_world_total>0) and (imp_ships<ship_allowance){
                 if (system_fleet_elements==0) {
                     switch(planets){
                         case 4:
-                            array_push(system_4, coords)//instance_create(x,y,obj_temp6);
+                            array_push(system_4, coords);
                             break;
                         case 3:
-                            array_push(system_3, coords)//instance_create(x,y,obj_temp5);
+                            array_push(system_3, coords);
                             break;
 						default:
 							if (p_type[1]!="Dead") {
-								array_push(system_other, coords)//instance_create(x,y,obj_temp4);
+								array_push(system_other, coords);
 							}
                             break;
                     }

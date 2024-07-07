@@ -128,6 +128,23 @@ function distance_removed_star(origional_x,origional_y, star_offset = choose(2,3
     instance_activate_object(obj_star);
     return from;     
 }
+
+function nearest_star_proper(xx,yy) {
+	var i=0;
+	var cur_star;
+	while(i<100){
+		i++;
+		cur_star = instance_nearest(xx,yy, obj_star);
+		if (!cur_star.craftworld && !cur_star.space_hulk){
+			instance_activate_object(obj_star);
+			return cur_star.id;
+		}
+		instance_deactivate_object(cur_star.id);
+	}
+	return "none";
+}
+
+
 function nearest_star_with_ownership(xx,yy, ownership){
 	var nearest = "none"
 	var total_stars =  instance_number(obj_star);

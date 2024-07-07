@@ -386,8 +386,10 @@ if (image="ruins_fort"){
     if (press=1) and (obj_controller.requisition>=1000){
         obj_controller.requisition-=1000;
         text="Resources have been spent on the planet to restore the fortress.  The planet's defense rating has increased to 5 (";
-        option1="";option2="";option3="";
-        var obj;obj=obj_temp4.obj;
+        option1="";
+        option2="";
+        option3="";
+        var obj=obj_temp4.obj;
         text+=string(obj.p_fortified[obj_temp4.num])+"+";
         text+=string(5-obj.p_fortified[obj_temp4.num])+")";
         obj.p_fortified[obj_temp4.num]=max(obj.p_fortified[obj_temp4.num],5);
@@ -415,9 +417,12 @@ if (image="ruins_fort"){
 }
 
 if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus Mission Accepted"){
-    if (option1="")and (title="Mechanicus Mission"){option1="Accept";option2="Refuse";exit;}
+    if (option1="")and (title="Mechanicus Mission"){
+        option1="Accept";
+        option2="Refuse";
+    }
     
-    if (press=1) and (option1!=""){
+    else if (press=1) and (option1!=""){
     
         if (string_count("tomb",mission)>0){
             with(obj_temp5){instance_destroy();}
@@ -486,7 +491,11 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
         }
         // Other missions here
     }
-    if (press=2) and (option2!=""){obj_controller.cooldown=10;if (number!=0) then obj_turn_end.alarm[1]=4;instance_destroy();}    
+    else if (press=2) and (option2!=""){
+        obj_controller.cooldown=10;
+        if (number!=0) then obj_turn_end.alarm[1]=4;
+        instance_destroy();
+    }    
 }
 
 

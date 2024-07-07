@@ -1350,11 +1350,11 @@ if (action="move") and (action_eta<5000){
     if (action_eta==2) and (owner=eFACTION.Inquisition) && (inquisitor>-1){
     	inquisitor_ship_approaches();
     }else if (action_eta==0) {
-        var steh, sta, steh_dist, old_x, old_y;
-        steh=instance_nearest(action_x,action_y,obj_star);
+        var cur_star, sta, steh_dist, old_x, old_y;
+        cur_star=instance_nearest(action_x,action_y,obj_star);
         sta=instance_nearest(action_x,action_y,obj_star);
         
-        // steh.present_fleets+=1;if (owner = eFACTION.Tau) then steh.tau_fleets+=1;
+        // cur_star.present_fleets+=1;if (owner = eFACTION.Tau) then cur_star.tau_fleets+=1;
         
         
         if (owner = eFACTION.Mechanicus){
@@ -1506,13 +1506,17 @@ if (action="move") and (action_eta<5000){
                     with(obj_temp3){instance_destroy();}
                     with(obj_temp4){instance_destroy();}
                     
-                    var targ, steh;steh=instance_nearest(x,y,obj_star);
-                    var bleh;bleh="";
+                    var targ;
+                    var cur_star=nearest_star_proper(x, y);
+                    var bleh="";
                     if (owner!=eFACTION.Inquisition) 
-						bleh=string(obj_controller.faction[owner])+" Fleet finalizes trade at "+string(steh.name)+".";
-                    else
-						bleh="Inquisitor Ship finalizes trade at "+string(steh.name)+".";
-                    debugl(bleh);scr_alert("green","trade",bleh,steh.x,steh.y);scr_event_log("",bleh);
+						bleh="{obj_controller.faction[owner]} Fleet finalizes trade at {cur_star.name}.";
+                    else{
+						bleh=$"Inquisitor Ship finalizes trade at {cur_star.name}.";
+                    }
+                    debugl(bleh);
+                    scr_alert("green","trade",bleh,cur_star.x,cur_star.y);
+                    scr_event_log("",bleh,cur_star.name);
                     
                     // Drop off here
                     if (trade_goods!="stuff") and (trade_goods!="none") then scr_trade_dep();
@@ -1521,50 +1525,20 @@ if (action="move") and (action_eta<5000){
                     if (target!=noone) then target=noone;
                     
                     if (owner=eFACTION.Eldar){
-                        with(obj_star){
-							if (owner= eFACTION.Eldar) and (p_owner[1]= eFACTION.Eldar) {
-								instance_create(x,y,obj_temp4);
-								instance_create(x,y,obj_temp3);
-							}
-						}
-                        // with(obj_temp4){x=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star).old_x;y=instance_nearest(obj_temp3.x,obj_temp3.y,obj_star).old_y;}
+                    	cur_star = nearest_star_with_ownership(xx,yy, eFACTION.Eldar);
+                    	if (cur_star!="none"){
+							cur_star=targ.x;
+							cur_star=targ.y;  
+                    	}                  	
+                    } else {
+	                    action_x=home_x;
+						action_y=home_y;                   	
                     }
-                    
-                    
-                    
-                    // show_message("temp3 created");
-                    // show_message("x:"+string(temp3.x)+",y:"+string(temp3.y));
-                    
-                    /*if (owner != eFACTION.Eldar) then targ=instance_nearest(x,y,obj_temp3);
-                    if (owner = eFACTION.Eldar) then targ=instance_nearest(x,y,obj_temp4);*/
-                    // show_message("targ ID: "+string(targ.instance_id));
-                    // targ=instance_nearest(x,y,obj_temp3);
-                    
-                    
-                    
-                    /*action_x=targ.x;
-                    action_y=targ.y;*/
-                    
-                    
-                    // show_message(string(home_x)+","+string(home_y));
-                    
-                    action_x=home_x;
-					action_y=home_y;
-                    if (owner=eFACTION.Eldar) {
-						targ=instance_nearest(x,y,obj_temp4);
-						action_x=targ.x;
-						action_y=targ.y;
-					}
                     
                     action_eta=0;
 					action="";
-					//more alarm shenanigans
-                    alarm[4]=1;
-                    
-                    with(obj_temp2){instance_destroy();}
-                    with(obj_temp3){instance_destroy();}
-                    with(obj_temp4){instance_destroy();}
-                    exit;
+
+                    set_fleet_movement();
                 }
                 exit;
             }
@@ -1574,8 +1548,8 @@ if (action="move") and (action_eta<5000){
         
         
         if (owner=eFACTION.Inquisition) and (string_count("_her",trade_goods)=0){
-            if (steh.owner  = eFACTION.Player) and (trade_goods="cancel_inspection"){
-                instance_deactivate_object(steh);
+            if (cur_star.owner  = eFACTION.Player) and (trade_goods="cancel_inspection"){
+                instance_deactivate_object(cur_star);
                 repeat(choose(1,2)){
                     orbiting=instance_nearest(x,y,obj_star);
                     instance_deactivate_object(orbiting);
@@ -1685,10 +1659,10 @@ if (action="move") and (action_eta<5000){
         old_x=x;old_y=y;
         x=-100;y=-100;
         
-        steh=instance_nearest(old_x,old_y,obj_en_fleet);
+        cur_star=instance_nearest(old_x,old_y,obj_en_fleet);
         var mergus;mergus=0;
         
-        mergus=steh.image_index;
+        mergus=cur_star.image_index;
         if (mergus<3) then mergus=0;
         if (mergus>=3) then mergus=10;
         if (owner = eFACTION.Tau) and (mergus>=3) then mergus=0;
@@ -1697,33 +1671,33 @@ if (action="move") and (action_eta<5000){
         // Think this might be causing the crash
         if (owner=eFACTION.Tau) and (sta.present_fleet[eFACTION.Imperium]+sta.present_fleet[eFACTION.Player]>=1) 
 			and (sta.present_fleet[eFACTION.Tau]=1) and (image_index=1) and (ret=0) then mergus=15;
-        if (steh.owner=eFACTION.Tau) and (owner=eFACTION.Tau) and (ret=1) then mergus=0;
+        if (cur_star.owner=eFACTION.Tau) and (owner=eFACTION.Tau) and (ret=1) then mergus=0;
         
         
         
         
         if (owner=eFACTION.Tau) and (image_index=1){
-            // show_message("Tau|||  Other Owner: "+string(steh.owner)+"   ret: "+string(ret)+"    mergus: "+string(mergus));
+            // show_message("Tau|||  Other Owner: "+string(cur_star.owner)+"   ret: "+string(ret)+"    mergus: "+string(mergus));
         }
         
         if (owner=eFACTION.Chaos) and (trade_goods="csm") or (trade_goods="Khorne_warband") then mergus=0;
         if (trade_goods="merge") then mergus=0;
-        // if (steh.owner!=owner) then mergus=0;
+        // if (cur_star.owner!=owner) then mergus=0;
         
         
         
         
-        if (steh.x=old_x) and (steh.y=old_y) and (steh.owner=self.owner) and (steh.action="") and (mergus=1999){// Merge the fleets
-            steh.escort_number+=self.escort_number;
-            steh.frigate_number+=self.frigate_number;// show_message("Tau fleet merging");
-            steh.capital_number+=self.capital_number;
-            steh.guardsmen+=self.guardsmen;
+        if (cur_star.x=old_x) and (cur_star.y=old_y) and (cur_star.owner=self.owner) and (cur_star.action="") and (mergus=1999){// Merge the fleets
+            cur_star.escort_number+=self.escort_number;
+            cur_star.frigate_number+=self.frigate_number;// show_message("Tau fleet merging");
+            cur_star.capital_number+=self.capital_number;
+            cur_star.guardsmen+=self.guardsmen;
             
             
             
-            steh=instance_nearest(old_x,old_y,obj_star);
-            // if (steh.present_fleets>=1) then steh.present_fleets-=1;
-            if (owner = eFACTION.Tau){obj_controller.tau_fleets-=1;steh.tau_fleets-=1;}
+            cur_star=instance_nearest(old_x,old_y,obj_star);
+            // if (cur_star.present_fleets>=1) then cur_star.present_fleets-=1;
+            if (owner = eFACTION.Tau){obj_controller.tau_fleets-=1;cur_star.tau_fleets-=1;}
             if (owner = eFACTION.Chaos) then obj_controller.chaos_fleets-=1;
             
             instance_destroy();
@@ -1803,7 +1777,7 @@ if (action="move") and (action_eta<5000){
         
         x=old_x;y=old_y;
         
-        if (steh.x=old_x) and (steh.y=old_y) and (steh.owner=self.owner) and (steh.action="") and ((owner = eFACTION.Tau) or (owner = eFACTION.Chaos)) and (mergus=10) and (trade_goods!="csm") and (trade_goods!="Khorne_warband"){// Move somewhere new
+        if (cur_star.x=old_x) and (cur_star.y=old_y) and (cur_star.owner=self.owner) and (cur_star.action="") and ((owner = eFACTION.Tau) or (owner = eFACTION.Chaos)) and (mergus=10) and (trade_goods!="csm") and (trade_goods!="Khorne_warband"){// Move somewhere new
             var stue, stue2;stue=0;stue2=0;
             var goood;goood=0;
             
@@ -1837,43 +1811,43 @@ if (action="move") and (action_eta<5000){
             var kay, temp5, temp6, temp7;
             kay=0;temp5=0;temp6=0;temp7=0;
             
-            var steh;steh=0;// Opposite of what normally is
+            var cur_star;cur_star=0;// Opposite of what normally is
 			//the hell is this jank? Doesn't even make sense since all the tests will fail
-            if (owner = eFACTION.Imperium) then steh=instance_nearest(x,y+32,obj_star);
-            if (owner = eFACTION.Mechanicus) then steh=instance_nearest(x,y+32,obj_star);
-            if (owner  = eFACTION.Inquisition) then steh=instance_nearest(x,y+32,obj_star);
-            if (owner = eFACTION.Ork) then steh=instance_nearest(x-32,y,obj_star);
-            if (owner = eFACTION.Tau) then steh=instance_nearest(x+24,y+24,obj_star);
-            if (owner = eFACTION.Tyranids) then steh=instance_nearest(x,y-32,obj_star);
-            if (owner = eFACTION.Chaos) then steh=instance_nearest(x+32,y,obj_star);
+            if (owner = eFACTION.Imperium) then cur_star=instance_nearest(x,y+32,obj_star);
+            if (owner = eFACTION.Mechanicus) then cur_star=instance_nearest(x,y+32,obj_star);
+            if (owner  = eFACTION.Inquisition) then cur_star=instance_nearest(x,y+32,obj_star);
+            if (owner = eFACTION.Ork) then cur_star=instance_nearest(x-32,y,obj_star);
+            if (owner = eFACTION.Tau) then cur_star=instance_nearest(x+24,y+24,obj_star);
+            if (owner = eFACTION.Tyranids) then cur_star=instance_nearest(x,y-32,obj_star);
+            if (owner = eFACTION.Chaos) then cur_star=instance_nearest(x+32,y,obj_star);
             
             
             // This is the new check to go along code; if doesn't add up to all planets = 7 then they exit
             
-            if (steh.planets>=1) and (steh.p_type[1]!="Dead") and (steh.p_owner[1]!=7){kay=5;exit;}
-            if (steh.planets>=2) and (steh.p_type[2]!="Dead") and (steh.p_owner[2]!=7){kay=5;exit;}
-            if (steh.planets>=3) and (steh.p_type[3]!="Dead") and (steh.p_owner[3]!=7){kay=5;exit;}
-            if (steh.planets>=4) and (steh.p_type[4]!="Dead") and (steh.p_owner[4]!=7){kay=5;exit;}
+            if (cur_star.planets>=1) and (cur_star.p_type[1]!="Dead") and (cur_star.p_owner[1]!=7){kay=5;exit;}
+            if (cur_star.planets>=2) and (cur_star.p_type[2]!="Dead") and (cur_star.p_owner[2]!=7){kay=5;exit;}
+            if (cur_star.planets>=3) and (cur_star.p_type[3]!="Dead") and (cur_star.p_owner[3]!=7){kay=5;exit;}
+            if (cur_star.planets>=4) and (cur_star.p_type[4]!="Dead") and (cur_star.p_owner[4]!=7){kay=5;exit;}
             
             
             /*
             var chick;chick=0;
-            if (steh.p_type[1]!="Dead") then chick+=steh.p_owner[1];
-            if (steh.p_type[2]!="Dead") then chick+=steh.p_owner[2];
-            if (steh.p_type[3]!="Dead") then chick+=steh.p_owner[3];
-            if (steh.p_type[4]!="Dead") then chick+=steh.p_owner[4];
+            if (cur_star.p_type[1]!="Dead") then chick+=cur_star.p_owner[1];
+            if (cur_star.p_type[2]!="Dead") then chick+=cur_star.p_owner[2];
+            if (cur_star.p_type[3]!="Dead") then chick+=cur_star.p_owner[3];
+            if (cur_star.p_type[4]!="Dead") then chick+=cur_star.p_owner[4];
             if (chick/7)!=round(chick/7){
                 kay=5;exit;
             }*/
             
-            /*if ((steh.owner = eFACTION.Ork) and (image_index>=5) and (owner = eFACTION.Ork)) or ((owner = eFACTION.Ork) and (image_index>=5) and (steh.planets=0)){// Continue away
+            /*if ((cur_star.owner = eFACTION.Ork) and (image_index>=5) and (owner = eFACTION.Ork)) or ((owner = eFACTION.Ork) and (image_index>=5) and (cur_star.planets=0)){// Continue away
                 kay=50;
             }*/
             if (kay=5){// KILL the enemy
-                if (steh.present_fleet[1]>1) or (steh.present_fleet[2]>1) then exit;
+                if (cur_star.present_fleet[1]>1) or (cur_star.present_fleet[2]>1) then exit;
             }
             
-            if ((steh.owner = eFACTION.Chaos) and (image_index>=5) and (owner = eFACTION.Chaos)) or ((owner = eFACTION.Chaos) and (image_index>=5) and (steh.planets=0)) then kay=50;
+            if ((cur_star.owner = eFACTION.Chaos) and (image_index>=5) and (owner = eFACTION.Chaos)) or ((owner = eFACTION.Chaos) and (image_index>=5) and (cur_star.planets=0)) then kay=50;
     
             if (kay=50){
             
@@ -1894,7 +1868,7 @@ if (action="move") and (action_eta<5000){
                     action_x=temp7.x;
                     action_y=temp7.y;
                     alarm[4]=1;
-                    // steh.present_fleets-=1;
+                    // cur_star.present_fleets-=1;
                 }
                 
                 instance_activate_object(obj_star);
