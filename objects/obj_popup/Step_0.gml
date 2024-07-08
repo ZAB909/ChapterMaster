@@ -353,7 +353,7 @@ if (title="Planetary Governor Assassinated") and (option1!="") and (cooldown<=0)
             obj_controller.event[ev]="governor_assassination_2|"+string(new_target.name)+"|"+string(planet)+"|";
             obj_controller.event_duration[ev]=(choose(1,2)*6)+choose(-3,-2,-1,0,1,2,3);
         }
-        $text="All of the successors for planet_numeral_name(planet,new_target) are removed or otherwise made indisposed.  Paperwork is slightly altered.  Rather than any sort of offical one of your Chapter Serfs is installed as the Planetary Governor.  The planet is effectively under your control.";
+        text=$"All of the successors for {planet_numeral_name(planet,new_target)} are removed or otherwise made indisposed.  Paperwork is slightly altered.  Rather than any sort of offical one of your Chapter Serfs is installed as the Planetary Governor.  The planet is effectively under your control.";
         if (new_target.p_first[planet]!=3) then new_target.p_owner[planet]=1;
         option1="";option2="";option3="";
         with(obj_temp4){instance_destroy();}
@@ -469,7 +469,7 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
                     if (string_count("raider",mission)){
                         add_new_problem(forge_planet, "mech_raider", 49, mission_star, {"completion":0});
                         text=$"The Adeptus Mechanicus await your forces at {mission_loc}.  They are expecting six {obj_ini.role[100][16]}s and a Land Raider.";
-                        scr_event_log("",$"Mechanicus Mission Accepted: Six of your "+string(obj_ini.role[100][16])+"s and a Land Raider are to be stationed at {mission_loc} for 24 months.", mission_star.name);                         
+                        scr_event_log("",$"Mechanicus Mission Accepted: Six of your {obj_ini.role[100][16]}s and a Land Raider are to be stationed at {mission_loc} for 24 months.", mission_star.name);                         
                     } else if (string_count("bionics",mission)){
                         add_new_problem(forge_planet, "mech_bionics", 49, mission_star, {"completion":0});
                         text=$"The Adeptus Mechanicus await your forces at {mission_loc}.  They are expecting ten Astartes with bionics.";
@@ -504,23 +504,33 @@ if (image="mechanicus") and (title="Mechanicus Mission") or (title="Mechanicus M
 if (image="geneseed_lab"){
     if (press=1){
         image="";text=string(estimate)+" gene-seed has been added to the chapter vaults.";
-        option1="";option2="";option3="";
+        option1="";
+        option2="";
+        option3="";
         obj_controller.gene_seed+=estimate;
         with(obj_temp4){instance_destroy();}
         cooldown=15;exit;
     }
     if (press=2){
         var req;req=floor(random_range(200,500))+1;
-        image="";text="Technological components have been salvaged, granting "+string(req)+" requisition.";
-        option1="";option2="";option3="";
+        image="";
+        text="Technological components have been salvaged, granting "+string(req)+" requisition.";
+        option1="";
+        option2="";
+        option3="";
         obj_controller.requisition+=req;
-        with(obj_temp4){instance_destroy();}
-        cooldown=15;exit;
+        with(obj_temp4){
+            instance_destroy();
+        }
+        cooldown=15;
+        exit;
     }
     if (press=3){
         with(obj_temp4){instance_destroy();}
-        obj_controller.cooldown=15;cooldown=15;
-        instance_destroy();exit;
+        obj_controller.cooldown=15;
+        cooldown=15;
+        instance_destroy();
+        exit;
     }
 }
 
@@ -543,10 +553,12 @@ if (image="ancient_ruins") and (woopwoopwoop=2){
    // instance_activate_object(obj_star);
     scr_battle_roster(_star.name ,_planet,true);
     obj_controller.cooldown=10;
-    obj_ncombat.battle_object=_star;instance_deactivate_object(obj_star);
+    obj_ncombat.battle_object=_star;
+    instance_deactivate_object(obj_star);
     obj_ncombat.battle_loc=_star.name;
     obj_ncombat.battle_id=_planet;
-    obj_ncombat.battle_special="ruins";if (obj_temp4.ruins_race=6) then obj_ncombat.battle_special="ruins_eldar";
+    obj_ncombat.battle_special="ruins";
+    if (obj_temp4.ruins_race=6) then obj_ncombat.battle_special="ruins_eldar";
     obj_ncombat.dropping=0;obj_ncombat.attacking=0;
     obj_ncombat.enemy=obj_temp4.ruins_battle;
     obj_ncombat.threat=obj_temp4.battle_threat;
@@ -564,14 +576,15 @@ if (image="ancient_ruins") and (option1!=""){
         _ruins.determine_race()
         
         dice=floor(random(100))+1;
-        if (string_count("Shitty",obj_ini.strin2)=0) and (dice<=50) then ruins_battle=1;
-        if (string_count("Shitty",obj_ini.strin2)>0) and (dice<=66) then ruins_battle=1;
+        var shit_luck = array_contains(obj_ini.dis,"Shitty Luck")
+        var pass_mark = shit_luck ? 66 : 50;
+        ruins_battle = dice<=pass_mark;
         
         // ruins_battle=1;
         
         if (ruins_battle=1){
             dice=floor(random(100))+1;
-            if (string_count("Shitty",obj_ini.strin2)>0) then dice+=10;
+            if shit_luck then dice+=10;
             
             battle_threat=4;
             if (dice>0) and (dice<=60) then battle_threat=1;
@@ -586,7 +599,9 @@ if (image="ancient_ruins") and (option1!=""){
             obj_temp4.ruins_battle=ruins_battle;
             obj_temp4.battle_threat=battle_threat;
             
-            option1="";option2="";option3="";
+            option1="";
+            option2="";
+            option3="";
             text="Your marines descended into the ancient ruins, mapping them out as they go.  They quickly determine the ruins were once ";
             if (_ruins.ruins_race=1) then text+="a Space Marine fortification from earlier times.";
             if (_ruins.ruins_race=2) then text+="golden-age Imperial ruins, lost to time.";
@@ -594,7 +609,7 @@ if (image="ancient_ruins") and (option1!=""){
             if (_ruins.ruins_race=6) then text+="Eldar colonization structures from an unknown time.";
             if (_ruins.ruins_race=10) then text+="golden-age Imperial ruins, since decorated with spikes and bones."; 
 			if (_ruins.failed_exploration == 1){
-				text+= "mission_star see the scarring in the walls and rouns impacts where your brothers died to clense this place of it's foul inhabitants"
+				text+= "mission_star see the scarring in the walls and round impacts where your brothers died to clense this place of it's foul inhabitants";
 			}			
             text+="  Unfortunantly, it's too late before your Battle Brothers discern the ruins are still inhabited.  Shapes begin to descend upon them from all directions, masked in the shadows.";
             
@@ -606,7 +621,8 @@ if (image="ancient_ruins") and (option1!=""){
             var obj=obj_temp4.obj;
             instance_activate_object(obj_star);
             scr_ruins_reward(obj,obj_temp4.num,obj_controller.current_planet_feature);
-            instance_destroy();exit;
+            instance_destroy();
+            exit;
         }
     }
     if (press=2){// Nothing
@@ -629,14 +645,20 @@ if (image="ancient_ruins") and (option1!=""){
             alll=0;
             update_general_manage_view();
         }
-        with(obj_temp4){instance_destroy();}
-        instance_destroy();exit;
+        with(obj_temp4){
+            instance_destroy();
+        }
+        instance_destroy();
+        exit;
     }
     if (press=3){// Return to ship, exit
         scr_return_ship(obj_temp4.loc,obj_temp4,obj_temp4.num);
         var man_size,ship_id,comp,plan,i;
         i=0;ship_id=0;man_size=0;comp=0;plan=0;
-        repeat(30){i+=1;if (obj_ini.ship[i]=obj_temp4.loc) then ship_id=i;}i=0;
+        repeat(30){
+            i+=1;
+            if (obj_ini.ship[i]=obj_temp4.loc) then ship_id=i;
+        }i=0;
         obj_controller.menu=0;obj_controller.managing=0;
         obj_controller.cooldown=10;
         with(obj_temp4){instance_destroy();}

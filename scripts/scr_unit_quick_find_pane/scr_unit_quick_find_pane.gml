@@ -813,7 +813,7 @@ function planet_selection_action(){
 					                }
 					            }
 					            if (tch+mch>0){
-					                var arti;arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
+					                var arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
 					                arti.num=sel_plan;
 					                arti.alarm[0]=1;
 					                arti.loc=obj_controller.selecting_location;
@@ -850,18 +850,25 @@ function planet_selection_action(){
 					                
 					                var nu=planet_numeral_name(sel_plan,target);
 
-					    			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
-					    				 pip.text="Located upon "+string(nu)+$" is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
+					    			 if(_explore_ruins.failed_exploration ==1){
+					    			 	pip.text=$"The accursed ruins on {nu} where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."
+					    			 }else{
+					    				 pip.text=$"Located upon {nu} is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
 					    				switch (ruins_size){
-					    					case "tiny":pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
+					    					case "tiny":
+					    						pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
 					    					break;
-					    					case "small":pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
+					    					case "small":
+					    						pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
 					    					break;
-					    					case "medium":pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
+					    					case "medium":
+					    						pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
 					    					break;
-					    					case "large":pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
+					    					case "large":
+					    						pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
 					    					break;
-					    					case "sprawling":pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
+					    					case "sprawling":
+					    						pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
 					    					break;
 					    				}
 					    				pip.text += ". What is thy will?"

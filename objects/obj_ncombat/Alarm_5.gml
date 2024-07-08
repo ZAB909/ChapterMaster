@@ -15,7 +15,7 @@ var roles = obj_ini.role[100];
 if (final_deaths+final_command_deaths>0){
     part1=$"Marines Lost: {final_deaths+final_command_deaths}";
     if(apoth){
-        part1+=" ({roles[Role.APOTHECARY]}{apoth>1?"s":""} prevented the death of {units_saved})";
+        part1+=$" ({roles[Role.APOTHECARY]}{apoth>1?"s":""} prevented the death of {units_saved})";
     }
     if (injured>0) then part8=$"Marines Critically Injured: {injured}";
     
@@ -59,7 +59,7 @@ if (string_count("Doom",obj_ini.strin2)>0) &&  (!apoth){
     newline=" ";scr_newtext();
 }else if (apoth>0) and (final_deaths+final_command_deaths>0) and (string_count("Doom",obj_ini.strin2)=0){
     part3=$"Gene-Seed Recovered: {seed_saved}(";
-    part3 += seed_saved ? $"{round((seed_saved/seed_max)*100))}" : "0";
+    part3 += seed_saved ? $"{round((seed_saved/seed_max)*100)}" : "0";
     part3 += "%)";
     newline=part3;
     scr_newtext();
@@ -145,7 +145,7 @@ if (slime>0){
         }
     }
     
-    s2=" {slime==1?"suit":"suits"} of Power Armour.  {compan_slime>1?"Companies":company} {s4} has been effected."};
+    s2=$" {slime==1?"suit":"suits"} of Power Armour.  {compan_slime>1?$"{compan_slime} Companies":"One company"} {s4} has been effected.";
     
     s3=string_delete(s3,string_length(s3)-1,2);
     
