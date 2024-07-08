@@ -22,8 +22,12 @@ function draw_text_ext_outline(_x, _y, _text, _sep=-1, _w=9999, _outl_col=c_blac
     draw_text_ext(_x+1.5, _y, _text, _sep, _w);
     draw_text_ext(_x, _y-1.5, _text, _sep, _w);
     draw_text_ext(_x, _y+1.5, _text, _sep, _w);
-    if (_text_col != 0) draw_set_color(_text_col);
-    else draw_set_color(_cur_color);
+    if (_text_col != 0){
+        draw_set_color(_text_col)
+    }
+    else {
+        draw_set_color(_cur_color);
+    }
     draw_text_ext(_x, _y, _text, _sep, _w);
     draw_set_color(_cur_color);
 }

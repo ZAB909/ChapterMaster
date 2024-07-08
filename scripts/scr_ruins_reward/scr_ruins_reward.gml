@@ -4,16 +4,18 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	
 	//if there is gear from previoulsy killed marines retrieve instead of a standard reward
 	if (_ruins.unrecovered_items != false){
-		_ruins.recover_from_dead()
+		_ruins.recover_from_dead();
 	} else{
 
 	// star_system: world object
 	// planet: planet
 	// ruins_type: ruins_type
 
-	var dice,loot,flea,sihd;
-	dice=floor(random(100))+1;loot="";
-	if (string_count("Shitty",obj_ini.strin2)>0) then dice-=10;
+	var sihd=0;
+	var dice=floor(random(100))+1;
+	var loot="";
+
+	if (scr_has_disadv("Shitty Luck")) then dice-=10;
 
 	if (dice>0) and (dice<=35) then loot="req";// 
 	if (dice>35) and (dice<=50) then loot="gear";// 
@@ -21,23 +23,26 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	if (dice>60) and (dice<=70) then loot="stc";// 
 	if (dice>70) and (dice<=85) then loot="wild_card";// 
 	if (dice>85) and (dice<=97) then loot="bunker";// 
-	if (dice>97) and (dice<=100) then loot="fortress";// 
-	if (dice>100) and (dice<=150) then loot="starship";// 
+	if (dice>97) and (dice<=99) then loot="fortress";// 
+	if (dice>99) and (dice<=150) then loot="starship";// 
 
-	if (ruins_type=1) and (loot="wild_card") then loot="gene_seed";// 
-	if (ruins_type=2) and (loot="wild_card") then loot="req";// 
-	if (ruins_type=6) and (loot="wild_card") then loot="gear";// 
-	if (ruins_type>=10) and (loot="wild_card") then loot="req";// 
+	if ((loot=="wild_card")){
+		if (ruins_type=1) then loot="gene_seed";// 
+		if (ruins_type=2) then loot="req";// 
+		if (ruins_type=6) then loot="gear";// 
+		if (ruins_type>=10) then loot="req";// 
+	}
 
-	var yar;yar=0;sihd=0;
-	with(obj_p_fleet){if (action!="") then instance_deactivate_object(id);}
+	with(obj_p_fleet){
+		if (action!="") then instance_deactivate_object(id);
+	}
 	flea=instance_nearest(star_system.x,star_system.y,obj_p_fleet);
-	if (yar=0) and (flea.capital_num[1]!=0){yar=1;sihd=flea.capital_num[1];}
-	if (yar=0) and (flea.frigate_num[1]!=0){yar=1;sihd=flea.frigate_num[1];}
-	if (yar=0) and (flea.escort_num[1]!=0){yar=1;sihd=flea.escort_num[1];}
+	if (flea.capital_num[1]!=0){sihd=flea.capital_num[1];}
+	else if (flea.frigate_num[1]!=0){sihd=flea.frigate_num[1];}
+	else if (flea.escort_num[1]!=0){;sihd=flea.escort_num[1];}
 	instance_activate_object(obj_p_fleet);
 
-	scr_event_log("","The Ancient Ruins on "+string(star_system.name)+" "+scr_roman(planet)+" has been explored.", star_system.name);
+	scr_event_log("",$"The Ancient Ruins on {planet_numeral_name(planet,star_system)} has been explored.", star_system.name);
 
 	// loot="artifact";
 
@@ -72,8 +77,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    scr_event_log("","STC Fragment recovered from Ancient Ruins.");
 	}
 	else if (loot="gear"){
-	    var wep1,wen1,wep2,wen2,wep3,wen3;
-	    wep1="";wen1=0;wep2="";wen2=0;wep3="";wen3=0;
+	    var wep1="",wen1=0,wep2="",wen2=0,wep3="",wen3=0;
 
 	    if (ruins_type<=2) or (ruins_type>=10){
 	        wep1=choose("Power Fist","Chainfist","Power Axe","Power Sword");
@@ -100,7 +104,8 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	        wen1=choose(2,3,4,5);
 	        wep2=choose("Flamer","Meltagun","Combiflamer");
 	        wen2=choose(3,4,5,6,7,8);
-	        wep3=choose("Heavy Flamer","Heavy Bolter","Plasma Pistol");wen3=choose(1,2,3);
+	        wep3=choose("Heavy Flamer","Heavy Bolter","Plasma Pistol");
+	        wen3=choose(1,2,3);
 	    }
 	    else if (ruins_type=6){
 	        wep1=choose("Eldar Power Sword","Power Spear");
@@ -127,7 +132,9 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    }
 		
     
-	    scr_add_item(wep1,wen1);scr_add_item(wep2,wen2);scr_add_item(wep3,wen3);
+	    scr_add_item(wep1,wen1);
+	    scr_add_item(wep2,wen2);
+	    scr_add_item(wep3,wen3);
     
 	    var pop;
 	    pop=instance_create(0,0,obj_popup);
@@ -175,7 +182,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	    pop.title="Ancient Ruins: Starship";
 	    pop.text="The ground beneath one of your battle brothers crumbles, and he falls a great height.  The other marines go down in pursuit- within a great chamber they find the remains of an ancient starship.  Though derelict, it is possible to land "+string(obj_ini.role[100][16])+"s onto the planet to repair the ship.  10,000 Requisition will be needed to make it operational.";
 		_ruins.find_starship();
-	    scr_event_log("","Ancient Starship discovered on "+string(star_system.name)+" "+scr_roman(planet)+".", star_system.name);
+	    scr_event_log("",$"Ancient Starship discovered on {planet_numeral_name(planet, star_system)}.", star_system.name);
 	}
 
 
@@ -183,7 +190,7 @@ function scr_ruins_reward(star_system, planet, _ruins) {
 	// star_system.p_feature[planet]="Ancient Ruins|";
 
 	}
-	if( instance_exists(obj_temp4)){
+	if (instance_exists(obj_temp4)){
 		instance_destroy(obj_temp4);
 	}
 }

@@ -131,7 +131,14 @@ if (image="debug_banshee") and (cooldown<=0){
             fleet.orbiting=id;
             instance_destroy();
         }
-        if (press=3){planet=5;cooldown=30;text="Ork, Tau, Cancel?";option1="Ork";option2="Tau";option3="Cancel";press=0;exit;}
+        if (press=3){
+            planet=5;cooldown=30;
+            text="Ork, Tau, Cancel?";
+            option1="Ork";
+            option2="Tau";
+            option3="Cancel";
+            press=0;exit;
+        }
     }
     if (planet=1){
         if (press=1){planet=2;cooldown=30;text="Select a faction";option1="Orks";option2="Chaos";option3="Tyranids";press=0;exit;}

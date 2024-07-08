@@ -232,12 +232,14 @@ function inquisitor_ship_approaches(){
     var inquis_string;
     var do_alert = false;
     if (string_count("fleet",trade_goods)>0){
-        player_fleet_location = fleets_next_location(target);
-        if (approach_system.name==player_fleet_location.name){
-            inquis_string = $"Our navigators report that an inquisitor's ship is currently warping towards our flagship. It is likely that the inquisitor on board (provided he/she makes it) will attempt to perform an inspection of our flagship.";
-            do_alert = true;
-            if (fleet_has_roles(target, ["Ork Sniper","Flash Git","Ranger"])){
-                inquis_string+=$"Currently, there are non-imperial hirelings within the fleet. It would be wise to at least unload them on a planet below, if we wish to remain in good graces with inquisition, and possibly imperium at large.";
+        var player_fleet_location = fleets_next_location(target);
+        if (player_fleet_location != "none"){
+            if (approach_system.name==player_fleet_location.name){
+                inquis_string = $"Our navigators report that an inquisitor's ship is currently warping towards our flagship. It is likely that the inquisitor on board (provided he/she makes it) will attempt to perform an inspection of our flagship.";
+                do_alert = true;
+                if (fleet_has_roles(target, ["Ork Sniper","Flash Git","Ranger"])){
+                    inquis_string+=$"Currently, there are non-imperial hirelings within the fleet. It would be wise to at least unload them on a planet below, if we wish to remain in good graces with inquisition, and possibly imperium at large.";
+                }
             }
         }
     } else if (approach_system.owner  == eFACTION.Player || system_feature_bool(approach_system.p_feature, P_features.Monastery)){

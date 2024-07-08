@@ -48,7 +48,7 @@ function scr_battle_roster(required_location, _target_location, _is_planet) {
     instance_activate_object(obj_pnunit);
 
     //For each company and the HQ
-    for (var company=0;company<=1;company++){
+    for (var company=0;company<=10;company++){
         if (man_limit_reached) {
             break;
         }

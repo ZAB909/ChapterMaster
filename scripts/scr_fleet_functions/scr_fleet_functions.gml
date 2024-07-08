@@ -29,7 +29,7 @@ function fleets_next_location(fleet="none"){
 			targ_location = fleets_next_location();
 		}
 	}
-	return targ_location.id;
+	return targ_location;
 }
 function chase_fleet_target_set(){
 	var targ_location = fleets_next_location(target);

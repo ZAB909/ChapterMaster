@@ -600,23 +600,20 @@ if ((type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             if (r2=3) then cn.stc_ships_un-=1;
 
             // Modify disposition here
-            if (giveto = eFACTION.Imperium)
-				obj_controller.disposition[giveto]+=3;
-            else if (giveto = eFACTION.Mechanicus)
-				obj_controller.disposition[giveto]+=choose(5,6,7,8);
-            else if (giveto = eFACTION.Inquisition)
-				obj_controller.disposition[giveto]+=3;
+            if (giveto = eFACTION.Imperium){
+                obj_controller.disposition[giveto]+=3;
+            }
+            else if (giveto = eFACTION.Mechanicus){
+                obj_controller.disposition[giveto]+=choose(5,6,7,8);
+            }
+            else if (giveto = eFACTION.Inquisition){
+                obj_controller.disposition[giveto]+=3;
+            }
             else if (giveto = eFACTION.Ecclesiarchy) {
                 obj_controller.disposition[giveto]+=3;
-                var o;
-				o=0;
-				repeat(4) {
-					o+=1;
-					if (obj_ini.adv[o]="Reverent Guardians") {
-						obj_controller.disposition[giveto]+=2;
-						break;
-					}
-				}
+                if (scr_has_adv("Reverent Guardians")){
+                    obj_controller.disposition[giveto]+=2;
+                }
             }
 			
             if (giveto=eFACTION.Eldar)

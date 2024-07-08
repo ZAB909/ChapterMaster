@@ -141,11 +141,15 @@ if (slime>0){
     for (var i=0;i<=10;i++){
         if (mucra[i]){
             compan_slime+=1;
-            s3+=$"{i}, ";
+			if (i>0){
+				s3+=$"{i}, ";
+			} else {
+				s3+=$"HQ, ";
+			}
         }
     }
     
-    s2=$" {slime==1?"suit":"suits"} of Power Armour.  {compan_slime>1?$"{compan_slime} Companies":"One company"} {s4} has been effected.";
+    s2=$" {slime==1?"suit":"suits"} of Power Armour.  {compan_slime>1?$"{s3} Companies":$"{s3} company"} {s4} has been effected.";
     
     s3=string_delete(s3,string_length(s3)-1,2);
     
