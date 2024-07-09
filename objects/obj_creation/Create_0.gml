@@ -86,7 +86,7 @@ flagship_name=global.name_generator.generate_imperial_ship_name();
 recruiting_exists=1;
 homeworld_exists=1;
 homeworld_rule=1;
-aspirant_trial="Blood Duel";
+aspirant_trial=eTrials.BLOODDUEL;
 discipline="default";
 
 battle_cry="For the Emperor";
@@ -161,7 +161,7 @@ chapter_id[3]="Space Wolves";
 chapter_tooltip[3]="Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.";
 
 chapter_id[4]="Imperial Fists";
-chapter_tooltip[4]="Siege-masters of utmost excellence, the Imperial Fists stoicism has lead them to great victories and horrifying defeats. To them, the idea of a tactical retreat is utterly unconsiderable. They hold ground on Inwit vigilantly, refusing to back down from any fight.";
+chapter_tooltip[4]="Siege-masters of utmost excellence, the Imperial Fists stoicism has lead them to great victories and horrifying defeats. To them, the idea of a tactical retreat is utterly inconsiderable. They hold ground on Inwit vigilantly, refusing to back down from any fight.";
 
 chapter_id[5]="Blood Angels";
 chapter_tooltip[5]="One of the most noble and renowned chapters, their combat record belies a dark flaw in their gene-seed caused by the death of their primarch. Their primarch had wings and a propensity for close combat, and this shows in their extensive use of jump packs and close quarters weapons.";
@@ -170,7 +170,7 @@ chapter_id[6]="Iron Hands";
 chapter_tooltip[6]="The flesh is weak, and the weak shall perish. Such is the creed of these mercilessly efficient cyborg warriors. A chapter with strong ties to the Mechanicum, they crush the foes of the Emperor and Machine God alike with a plethora of exotic technology and ancient weaponry.";
 
 chapter_id[7]="Ultramarines";
-chapter_tooltip[7]="An honorable and venerated chapter, the Ultramarines are considered to be amongst the best of the best. Their Primarch was the author of the great tome of the “Codex Astartes”, and they are considered exemplars of what a perfect Space Marine Chapter should be like.";
+chapter_tooltip[7]="An honourable and venerated chapter, the Ultramarines are considered to be amongst the best of the best. Their Primarch was the author of the great tome of the “Codex Astartes”, and they are considered exemplars of what a perfect Space Marine Chapter should be like.";
 
 chapter_id[8]="Salamanders";
 chapter_tooltip[8]="Followers of the Promethean Cult, the jet-black skinned Salamanders are forgemasters of legend. They are armed with the best wargear available and prefer flame based weaponry. Their only drawback is their low numbers and slow recruiting.";
@@ -235,13 +235,13 @@ else if (file_exists("chaptersave#1.ini")=false){
 
 if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 	ini_open("chaptersave#1.ini")
-	chapter_id[21]= ini_read_string("Save","chapter_id","Custom");
-	chapter21 = ini_read_string("Save","chapter_name",chapter);
-	icon21= ini_read_real("Save","icon#",icon);
-	   icon_name21= ini_read_string("Save","icon_name","custom");
-	   strength21 = ini_read_real("Save","strength",strength);
+		chapter_id[21]= ini_read_string("Save","chapter_id","Custom");
+		chapter21 = ini_read_string("Save","chapter_name",chapter);
+		icon21= ini_read_real("Save","icon#",icon);
+	   	icon_name21= ini_read_string("Save","icon_name","custom");
+	   	strength21 = ini_read_real("Save","strength",strength);
 	    purity21 = ini_read_real("Save","purity",purity);
-	   stability21= ini_read_real("Save","stability",stability);
+	   	stability21= ini_read_real("Save","stability",stability);
 		cooperation21=ini_read_real("Save","cooperation",cooperation);
 		founding21 = ini_read_real("Save","founding",1);
 		
@@ -253,7 +253,7 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		homeworld_exists21 = ini_read_real("Save","home_worldexists",homeworld_exists);
 		recruiting_exists21= ini_read_real("Save","recruiting_exists",recruiting_exists);
 		homeworld_rule21= ini_read_real("Save","home_world_rule",homeworld_rule);
-		aspirant_trial21=ini_read_string("Save","aspirant_trial",aspirant_trial);
+		aspirant_trial21=ini_read_real("Save","aspirant_trial",aspirant_trial);
 		discipline21=ini_read_string("Save","discipline",discipline);
 		
 		color_to_main21= ini_read_string("Controller","main_color","Red");
@@ -296,6 +296,7 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		disposition21[4]=ini_read_real("Creation","inquisition_disposition",disposition[4]);
 		disposition21[5]=ini_read_real("Creation","ecclesiarchy_disposition",disposition[5]);
 		disposition21[7]=ini_read_real("Creation","reserved_disposition",disposition[7]);
+		complex_livery21 = return_json_from_ini("Creation","complex_livery", complex_livery_default());
 		
 		
 		
@@ -308,8 +309,8 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		chapter_master_melee21 = ini_read_real("Creation","chapter_master_melee",chapter_master_melee);
 		chapter_master_ranged21= ini_read_string("Creation","master_ranged",chapter_master_ranged);
 		chapter_master_specialty21=ini_read_string("Creation","master_specialty",chapter_master_specialty);
-		adv21=[1,2,3,4]
-		dis21=[1,2,3,4]
+		adv21=[1,2,3,4];
+		dis21=[1,2,3,4];
 		for(var i =1;i<=4;i++){
 			
 			adv21[i]=ini_read_string("Creation","adv21"+string(i),"")
@@ -317,13 +318,13 @@ if((file_exists("chaptersave#1.ini")=true) and (chapter_made=1)){
 		}
 		
 		for(var i=0;i<=22;i++){
-    role_21[i]= ini_read_string("Save","role_21"+string(i),"Tactical");
-	wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Combat Knife");
-	wep2_21[i]=ini_read_string("Save","wep2_21"+string(i),"Bolter")
-	armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armour");
-	 gear_21[i]= ini_read_string("Save","gear_21"+string(i),"");
-	mobi_21[i]= ini_read_string("Save","mobi_21"+string(i),"");
-}
+		    role_21[i]= ini_read_string("Save","role_21"+string(i),"Tactical");
+			wep1_21[i]= ini_read_string("Save","wep1_21"+string(i),"Combat Knife");
+			wep2_21[i]=ini_read_string("Save","wep2_21"+string(i),"Bolter")
+			armour_21[i]= ini_read_string("Save","armour_21"+string(i),"Power Armour");
+			 gear_21[i]= ini_read_string("Save","gear_21"+string(i),"");
+			mobi_21[i]= ini_read_string("Save","mobi_21"+string(i),"");
+		}
 stage = 6;
 ini_close();
 }
@@ -422,7 +423,7 @@ color_to_pauldron21="Red";
 		i=100
 	repeat(3){i+=1;// First is for the correct slot, second is for default
 	race_21[i,2]=1;
-    role_21[i,2]="Honor Guard";
+    role_21[i,2]="Honour Guard";
     wep1_21[i,2]="Power Sword";
     wep2_21[i,2]="Bolter";
     armour_21[i,2]="Artificer Armour";
@@ -463,7 +464,7 @@ color_to_pauldron21="Red";
 	mobi_21[i,6]="";
 	
     race_21[i,7]=1;
-    role_21[i,7]="Company Champion";
+    role_21[i,7]="Champion";
     wep1_21[i,7]="Power Sword";
     wep2_21[i,7]="Bolt Pistol";
     armour_21[i,7]="Power Armour";
@@ -572,7 +573,7 @@ advantage_tooltip[i]="Boarding other ships is routine for the chapter.  Your inf
 advantage[i]="Bolter Drilling";
 advantage_tooltip[i]="Bolter drills are sacred to your chapter; all marines have increased attack with Bolter weaponry.";i+=1;
 advantage[i]="Brothers, All";
-advantage_tooltip[i]="Your chapter places great emphasis on camradery and loyalty.  You start with a well-equip Honor Guard.";i+=1;
+advantage_tooltip[i]="Your chapter places great emphasis on comradely and loyalty.  You start with a well-equip Honour Guard.";i+=1;
 advantage[i]="Comrades in Arms";
 advantage_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;
 advantage[i]="Crafters";
@@ -592,13 +593,13 @@ advantage_tooltip[i]="Tau are particularly hated by your chapter.  When fighting
 advantage[i]="Enemy: Tyranids";
 advantage_tooltip[i]="Tyranids are particularly hated by your chapter.  When fighting Tyranids damage is increased.";i+=1;
 advantage[i]="Kings of Space";
-advantage_tooltip[i]="Veterans of naval combat, your ships have bonus offense, defense, and may always be controlled regardless of whether or not the Chapter Master is present.";i+=1;
+advantage_tooltip[i]="Veterans of naval combat, your ships have bonus offense, defence, and may always be controlled regardless of whether or not the Chapter Master is present.";i+=1;
 advantage[i]="Lightning Warriors";
 advantage_tooltip[i]="Your marines' only concern in battle is dealing the maximum amount of damage.  Infantry have boosted attack but less defense.";i+=1;
 advantage[i]="Paragon";
 advantage_tooltip[i]="You are a pale shadow of the primarchs.  Larger, stronger, faster, your Chapter Master is on a higher level than most, gaining additional health and combat effectiveness.";i+=1;
 advantage[i]="Psyker Abundance";
-advantage_tooltip[i]="The Psyker mutation runs rampant in your chapter.  Librarians train in 60% the normal time and recieve bonus experience.";i+=1;
+advantage_tooltip[i]="The Psyker mutation runs rampant in your chapter.  Librarians train in 60% the normal time and receive bonus experience.";i+=1;
 advantage[i]="Reverent Guardians";
 advantage_tooltip[i]="Your chapter places great faith in the Imperial Cult; you start with more Chaplains and any Ecclesiarchy disposition increases are enhanced.";i+=1;
 advantage[i]="Tech-Brothers";
@@ -608,14 +609,14 @@ advantage_tooltip[i]="Your Astartes have a knack for finding what has been lost.
 advantage[i]="Siege Masters";
 advantage_tooltip[i]="Your chapter is familiar with the ins-and-outs of fortresses.  They are better at defending and attacking fortifications.";i+=1;
 advantage[i]="Slow and Purposeful";
-advantage_tooltip[i]="Careful and steady is your chapters doctrine; all infantry have slightly less attack but boosted defenses.";i+=1;
+advantage_tooltip[i]="Careful and steady is your chapters doctrine; all infantry have slightly less attack but boosted defences.";i+=1;
 advantage[i]="Melee Enthusiasts";
 advantage_tooltip[i]="Rip and tear! Each Company has an additional Assault Squad.  Your marines and dreadnoughts also have boosted attack with melee weapons.";i+=1;
 i+=1;
 advantage[i]="Cancel";advantage_tooltip[i]="";
 
 i=1;
-disadvantage[i]="Black Rage";dis_tooltip[i]="Your marines are successible to Black Rage, having a chance each battle to become Death Company.  These units are locked as Assault Marines and are fairly suicidal.";i+=1;
+disadvantage[i]="Black Rage";dis_tooltip[i]="Your marines are susceptible to Black Rage, having a chance each battle to become Death Company.  These units are locked as Assault Marines and are fairly suicidal.";i+=1;
 disadvantage[i]="Blood Debt";dis_tooltip[i]="Prevents your Chapter from recruiting new Astartes until enough of your marines, or enemies, have been killed.  Incompatible with Penitent chapter types.";i+=1;
 // disadvantage[i]="Embargo";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;// Greatly increases the cost of common wargear and disallows advanced items.
 // disadvantage[i]="First In, Last Out";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;
@@ -686,7 +687,7 @@ ye=103;i=-1;repeat(51){i+=1;
 i=99;
 repeat(3){i+=1;// First is for the correct slot, second is for default
     race[i,2]=1;
-    role[i,2]="Honor Guard";
+    role[i,2]="Honour Guard";
     wep1[i,2]="Power Sword";
     wep2[i,2]="Bolter";
     armour[i,2]="Artificer Armour";
@@ -717,7 +718,7 @@ repeat(3){i+=1;// First is for the correct slot, second is for default
     armour[i,6]="Dreadnought";
 
     race[i,7]=1;
-    role[i,7]="Company Champion";
+    role[i,7]="Champion";
     wep1[i,7]="Power Sword";
     wep2[i,7]="Bolt Pistol";
     armour[i,7]="Power Armour";

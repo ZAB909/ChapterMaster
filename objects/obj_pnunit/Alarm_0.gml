@@ -70,16 +70,6 @@ if (instance_exists(obj_enunit)){
             if ((range[i]!=floor(range[i]) || floor(range[i])=1) && engaged=1) then range_shoot="melee";
         }
         
-        if (range_shoot=="" && engaged=1){
-            if (is_struct(weapon_data)){
-                if (weapon_data.has_tag("flame")){
-                    att[i]/=2;
-                    range[i] = 1;
-                    range_shoot="melee";
-                }
-            }
-        }
-        
         if (range_shoot="ranged") and (range[i]>=dist){// Weapon meets preliminary checks
             var ap=0;
             if (apa[i]>att[i]) then ap=1;// Determines if it is AP or not
@@ -168,7 +158,7 @@ if (instance_exists(obj_enunit)){
                     }
                 }
             }
-        }else if  (range_shoot="melee") and ((range[i]=1) or (range[i]!=floor(range[i]))){// Weapon meets preliminary checks 
+        }else if  (range_shoot="melee") and ((range[i]==1) or (range[i]!=floor(range[i]))){// Weapon meets preliminary checks 
             var ap=0;
             if (apa[i]==1) then ap=1;// Determines if it is AP or not
             

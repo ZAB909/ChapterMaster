@@ -70,7 +70,7 @@ if (mouse_check_button(mb_left)){
                     
                 }
 
-                if (feature!=""){
+                if (!is_string(feature)){
                     if (scr_hit(
                         feature.main_slate.XX,
                         feature.main_slate.YY,
@@ -365,19 +365,13 @@ if (obj_controller.selecting_planet!=0){
                 draw_sprite(spr_requisition,0,xx+657,yy+283);
                 
                 
-                var improve_cost,yep,o;improve_cost=1500;
-                o=0;yep=0;
+                var improve_cost=1500,yep=0,o=0;
+
                 if (array_contains(obj_ini.adv, "Siege Masters")) then improve_cost=1100;
                 
-                draw_set_color(0);
-                draw_text(xx+671-1,yy+281-1,string_hash_to_newline(string(improve_cost)));
-                draw_text(xx+671+1,yy+281-1,string_hash_to_newline(string(improve_cost)));
-                draw_text(xx+671+1,yy+281+1,string_hash_to_newline(string(improve_cost)));
-                draw_text(xx+671-1,yy+281+1,string_hash_to_newline(string(improve_cost)));
-                draw_set_color(16291875);
-                draw_text(xx+671,yy+281,string_hash_to_newline(string(improve_cost)));
+                draw_text_glow(xx+671, yy+281,string(improve_cost),16291875,0);
                 
-                if (scr_hit(xx+481,yy+282,xx+716,yy+300)=true){
+                if (scr_hit(xx+481,yy+282,xx+716,yy+300)){
                     draw_set_color(0);
                     draw_set_alpha(0.2);
                     draw_rectangle(xx+481,yy+280,xx+716,yy+298,0);

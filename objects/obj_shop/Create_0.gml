@@ -166,6 +166,26 @@ if (shop = "equipment") {
         item_cost[i] = 0;
     }
     i += 1;
+    item[i] = "Power Mace";
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 50;
+    if (research.power_fields[0]>1){
+        forge_cost[i] = 140;
+    }
+    if (rene = 1) {
+        nobuy[i] = 1;
+        item_cost[i] = 0;
+    }
+    if (global.chapter_name == "Dark Angels"){
+        i += 1;
+        item[i] = "Mace of Absolution";
+        item_stocked[i] = scr_item_count(item[i]);
+        item_cost[i] = 70;
+        if (research.power_fields[0]>1){
+            forge_cost[i] = 160;
+        }
+    }
+    i += 1;
     item[i] = "Lightning Claw";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 90;
@@ -347,10 +367,10 @@ if (shop = "equipment") {
     item[i] = "Incinerator";
     item_stocked[i] = scr_item_count(item[i]);
     nobuy[i] = 1;
-    i += 1;
-    item[i] = "Integrated Bolters";
-    item_stocked[i] = scr_item_count(item[i]);
-    item_cost[i] = 120;
+    // i += 1;
+    // item[i] = "Integrated Bolter";
+    // item_stocked[i] = scr_item_count(item[i]);
+    // item_cost[i] = 120;
     i += 1;
     item[i] = "Meltagun";
     forge_cost[i] = 250;
@@ -640,6 +660,12 @@ if (shop = "equipment2") {
     }
     i += 1;
     x_mod[i] = 9;
+    item[i] = "Combat Shield";
+    forge_cost[i] = 75;
+    item_stocked[i] = scr_item_count(item[i]);
+    item_cost[i] = 15;
+    i += 1;
+    x_mod[i] = 9;
     item[i] = "Rosarius";
     item_stocked[i] = scr_item_count(item[i]);
     forge_cost[i] = 2000;
@@ -870,18 +896,6 @@ if (shop = "vehicles") {
     item[i] = "Close Combat Weapon";
     item_stocked[i] = scr_item_count(item[i]);
     item_cost[i] = 45;
-    if (rene = 1) {
-        nobuy[i] = 1;
-        item_cost[i] = 0;
-    }
-    i += 1;
-    x_mod[i] = 9;
-    item[i] = "Force Staff";
-    item_stocked[i] = scr_item_count(item[i]);
-    if (obj_controller.in_forge){
-        if (research.psi[0]>0) then forge_cost[i] = 500;
-    }
-    item_cost[i] = 80;
     if (rene = 1) {
         nobuy[i] = 1;
         item_cost[i] = 0;
@@ -1285,7 +1299,7 @@ if (forge_master!="none"){
 } else {
     forge_master_modifier=1.7;
 }
-
+var tech_heretic_modifier =1
  i = 0;
   repeat(array_length(item_cost)-2){
     i += 1;
@@ -1294,10 +1308,19 @@ if (forge_master!="none"){
     }
     if (rene != 1){
 		item_cost[i]*=mechanicus_modifier;
+        if (obj_controller.tech_status=="heretics"){
+            tech_heretic_modifier = 1.05;
+            item_cost[i]*=tech_heretic_modifier
+        }
 	}
 	item_cost[i] *= forge_master_modifier;
     item_cost[i] = ceil(item_cost[i]);
 }
+
+item_cost_tooltip_info = "";
+item_cost_tooltip_info += $"Modifier from forge Master : X{forge_master_modifier}/n"
+item_cost_tooltip_info += $"Mechanicus Relations : X{mechanicus_modifier}/n"
+item_cost_tooltip_info += $"Chapter tech approach (obj_controller.tech_status) : X{tech_heretic_modifier}/n"
 
 
 /* */

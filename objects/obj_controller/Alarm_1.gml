@@ -227,7 +227,9 @@ if (did==1){
     
     if (obj_ini.load_to_ships[0]>0){
         scr_start_load(fleet,current_system,obj_ini.load_to_ships);
-        with(obj_p_fleet){instance_create(x,y,obj_fleet_show);}
+        with(obj_p_fleet){
+            instance_create(x,y,obj_fleet_show);
+        }
     }
     // End player homeworld
     

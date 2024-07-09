@@ -178,8 +178,8 @@ function scr_ui_settings() {
 					tooltip2="You and your advisors will be placed within this section.  It is strongly advisable you give them backup in this same column.";
 				}
 	            if (theh.unit_id=2){
-					tooltip="Honor Guard";
-					tooltip2="Any Honor Guard within your Headquarters will be placed here.  The best place for them within the formation depends on loadout.";
+					tooltip="Honour Guard";
+					tooltip2="Any Honour Guard within your Headquarters will be placed here.  The best place for them within the formation depends on loadout.";
 				}
 	            if (theh.unit_id=3){
 					tooltip="Librarians";
@@ -457,7 +457,7 @@ function scr_ui_settings() {
     
 	    draw_text(xx+66,yy+359,"Captain");
 	    draw_text(xx+66,yy+386,"Standard Bearer");
-	    draw_text(xx+66,yy+413,"Company Champion");
+	    draw_text(xx+66,yy+413,"Champion");
 	    draw_text(xx+66,yy+440,"Chaplain");
 	    draw_text(xx+66,yy+467,"Apothecary");
 	    draw_text(xx+66,yy+494,"Librarian");
@@ -892,13 +892,20 @@ function scr_ui_settings() {
 	                    if (bat_formation[formating]=""){
 	                        bat_formation[formating]="Custom"+string(formating-3);
 	                        bat_formation_type[formating]=1;
-	                        bat_deva_for[formating]=1;bat_assa_for[formating]=4;
-	                        bat_tact_for[formating]=2;bat_vete_for[formating]=2;
-	                        bat_hire_for[formating]=3;bat_libr_for[formating]=3;
-	                        bat_comm_for[formating]=3;bat_tech_for[formating]=3;
-	                        bat_term_for[formating]=3;bat_hono_for[formating]=3;
-	                        bat_drea_for[formating]=5;bat_rhin_for[formating]=6;
-	                        bat_pred_for[formating]=7;bat_land_for[formating]=7;
+	                        bat_deva_for[formating]=1;
+	                        bat_assa_for[formating]=4;
+	                        bat_tact_for[formating]=2;
+	                        bat_vete_for[formating]=2;
+	                        bat_hire_for[formating]=3;
+	                        bat_libr_for[formating]=3;
+	                        bat_comm_for[formating]=3;
+	                        bat_tech_for[formating]=3;
+	                        bat_term_for[formating]=3;
+	                        bat_hono_for[formating]=3;
+	                        bat_drea_for[formating]=5;
+	                        bat_rhin_for[formating]=6;
+	                        bat_pred_for[formating]=7;
+	                        bat_land_for[formating]=7;
 	                        bat_scou_for[formating]=1;
 	                    }
 	                }

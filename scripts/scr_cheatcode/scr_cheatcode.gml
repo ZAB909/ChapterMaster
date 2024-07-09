@@ -44,7 +44,7 @@ function scr_cheatcode(argument0) {
             createobj_controller.chaplain_points = 50;
         }                      
         if (cheatcode_string=="artifact"){
-            scr_add_artifact("random","",0,obj_ini.ship[1],501);
+            scr_add_artifact("random","",6,obj_ini.ship[1],501);
         }
         if (cheatcode_string=="inspection"){
             new_inquisitor_inspection();
@@ -66,6 +66,10 @@ function scr_cheatcode(argument0) {
             pip.title = "Technical Differences!";
             pip.text = "You Recive an Urgent Transmision A serious breakdown in culture has coccured causing believers in tech heresy to demand that they are given preseidence and assurance to continue their practises";
             pip.image = "tech_uprising";
+         }
+        if (cheatcode_string=="inquisarti"){
+            scr_quest(0,"artifact_loan",4,10);
+            var last_artifact =scr_add_artifact("good","inquisition",0,obj_ini.ship[1],501);
          }
         if (string_count("event", cheatcode_string) >0) {
             if (string_count("crusade", cheatcode_string) >0) {

@@ -15,6 +15,7 @@ strin2="";
 tolerant=0;
 companies=10;
 progenitor=0;
+aspirant_trial = 0;
 
 load_to_ships=[2,0,0];
 if (instance_exists(obj_creation)){load_to_ships=obj_creation.load_to_ships;}
@@ -112,6 +113,7 @@ millenium=0;
 company_spawn_buffs = [];
 role_spawn_buffs ={};
 previous_forge_masters = [];
+recruit_trial = 0;
 
 /* if (global.load=0){
     if (obj_creation.custom>0) then scr_initialize_custom();

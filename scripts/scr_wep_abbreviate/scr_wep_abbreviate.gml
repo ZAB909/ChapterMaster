@@ -77,7 +77,7 @@ function scr_wep_abbreviate(argument0) {
 	if (we="Missile Launcher") then we2="Missi";
 	if (we="Lascannon") then we2="LasCan";
 	if (we="Conversion Beam Projector") then we2="CBP";
-	if (we="Integrated Bolters") then we2="IntBolt";
+	if (we="Integrated Bolter") then we2="IntBolt";
 	if (we="Power Fists") then we2="2 PoFist";
 	if (we="Close Combat Weapon") then we2="CCW";
 	if (we="Twin Linked Heavy Bolter") then we2="TL Hvy Bolt";

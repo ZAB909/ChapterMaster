@@ -528,7 +528,7 @@ if (menu==1 && (managing>0 || managing<0)){
         if (!is_array(last_unit)){
             last_unit=[0,0];
         }
-        if (unit.base_group != "none") && (last_unit[1]!=unit.marine_number){
+        if (unit.base_group != "none") && (last_unit[1]!=unit.marine_number || last_unit[0]!=unit.company){
             last_unit=[unit.company,unit.marine_number]
             marine_armour[0]=unit.armour();
             fix_right=0;
@@ -672,7 +672,7 @@ if (unload>0){
     
     var unit,company, unit_id;
     for(var q=0; q<array_length(display_unit); q++){
-        if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1)and (man_sel[q]!=0){
+        if (man[q]=="man") and (ma_loc[q]==selecting_location) and (ma_wid[q]<1) and (man_sel[q]!=0){
             if (b==0) then b=ma_lid[q];
             unit=display_unit[q];
             if (!is_struct(unit)) then continue;

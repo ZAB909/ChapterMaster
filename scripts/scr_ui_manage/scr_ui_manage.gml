@@ -255,7 +255,7 @@ function scr_ui_manage() {
 		                				break;
 									case "champion_promote":
 			                			unit = display_unit[i];
-			                			unit.update_role(obj_ini.role[100][Role.COMPANY_CHAMPION]);
+			                			unit.update_role(obj_ini.role[100][Role.CHAMPION]);
 		
 										with (obj_ini){
 			                				scr_company_order(unit.company);
@@ -516,29 +516,29 @@ function scr_ui_manage() {
 	        for (var part = 0; part<array_length(global.body_parts);part++){
 				if (struct_exists(selected_unit.body[$ global.body_parts[part]], "bionic")){
 					var part_display = global.body_parts_display[part];
-					bionic_tooltip += $"Bionic {part_display}#";
+					bionic_tooltip += $"Bionic {part_display}";
 					switch (part_display) {
 						case "Left Leg":
 						case "Right Leg":
-							bionic_tooltip += $"CON: +2 STR: +1 DEX: -2#";
+							bionic_tooltip += $" (CON: +2 STR: +1 DEX: -2)#";
 							break;
 						case "Left Eye":
 						case "Right Eye":
-							bionic_tooltip += $"CON: +1 WIS: +1 DEX: +1#";
+							bionic_tooltip += $" (CON: +1 WIS: +1 DEX: +1)#";
 							break;
 						case "Left Arm":
 						case "Right Arm":
-							bionic_tooltip += $"CON: +2 STR: +2 WS: -1#";
+							bionic_tooltip += $" (CON: +2 STR: +2 WS: -1)#";
 							break;
 						case "Torso":
-							bionic_tooltip += $"CON: +4 STR: +1 DEX: -1#";
+							bionic_tooltip += $" (CON: +4 STR: +1 DEX: -1)#";
 							break;
 						case "Throat":
-							bionic_tooltip += $"CHA: -1#";
+							bionic_tooltip += $" (CHA: -1)#";
 							break;
 						case "Jaw":
 						case "Head":
-							bionic_tooltip += $"CON: +1#";
+							bionic_tooltip += $" (CON: +1)#";
 							break;
 					}
 				}				
@@ -797,27 +797,6 @@ function scr_ui_manage() {
 		//tooltip text to tell you if a unit is eligible for special roles
 	    
 	    if (!obj_controller.view_squad){
-	        /*if (sel_all!=""){             
-	            if (selecting_location==""){
-	                if (sel_all!="Command") and (sel_all!="man") and (sel_all!="vehicle"){
-	                	//TODO fix this shitty function so it actually calculates right
-	                     scr_load_decide_loc("unit role",sel_all,false);
-	                     scr_load_decide_loc("unit role",sel_all,true);
-	                } else {
-	                    switch(sel_all){
-	                        case "man":
-	                            scr_load_decide_loc("man","man",false);
-	                            break;
-	                        case "vehicle":
-	                            scr_load_decide_loc("vehicle","man",true);
-	                            break;
-	                        case "Command":
-	                            scr_load_decide_loc("Command","man",false);
-	                            break;                                                
-	                    }
-	                }
-	            }
-	        }*/
 	        man_count = 0;
 	        if (managing>0 && managing<=10){
 		        var cap_slot=company_data.captain!="none";
@@ -870,7 +849,7 @@ function scr_ui_manage() {
 							};
 							var candidates = collect_role_group("standard", "", true,search_params);
 							group_selection(candidates,{
-								purpose:$"{scr_roman_numerals()[managing-1]} Company Champion Candidates",
+								purpose:$"{scr_roman_numerals()[managing-1]} Champion Candidates",
 								purpose_code : "champion_promote",
 								number:1,
 								system:managing,
@@ -981,7 +960,7 @@ function scr_ui_manage() {
 		    yy+=8;
 		     //TODO handle recursively
 		    if (!obj_controller.unit_profile) && (!stats_displayed){
-		    	sel_loading=selecting_ship;
+		    	var sel_loading=obj_controller.selecting_ship;
 			    //draws hover over tooltips
 				function gen_tooltip(tooltip_array) {
 					for (var i = 0; i < array_length(tooltip_array); i++) {
@@ -1017,7 +996,7 @@ function scr_ui_manage() {
 				button.label = "Load";
 				var load_unload_possible = man_size>0;
 				
-				if load_unload_possible{
+				if (load_unload_possible){
 					button.alpha = 1;
 					if (sel_loading==0){
 						if (point_and_click(draw_unit_buttons([button.x1, button.y1, button.x2, button.y2], button.label, [1,1],button.color,,,button.alpha))){

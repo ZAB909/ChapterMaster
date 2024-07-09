@@ -419,6 +419,7 @@ function data_slate() constructor{
 	YY=0;
 	width=0;
 	height=0;
+	percent_cut=0;
 	static draw = function(xx,yy, scale_x=1, scale_y=1){
 		XX=xx;
 		YY=yy;
@@ -454,7 +455,7 @@ function data_slate() constructor{
 			draw_text_ext(xx+(0.5*width), yy+(50*scale_y)+draw_height, string_hash_to_newline(body_text), -1, width-60);
 		}
 	}
-	static draw_cut = function(xx,yy, scale_x=1, scale_y=1, middle_percent=0){
+	static draw_cut = function(xx,yy, scale_x=1, scale_y=1, middle_percent=percent_cut){
 		XX=xx;
 		YY=yy;
 		draw_sprite_part_ext(spr_data_slate,1, 0, 0, 850, 69, XX, YY, scale_x, scale_y, c_white, 1);
@@ -465,6 +466,12 @@ function data_slate() constructor{
 		if (is_method(inside_method)){
 			inside_method();
 		}		
+	}
+
+	static percent_mod_draw_cut = function(xx,yy, scale_x=1, scale_y=1, mod_edit=1){
+		percent_cut = min(percent_cut+mod_edit, 100);
+		if (!percent_cut) then percent_cut=0;
+		draw_cut(xx,yy, scale_x, scale_y);
 	}
 }
 

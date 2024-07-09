@@ -60,8 +60,7 @@ function role_groups(group){
 	            "Codiciery",
 	            "Lexicanum",
 	            obj_ini.role[100][11],
-	            "Company Champion",
-	            "Champion"
+	            obj_ini.role[100][7],
 	        ]; 
 	        break;
 	    case "dreadnoughts":
@@ -81,7 +80,7 @@ function role_groups(group){
 			role_list = [
 				roles[Role.SERGEANT], //sergeant
 				roles[Role.VETERAN_SERGEANT],
-				roles[Role.COMPANY_CHAMPION],				
+				roles[Role.CHAMPION],				
 				roles[Role.CAPTAIN],								
 				roles[Role.TERMINATOR],				
 				roles[Role.VETERAN],
@@ -198,8 +197,12 @@ function collect_role_group(group="standard", location="", opposite=false, searc
 	    for (i=0;i<array_length(obj_ini.TTRPG[com]);i++){
 	    	add=false;
 			unit=fetch_unit([com,i]);
-			if (unit.name()=="") then continue; 	
-			is_special_group = unit.IsSpecialist(group);
+			if (unit.name()=="") then continue;
+			if (is_array(group)){
+				is_special_group = unit.IsSpecialist(group[0], group[1]);
+			} else {
+				is_special_group = unit.IsSpecialist(group);
+			}
 	        if ((is_special_group && !opposite) || (!is_special_group && opposite)){
 	        	if (location==""){
 	        		add=true;

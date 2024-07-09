@@ -83,7 +83,7 @@ repeat(71){i+=1;
     ammo[i]=-1;
     splash[i]=0;
     wep_owner[i]="";
-    wep_solo[i]="";
+    wep_solo[i]=[];
     wep_title[i]="";
 
     dudes[i]="";

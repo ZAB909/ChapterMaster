@@ -122,7 +122,7 @@ function scr_unit_quick_find_pane() constructor{
 		}
 		for (i=0;i<array_length(obj_controller.quest);i++){
 			if (obj_controller.quest[i] != ""){
-				var mission_explain =  mission_name_key(quest[i]);
+				var mission_explain =  mission_name_key(obj_controller.quest[i]);
 				if (mission_explain!="none"){
 					array_push(temp_log,
 						{
@@ -640,17 +640,18 @@ function load_selection(){
 }
 
 function unload_selection(){
-    if (man_size>0) and (sel_loading>=1) and (!instance_exists(obj_star_select)) 
+	show_debug_message("{0},{1},{2}",obj_controller.selecting_ship,man_size,selecting_location);
+    if (man_size>0) and (obj_controller.selecting_ship>=1) and (!instance_exists(obj_star_select)) 
     and (selecting_location!="Terra") and (selecting_location!="Mechanicus Vessel") and (selecting_location!="Warp"){
         cooldown=8000;
         var boba=0;
-        var unload_star = star_by_name(obj_ini.ship_location[obj_controller.selecting_ship]);
+        var unload_star = star_by_name(selecting_location);
         if (unload_star != "none"){
             if (unload_star.space_hulk!=1){
                 boba=instance_create(unload_star.x,unload_star.y,obj_star_select);
                 boba.loading=1;
                 // selecting location is the ship right now; get it's orbit location
-                boba.loading_name=obj_ini.ship_location[selecting_ship];
+                boba.loading_name=selecting_location;
                 boba.depth=self.depth-50;
                 // sel_uid=obj_ini.ship_uid[selecting_ship];
                 scr_company_load(obj_ini.ship_location[selecting_ship]);
@@ -726,10 +727,10 @@ function planet_selection_action(){
 	            obj_controller.selecting_planet=i+1;
 	            var sel_plan = obj_controller.selecting_planet;
 	            var planet_is_allies = scr_is_planet_owned_by_allies(target, sel_plan);
-	            var garrison_issue = (!planet_is_allies && target.p_pdf[sel_plan]<1);
+	            var garrison_issue = (!planet_is_allies || target.p_pdf[sel_plan]<1);
 	            if (garrison_assignment && (garrison_issue && mission=="garrison")){
                 	planet_draw = c_red;
-                	tooltip_draw("Can't garrison on non-friendly planet with no PDF");	            	
+                	tooltip_draw("Can't garrison on non-friendly planet with no PDF", 150);	            	
 	            }
 	            if (mouse_check_button_pressed(mb_left)){
 	                if (garrison_assignment){
@@ -812,7 +813,7 @@ function planet_selection_action(){
 					                }
 					            }
 					            if (tch+mch>0){
-					                var arti;arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
+					                var arti=instance_create(target.x,target.y,obj_temp4);// Unloading / artifact crap
 					                arti.num=sel_plan;
 					                arti.alarm[0]=1;
 					                arti.loc=obj_controller.selecting_location;
@@ -849,18 +850,25 @@ function planet_selection_action(){
 					                
 					                var nu=planet_numeral_name(sel_plan,target);
 
-					    			 if(_explore_ruins.failed_exploration ==1){ pip.text="The accursed ruins on "+string(nu)+"where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."}else{
-					    				 pip.text="Located upon "+string(nu)+$" is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
+					    			 if(_explore_ruins.failed_exploration ==1){
+					    			 	pip.text=$"The accursed ruins on {nu} where your brothers fell still holds many secrets including the remains of your brothers honour demands you avenge them."
+					    			 }else{
+					    				 pip.text=$"Located upon {nu} is a {ruins_size} expanse of ancient ruins, dating back to times long since forgotten.  Locals are superstitious about the place- as a result the ruins are hardly explored.  What they might contain, and any potential threats, are unknown.";
 					    				switch (ruins_size){
-					    					case "tiny":pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
+					    					case "tiny":
+					    						pip.text += "It's tiny nature means no more than five marines can operate in cohesion without being seperated";
 					    					break;
-					    					case "small":pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
+					    					case "small":
+					    						pip.text += "As a result of it's narrow corridors and tight spaces a squad of any more than 15 would struggle to operate effectivly";
 					    					break;
-					    					case "medium":pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
+					    					case "medium":
+					    						pip.text += "Half a standard company (55) could easily operate effectivly in the many wide spaces and caverns";
 					    					break;
-					    					case "large":pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
+					    					case "large":
+					    						pip.text += "A whole company (110) would not be confined in the huge spaces that such a ruin contain";
 					    					break;
-					    					case "sprawling":pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
+					    					case "sprawling":
+					    						pip.text += "The ruins is of an unprecidented size whole legions of old would not feel uncomfortable in such a space"
 					    					break;
 					    				}
 					    				pip.text += ". What is thy will?"

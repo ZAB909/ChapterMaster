@@ -70,12 +70,16 @@ function cancel_fleet_movement(){
 }
 function set_new_player_fleet_course(target_array){
 	if (array_length(target_array)>0){
-		var target_planet = target_array[0];
+		var target_planet = star_by_name(target_array[0]);
 		var nearest_planet = instance_nearest(x,y,obj_star);
 		var from_star = point_distance(nearest_planet.x,nearest_planet.y, x, y) <100;
-		if (target_planet.id == nearest_planet.id && from_star){
+		var valid = target_planet!="none";
+		if (valid){
+			valid = !(target_planet.id == nearest_planet.id && from_star);
+		}
+		if (!valid){
 			if (array_length(target_array)>1){
-				target_planet = target_array[1];
+				target_planet = star_by_name(target_array[1]);
 				array_delete(target_array, 0, 2);
 			} else {
 				return "complex_route_finish";
@@ -148,23 +152,29 @@ function set_player_fleet_image(){
     image_index=min(ii,9);	
 }
 
-function fleet_full_ship_array(fleet="none"){
+function fleet_full_ship_array(fleet="none", exclude_capitals=false, exclude_frigates = false, exclude_escorts = false){
 	var all_ships = [];
 	var i;
 	if (fleet=="none"){
-		for (i=1; i<=capital_number;i++){
-			if (i>=0 && i < array_length(obj_ini.ship_location)){
-				array_push(all_ships, capital_num[i]);
+		if (!exclude_capitals){
+			for (i=1; i<=capital_number;i++){
+				if (i>=0 && i < array_length(capital_num)){
+					array_push(all_ships, capital_num[i]);
+				}
 			}
 		}
-		for (i=1; i<=frigate_number;i++){
-			if (i>=0 && i < array_length(obj_ini.ship_location)){
-				array_push(all_ships, frigate_num[i]);
+		if (!exclude_frigates){
+			for (i=1; i<=frigate_number;i++){
+				if (i>=0 && i < array_length(frigate_num)){
+					array_push(all_ships, frigate_num[i]);
+				}
 			}
 		}
-		for (i=1; i<=escort_number;i++){
-			if (i>=0 && i < array_length(obj_ini.ship_location)){
-				array_push(all_ships, escort_num[i]);
+		if (!exclude_escorts){
+			for (i=1; i<=escort_number;i++){
+				if (i>=0 && i < array_length(escort_num)){
+					array_push(all_ships, escort_num[i]);
+				}
 			}
 		}			
 	} else {
@@ -252,6 +262,7 @@ function new_player_ship(type, start_loc="home"){
             if (array_contains(obj_ini.ship,new_name)) then new_name="";
         } else {break};
     }
+    if (start_loc == "home") then start_loc = obj_ini.home_name;
    obj_ini.ship[index]=new_name;
     obj_ini.ship_uid[index]=floor(random(99999999))+1;
     obj_ini.ship_owner[index]=1; //TODO: determine if this means the player or not
@@ -384,6 +395,15 @@ function get_nearest_player_fleet(nearest_x, nearest_y, is_static=false, is_movi
 		}
 	}
 	return chosen_fleet;	
+}
+
+function get_valid_player_ship(){
+	for (var i = 0;i<array_length(obj_ini.ship);i++){
+		if (obj_ini.ship[i] != ""){
+			return i;
+		}
+	}
+	return -1;
 }
 
 

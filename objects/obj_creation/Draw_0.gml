@@ -1019,7 +1019,7 @@ if (slide=3){
     draw_line(445,457,1125,457);
     
     // homeworld_rule=0;
-    // aspirant_trial="Blood Duel";
+    // aspirant_trial=eTrials.BLOODDUEL;
     
     draw_set_halign(fa_left);
     
@@ -1030,57 +1030,64 @@ if (slide=3){
         draw_text_transformed(485,544,"Passive Supervision",0.5,0.5,0);
         draw_text_transformed(485,576,"Personal Rule",0.5,0.5,0);
         
-        yar=0;if (homeworld_rule=1) then yar=1;draw_sprite(spr_creation_check,yar,445,512);yar=0;
+        yar=homeworld_rule==1;
+        draw_sprite(spr_creation_check,yar,445,512);
         if (scr_hit(445,512,445+32,512+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=1){cooldown=8000;homeworld_rule=1;}
-        if (scr_hit(445,512,670,512+32)){tooltip="Planetary Governer";tooltip2="Your Chapter's homeworld is ruled by a single Planetary Governer, who does with the planet mostly as they see fit.  While heavily influenced by your Astartes the planet is sovereign.";}
+        if (scr_hit(445,512,670,512+32)){
+            tooltip="Planetary Governer";
+            tooltip2="Your Chapter's homeworld is ruled by a single Planetary Governer, who does with the planet mostly as they see fit.  While heavily influenced by your Astartes the planet is sovereign.";
+        }
         
-        yar=0;if (homeworld_rule=2) then yar=1;draw_sprite(spr_creation_check,yar,445,544);yar=0;
+        yar=homeworld_rule==2;
+        draw_sprite(spr_creation_check,yar,445,544);
         if (scr_hit(445,544,445+32,544+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=2){cooldown=8000;homeworld_rule=2;}
-        if (scr_hit(445,544,620,544+32)){tooltip="Passive Supervision";tooltip2="Instead of a Planetary Governer the planet is broken up into many countries or clans.  The people are less united but happier, and see your illusive Astartes as semi-divine beings.";}
+        if (scr_hit(445,544,620,544+32)){
+            tooltip="Passive Supervision";
+            tooltip2="Instead of a Planetary Governer the planet is broken up into many countries or clans.  The people are less united but happier, and see your illusive Astartes as semi-divine beings.";
+        }
         
-        yar=0;if (homeworld_rule=3) then yar=1;draw_sprite(spr_creation_check,yar,445,576);yar=0;
-        if (scr_hit(445,576,445+32,576+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>1) and (homeworld_rule!=3){cooldown=8000;homeworld_rule=3;}
-        if (scr_hit(445,576,670,576+32)){tooltip="Planetary Governer";tooltip2="You personally take the rule of the Planetary Governer, ruling over your homeworld with an iron fist.  Your every word and directive, be they good or bad, are absolute law.";}
+        yar=homeworld_rule==3;
+        draw_sprite(spr_creation_check,yar,445,576);
+        if (point_and_click([445,576,445+32,576+32])) and (custom>1) and (homeworld_rule!=3){cooldown=8000;homeworld_rule=3;}
+        if (scr_hit(445,576,670,576+32)){
+            tooltip="Planetary Governer";
+            tooltip2="You personally take the rule of the Planetary Governer, ruling over your homeworld with an iron fist.  Your every word and directive, be they good or bad, are absolute law.";
+        }
     }
     
+    var trial_data = scr_trial_data();
+    var current_trial = trial_data[aspirant_trial];
+    draw_text_transformed(80,180,"Aspirant Trial",0.6,0.6,0);
+    draw_text_transformed(110,210,current_trial.name,0.5,0.5,0);
     
-    draw_text_transformed(750,480,string_hash_to_newline("Aspirant Trial"),0.6,0.6,0);
-    draw_text_transformed(780,512,string_hash_to_newline(string(aspirant_trial)),0.5,0.5,0);
-    
-    var asp_info;asp_info="";
-    if (aspirant_trial="Blood Duel") then asp_info="- 2-4 years of training.#- 10-30% more recruits.#- 10% chance to burn gene-seed per recruiting speed.";
-    if (aspirant_trial="Hunting the Hunter") then asp_info="- 6 years of training.#- 7-20 starting XP on Desert, Ice and Death planets";
-    if (aspirant_trial="Survival of the Fittest") then asp_info="- 6 years of training.#- 10-30% more recruits on Desert, Ice, Death and Lava planets.#- 20-50% more recruits on Feudal planets.";
-    if (aspirant_trial="Exposure") then asp_info="- 3-5 years of training on Desert, Ice, Forge, Lava and Death planets.#- 6 years of training on all other planets.";
-    if (aspirant_trial="Knowledge of Self") then asp_info="- 7.5-9 years of training.#- 15-25 starting XP.#- Additional 5-10 starting XP on Temperate planets.";
-    if (aspirant_trial="Challenge") then asp_info="- 5.5-6.5 years of training.#- 20% chance to gain 10-20 starting XP.";
-    if (aspirant_trial="Apprenticeship") then asp_info="- 10-11 years of training.#- 34-43 starting XP.#- 30-50% more recruits on Lava planets.";
-    draw_text_ext_transformed(700,544,string_hash_to_newline(string(asp_info)),64,950,0.5,0.5,0);
+    var asp_info;
+    asp_info = scr_compile_trial_bonus_string(current_trial);
+
+    draw_text_ext_transformed(100,244,asp_info,64,950,0.5,0.5,0);
      
-    if (scr_hit(750,480,950,510)){tooltip="Aspirant Trial";tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.";}
-    
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,0,700,502,32,32);
-    if (scr_hit(700,502,700+32,502+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
-        var onceh;onceh=0;cooldown=8000;
-        if (aspirant_trial="Apprenticeship") and (onceh=0){aspirant_trial="Challenge";onceh=1;}
-        if (aspirant_trial="Challenge") and (onceh=0){aspirant_trial="Knowledge of Self";onceh=1;}
-        if (aspirant_trial="Knowledge of Self") and (onceh=0){aspirant_trial="Exposure";onceh=1;}
-        if (aspirant_trial="Exposure") and (onceh=0){aspirant_trial="Survival of the Fittest";onceh=1;}
-        if (aspirant_trial="Survival of the Fittest") and (onceh=0){aspirant_trial="Hunting the Hunter";onceh=1;}
-        if (aspirant_trial="Hunting the Hunter") and (onceh=0){aspirant_trial="Blood Duel";onceh=1;}
-        if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Apprenticeship";onceh=1;}
+    if (scr_hit(50,480,950,510)){
+        tooltip="Aspirant Trial";
+        tooltip2="A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training (This can be changed once in game but the chosen trial here will effect the spawn characteristics of your starting marines).";
     }
     
-    if (custom>1) then draw_sprite_stretched(spr_creation_arrow,1,738,502,32,32);
-    if (scr_hit(738,502,738+32,502+32)) and (mouse_left>=1) and (cooldown<=0) and (custom>1){
-        var onceh;onceh=0;cooldown=8000;
-        if (aspirant_trial="Blood Duel") and (onceh=0){aspirant_trial="Hunting the Hunter";onceh=1;}
-        if (aspirant_trial="Hunting the Hunter") and (onceh=0){aspirant_trial="Survival of the Fittest";onceh=1;}
-        if (aspirant_trial="Survival of the Fittest") and (onceh=0){aspirant_trial="Exposure";onceh=1;}
-        if (aspirant_trial="Exposure") and (onceh=0){aspirant_trial="Knowledge of Self";onceh=1;}
-        if (aspirant_trial="Knowledge of Self") and (onceh=0){aspirant_trial="Challenge";onceh=1;}
-        if (aspirant_trial="Challenge") and (onceh=0){aspirant_trial="Apprenticeship";onceh=1;}
-        if (aspirant_trial="Apprenticeship") and (onceh=0){aspirant_trial="Blood Duel";onceh=1;}
+    if (custom>1){
+        draw_sprite_stretched(spr_creation_arrow,0,00,200,32,32);
+        if (point_and_click([00,200,00+32,200+32]) and (cooldown<=0)){
+            var onceh=0;cooldown=8000;
+            aspirant_trial++;
+            if (aspirant_trial>=array_length(trial_data)){
+                aspirant_trial=0
+            }
+        }
+        draw_sprite_stretched(spr_creation_arrow,1,38,200,32,32);
+
+        if (point_and_click([38,200,38+32,200+32]) and (mouse_left>=1) and (cooldown<=0)){
+            var onceh=0;cooldown=8000;
+            aspirant_trial--;
+            if (aspirant_trial<0){
+                aspirant_trial = array_length(trial_data)-1;
+            }
+        }
     }
     
     
@@ -1664,9 +1671,9 @@ if (slide=4){
 		draw_sprite(spr_creation_check,yar,860,645+80);yar=0;
     	if (scr_hit(860,645+80,1005,765+80)) and (!instance_exists(obj_creation_popup)){tooltip="Distribute Scouts";tooltip2="Check to have your Scouts split across ships in the fleet.";}
     	if (scr_hit(860,645+80,860+32,645+32+80)) and (cooldown<=0) and (mouse_left>=1) and (!instance_exists(obj_creation_popup)){
-    		 cooldown=8000;var onceh;onceh=0;
-    		 if (load_to_ships[1]=0) and (onceh=0){load_to_ships[1]=1;onceh=1;}
-     		 if (load_to_ships[1]=1) and (onceh=0){load_to_ships[1]=0;onceh=1;}   		 
+    		 cooldown=8000;
+             var onceh;onceh=0;
+             load_to_ships[1] = !load_to_ships[1];  		 
     	}
     	draw_text_transformed(860+30,645+4+80,string_hash_to_newline("Distribute Scouts"),0.4,0.4,0);	
 	
@@ -1889,7 +1896,7 @@ if (slide=5){
         }, 
         {
             t_tip :"Mutated Catalepsean Node",
-            t_tip2: "Your Astartes cannot spit acid, and as a result, have slightly less attack in melee combat.",
+            t_tip2: "Your Astartes have reduced awareness when tired. Slightly less attack in ranged and melee combat.",
             data : catalepsean,
             mutation_points : 1,
         }, 
@@ -1984,7 +1991,7 @@ if (slide=5){
     draw_text(650,600,string_hash_to_newline("Ecclesiarchy ("+string(disposition[5])+")"));
     draw_text(650,625,string_hash_to_newline("Inquisition ("+string(disposition[4])+")"));
     if (founding!=0) then draw_text(650,650,string_hash_to_newline("Progenitor ("+string(disposition[1])+")"));
-    draw_text(650,675,string_hash_to_newline("Adeptus Astartes ("+string(disposition[6])+")"));
+    draw_text(650,675,"Adeptus Astartes ("+string(disposition[6])+")");
     
     draw_rectangle(655,552,1150,567,1);
     draw_rectangle(655,552+25,1150,567+25,1);
@@ -2024,7 +2031,7 @@ if (slide=6){
     
     
     draw_set_color(38144);draw_set_halign(fa_left);
-    draw_text_transformed(580,118,string_hash_to_newline("Chapter Master Name: "),0.9,0.9,0);draw_set_font(fnt_40k_14b);
+    draw_text_transformed(580,100,string_hash_to_newline("Chapter Master Name: "),0.9,0.9,0);draw_set_font(fnt_40k_14b);
     
 	
     if (text_selected!="cm") or (custom=0) then draw_text_ext(580,144,string_hash_to_newline(string(chapter_master_name)),-1,580);
@@ -2049,44 +2056,54 @@ if (slide=6){
     draw_text_transformed(800,240,string_hash_to_newline("Ranged"),0.6,0.6,0);
     
     
-    var x6,y6,spac,h,it;
-    x6=444;y6=265;spac=25;h=0;it="";
+    var x6,y6,spac;
+    var melee_choice_order = 0;
+    var melee_choice_weapon = "";
+    x6=444;y6=265;spac=25;
     if (custom=0) or (restarted>0) then draw_set_alpha(0.5);
     
-    repeat(8){h+=1;
-        if (h=1) then it="Twin Power Fists";
-		if (h=2) then it="Twin Lightning Claws";
-        if (h=3) then it="Relic Blade";
-        if (h=4) then it="Master Crafted Thunder Hammer";
-        if (h=5) then it="Master Crafted Power Sword";
-        if (h=6) then it="Master Crafted Power Axe";
-        if (h=7) then it="Master Crafted Eviscerator";
-        if (h=8) then it="Master Crafted Force Staff";
+    repeat(8){
+        melee_choice_order+=1;
+        if (melee_choice_order=1) then melee_choice_weapon="Twin Power Fists";
+		if (melee_choice_order=2) then melee_choice_weapon="Twin Lightning Claws";
+        if (melee_choice_order=3) then melee_choice_weapon="Relic Blade";
+        if (melee_choice_order=4) then melee_choice_weapon="Thunder Hammer";
+        if (melee_choice_order=5) then melee_choice_weapon="Power Sword";
+        if (melee_choice_order=6) then melee_choice_weapon="Power Axe";
+        if (melee_choice_order=7) then melee_choice_weapon="Eviscerator";
+        if (melee_choice_order=8) then melee_choice_weapon="Force Staff";
         
-        yar=0;if (chapter_master_melee=h) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
+        yar=0;if (chapter_master_melee=melee_choice_order) then yar=1;draw_sprite(spr_creation_check,yar,x6,y6);yar=0;
         if (scr_hit(x6,y6,x6+32,y6+32)) and (cooldown<=0) and (mouse_left>=1) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
             cooldown=8000;var onceh;onceh=0;
-            if (chapter_master_melee=h) and (onceh=0){chapter_master_melee=0;onceh=1;}
-            if (chapter_master_melee!=h) and (onceh=0){chapter_master_melee=h;onceh=1;}
+            if (chapter_master_melee=melee_choice_order) and (onceh=0){chapter_master_melee=0;onceh=1;}
+            if (chapter_master_melee!=melee_choice_order) and (onceh=0){chapter_master_melee=melee_choice_order;onceh=1;}
         }
-        draw_text_transformed(x6+30,y6+4,string_hash_to_newline(it),0.4,0.4,0);
+        draw_text_transformed(x6+30,y6+4,string_hash_to_newline(melee_choice_weapon),0.4,0.4,0);
         y6+=spac;
     }
     
-    x6=800;y6=265;h=0;it="";
-    var ranged_options = ["","Integrated Bolters","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
-    repeat(7){h+=1;
+    x6=800;y6=265;
+    var ranged_choice_order = 0;
+    var ranged_choice_weapon = "";
+    var ranged_options = ["","Boltstorm Gauntlet","Infernus Pistol","Plasma Pistol","Plasma Gun","Master Crafted Heavy Bolter","Master Crafted Meltagun","Storm Shield",""];
+    if (array_contains([1, 2, 7], chapter_master_melee)){
+        draw_set_alpha(0.5);
+        chapter_master_ranged = 1;
+    }
+    repeat(7){
+        ranged_choice_order += 1;
         yar=0;
-        if (chapter_master_ranged=h) then yar=1;
+        if (chapter_master_ranged=ranged_choice_order) then yar=1;
         draw_sprite(spr_creation_check,yar,x6,y6);
         yar=0;
-        if point_and_click([x6,y6,x6+32,y6+32]) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)){
+        if point_and_click([x6,y6,x6+32,y6+32]) and (custom>0) and (restarted=0) and (!instance_exists(obj_creation_popup)) and (!array_contains([1, 2, 7], chapter_master_melee)){
             cooldown=8000;
             var onceh=0;
-            if (chapter_master_ranged=h) {chapter_master_ranged=0;}
-            else if (chapter_master_ranged!=h) {chapter_master_ranged=h;}
+            if (chapter_master_ranged=ranged_choice_order) {chapter_master_ranged=0;}
+            else if (chapter_master_ranged!=ranged_choice_order) {chapter_master_ranged=ranged_choice_order;}
         }
-        draw_text_transformed(x6+30,y6+4,ranged_options[h],0.4,0.4,0);
+        draw_text_transformed(x6+30,y6+4,ranged_options[ranged_choice_order],0.4,0.4,0);
         y6+=spac;
     }
     
@@ -2144,7 +2161,7 @@ if (slide=6){
     if(custom>0){
 	
 	draw_rectangle(1000,135,1180,170,1)
-	draw_text_transformed(1090,135,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
+	draw_text_transformed(1090,140,string("Save Chapter"),0.6,0.6,0);draw_set_font(fnt_40k_14b);
 	if (scr_hit(1000,135,1180,170)) {
 		tooltip2="Click to save your chapter";
 		tooltip= "Do you want to save your chapter?"

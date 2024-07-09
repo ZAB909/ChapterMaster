@@ -47,21 +47,30 @@ function scr_quest(quest_satus=0, quest_name, quest_fac, quest_end) {
 	        obj_controller.alarm[8]=1;
 	    }
 	    else if (quest_name="artifact_loan") and (quest_satus=1){// Inq want the artifact back
-	        var that=0;        
+	        var wanted_arti=-1;        
 	        for (var i=0;i<array_length(obj_ini.artifact);i++){
-	        	if (that=0) and (obj_ini.artifact[i]!=""){
-	        		if (array_contains(obj_ini.artifact_tags[i], "inq")) then that=i;
+	        	if (obj_ini.artifact[i]!=""){
+	        		if (obj_ini.artifact_struct[i].has_tag("inq")){
+	        			wanted_arti=i;
+	        			break;
+	        		}
 	        	}
 	        }
-	        if (that=0){
+	        var failed=false;
+	        if (wanted_arti<0){
+	        	failed=true;
+	        } else{
+	        	var arti = obj_ini.artifact_struct[wanted_arti]
+	        	if (arti.equipped() && is_array(arti.bearer)) then failed=true;
+	        }
+	        if (failed){
 	            scr_popup("Inquisition Artifact","The Inquisition has asked for the return of the Artifact left in your care.  Despite your Marine's best efforts they were unable to waylay the Inquisition, who are now furious.  They demand the Artifact's immediate return.","inquisition","");
 	            scr_event_log("red","Inquisition Mission: The Inquisition Artifact entrusted to your Chapter is not retrievable.");
 	            disposition[4]-=10;
 	            obj_controller.qsfx=1;
-	        }
-	        if (that>0){
-	            delete_artifact(index);
-	            i=that;
+	        }else {
+	            delete_artifact(wanted_arti);
+	            i=wanted_arti;
 	            if (obj_controller.demanding=0) then obj_controller.disposition[4]+=1;
 	            if (obj_controller.demanding=1) then obj_controller.disposition[4]+=choose(0,0,1);
 	            scr_popup("Inquisition Mission Completed","The Inquisition has asked for the return of the Artifact, and your Chapter was able to hand it over without complications.  The mission has been accomplished.","inquisition","");

@@ -29,7 +29,7 @@ function fleets_next_location(fleet="none"){
 			targ_location = fleets_next_location();
 		}
 	}
-	return targ_location.id;
+	return targ_location;
 }
 function chase_fleet_target_set(){
 	var targ_location = fleets_next_location(target);
@@ -302,8 +302,12 @@ function fastest_route_algorithm(start_x,start_y, xx,yy,ship_speed, start_from_s
 	}
 	static final_array_path = function(){
 		var final_path = final_route_info[2];
+		var path_store = [];
 		array_push(final_path, final_route_info[0]);
-		return final_path;
+		for (var i=0;i<array_length(final_path);i++){
+			array_push(path_store, final_path[i].name);
+		}
+		return path_store;
 	}
 }
 

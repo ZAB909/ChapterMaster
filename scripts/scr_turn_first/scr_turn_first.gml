@@ -2,32 +2,41 @@ function scr_turn_first() {
 
 	// I believe this is ran at the start of the end of the turn.  That would make sense, right?
 
-	identifiable=0;
-	unload=0;
-	repeat(artifacts){unload+=1;
+	var identifiable=0;
+	var unload=0;
+	for (var i=0;i<array_length(obj_ini.artifact);i++){
+		unload=i;
+		if (obj_ini.artifact[unload]=="") then continue;
+		if (obj_ini.artifact_loc[unload]==""){
+			var valid_ship = get_valid_player_ship();
+			if (valid_ship >-1){
+				obj_ini.artifact_loc[unload] = obj_ini.ship[valid_ship];
+				obj_ini.artifact_sid[unload] = 500+valid_ship;
+			}
+		}
 	    if (obj_ini.artifact_identified[unload]>0){
-	        if (obj_ini.artifact_loc[unload]=obj_ini.home_name) then identifiable=1;
+	        if (obj_ini.artifact_loc[unload]==obj_ini.home_name) then identifiable=1;
 	        if (obj_ini.artifact_sid[unload]>=500){
 	            if (obj_ini.ship_location[obj_ini.artifact_sid[unload]-500]=obj_ini.home_name) then identifiable=1;
 	        }
         
 	        if (instance_exists(obj_p_fleet)) and (identifiable=0){
 	            with(obj_p_fleet){
-	                var i,good;i=0;good=0;
-	                repeat(20){i+=1;
-	                    if (i<=9){if (capital_num[i]=obj_ini.artifact_sid[other.unload]-500) then good=1;}
-	                    if (frigate_num[i]=obj_ini.artifact_sid[other.unload]-500) then good=1;
-	                    if (escort_num[i]=obj_ini.artifact_sid[other.unload]-500) then good=1;
+	                var good=0;
+	               for (var s=0;s<=20;s++){
+	                    if (s<=9){
+	                    	if (capital_num[s]=obj_ini.artifact_sid[other.unload]-500) then good=1;
+	                    }
+	                    if (frigate_num[s]=obj_ini.artifact_sid[other.unload]-500) then good=1;
+	                    if (escort_num[s]=obj_ini.artifact_sid[other.unload]-500) then good=1;
 	                }
 	                if (good=1) and (capital_number>0) then good=2;
 	                if (good=2) then obj_controller.identifiable=1;
 	            }
 	        }
         
-	        if (obj_ini.artifact[unload]!=""){
-	            if (identifiable=1) then obj_ini.artifact_identified[unload]-=1;
-	            if (obj_ini.artifact_identified[unload]=0) then scr_alert("green","artifact","Artifact ("+string(obj_ini.artifact[unload])+") has been identified.",0,0);
-	        }
+            if (identifiable=1) then obj_ini.artifact_identified[unload]-=1;
+            if (obj_ini.artifact_identified[unload]=0) then scr_alert("green","artifact","Artifact ("+string(obj_ini.artifact[unload])+") has been identified.",0,0);
 	    }
 	    identifiable=0;
 	}
@@ -48,7 +57,7 @@ function scr_turn_first() {
 	        if (owner>5){
 				baddy = 0;
 				o = 0;
-	            repeat(4){
+	            repeat(planets){
 					o+=1;
 					if (p_orks[o]+p_tyranids[o]+p_chaos[o]+p_traitors[o]+p_necrons[o]>=3) then baddy+=1;
 				}
@@ -79,8 +88,9 @@ function scr_turn_first() {
 	            repeat(20){if (gnew=0) or (gnew=gold) then gnew=choose(1,2,3,4);}
 	            faction_gender[7]=gnew;starf=0;
             
-	            var x3,y3,side,fnum;fnum=0;
-	            x3=0;y3=0;side=choose("left","right","up","down");
+	            var x3,y3,fnum;fnum=0;
+	            x3=0;y3=0;
+	            var side=choose("left","right","up","down");
 	            if (side="left") then y3=floor(random_range(0,room_height))+1;
 	            if (side="right"){y3=floor(random_range(0,room_height))+1;x3=room_width;}
 	            if (side="up") then x3=floor(random_range(0,room_width))+1;

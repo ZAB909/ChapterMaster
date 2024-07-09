@@ -13,7 +13,7 @@ function disposition_description_chart(dispo){
 		return "Very Friendly";
 	}else if (dispo<90){
 		return "Excellent";
-	}else if (dispo<100){
+	}else if (dispo<=100){
 		return "Unquestionable";
 	}
 }
@@ -172,16 +172,20 @@ function garrison_force(planet_operatives, turn_end=false, type="garrison")const
 			var final_modifier = 5 + total_garrison/10 - disposition_modifier + time_modifier;
 			if (up_or_down){
 				dispo_change =  garrison_leader.charisma+final_modifier;
-				if (dispo_change<50 && planet_disposition<obj_controller.disposition[star.p_owner[planet]]){
+				if (dispo_change<50 && (planet_disposition<obj_controller.disposition[star.p_owner[planet]] || garrison_leader.has_trait("honorable"))){
 					dispo_change = 50;
 				}
 			} else {
 				var charisma_test = global.character_tester.standard_test(garrison_leader, "charisma", final_modifier);
 				if (!charisma_test[0]){
-					if (planet_disposition<obj_controller.disposition[star.p_owner[planet]]){
-						dispo_change = -charisma_test[1]/10;
-					} else {
-						dispo_change=0;
+					if (garrison_leader.has_trait("honorable")){
+						dispo_change = "none";
+					}else {
+						if (planet_disposition<obj_controller.disposition[star.p_owner[planet]]){
+							dispo_change = -charisma_test[1]/10;
+						} else {
+							dispo_change=0;
+						}
 					}
 				} else {
 					dispo_change=charisma_test[1]/10;

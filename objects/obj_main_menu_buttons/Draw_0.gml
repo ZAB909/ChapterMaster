@@ -26,11 +26,11 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_ingame_menu)){
 if (room_get_name(room)="Creation"){
     shader_set(light_dark_shader);
     var yy=y+25,i=1;
-    var height = (20*2);
-    var width = (198*2);
+    var _spr_height = sprite_get_height(spr_mm_butts_small) * 2;
+    var _spr_width = sprite_get_width(spr_mm_butts_small) * 2;
     shader_set_uniform_f(shader_get_uniform(light_dark_shader, "highlight"), 1+hover[0]/10);
-    draw_sprite_ext(spr_mm_butts, 4, x,yy, 2, 2, 0, c_white, 1);
-    if (scr_hit(x,yy, x+width, yy+height)){
+    draw_sprite_ext(spr_mm_butts_small, 1, x,yy, 2, 2, 0, c_white, 1);
+    if (scr_hit(x,yy, x+_spr_width, yy+_spr_height)){
         if (hover[0]<20){
             hover[0]++;
         }
@@ -43,21 +43,21 @@ if (room_get_name(room)="Creation"){
 }
 
 if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!instance_exists(obj_credits)){
-    if (obj_main_menu.tim4>0){
-        draw_set_alpha((oth/40)/4);
-        if (point_distance(mouse_x,mouse_y,24,room_height-24)<=24) and (!instance_exists(obj_ingame_menu)) and (oth>=40){
-            if (instance_exists(obj_cursor)){
-                if (obj_cursor.image_alpha>=1){
-                    draw_set_alpha(1);
-                    if (mouse_left=1) and (cooldown<=0){
-                        instance_create(0,0,obj_ingame_menu);
-                    }
-                }
-            }
-        }
-        draw_sprite_stretched(spr_settings_button,0,0,room_height-48,48,48);
-        draw_set_alpha(1);
-    }
+    // if (obj_main_menu.tim4>0){
+    //     draw_set_alpha((oth/40)/4);
+    //     if (point_distance(mouse_x,mouse_y,24,room_height-24)<=24) and (!instance_exists(obj_ingame_menu)) and (oth>=40){
+    //         if (instance_exists(obj_cursor)){
+    //             if (obj_cursor.image_alpha>=1){
+    //                 draw_set_alpha(1);
+    //                 if (mouse_left=1) and (cooldown<=0){
+    //                     instance_create(0,0,obj_ingame_menu);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     draw_sprite_stretched(spr_settings_button,0,0,room_height-48,48,48);
+    //     draw_set_alpha(1);
+    // }
 
 
     shader_set(light_dark_shader);
@@ -82,22 +82,21 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                     hover[i]--;
                 }
             }
-            if (point_and_click([580,y_start, 580+width, y_start+height])){
+            if (point_and_click([580,y_start, 580+width, y_start+height]) and !instance_exists(obj_ingame_menu)){
                 switch(i){
                     case 0:
                         ini_open("saves.ini");
-                        var skap=0;
-                        skap = ini_read_real("Data", "tutorial", 0);
+                        var skip_tutorial_option=0;
+                        skip_tutorial_option = ini_read_real("Data", "tutorial", 0);
                         ini_close();
                         cooldown=9999;
                         button=1;
                         
-                        if (skap=1){
+                        if (skip_tutorial_option){
                             obj_main_menu_buttons.fading=1;
                             obj_main_menu_buttons.crap=2;
                             obj_main_menu_buttons.cooldown=9999;
-                        }
-                        if (skap=0){
+                        }else {
                             var pop;
                             pop=instance_create(0,0,obj_popup);
                             pop.size=1;pop.title="Tutorial";
@@ -114,11 +113,7 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
                         button=0;   
                         break;                                             
                     case 2:
-                        instance_create(0,0,obj_credits);
-                        obj_main_menu.menu=3;
-                        fading=0;
-                        fade=0;
-                        button=0;                        
+                        instance_create(0,0,obj_ingame_menu);         
                         break;
                     case 3:
                         with(obj_cursor){instance_destroy();}
@@ -134,15 +129,16 @@ if (instance_exists(obj_main_menu)) and (!instance_exists(obj_saveload)) and (!i
     if (obj_main_menu.tim4>0) and (obj_main_menu.menu!=3) then with(obj_main_menu){
         draw_set_font(fnt_menu);draw_set_halign(fa_center);
         
-        var wfd,xx,yy,wad;wfd="";// xx=1138;yy=532;wad=430;
-        xx=room_width/2;yy=850;wad=800;
+        var wfd="";// xx=1138;yy=532;wad=430;
+        var xx=room_width/2,yy=850,wad=800;
         
         if (word_from_duke!="blank") and (word_from_duke!="") then wfd=word_from_duke;
         if (word_from_duke2!="blank") and (word_from_duke2!="") then wfd=word_from_duke2;
         
         if (wfd!="blank") and (wfd!="") and (obj_main_menu.tim4<400){
             draw_set_alpha((tim4-20)/50);
-            draw_set_color(c_yellow);
+            
+            set_color(c_yellow);
             draw_text_ext_transformed(xx,yy,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
             draw_text_ext_transformed(xx+0.5,yy+0.5,string_hash_to_newline("Server: "+string(wfd)),-1,wad,1,1,0);
             

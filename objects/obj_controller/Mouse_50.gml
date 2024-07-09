@@ -161,66 +161,13 @@ else if (menu==15) and (cooldown<=0){
         var onceh=0;
         if (mouse_x>=xx+713) and (mouse_x<=xx+752){
             cooldown=8000;
-            if (recruit_trial=="Blood Duel") and (onceh==0){
-                onceh=1;
-                recruit_trial="Hunting the Hunter";
-            }
-            if (recruit_trial=="Hunting the Hunter") and (onceh==0){
-                onceh=1;
-                recruit_trial="Survival of the Fittest";
-            }
-            if (recruit_trial=="Survival of the Fittest") and (onceh==0){
-                onceh=1;
-                recruit_trial="Exposure";
-            }
-            if (recruit_trial=="Exposure") and (onceh==0){
-                onceh=1;
-                recruit_trial="Knowledge of Self";
-            }
-            if (recruit_trial=="Knowledge of Self") and (onceh==0){
-                onceh=1;
-                recruit_trial="Challenge";
-            }
-            if (recruit_trial=="Challenge") and (onceh==0){
-                onceh=1;
-                recruit_trial="Apprenticeship";
-            }
-            if (recruit_trial=="Apprenticeship") and (onceh==0){
-                onceh=1;
-                recruit_trial="Blood Duel";
-            }
+            recruit_trial++;
+            if (recruit_trial==eTrials.num) then recruit_trial=0;
         }
         if (mouse_x>=xx+492) and (mouse_x<=xx+528){
             cooldown=8000;
-            if (recruit_trial=="Blood Duel") and (onceh==0){
-                onceh=1;
-                recruit_trial="Apprenticeship";
-            }
-            if (recruit_trial=="Apprenticeship") and (onceh==0){
-                onceh=1;
-                recruit_trial="Challenge";
-            }
-            if (recruit_trial=="Challenge") and (onceh==0){
-                onceh=1;
-                recruit_trial="Knowledge of Self";
-            }
-            if (recruit_trial=="Knowledge of Self") and (onceh==0){
-
-                onceh=1;
-                recruit_trial="Exposure";
-            }
-            if (recruit_trial=="Exposure") and (onceh==0){
-                onceh=1;
-                recruit_trial="Survival of the Fittest";
-            }
-            if (recruit_trial=="Survival of the Fittest") and (onceh==0){
-                onceh=1;
-                recruit_trial="Hunting the Hunter";
-            }
-            if (recruit_trial=="Hunting the Hunter") and (onceh==0){
-                onceh=1;
-                recruit_trial="Blood Duel";
-            }
+            recruit_trial--;
+            if (recruit_trial<0) then recruit_trial=eTrials.num-1;
         }
     }
 }
@@ -517,7 +464,9 @@ if (menu==20) and (diplomacy>0) or ((diplomacy<-5) and (diplomacy>-6)) and (cool
                 menu=0;
                 force_goodbye=0;
                 cooldown=8;
-                if (trading_artifact==2) and (instance_exists(obj_temp4)){obj_temp4.alarm[2]=1;}// 135 this might not be needed
+                if (trading_artifact==2) and (instance_exists(obj_temp4)){
+                    obj_temp4.alarm[2]=1;
+                }// 135 this might not be needed
                 trading_artifact=0;
                 with(obj_popup){
                     obj_temp4.alarm[1]=1;
@@ -1420,18 +1369,16 @@ if (action_if_number(obj_saveload, 0, 0) &&
             }
             menu_adept=0;
             hide_banner=1;
-            if (menu!=15) and (onceh==0){
-                menu=15;
-                onceh=1;
-                cooldown=8000;
-                click=1;
-            }
-            if (menu==15) and (onceh==0){
-                menu=0;
-                onceh=1;
-                cooldown=8000;
-                click=1;
-                location_viewer.update_garrison_log();
+            if (!onceh){
+                if (menu!=15) {
+                    set_up_recruitment_view();
+                } else if (menu==15){
+                    menu=0;
+                    onceh=1;
+                    cooldown=8000;
+                    click=1;
+                    location_viewer.update_garrison_log();
+                }
             }
             managing=0;
         }

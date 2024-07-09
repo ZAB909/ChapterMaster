@@ -107,7 +107,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1576) and (mouse_y<y
         company=manag
     }
     if (type=5.1) and (cooldown<=0) and (company!=target_comp) and (target_comp!=-1){
-        cooldown=999;obj_controller.cooldown=8000;
+        cooldown=999;
+        obj_controller.cooldown=8000;
 
         var mahreens=0,w=0,god=0,vehi=0,god2=0;
 
@@ -351,9 +352,8 @@ if (point_in_rectangle(mouse_x, mouse_y, xx+1465, yy+499,xx+1576,yy+518)){// Pro
                     squad = obj_ini.squads[move_squad];
                     squad.update_fulfilment();
                     move_members = squad.members;
-                    if (array_length(move_member)==1){
+                    if (array_length(move_members)==1){
                         unit.squad = "none";
-                        array_delete(obj_ini.squads, squad, 1);
                         moveable = false;
                     }                  
                     for (var mem = 0;mem<array_length(move_members);mem++){//check all members have been selected and are in the same company
@@ -572,8 +572,8 @@ if (mouse_x>=xx+1465) and (mouse_y>=yy+499) and (mouse_x<xx+1577) and (mouse_y<y
 
 
 // if ((mouse_x>=xx+240) and (mouse_x<=xx+387) and (type!=88)) or (((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420)){
-if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
-    if ((type=9) or (type=9.1)) and (cooldown<=0){
+if ((type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
+    if ((type=9.1)) and (cooldown<=0){
         giveto=0;
 
         if (mouse_y>=yy+325) and (mouse_y<yy+342){
@@ -581,30 +581,6 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             instance_destroy();
             exit;
         }
-
-        inq_hide=0;
-        if (type=9){
-            if (array_contains(obj_ini.artifact_tags[obj_controller.fest_display], "inq")){
-                var i=-1;
-                repeat(10){
-                    i+=1;
-                    if (obj_controller.quest[i]="artifact_loan") then inq_hide=1;
-                    if (obj_controller.quest[i]="artifact_return") then inq_hide=2;
-                }
-            }
-        }
-
-
-        if (mouse_y>=yy+121) and (mouse_y<=yy+149) and (obj_controller.known[eFACTION.Imperium]>1) then giveto=2;
-        if (mouse_y>=yy+151) and (mouse_y<=yy+179) and (obj_controller.known[eFACTION.Mechanicus]>1) then giveto=3;
-        if (mouse_y>=yy+181) and (mouse_y<=yy+209) and ((obj_controller.known[eFACTION.Inquisition]>1) or (inq_hide=2)) and (inq_hide!=1) then giveto=4;
-        if (mouse_y>=yy+211) and (mouse_y<=yy+239) and (obj_controller.known[eFACTION.Ecclesiarchy]>1) then giveto=5;
-        if (mouse_y>=yy+241) and (mouse_y<=yy+269) and (obj_controller.known[eFACTION.Eldar]>1) then giveto=6;
-        if (mouse_y>=yy+271) and (mouse_y<=yy+299) and (obj_controller.known[eFACTION.Tau]>1) then giveto=8;
-
-
-
-
 
         if (giveto>0) and (type=9.1){
             var r1,r2,cn;r2=0;cn=obj_controller;
@@ -624,23 +600,20 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
             if (r2=3) then cn.stc_ships_un-=1;
 
             // Modify disposition here
-            if (giveto = eFACTION.Imperium)
-				obj_controller.disposition[giveto]+=3;
-            else if (giveto = eFACTION.Mechanicus)
-				obj_controller.disposition[giveto]+=choose(5,6,7,8);
-            else if (giveto = eFACTION.Inquisition)
-				obj_controller.disposition[giveto]+=3;
+            if (giveto = eFACTION.Imperium){
+                obj_controller.disposition[giveto]+=3;
+            }
+            else if (giveto = eFACTION.Mechanicus){
+                obj_controller.disposition[giveto]+=choose(5,6,7,8);
+            }
+            else if (giveto = eFACTION.Inquisition){
+                obj_controller.disposition[giveto]+=3;
+            }
             else if (giveto = eFACTION.Ecclesiarchy) {
                 obj_controller.disposition[giveto]+=3;
-                var o;
-				o=0;
-				repeat(4) {
-					o+=1;
-					if (obj_ini.adv[o]="Reverent Guardians") {
-						obj_controller.disposition[giveto]+=2;
-						break;
-					}
-				}
+                if (scr_has_adv("Reverent Guardians")){
+                    obj_controller.disposition[giveto]+=2;
+                }
             }
 			
             if (giveto=eFACTION.Eldar)
@@ -664,105 +637,6 @@ if ((type=9) or (type=9.1)) and (mouse_x>=xx+240+420) and (mouse_x<xx+387+420){
 			}
             instance_destroy();
 			exit;
-        }
-
-        if (giveto>0) and (type=9){
-            var arti_index = obj_controller.menu_artifact;
-
-            var e=0;
-            repeat(50){e+=1;
-                if (obj_controller.fest_display=arti_index) then obj_controller.fest_display=0;
-
-                /*if (obj_ini.artifact_tags[obj_controller.menu_artifact]=obj_controller.recent_keyword[e]){
-                    obj_controller.recent_keyword[e]="";obj_controller.recent_type[e]="";
-                    obj_controller.recent_turn[e]=0;obj_controller.recent_number[e]=0;
-                    scr_recent("artifact_gifted",obj_controller.recent_keyword,giveto);
-                    scr_recent("","",0);
-                }*/
-            }
-
-
-
-
-            old_tags=obj_ini.artifact_tags[arti_index];
-            obj_ini.artifact[arti_index]="";
-            obj_ini.artifact_tags[arti_index]="";
-            obj_ini.artifact_identified[arti_index]=0;
-            obj_ini.artifact_condition[arti_index]=100;
-            obj_ini.artifact_loc[arti_index]="";
-            obj_ini.artifact_sid[arti_index]=0;
-            var arti = obj_ini.artifact_struct[arti_index];
-            arti.unequip_from_unit();
-            obj_ini.artifact_struct[arti_index] = new arti_struct(arti_index);
-            obj_ini.artifact_equipped[arti_index] = false;
-
-            obj_controller.artifacts-=1;
-            cooldown=7000;
-
-            obj_controller.cooldown=10;
-            if (obj_controller.menu_artifact>obj_controller.artifacts) then obj_controller.menu_artifact=obj_controller.artifacts;
-
-            obj_controller.menu=20;
-            obj_controller.diplomacy=giveto;
-            obj_controller.force_goodbye=-1;
-            var the="";
-            if (giveto!=7) and (giveto!=10) then the="the ";
-            scr_event_log("","Artifact gifted to "+string(the)+string(obj_controller.faction[giveto])+".");
-            var is_daemon = array_contains(old_tags,"Daemon");
-            var is_chaos = array_contains(old_tags,"Chaos");
-            if (inq_hide!=2) then with(obj_controller){
-                if (!is_daemon) or ((diplomacy!=4) and (diplomacy!=5) and (diplomacy!=2)) then scr_dialogue("artifact_thanks");
-                if (is_daemon) and ((diplomacy=4) or (diplomacy=5) or (diplomacy=2)) then scr_dialogue("artifact_daemon");
-            }
-            if (inq_hide=2) and (obj_controller.diplomacy=4) then with(obj_controller){scr_dialogue("artifact_returned");}
-
-            if (string_count("MINOR",old_tags)=0){
-                if (giveto=2) then obj_controller.disposition[2]+=6;
-                if (giveto=3) then obj_controller.disposition[3]+=4;
-                if (giveto=4) and (inq_hide!=2) then obj_controller.disposition[4]+=4;
-                if (giveto=4) and (inq_hide=2) then obj_controller.disposition[4]+=2;
-                if (giveto=5) and (!is_daemon){
-                    obj_controller.disposition[5]+=4;
-                    var o=0
-                    if (array_contains(obj_ini.adv, "Reverent Guardians")) then obj_controller.disposition[5]+=2;
-                }
-                if (giveto=6) then obj_controller.disposition[6]+=3;
-                if (giveto=8) then obj_controller.disposition[8]+=4;
-            }
-
-            // Need to modify ^^^^ based on if it is chaos or daemonic
-
-            if (giveto=2){
-                if (is_daemon){
-                    var v,ev;v=0;ev=0;repeat(99){v+=1;if (ev=0) and (obj_controller.event[v]="") then ev=v;}
-                    obj_controller.event[ev]="imperium_daemon";obj_controller.event_duration[ev]=1;
-                    with(obj_star){
-                        if (p_owner[1]=2) then p_heresy[1]+=choose(30,40,50,60);
-                        if (p_owner[2]=2) then p_heresy[2]+=choose(30,40,50,60);
-                        if (p_owner[3]=2) then p_heresy[3]+=choose(30,40,50,60);
-                        if (p_owner[4]=2) then p_heresy[4]+=choose(30,40,50,60);
-                    }
-                }
-                if (is_chaos){
-                    with(obj_star){
-                        if (p_owner[1]=2) and (p_heresy[1]>0) then p_heresy[1]+=10;
-                        if (p_owner[2]=2) and (p_heresy[2]>0) then p_heresy[2]+=10;
-                        if (p_owner[3]=2) and (p_heresy[3]>0) then p_heresy[3]+=10;
-                        if (p_owner[4]=2) and (p_heresy[4]>0) then p_heresy[4]+=10;
-                    }
-                }
-            }
-            if (giveto=8){
-                if (is_daemon){
-                    with(obj_star){
-                        if (p_owner[1]=8) then p_heresy[1]+=40;
-                        if (p_owner[2]=8) then p_heresy[2]+=40;
-                        if (p_owner[3]=8) then p_heresy[3]+=40;
-                        if (p_owner[4]=8) then p_heresy[4]+=40;
-                    }
-                }
-            }
-            instance_destroy();exit;
         }
 
     }

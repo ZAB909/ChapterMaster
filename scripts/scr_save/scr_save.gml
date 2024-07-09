@@ -281,6 +281,7 @@ function scr_save(save_slot,save_id) {
 	    ini_write_real("Controller","millenium",obj_controller.millenium);
 	    //
 	    ini_write_real("Controller","req",obj_controller.requisition);
+	    ini_write_string("Controller","tech_status",obj_controller.tech_status);
 	    //
 	    ini_write_real("Controller","income",obj_controller.income);
 	    ini_write_real("Controller","income_last",obj_controller.income_last);
@@ -652,16 +653,18 @@ function scr_save(save_slot,save_id) {
 	    ini_write_string("Ini","lord_name",obj_ini.lord_admiral_name);
 	    ini_write_string("Ini","previous_forge_masters",base64_encode(json_stringify(obj_ini.previous_forge_masters)));
 	    //
-	    var g;g=0;
-	    repeat(150){g+=1;
+	    var g=0;
+	    for (g=0;g<array_length(obj_ini.equipment);g++){
 	        if (obj_ini.equipment[g]!=""){
-	            ini_write_string("Ini","equipment"+string(g),obj_ini.equipment[g]);
-	            ini_write_string("Ini","equipment_type"+string(g),obj_ini.equipment_type[g]);
-	            ini_write_real("Ini","equipment_number"+string(g),obj_ini.equipment_number[g]);
-	            ini_write_real("Ini","equipment_condition"+string(g),obj_ini.equipment_condition[g]);
-	            ini_write_string("Ini","equipment_quality"+string(g),base64_encode(json_stringify(obj_ini.equipment_quality[g])));
-	        }
-	        if (obj_ini.artifact[g]!=""){
+	            ini_write_string("Ini",$"equipment{g}",obj_ini.equipment[g]);
+	            ini_write_string("Ini",$"equipment_type{g}",obj_ini.equipment_type[g]);
+	            ini_write_real("Ini",$"equipment_number{g}",obj_ini.equipment_number[g]);
+	            ini_write_real("Ini",$"equipment_condition{g}",obj_ini.equipment_condition[g]);
+	            ini_write_string("Ini",$"equipment_quality{g}",base64_encode(json_stringify(obj_ini.equipment_quality[g])));
+	        }	    	
+	    }
+	    for (g=0;g<array_length(obj_ini.artifact);g++){
+			if (obj_ini.artifact[g]!=""){
 	            ini_write_string("Ini","artifact"+string(g),obj_ini.artifact[g]);
 	            ini_write_string("Ini","artifact_tags"+string(g),base64_encode(json_stringify(obj_ini.artifact_tags[g])));
 	            ini_write_real("Ini","artifact_ident"+string(g),obj_ini.artifact_identified[g]);
@@ -669,7 +672,7 @@ function scr_save(save_slot,save_id) {
 	            ini_write_real("Ini","artifact_equipped"+string(g),obj_ini.artifact_equipped[g]);
 	            ini_write_string("Ini","artifact_loc"+string(g),obj_ini.artifact_loc[g]);
 	            ini_write_real("Ini","artifact_sid"+string(g),obj_ini.artifact_sid[g]);
-	            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_sid[g]);
+	            ini_write_string("Ini","artifact_quality"+string(g),obj_ini.artifact_quality[g]);
 				var copy_artifact = obj_ini.artifact_struct[g];
 				var new_artifact = {};
 				var names = variable_struct_get_names(copy_artifact);
@@ -679,7 +682,7 @@ function scr_save(save_slot,save_id) {
 				  }
 				}
                 ini_write_string("Ini","artifact_struct"+string(g),base64_encode(json_stringify(new_artifact)));	            
-	        }
+	        }	    	
 	    }
 	    //
 	    var g;g=0;repeat(200){g+=1;

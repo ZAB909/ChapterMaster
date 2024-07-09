@@ -1,3 +1,13 @@
+function return_json_from_ini(ini_area,ini_code, default_val=[]){
+	var ini_fetch = ini_read_string(ini_area,ini_code,"");
+	if (ini_fetch!=""){
+		return json_parse(base64_decode(ini_fetch));
+	} else {
+		return default_val;
+	}
+}
+
+
 function scr_load(argument0, argument1) {
 	var int_strings = [];
 	for (var i=0;i<=20;i++){
@@ -11,15 +21,6 @@ function scr_load(argument0, argument1) {
 				obj_ini.TTRPG[company, marine].load_json_data(marStruct);
 			} else {obj_ini.TTRPG[company, marine] = new TTRPG_stats("chapter", company, marine,"blank");}		
 	};
-
-	function return_json_from_ini(ini_area,ini_code, default_val=[]){
-		var ini_fetch = ini_read_string(ini_area,ini_code,"");
-		if (ini_fetch!=""){
-			return json_parse(base64_decode(ini_fetch));
-		} else {
-			return default_val;
-		}
-	}
 	var rang,i,g,stars,pfleets,efleets,unit;
 	rang=0;i=0;g=0;stars=0;pfleets=0;efleets=0;
 
@@ -243,7 +244,7 @@ function scr_load(argument0, argument1) {
 
 	    obj_controller.recruiting_worlds=ini_read_string("Controller","recruiting_worlds","");
 	    obj_controller.recruiting=ini_read_real("Controller","recruiting",0);
-	    obj_controller.recruit_trial=ini_read_string("Controller","trial","Blood Duel");
+	    obj_controller.recruit_trial=ini_read_string("Controller","trial",eTrials.BLOODDUEL);
 	    obj_controller.recruits=ini_read_real("Controller","recruits",0);
 	    obj_controller.recruit_last=ini_read_real("Controller","recruit_last",0);
 
@@ -330,6 +331,7 @@ function scr_load(argument0, argument1) {
 	    obj_controller.millenium=ini_read_real("Controller","millenium",0);
 	    //
 	    obj_controller.requisition=ini_read_real("Controller","req",0);
+	    obj_controller.tech_status=ini_read_string("Controller","tech_status","Cult Mechanicus");
 	    //
 	    obj_controller.income=ini_read_real("Controller","income",0);
 	    obj_controller.income_last=ini_read_real("Controller","income_last",0);
@@ -343,8 +345,8 @@ function scr_load(argument0, argument1) {
 	    obj_controller.income_trade=ini_read_real("Controller","income_trade",0);
 	    obj_controller.loyalty=ini_read_real("Controller","loyalty",0);
 	    obj_controller.loyalty_hidden=ini_read_real("Controller","loyalty_hidden",0);
-	        obj_controller.inqis_flag_lair=ini_read_real("Controller","flag_lair",0);
-	        obj_controller.inqis_flag_gene=ini_read_real("Controller","flag_gene",0);
+	    obj_controller.inqis_flag_lair=ini_read_real("Controller","flag_lair",0);
+	    obj_controller.inqis_flag_gene=ini_read_real("Controller","flag_gene",0);
 	    obj_controller.gene_seed=ini_read_real("Controller","gene_seed",0);
 	    obj_controller.marines=ini_read_real("Controller","marines",0);
 	    obj_controller.command=ini_read_real("Controller","command",0);
@@ -713,18 +715,14 @@ function scr_load(argument0, argument1) {
 	    obj_ini.forbidden_unit2=ini_read_string("Ini","forbidden_unit2","Error");
 	    obj_ini.forbidden_unit3=ini_read_string("Ini","forbidden_unit3","Error");
 	    //
-	    var g;g=-1;
+	    var g=-1;
 	    repeat(150){g+=1;
 	        obj_ini.equipment[g]=ini_read_string("Ini","equipment"+string(g),"");
 	        obj_ini.equipment_type[g]=ini_read_string("Ini","equipment_type"+string(g),"");
 	        obj_ini.equipment_number[g]=ini_read_real("Ini","equipment_number"+string(g),0);
 	        obj_ini.equipment_condition[g]=ini_read_real("Ini","equipment_condition"+string(g),0);
 	        obj_ini.equipment_quality[g]=ini_read_string("Ini","equipment_quality"+string(g),"");
-	        if (obj_ini.equipment_quality[g]!=""){
-	        	obj_ini.equipment_quality[g] = json_parse(base64_decode(obj_ini.equipment_quality[g]));
-	        } else {
-	        	obj_ini.equipment_quality[g]=[];
-	        }
+	        obj_ini.equipment_quality[g] = return_json_from_ini("Ini", $"equipment_quality{g}", []);
 
 	        if (g<=20){
 	        	obj_ini.artifact[g]=ini_read_string("Ini","artifact"+string(g),"");
@@ -1286,6 +1284,7 @@ function scr_load(argument0, argument1) {
 	    obj_saveload.alarm[1]=30;
 	    obj_controller.invis=false;
 	    global.load=0;
+	    scr_image("force",-50,0,0,0,0);
 	    debugl("Loading slot "+string(argument1)+" completed");
 	}
 

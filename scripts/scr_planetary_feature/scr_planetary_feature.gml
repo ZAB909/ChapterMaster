@@ -140,7 +140,8 @@ function new_planet_feature(feature_type, other_data={}) constructor{
 		//revcover equipment of fallen marines from ruins
 		static recover_from_dead = function(){
 			var pop=instance_create(0,0,obj_popup);var route = random(5);
-			pop.image="ancient_ruins";pop.title="Ancient Ruins: Recovery";
+			pop.image="ancient_ruins";
+			pop.title="Ancient Ruins: Recovery";
 			if (route < 4){
 				var weapon_text = ""
 			

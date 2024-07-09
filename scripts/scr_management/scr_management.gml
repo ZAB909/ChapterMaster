@@ -95,7 +95,7 @@ function scr_management(argument0) {
 			num[i] = 0;
 			nam[i] = "";
 		}
-	    nam[2]=role_names[Role.HONOR_GUARD];
+	    nam[2]=role_names[Role.HONOUR_GUARD];
 
 	    for (var i = 1; i <= 200; i++) {
 			unit = fetch_unit([0,i]);
@@ -103,14 +103,14 @@ function scr_management(argument0) {
 				num[1] += 1;
 				if (nam[1] == "") then nam[1] = unit.name();
 			}
-			if (unit.role() == role_names[Role.HONOR_GUARD]) then num[2] += 1;
+			if (unit.role() == role_names[Role.HONOUR_GUARD]) then num[2] += 1;
 		}
 		
 
 	    // if (num[2]=0) then nam[2]="Strategic Staff";// reserved for co-master alien or something
 		
 	    // if (num[2]>0) {
-		// 	nam[2]=string(num)+"x "+string(role_names[Role.HONOR_GUARD]);
+		// 	nam[2]=string(num)+"x "+string(role_names[Role.HONOUR_GUARD]);
 		// 	nam[3]="Strategic Staff";
 		// 	num[3]=1;
 		// }
@@ -131,8 +131,8 @@ function scr_management(argument0) {
 	    obj_managment_panel.italic[1]=1; obj_managment_panel.bold[q]=1;
 		instance_activate_object(obj_managment_panel);
     
-	    // ll=0;ll2=0;repeat(200){ll2++;if (obj_ini.role[company,ll2]=role_names[Role.HONOR_GUARD]) then ll++;}
-	    // if (ll>0) then temp[3]=string(ll)+"x "+string(role_names[Role.HONOR_GUARD]);
+	    // ll=0;ll2=0;repeat(200){ll2++;if (obj_ini.role[company,ll2]=role_names[Role.HONOUR_GUARD]) then ll++;}
+	    // if (ll>0) then temp[3]=string(ll)+"x "+string(role_names[Role.HONOUR_GUARD]);
     
 	
     
@@ -366,7 +366,7 @@ function scr_management(argument0) {
 			nam[6] = "Codiciery";
 			nam[7] = "Lexicanum";
 			nam[8] = "Company" + role_names[Role.ANCIENT];
-			nam[9] = (role_names[Role.COMPANY_CHAMPION] == "Company Champion") ? "Champion" : role_names[Role.COMPANY_CHAMPION];
+			nam[9] = (role_names[Role.CHAMPION] == "Champion") ? "Champion" : role_names[Role.CHAMPION];
 			nam[10] = role_names[Role.TERMINATOR];
 			nam[11] = role_names[Role.SERGEANT];
 			nam[12] = (role_names[Role.VETERAN_SERGEANT] == "Veteran Sergeant") ? "Sergeant" : role_names[Role.VETERAN_SERGEANT];
@@ -397,7 +397,7 @@ function scr_management(argument0) {
 				if (unit.role() == "Codiciery") then num[6]++;
 				if (unit.role() == "Lexicanum") then num[7]++;
 				if (unit.role() == role_names[Role.ANCIENT]) then num[8]++;
-				if (unit.role() == role_names[Role.COMPANY_CHAMPION]) then num[9]++;
+				if (unit.role() == role_names[Role.CHAMPION]) then num[9]++;
 				if (unit.role() == role_names[Role.TERMINATOR]) then num[10]++;
 				if (unit.role() == role_names[Role.VETERAN_SERGEANT]) then num[11]++;
 				if (unit.role() == role_names[Role.SERGEANT]) then num[12]++;

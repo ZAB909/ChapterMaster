@@ -415,13 +415,13 @@ function scr_powers(power_set, power_count, enemy_target, unit_id) {
 	// }
 	var has_force_weapon=false;
 	if (is_struct(weapon_one)){
-		if weapon_one.has_tag("psy"){
+		if weapon_one.has_tag("force"){
 			has_force_weapon=true;
 		}
 	}
 
 	if (is_struct(weapon_two)){
-		if weapon_two.has_tag("psy"){
+		if weapon_two.has_tag("force"){
 			has_force_weapon=true;
 		}
 	}

@@ -30,7 +30,7 @@ function scr_chapter(chosen_chapter) {
 	    battle_cry="Repent!  For tomorow you may die";monastery_name="The Rock";master_name="Azreal";
 	    main_color="Caliban Green";secondary_color="None";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Dead";recruiting_type="Death";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=global.name_generator.generate_space_marine_name();
 	    chief_librarian_name="Ezekial";high_chaplain_name="Sapphon";high_apothecary_name=global.name_generator.generate_space_marine_name();forge_master_name="";
@@ -40,7 +40,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=15;ecclesiarchy_disposition=15;other1_disposition=11;other1="";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Blood Duel";
+	    recruit_trial=eTrials.BLOODDUEL;
 	    company_title[1]="Deathwing";company_title[2]="Ravenwing";
 	}
 	if (chosen_chapter="Duke Test"){founding="N/A";
@@ -50,7 +50,7 @@ function scr_chapter(chosen_chapter) {
 	    battle_cry="Repent!  For tomorow you may die";monastery_name="Bananajam";master_name="Azreal";
 	    main_color="Dark Green";secondary_color="None";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Dead";recruiting_type="Death";recruiting_name="Kimmeria";home_name="The Rock";lord_admiral_name=global.name_generator.generate_space_marine_name();
 	    chief_librarian_name="Ezekial";high_chaplain_name="Sapphon";high_apothecary_name=global.name_generator.generate_space_marine_name();forge_master_name="";
@@ -60,7 +60,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=15;ecclesiarchy_disposition=15;other1_disposition=11;other1="";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Blood Duel";
+	    recruit_trial=eTrials.BLOODDUEL;
 	    company_title[1]="Deathwing";company_title[2]="Ravenwing";
 	}
 
@@ -95,7 +95,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=15;ecclesiarchy_disposition=13;other1_disposition=12;other1="Imperial Fists";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";psy_powers="rune Magick";
     
-	    recruit_trial="Exposure";
+	    recruit_trial=eTrials.EXPOSURE;
 	    company_title[1]="Champions of Fenris";
 	    company_title[2]="The Bloodmaws";
 	    company_title[3]="The Seawolves";
@@ -119,7 +119,7 @@ function scr_chapter(chosen_chapter) {
 	    main_color="Yellow";secondary_color="Yellow";
 	    lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=2;master_ranged=1;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";   
     
 	    home_name="Terra";
@@ -141,7 +141,7 @@ function scr_chapter(chosen_chapter) {
 	    main_color="Dark Gold";secondary_color="Red";lens_color="Red";weapon_color="Black";
 	    initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";veteran_name="Veteran";
 	    devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";
 	    captain_name="Captain";master_melee=1;master_ranged=1;
 	    forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Hive";recruiting_type="Hive";recruiting_name="Terra-";home_name="Terra-";
@@ -178,7 +178,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=16;ecclesiarchy_disposition=15;other1_disposition=11;other1="";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Blood Duel";
+	    recruit_trial=eTrials.BLOODDUEL;
 	    company_title[1]="Archangels";
 	    company_title[2]="The Blooded";
 	    company_title[3]="Ironhelms";
@@ -200,7 +200,7 @@ function scr_chapter(chosen_chapter) {
 	    battle_cry="The flesh is weak";monastery_name="Medusa";master_name="Kardan Stronos";
 	    main_color="Black";secondary_color="None";lens_color="Dark Red";weapon_color="Silver";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Iron Father";chaplain_name="Iron Father";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Iron Father";chaplain_name="Iron Father";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=999;forbidden_unit1="Chaplain";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Lava";recruiting_type="Lava";recruiting_name="Medusa";home_name="Medusa";lord_admiral_name=global.name_generator.generate_space_marine_name();
 	    chief_librarian_name="Lydriik";high_chaplain_name="Shulgaar";high_apothecary_name="Grolvoch";forge_master_name="Feirros";
@@ -210,7 +210,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=14;ecclesiarchy_disposition=12;other1_disposition=15;other1="";other2_disposition=18;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Knowledge of Self";
+	    recruit_trial=eTrials.KNOWLEDGE;
 	    company_title[1]="Clan Avernii";
 	    company_title[2]="Clan Garrsak";
 	    company_title[3]="Clan Felg";
@@ -233,7 +233,7 @@ function scr_chapter(chosen_chapter) {
 	    battle_cry="Courage and honor";monastery_name="Fortress of Hera";master_name="Marneus Calgar";
 	    main_color="Blue";secondary_color="Dark Gold";lens_color="Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=1;master_ranged=1;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="Temperate";recruiting_type="Death";recruiting_name="Parmenio";home_name="Macragge";lord_admiral_name="Lazlo Tiberius";
 	    chief_librarian_name="Varro Tigurius";high_chaplain_name="Ortan Cassius";high_apothecary_name="Corpus Helix";forge_master_name="Fennias Maxim";
@@ -243,7 +243,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=16;ecclesiarchy_disposition=15;other1_disposition=12;other1="Imperial Fists";other2_disposition=15;other2="Mechanicus";
 	    mutations=0;mutations_selected=0;mutation="";
     
-	    recruit_trial="Exposure";
+	    recruit_trial=eTrials.EXPOSURE;
 	    company_title[1]="Warriors of Ultramar";
 	    company_title[2]="Guardians of the Temple";
 	    company_title[3]="Scourge of the Xenos";
@@ -271,7 +271,7 @@ function scr_chapter(chosen_chapter) {
 	    inquisition_disposition=16;ecclesiarchy_disposition=15;other1_disposition=11;other1="Iron Hands";other2_disposition=15;other2="Mechanicus";
 	    mutations=1;mutations_selected=1;mutation="secretions";secretions=1;psy_powers="pyromancy";
     
-	    recruit_trial="Apprenticeship";
+	    recruit_trial=eTrials.APPRENTICESHIP;
 	    company_title[1]="The Firedrakes";
 	}
 
@@ -285,7 +285,7 @@ function scr_chapter(chosen_chapter) {
 	    main_color="Green";secondary_color="Black";
 	    lens_color="Yellow";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=2;master_ranged=3;forbidden_unit1="Land Speeder";forbidden_unit2="Bike";forbidden_unit3="";
     
 	    home_name="Nocturne"; 
@@ -300,7 +300,7 @@ function scr_chapter(chosen_chapter) {
 	    main_color="Yellow";secondary_color="None";
 	    lens_color="Dark Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=2;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
     
 	    home_name="Lacrima Vex";
@@ -315,7 +315,7 @@ function scr_chapter(chosen_chapter) {
 	    battle_cry="For those we cherish, we die in Glory";monastery_name="Lacrima Vex";master_name="Malakim Phoros";
 	    main_color="Yellow";secondary_color="None";lens_color="Dark Red";weapon_color="Black";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";
 	    veteran_name="Veteran";devastator_name="Devastator Marine";assault_name="Assault Marine";apothecary_name="Apothecary";librarian_name="Librarian";
-	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honor Guard";dreadnought_name="Dreadnought";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Chaplain";role[100][2]="Honour Guard";dreadnought_name="Dreadnought";captain_name="Captain";
 	    master_melee=3;master_ranged=2;forbidden_unit1="";forbidden_unit2="";forbidden_unit3="";
 	    home_type="random";recruiting_type="Temperate";recruiting_name="random";home_name="random";lord_admiral_name=global.name_generator.generate_space_marine_name();
 	    chief_librarian_name=global.name_generator.generate_space_marine_name();high_chaplain_name=global.name_generator.generate_space_marine_name();high_apothecary_name=global.name_generator.generate_space_marine_name();forge_master_name=global.name_generator.generate_space_marine_name();
@@ -326,7 +326,7 @@ function scr_chapter(chosen_chapter) {
 	    mutations=0;mutations_selected=0;mutation="";chapter_year=908;
 	    // Badab Sector, need custom map
     
-	    recruit_trial="Challenge";
+	    recruit_trial=eTrials.CHALLENGE;
 	}
 
 
@@ -338,7 +338,7 @@ function scr_chapter(chosen_chapter) {
 	    typing_slot=0;battle_cry="ALWAYS ANGRY ALL THE TIME";main_color="Yellow";secondary_color="Red";monastery_name="";
 	    lens_color="Red";weapon_color="Red";initiate_name="Initiate";scout_name="Scout";tactical_name="Tactical Marine";veteran_name="Cock Knockers";
 	    devastator_name="Devastator Marine";assault_name="Angrier Marine";apothecary_name="Apothecary";librarian_name="Master of Mindfuckery";
-	    tech_name="Techmarine";chaplain_name="Holy Pugilist";role[100][2]="Honor Guard";dreadnought_name="Belligerent Engine";captain_name="Captain";
+	    tech_name="Techmarine";chaplain_name="Holy Pugilist";role[100][2]="Honour Guard";dreadnought_name="Belligerent Engine";captain_name="Captain";
 	    master_name="Temperus Maximus";master_melee=1;master_ranged=1;forbidden_unit1="Devastator Marine";forbidden_unit2="Apothecary";forbidden_unit3="";
     
 	    home_name="Angrymar";

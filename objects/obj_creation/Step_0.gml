@@ -115,7 +115,7 @@ if (change_slide==35) or (change_slide==36) or (chapter=="Doom Benefactors") or 
         flagship_name=global.name_generator.generate_imperial_ship_name();
         recruiting_exists=1;
         homeworld_exists=1;homeworld_rule=1;
-        aspirant_trial="Blood Duel";
+        aspirant_trial=eTrials.BLOODDUEL;
         discipline="default";
         battle_cry="For the Emperor";
         main_color=1;
