@@ -2755,7 +2755,7 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// @param {String} [gear] Gear item.
 /// @param {String} [mobi] Mobility item.
 /// @param {String} [armour] Armour.
-/// @returns {Struct.TTRPG_stats}
+/// @returns {Struct.TTRPG_stats|undefined}}
 function add_unit_to_company(ttrpg_name, company, role_id, wep1 = "default", wep2 = "default", gear = "default", mobi = "default", armour = "default") {
     if (!player_role_data[role_id].available_to_player){
         return undefined;
