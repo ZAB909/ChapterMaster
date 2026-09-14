@@ -699,7 +699,7 @@ function scr_ui_manage() {
         if (managing > 0) {
             if (managing == 14){
                 if (scr_has_adv("Spiritual Healers")){
-                    managing = 12;
+                    switch_view_company(12);
                 }
             }
             company_manage_actions();
