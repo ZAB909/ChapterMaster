@@ -1470,7 +1470,7 @@ function scr_initialize_custom() {
     }
 
     if (variable_instance_exists(obj_creation, "custom_roles")) {
-        var c_roles = obj_creation.custom_roles;
+        var _c_roles = obj_creation.custom_roles;
         var _possible_custom_attributes = global.role_data_keys;
         /**
 		 * check whether the json structure exists to populate custom role names and 
@@ -1478,14 +1478,17 @@ function scr_initialize_custom() {
         var _role_names = struct_get_names(global.string_to_enum_roles_map);
         for (var c = 0; c < array_length(_role_names); c++) {
             var c_rolename = _role_names[c];
-            if (struct_exists(c_roles, c_rolename)) {
+            if (struct_exists(_c_roles, c_rolename)) {
                 var c_roleid = global.string_to_enum_roles_map[$ c_rolename];
                 for (var a = 0; a < array_length(_possible_custom_attributes); a++) {
                     var attribute = _possible_custom_attributes[a];
-                    if (struct_exists(c_roles[$ c_rolename], attribute)) {
-                        var value = c_roles[$ c_rolename][$ attribute];
+                    if (struct_exists(_c_roles[$ c_rolename], attribute)) {
+                        var value = _c_roles[$ c_rolename][$ attribute];
                         player_role_data[c_roleid][$ attribute] = value;
                     }
+                }
+                if (struct_exists(_c_roles[$ c_rolename], "name")){
+                    player_role_data[c_roleid][$ "role"] = _c_roles[$ c_rolename][$ "name"];
                 }
             }
         }
@@ -2747,6 +2750,9 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// @param {String} [armour] Armour.
 /// @returns {Struct.TTRPG_stats}
 function add_unit_to_company(ttrpg_name, company, role_id, wep1 = "default", wep2 = "default", gear = "default", mobi = "default", armour = "default") {
+    if (!player_role_data[role_id].available_to_player){
+        exit;
+    }
     var _slot = find_company_open_slot(company);
     var spawn_unit = new TTRPG_stats("chapter", company, _slot, ttrpg_name);
     obj_ini.TTRPG[company][_slot] = spawn_unit;
