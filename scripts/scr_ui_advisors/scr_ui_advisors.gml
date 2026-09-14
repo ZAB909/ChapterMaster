@@ -349,7 +349,7 @@ function scr_ui_advisors() {
         draw_set_color(c_gray);
         draw_text_transformed(xx + 1262, yy + 70, localize("Scheduling Event"), 0.6, 0.6, 0);
         draw_text_transformed(xx + 962, yy + 126, localize("Event Type: "), 1, 1, 0);
-        draw_text_transformed(xx + 962, yy + 185, localize("Event Location: ")), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 185, localize("Event Location: "), 1, 1, 0);
         draw_text_transformed(xx + 962, yy + 266, localize("Grandoise: "), 1, 1, 0);
         draw_text_transformed(xx + 962, yy + 324, localize("Features: "), 1, 1, 0);
         draw_text_transformed(xx + 962, yy + 379, localize("Display: "), 1, 1, 0);
