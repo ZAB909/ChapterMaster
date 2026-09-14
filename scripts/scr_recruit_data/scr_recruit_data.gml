@@ -74,9 +74,9 @@ global.techmarine_training_tiers = [
     14,
 ];
 
-global.apothecary_training_costs = [-1, -2, -3, -4, -6, -12];
-
 global.apothecary_training_costs = [0, -1, -2, -3, -4, -6, -12];
+
+global.chaplain_training_costs = [0, -1, -2, -3, -4, -6, -12];
 
 global.techmarine_training_costs = [0, -1, -2, -3, -4, -6, -12];
 
@@ -975,7 +975,7 @@ function scr_draw_recruit_advisor() {
         amo = 0;
         draw_set_color(16291875);
 
-        amo -= global.apothecary_training_costs[training_chaplain];
+        amo -= global.chaplain_training_costs[training_chaplain];
         if (amo != 0) {
             draw_sprite(spr_requisition, 0, xx + 336 + 16, yy + 416);
         }
