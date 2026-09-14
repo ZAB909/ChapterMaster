@@ -74,13 +74,13 @@ global.techmarine_training_tiers = [
     14,
 ];
 
-global.apothecary_training_costs = [0, -1, -2, -3, -4, -6, -12];
+global.apothecary_training_costs = [0, 1, 2, 3, 4, 6, 12];
 
-global.chaplain_training_costs = [0, -1, -2, -3, -4, -6, -12];
+global.chaplain_training_costs = [0, 1, 2, 3, 4, 6, 12];
 
-global.techmarine_training_costs = [0, -1, -2, -3, -4, -6, -12];
+global.techmarine_training_costs = [0, 1, 2, 3, 4, 6, 12];
 
-global.psyker_training_costs = [0, -1, -2, -3, -4, -6, -12];
+global.psyker_training_costs = [0, 1, 2, 3, 4, 6, 12];
 
 
 function find_recruit_success_chance(local_apothecary_points, system, planet, ui = 0) {
