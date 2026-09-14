@@ -503,20 +503,20 @@ function company_manage_actions() {
 
     //TODO attatch these to OOP constructs
     // Previous company
-    if (allow_shortcuts){
-        var _back_check = keyboard_check_pressed(ord(string("N")));
-        var _forward_check =  keyboard_check_pressed(ord(string("M")));
-        if (point_and_click([xx + 424, yy + 80, xx + 496, yy + 128]) || _back_check) {
-            _change = true;
-            _change_value = -1;
-        }
 
-        // Next company
-        if (point_and_click([xx + 1105, yy + 80, xx + 1178, yy + 128]) || _forward_check) {
-            _change = true;
-            _change_value = 1;
-        }
+    var _back_check = keyboard_check_pressed(ord(string("N"))) && allow_shortcuts;
+    var _forward_check =  keyboard_check_pressed(ord(string("M"))) && allow_shortcuts;
+    if (point_and_click([xx + 424, yy + 80, xx + 496, yy + 128]) || _back_check) {
+        _change = true;
+        _change_value = -1;
     }
+
+    // Next company
+    if (point_and_click([xx + 1105, yy + 80, xx + 1178, yy + 128]) || _forward_check) {
+        _change = true;
+        _change_value = 1;
+    }
+
     if (_change){
         var _new_view = managing + _change_value;
         if (scr_has_adv("Spiritual Healers")){
