@@ -1883,26 +1883,29 @@ function scr_initialize_custom() {
     // Forge Master
 
     var _forge_master = add_unit_to_company("marine", _company_i, eROLE.FORGEMASTER, "Infernus Pistol", "Omnissian Axe", "default", "Servo-harness", _hq_armour);
-    _forge_master.set_name(obj_creation.fmaster);
-    if (_forge_master.technology < 40) {
-        _forge_master.technology = 40;
-    }
-    _forge_master.add_trait("mars_trained");
-    _forge_master.add_bionics("right_arm", "standard", false);
-    _forge_master.marine_assembling();
-    if (global.chapter_name == "Iron Hands") {
-        repeat (9) {
-            _forge_master.add_bionics("none", "standard", false);
+    if (!is_undefined(_forge_master)) {
+        _forge_master.set_name(obj_creation.fmaster);
+        if (_forge_master.technology < 40) {
+            _forge_master.technology = 40;
         }
-    } else {
-        repeat (irandom(5) + 3) {
-            _forge_master.add_bionics("none", "standard", false);
+        _forge_master.add_trait("mars_trained");
+        _forge_master.add_bionics("right_arm", "standard", false);
+        _forge_master.marine_assembling();
+        if (global.chapter_name == "Iron Hands") {
+            repeat (9) {
+                _forge_master.add_bionics("none", "standard", false);
+            }
+        } else {
+            repeat (irandom(5) + 3) {
+                _forge_master.add_bionics("none", "standard", false);
+            }
         }
     }
 
     // Master of Sanctity (Chaplain)
-    if (chaplains > 0 && player_role_data[eROLE.MASTERCHAPLAIN].available_to_player) {
-        var _hchap = add_unit_to_company("marine", _company_i, eROLE.MASTERCHAPLAIN, "default", "Plasma Pistol", "default", "default", _hq_armour);
+
+    var _hchap = add_unit_to_company("marine", _company_i, eROLE.MASTERCHAPLAIN, "default", "Plasma Pistol", "default", "default", _hq_armour);
+    if (!is_undefined(_hchap)) {
         _hchap.set_name(high_chaplain_name);
         _hchap.edit_corruption(-100);
         _hchap.piety = max(_hchap.piety, 45);
@@ -1911,17 +1914,21 @@ function scr_initialize_custom() {
 
     // Maser of the Apothecarion (Apothecary)
     var _hapoth = add_unit_to_company("marine", _company_i, eROLE.MASTERAPOTHECARY, "default", "Plasma Pistol", "default", "default", _hq_armour);
-    _hapoth.set_name(obj_creation.hapothecary);
-    _hapoth.edit_corruption(0);
+    if (!is_undefined(_hapoth)) {
+        _hapoth.set_name(obj_creation.hapothecary);
+        _hapoth.edit_corruption(0);
+    }
 
     // Chief Librarian
     if (!scr_has_disadv("Psyker Intolerant")) {
         var _clibrarian = add_unit_to_company("marine", _company_i, eROLE.CHIEFLIBRARIAN, "default", "Plasma Pistol", "default", "default", _hq_armour);
-        _clibrarian.set_name(obj_creation.clibrarian);
-        _clibrarian.edit_corruption(0);
-        _clibrarian.psionic = choose(11, 12);
-        _clibrarian.update_powers();
-        _clibrarian.add_trait("favoured_by_the_warp");
+        if (!is_undefined(_clibrarian)) {
+            _clibrarian.set_name(obj_creation.clibrarian);
+            _clibrarian.edit_corruption(0);
+            _clibrarian.psionic = choose(11, 12);
+            _clibrarian.update_powers();
+            _clibrarian.add_trait("favoured_by_the_warp");
+        }
     }
 
     // Techmarines in the armoury
@@ -2751,7 +2758,7 @@ function add_veh_to_company(name, company, slot, wep1, wep2, wep3, upgrade, acce
 /// @returns {Struct.TTRPG_stats}
 function add_unit_to_company(ttrpg_name, company, role_id, wep1 = "default", wep2 = "default", gear = "default", mobi = "default", armour = "default") {
     if (!player_role_data[role_id].available_to_player){
-        exit;
+        return undefined;
     }
     var _slot = find_company_open_slot(company);
     var spawn_unit = new TTRPG_stats("chapter", company, _slot, ttrpg_name);
