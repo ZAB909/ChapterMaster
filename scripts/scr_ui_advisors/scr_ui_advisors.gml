@@ -79,11 +79,12 @@ function scr_ui_advisors() {
         draw_set_color(c_gray);
         var _active_roles = active_roles();
         var _chap_role = reclusiam_vars.chaplain_role
+        var _chap_count = reclusiam_vars.chapter_chaplains.number();
 
-        if (chapter_chaplains.number() > 0) {
-            blurp = localize("Sir!  You requested a report?  Currently, we have deployed {0} {1}s to watch over the health of our Battle-Brothers in the field.  We have an additional {2} {1}s who await only your order to carry the word to the troops.", [chapter_chaplains.number(), localize(_chap_role), 0]);
+        if (_chap_count > 0) {
+            blurp = localize("Sir!  You requested a report?  Currently, we have deployed {0} {1}s to watch over the health of our Battle-Brothers in the field.  We have an additional {2} {1}s who await only your order to carry the word to the troops.", [_chap_count, localize(_chap_role), 0]);
         }
-        if (chapter_chaplains.number() == 0) {
+        if (_chap_count == 0) {
             blurp = localize("Sir!  You requested a report?  Currently, we have {0} {1}s who await only your order to carry the word to the troops.", [0, localize(_chap_role)]);
         }
         if ((!reclusiam_vars.spiritual_healers) && (global.chapter_name != "Iron Hands")) {
@@ -141,7 +142,7 @@ function scr_ui_advisors() {
         draw_set_color(c_gray);
 
         if (menu_adept == 1) {
-            blurp = localize("Your Chapter contains {0} {1}s.##", [temp[36], localize(_chap_role)]);
+            blurp = localize("Your Chapter contains {0} {1}s.##", [_chap_count, localize(_chap_role)]);
             if (!reclusiam_vars.spiritual_healers && global.chapter_name != "Iron Hands") {
                 blurp += localize("Training of further {0}s", [localize(_chap_role)]);
                 if (training_chaplain >= 0 && training_chaplain <= 6) {
@@ -347,17 +348,17 @@ function scr_ui_advisors() {
         draw_set_font(cjk_font(fnt_40k_14b));
         draw_set_color(c_gray);
         draw_text_transformed(xx + 1262, yy + 70, localize("Scheduling Event"), 0.6, 0.6, 0);
-        draw_text_transformed(xx + 962, yy + 126, string_hash_to_newline(localize("Event Type: ")), 1, 1, 0);
-        draw_text_transformed(xx + 962, yy + 185, string_hash_to_newline(localize("Event Location: ")), 1, 1, 0);
-        draw_text_transformed(xx + 962, yy + 266, string_hash_to_newline(localize("Grandoise: ")), 1, 1, 0);
-        draw_text_transformed(xx + 962, yy + 324, string_hash_to_newline(localize("Features: ")), 1, 1, 0);
-        draw_text_transformed(xx + 962, yy + 379, string_hash_to_newline(localize("Display: ")), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 126, localize("Event Type: "), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 185, localize("Event Location: ")), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 266, localize("Grandoise: "), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 324, localize("Features: "), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 379, localize("Display: "), 1, 1, 0);
 
-        draw_text_transformed(xx + 962, yy + 434, string_hash_to_newline(localize("Repeat: ")), 1, 1, 0);
-        draw_text_transformed(xx + 1225, yy + 434, string_hash_to_newline(localize("Honoring: ")), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 434, localize("Repeat: "), 1, 1, 0);
+        draw_text_transformed(xx + 1225, yy + 434, localize("Honoring: "), 1, 1, 0);
 
-        draw_text_transformed(xx + 962, yy + 527, string_hash_to_newline(localize("Attendees: ")), 1, 1, 0);
-        draw_text_transformed(xx + 1246, yy + 527, string_hash_to_newline(localize("Public: ")), 1, 1, 0);
+        draw_text_transformed(xx + 962, yy + 527, localize("Attendees: "), 1, 1, 0);
+        draw_text_transformed(xx + 1246, yy + 527, localize("Public: "), 1, 1, 0);
 
         draw_set_font(cjk_font(fnt_40k_14));
 

@@ -257,7 +257,7 @@
     "bans_roles" : [
       "chaplain",
       "chaplain_aspirant",
-      "master_chaplain",
+      "master_chaplain"
     ]
   }
 ]

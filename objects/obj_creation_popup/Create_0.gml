@@ -101,7 +101,7 @@ if (_is_livery && livery_pick_type == eLIVERY_COLOURING_OPTIONS.BULK) {
     role_name_input = new TextBarArea(800, 170, 380, true);
 
     editing_role_data = obj_creation.player_role_data[target_role];
-    _blocked_names = [];
+    var _blocked_names = [];
     for (var i = 0; i < array_length(obj_creation.player_role_data); i++) {
         if (i == target_role) {
             continue;

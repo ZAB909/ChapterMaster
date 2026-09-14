@@ -518,7 +518,7 @@ function company_manage_actions() {
         }
     }
     if (_change){
-        _new_view = managing + _change_value;
+        var _new_view = managing + _change_value;
         if (scr_has_adv("Spiritual Healers")){
             if (_new_view == 14){
                 _new_view += _change_value;
@@ -530,7 +530,7 @@ function company_manage_actions() {
         if (_new_view == 0){
             _new_view = 15;
         }
-        switch_view_company(new_view);
+        switch_view_company(_new_view);
     }
 }
 
