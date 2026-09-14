@@ -184,7 +184,7 @@ function apothecary_training() {
 function chaplain_training() {
     // * Chaplain training *
     // TODO add functionality for Space Wolves and Iron Hands
-    if (scr_has_adv("Spiritual Healers") || global.chapter_name == "Iron Hands") {
+    if (scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
         exit;
     }
     var recruit_count = 0;

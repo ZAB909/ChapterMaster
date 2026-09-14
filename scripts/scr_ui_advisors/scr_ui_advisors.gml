@@ -87,7 +87,7 @@ function scr_ui_advisors() {
         if (_chap_count == 0) {
             blurp = localize("Sir!  You requested a report?  Currently, we have {0} {1}s who await only your order to carry the word to the troops.", [0, localize(_chap_role)]);
         }
-        if ((!reclusiam_vars.spiritual_healers) && (global.chapter_name != "Iron Hands")) {
+        if (!scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
             blurp += localize("##Currently, we are training additional {0} at a ", [localize(_chap_role)]);
             var _recruit_rates = global.recruitment_rates;
             blurp += localize(_recruit_rates[training_chaplain]);
@@ -143,7 +143,7 @@ function scr_ui_advisors() {
 
         if (menu_adept == 1) {
             blurp = localize("Your Chapter contains {0} {1}s.##", [_chap_count, localize(_chap_role)]);
-            if (!reclusiam_vars.spiritual_healers && global.chapter_name != "Iron Hands") {
+            if (!scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
                 blurp += localize("Training of further {0}s", [localize(_chap_role)]);
                 if (training_chaplain >= 0 && training_chaplain <= 6) {
                     var _recruit_pace = global.recruitment_pace_descriptions;
@@ -170,7 +170,7 @@ function scr_ui_advisors() {
         // TODO rename fest_type and fest_scheduled into feast_type and feast_schedule and refactor scripts
         if (menu_adept == 0) {
             if (fest_scheduled == 0) {
-                if (!reclusiam_vars.spiritual_healers && global.chapter_name != "Iron Hands") {
+                if (!scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
                     blurp2 = localize("As our bolters are charged with death for the Emperor's enemies, our thoughts are charged with his wisdom.  As our bodies are armoured with Adamantium, our souls are protected with our loyalty- loyalty to Him, and loyalty to our brothers.  The bonds of this brotherhood are worth revering, even if a lull in duty invites doubt and heresy.  Should you wish to schedule a rousing event, or challenge, I will make it so.  Under the careful watch of our {0}s, our brothers' spirits may be lifted.", [localize(_chap_role)]);
                 }
                 if (reclusiam_vars.spiritual_healers) {

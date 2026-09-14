@@ -420,7 +420,7 @@ function scr_marine_game_spawn_constructions() {
                 bionic_count = choose(1, 1, 1, 2, 3);
             }
             var tech_heresy = irandom(49);
-            if ((_chap_name == "Iron Hands") || (obj_ini.progenitor == ePROGENITOR.IRON_HANDS) || scr_has_disadv("Tech-Heresy")) {
+            if (scr_has_adv("Tech-Cult Religion") || obj_ini.progenitor == ePROGENITOR.IRON_HANDS || scr_has_disadv("Tech-Heresy")) {
                 add_bionics("right_arm", "standard", false);
                 bionic_count = choose(6, 6, 7, 7, 7, 8, 9);
                 add_trait("flesh_is_weak");

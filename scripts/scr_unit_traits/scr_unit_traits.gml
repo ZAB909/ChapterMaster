@@ -697,8 +697,8 @@ global.astartes_trait_dist = [
             999,
         ],
         {
-            chapter_name: [
-                "Iron Hands",
+            "advantage": [
+                "Tech-Cult Religion",
                 [
                     1000,
                     600,

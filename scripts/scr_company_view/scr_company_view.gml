@@ -519,7 +519,7 @@ function company_manage_actions() {
 
     if (_change){
         var _new_view = managing + _change_value;
-        if (scr_has_adv("Spiritual Healers")){
+        if (scr_has_adv_any(["Spiritual Healers","Tech-Cult Religion"])){
             if (_new_view == 14){
                 _new_view += _change_value;
             }

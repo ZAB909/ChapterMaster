@@ -701,6 +701,9 @@ function scr_ui_manage() {
                 if (scr_has_adv("Spiritual Healers")){
                     switch_view_company(12);
                 }
+                if (scr_has_adv("Tech-Cult Religion")){
+                    switch_view_company(15);
+                }
             }
             company_manage_actions();
         }

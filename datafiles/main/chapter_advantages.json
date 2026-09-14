@@ -253,7 +253,18 @@
     "name": "Spiritual Healers",
     "description": "Your Chapter combines its Chaplains and its Apothecaries into a single role.",
     "points": 20,
-    "meta": ["beliefs"],
+    "meta": ["Chaplain Role"],
+    "bans_roles" : [
+      "chaplain",
+      "chaplain_aspirant",
+      "master_chaplain"
+    ]
+  },
+  {
+    "name": "Tech-Cult Religion",
+    "description": "Your chapter follows a creed of religion that places a heavy emphasis on the machine spirit and technology.",
+    "points": 20,
+    "meta": ["Chaplain Role"],
     "bans_roles" : [
       "chaplain",
       "chaplain_aspirant",
