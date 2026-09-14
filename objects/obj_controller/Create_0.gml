@@ -1237,7 +1237,7 @@ if (instance_exists(obj_ini)) {
     if (scr_has_disadv("Psyker Intolerant")) {
         training_psyker = 0;
     }
-    if (scr_has_adv("Spiritual Healers")) {
+    if (scr_has_adv_any(["Spiritual Healers", "Tech-Cult Religion"])) {
         training_chaplain = 0;
     }
 }

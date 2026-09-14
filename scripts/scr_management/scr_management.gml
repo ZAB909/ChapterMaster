@@ -14,7 +14,8 @@ function scr_management(argument0) {
         var _command_company = collect_company(0);
 
         var _spirit_healers = scr_has_adv("Spiritual Healers");
-        if (!_spirit_healers){
+        var _tech_chaplains = scr_has_adv("Tech-Cult Religion");
+        if (!_spirit_healers && !_tech_chaplains){
             pane = instance_create(475, 180 - 48, obj_managment_panel);
             pane.company = 0;
             pane.manage = 14;
@@ -48,6 +49,9 @@ function scr_management(argument0) {
         pane.manage = 15;
         pane.header = 2;
         pane.title = "ARMOURY";
+        if (_tech_chaplains){
+            pane.title = "ARMOURY/RECLUSIUM"
+        }
         var _armoury_units = _command_company.get_from({group: [SPECIALISTS_TECHS, true, true]}, true, true);
 
         _armoury_units = _armoury_units.index_roles();

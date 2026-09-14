@@ -245,10 +245,16 @@ function scr_toggle_reclu() {
                 reclusiam_vars = {
                     chapter_chaplains : collect_role_group([SPECIALISTS_CHAPLAINS, true, true], "", false, {}, true),
                     spiritual_healers : scr_has_adv("Spiritual Healers"),
+                    tech_chaplains : scr_has_adv("Tech-Cult Religion")
                 }
 
-                reclusiam_vars.chaplain_role = reclusiam_vars.spiritual_healers ? _active_roles[eROLE.APOTHECARY] : _active_roles[eROLE.CHAPLAIN];
-                
+                if (reclusiam_vars.spiritual_healers) {
+                    reclusiam_vars.chaplain_role = _active_roles[eROLE.APOTHECARY];
+                } else if (reclusiam_vars.tech_chaplains) {
+                    reclusiam_vars.chaplain_role = _active_roles[eROLE.TECHMARINE];
+                } else {
+                    reclusiam_vars.chaplain_role = _active_roles[eROLE.CHAPLAIN];
+                }
                 penitorium = 0;
 
                 // Get list of jailed marines

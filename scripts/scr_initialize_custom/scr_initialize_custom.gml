@@ -1471,7 +1471,7 @@ function scr_initialize_custom() {
 
     if (variable_instance_exists(obj_creation, "custom_roles")) {
         var c_roles = obj_creation.custom_roles;
-        var possible_custom_attributes = global.unit_equip_slots;
+        var _possible_custom_attributes = global.role_data_keys;
         /**
 		 * check whether the json structure exists to populate custom role names and 
 		 */
@@ -1480,8 +1480,8 @@ function scr_initialize_custom() {
             var c_rolename = _role_names[c];
             if (struct_exists(c_roles, c_rolename)) {
                 var c_roleid = global.string_to_enum_roles_map[$ c_rolename];
-                for (var a = 0; a < array_length(possible_custom_attributes); a++) {
-                    var attribute = possible_custom_attributes[a];
+                for (var a = 0; a < array_length(_possible_custom_attributes); a++) {
+                    var attribute = _possible_custom_attributes[a];
                     if (struct_exists(c_roles[$ c_rolename], attribute)) {
                         var value = c_roles[$ c_rolename][$ attribute];
                         player_role_data[c_roleid][$ attribute] = value;
@@ -1492,7 +1492,6 @@ function scr_initialize_custom() {
     }
 
     update_role_data_wth_defaults();
-
     var _roles = active_roles();
     player_role_data[eROLE.LIBRARIANASPIRANT].role = _roles[eROLE.LIBRARIAN] + " Aspirant";
     player_role_data[eROLE.APOTHECARYASPIRANT].role = _roles[eROLE.APOTHECARY] + " Aspirant";
@@ -1501,6 +1500,7 @@ function scr_initialize_custom() {
 
     player_role_data[eROLE.CHIEFLIBRARIAN].role = "Chief " + _roles[eROLE.LIBRARIAN];
 
+    var _roles = active_roles();
     #endregion
 
     #region Squad Loadouts
