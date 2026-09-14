@@ -101,7 +101,7 @@ function role_groups(group, include_trainee = false, include_heads = true, allow
             if (include_heads) {
                 array_push(_role_list, _roles[eROLE.FORGEMASTER]);
             }
-            if (_chap_name == "Iron Hands" && allow_subsearches) {
+            if (scr_has_adv("Tech-Cult Religion") && allow_subsearches) {
                 _role_list = array_concat(_role_list, role_groups(SPECIALISTS_CHAPLAINS, include_trainee, include_heads, false));
             }
             break;
@@ -116,7 +116,7 @@ function role_groups(group, include_trainee = false, include_heads = true, allow
             if (scr_has_adv("Spiritual Healers") && allow_subsearches) {
                 _role_list = array_concat(_role_list, role_groups(SPECIALISTS_APOTHECARIES, include_trainee, include_heads, false));
             }
-            if (_chap_name == "Iron Hands" && allow_subsearches) {
+            if (scr_has_adv("Tech-Cult Religion") && allow_subsearches) {
                 _role_list = array_concat(_role_list, role_groups(SPECIALISTS_TECHS, include_trainee, include_heads, false));
             }
             break;

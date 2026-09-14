@@ -133,7 +133,7 @@ get_unit_promotion_options = function() {
         role_name[1] = _role_data[eROLE.APOTHECARY].role;
         role_exp[1] = 5;
         spec = 1;
-    } else if (unit_role == _role_data[eROLE.CHAPLAIN].role && _role_data[eROLE.CHAPLAIN].available_to_player && global.chapter_name != "Iron Hands") {
+    } else if (unit_role == _role_data[eROLE.CHAPLAIN].role && _role_data[eROLE.CHAPLAIN].available_to_player) {
         //chaplain
         role_name[1] = _role_data[eROLE.CHAPLAIN].role;
         role_exp[1] = 5;

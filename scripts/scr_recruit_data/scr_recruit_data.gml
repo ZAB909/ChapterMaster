@@ -978,7 +978,7 @@ function scr_draw_recruit_advisor() {
     draw_text(xx + 728, yy + 394, string_hash_to_newline("[-] [+]"));
 
     // TODO implement Spave Wolves and Iron Hands cases
-    if ((global.chapter_name != "Space Wolves") && (global.chapter_name != "Iron Hands")) {
+    if (!scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
         // ** Chaplain recruitment **
         amo = 0;
         draw_set_color(16291875);

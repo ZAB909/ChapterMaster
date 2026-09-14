@@ -192,7 +192,6 @@ function scr_creation(slide_num) {
     if (slide_num == eCREATION_SLIDES.CHAPTERTRAITS && custom == eCHAPTER_TYPE.PREMADE) {
         change_slide = true;
         goto_slide = 3;
-        player_role_data[eROLE.CHAPLAIN].available_to_player = chapter_name != "Iron Hands";
     }
 
     if (slide_num == eCREATION_SLIDES.CHAPTERHOME) {
