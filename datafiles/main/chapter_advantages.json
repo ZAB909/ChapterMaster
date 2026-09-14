@@ -262,7 +262,7 @@
   },
   {
     "name": "Tech-Cult Religion",
-    "description": "Your chapter follows a creed of religion that places a heavy enphasis on the machine spirit and technology.",
+    "description": "Your chapter follows a creed of religion that places a heavy emphasis on the machine spirit and technology.",
     "points": 20,
     "meta": ["chaplain role"],
     "bans_roles" : [

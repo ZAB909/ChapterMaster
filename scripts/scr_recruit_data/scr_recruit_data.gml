@@ -74,6 +74,15 @@ global.techmarine_training_tiers = [
     14,
 ];
 
+global.apothecary_training_costs = [-1, -2, -3, -4, -6, -12];
+
+global.apothecary_training_costs = [0, -1, -2, -3, -4, -6, -12];
+
+global.techmarine_training_costs = [0, -1, -2, -3, -4, -6, -12];
+
+global.psyker_training_costs = [0, -1, -2, -3, -4, -6, -12];
+
+
 function find_recruit_success_chance(local_apothecary_points, system, planet, ui = 0) {
     var p_data = system.get_planet_data(planet);
     var _recruit_world = p_data.get_features(eP_FEATURES.RECRUITING_WORLD)[0];
@@ -944,31 +953,15 @@ function scr_draw_recruit_advisor() {
     draw_text(xx + 728, yy + 354, string_hash_to_newline("[-] [+]"));
 
     amo = 0;
+    //TODO update to use OOP ValueShifter
     // ** Apothecary recruitment **
     draw_set_color(16291875);
-    if (training_apothecary == 1) {
-        amo = -1;
-    }
-    if (training_apothecary == 2) {
-        amo = -2;
-    }
-    if (training_apothecary == 3) {
-        amo = -3;
-    }
-    if (training_apothecary == 4) {
-        amo = -4;
-    }
-    if (training_apothecary == 5) {
-        amo = -6;
-    }
-    if (training_apothecary == 6) {
-        amo = -12;
-    }
+    amo -= global.apothecary_training_costs[training_apothecary];
     if (amo != 0) {
         draw_sprite(spr_requisition, 0, xx + 336 + 16, yy + 396);
     }
     if (training_apothecary != 0) {
-        draw_text(xx + 351 + 16, yy + 394, string_hash_to_newline(string(amo)));
+        draw_text(xx + 351 + 16, yy + 394, string(amo));
     }
     draw_set_color(c_gray);
     if ((training_apothecary >= 0) && (training_apothecary <= 6)) {
@@ -977,29 +970,12 @@ function scr_draw_recruit_advisor() {
     draw_text(xx + 407, yy + 394, string_hash_to_newline(localize("Apothecary Training: {0}", [blur])));
     draw_text(xx + 728, yy + 394, string_hash_to_newline("[-] [+]"));
 
-    // TODO implement Spave Wolves and Iron Hands cases
     if (!scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
         // ** Chaplain recruitment **
         amo = 0;
         draw_set_color(16291875);
-        if (training_chaplain == 1) {
-            amo = -1;
-        }
-        if (training_chaplain == 2) {
-            amo = -2;
-        }
-        if (training_chaplain == 3) {
-            amo = -3;
-        }
-        if (training_chaplain == 4) {
-            amo = -4;
-        }
-        if (training_chaplain == 5) {
-            amo = -6;
-        }
-        if (training_chaplain == 6) {
-            amo = -12;
-        }
+
+        amo -= global.apothecary_training_costs[training_chaplain];
         if (amo != 0) {
             draw_sprite(spr_requisition, 0, xx + 336 + 16, yy + 416);
         }
@@ -1017,24 +993,8 @@ function scr_draw_recruit_advisor() {
     // ** Psyker recruitment **
     amo = 0;
     draw_set_color(16291875);
-    if (training_psyker == 1) {
-        amo = -1;
-    }
-    if (training_psyker == 2) {
-        amo = -2;
-    }
-    if (training_psyker == 3) {
-        amo = -3;
-    }
-    if (training_psyker == 4) {
-        amo = -4;
-    }
-    if (training_psyker == 5) {
-        amo = -6;
-    }
-    if (training_psyker == 6) {
-        amo = -12;
-    }
+
+    amo -= global.psyker_training_costs[training_psyker];
     if (amo != 0) {
         draw_sprite(spr_requisition, 0, xx + 336 + 16, yy + 436);
     }
@@ -1051,24 +1011,8 @@ function scr_draw_recruit_advisor() {
     // ** Techmarine recruitment **
     amo = 0;
     draw_set_color(16291875);
-    if (training_techmarine == 1) {
-        amo = -1;
-    }
-    if (training_techmarine == 2) {
-        amo = -2;
-    }
-    if (training_techmarine == 3) {
-        amo = -3;
-    }
-    if (training_techmarine == 4) {
-        amo = -4;
-    }
-    if (training_techmarine == 5) {
-        amo = -6;
-    }
-    if (training_techmarine == 6) {
-        amo = -12;
-    }
+
+    amo -= global.techmarine_training_costs[training_techmarine];
     if (amo != 0) {
         draw_sprite(spr_requisition, 0, xx + 336 + 16, yy + 456);
     }
