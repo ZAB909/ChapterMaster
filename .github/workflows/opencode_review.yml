@@ -6,6 +6,10 @@ on:
 
 jobs:
   review:
+    concurrency:
+      group: pr-${{ github.event.issue.number }}
+      cancel-in-progress: true
+
     if: |
       github.event.issue.pull_request
       && startsWith(github.event.comment.body, '/review')
@@ -18,11 +22,7 @@ jobs:
       - name: Get PR number
         id: pr-number
         run: |
-          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
-            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
-          else
-            echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
-          fi
+          echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
     
       - name: Checkout repository
         uses: actions/checkout@v4
