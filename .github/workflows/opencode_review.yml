@@ -6,6 +6,10 @@ on:
 
 jobs:
   review:
+    concurrency:
+      group: pr-${{ github.event.pull_request.number }}
+      cancel-in-progress: true
+
     if: |
       github.event.issue.pull_request
       && startsWith(github.event.comment.body, '/review')
