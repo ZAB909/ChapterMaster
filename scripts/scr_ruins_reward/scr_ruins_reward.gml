@@ -30,12 +30,15 @@ function LootPool(_data) constructor {
             return undefined;
         }
 
-        return {name: options[irandom(array_length(options) - 1)], count: _count};
+        return {
+            name: options[irandom(array_length(options) - 1)],
+            count: _count,
+        };
     };
 }
 
 /// @desc Processes rewards for exploring ancient ruins.
-/// @param {Asset.GMObject.obj_star} _star_system The star system object.
+/// @param {Id.Instance.obj_star} _star_system The star system object.
 /// @param {Real} _pid_idx Planet index within the system.
 /// @param {Struct.NewPlanetFeature} _ruins The ruins feature struct.
 function scr_ruins_reward(_star_system, _pid_idx, _ruins) {
@@ -47,14 +50,14 @@ function scr_ruins_reward(_star_system, _pid_idx, _ruins) {
 
     /// @desc Internal logic for handling Gear distribution via JSON data.
     /// @param {Real} _race The ID of the ruins race.
-    /// @param {Asset.GMObject.obj_popup} _popup The popup instance to populate.
+    /// @param {Id.Instance.obj_popup} _popup The popup instance to populate.
     static _process_gear_reward = function(_race, _popup) {
         static _loot_registry = undefined;
 
         // Lazy-load JSON from disk once
         if (_loot_registry == undefined) {
             _loot_registry = {};
-            var _path = working_directory + "\\data\\ruins_loot.json";
+            var _path = working_directory + "/data/ruins_loot.json";
             var _raw_json = json_to_gamemaker(_path, json_parse);
 
             var _keys = struct_get_names(_raw_json);
@@ -104,7 +107,9 @@ function scr_ruins_reward(_star_system, _pid_idx, _ruins) {
     };
 
     /// @desc Internal logic for handling Artifact retrieval.
-    /// @param {Asset.GMObject.obj_popup} _popup
+    /// @param {Id.Instance.obj_star} _star
+    /// @param {String} _pidx
+    /// @param {Id.Instance.obj_popup} _popup
     static _process_artifact_reward = function(_star, _pidx, _popup) {
         var _chosen_ship = -1;
         var _fleet = scr_orbiting_player_fleet(_star);
@@ -117,9 +122,9 @@ function scr_ruins_reward(_star_system, _pid_idx, _ruins) {
         }
 
         if (_chosen_ship > -1) {
-            var _art_idx = scr_add_artifact("random", "random", 4, _pidx, _chosen_ship + 500);
+            var _art_idx = scr_add_artifact("random", "random", 4, _pidx, _chosen_ship);
             _popup.title = "Ancient Ruins: Artifact";
-            _popup.text = $"An Artifact has been found within the ancient ruins. It appears to be a {obj_ini.artifact[_art_idx]} but should be brought to the Lexicanum and identified posthaste.";
+            _popup.text = $"An Artifact has been found within the ancient ruins. It appears to be a {fetch_artifact(_art_idx).get_type_name()} but should be brought to the Lexicanum and identified posthaste.";
             scr_event_log("", "Artifact recovered from Ancient Ruins.");
         } else {
             _popup.title = "Ancient Ruins: Artifact Lost";
@@ -201,7 +206,7 @@ function scr_ruins_reward(_star_system, _pid_idx, _ruins) {
         case eLOOT_TYPE.STARSHIP:
             _popup.image = "ruins_ship";
             _popup.title = "Ancient Ruins: Starship";
-            _popup.text = $"The ground beneath one of your battle brothers crumbles, and he falls a great height. The other marines go down in pursuit. Within a great chamber they find the remains of an ancient starship. Though derelict, it is possible to land {obj_ini.role[100][16]}s to repair the ship. 10,000 Requisition will be needed to make it operational.";
+            _popup.text = $"The ground beneath one of your battle brothers crumbles, and he falls a great height. The other marines go down in pursuit. Within a great chamber they find the remains of an ancient starship. Though derelict, it is possible to land {obj_ini.player_role_data[eROLE.TECHMARINE].role}s to repair the ship. 10,000 Requisition will be needed to make it operational.";
             _ruins.find_starship();
             scr_event_log("", $"Ancient Starship discovered on {_planet_name}.", _star_system.name);
             break;
@@ -218,7 +223,7 @@ function scr_ruins_reward(_star_system, _pid_idx, _ruins) {
     _ruins.ruins_explored();
 }
 
-/// @param {Asset.GMObject.obj_popup} _popup The popup instance to populate.
+/// @param {Id.Instance.obj_popup} _popup The popup instance to populate.
 function ancient_gene_lab_ruins_loot(_popup) {
     _popup.image = "geneseed_lab";
     _popup.title = "Ancient Ruins: Gene-seed";
@@ -261,15 +266,15 @@ function ancient_gene_lab_ruins_loot(_popup) {
                     //scr_play_sound(snd_cancel);
                     popup_default_close();
                 },
-            }
+            },
         ],
     };
 }
 
-/// @param {Asset.GMObject.obj_star} _star
+/// @param {Id.Instance.obj_star} _star
 /// @param {Real} _planet
 /// @param {Struct} _ruins
-/// @param {Asset.GMObject.obj_popup} _popup
+/// @param {Id.Instance.obj_popup} _popup
 function ancient_fortress_ruins_loot(_star, _planet, _ruins, _popup) {
     _popup.image = "ruins_fort";
     _popup.title = "Ancient Ruins: Fortress";
@@ -307,7 +312,7 @@ function ancient_fortress_ruins_loot(_star, _planet, _ruins, _popup) {
                     obj_controller.requisition += _requisition_gain;
                     reset_popup_options();
                 },
-            }
+            },
         ],
     };
 }

@@ -1,21 +1,18 @@
-var battle_o;
-battle_o = 0;
 current_battle += 1;
 combating = 0;
 
 instance_activate_object(obj_star);
 
 if ((battles > 0) && (current_battle <= battles)) {
-    var ii = 0, good = 0;
     var battle_star = find_star_by_name(battle_location[current_battle]);
     obj_controller.temp[1060] = battle_location[current_battle];
 
-    if (battle_star != "none") {
+    if (battle_star != noone) {
         obj_controller.x = battle_star.x;
         obj_controller.y = battle_star.y;
         show = current_battle;
 
-        if (battle_world[current_battle] == -50) {
+        if (battle_world[current_battle] == 0) {
             strin[1] = string(battle_pobject[current_battle].capital_number);
             strin[2] = string(battle_pobject[current_battle].frigate_number);
             strin[3] = string(battle_pobject[current_battle].escort_number);
@@ -51,9 +48,7 @@ if ((battles > 0) && (current_battle <= battles)) {
 
             strin[3] = "";
 
-            var tempy;
-            tempy = 0;
-            tempy = battle_object[current_battle].p_owner[battle_world[current_battle]];
+            var tempy = battle_object[current_battle].p_owner[battle_world[current_battle]];
 
             if ((tempy == 1) || (tempy == 2) || (tempy == 3)) {
                 if (battle_object[current_battle].p_fortified[battle_world[current_battle]] == 1) {
@@ -116,11 +111,11 @@ if ((battles > 0) && (current_battle <= battles)) {
             }
         }
 
-        if (obj_controller.zoomed == 1) {
-            with (obj_controller) {
-                scr_zoom();
-            }
-        }
+        // if (obj_controller.zoomed == 1) {
+        //     with (obj_controller) {
+        //         scr_zoom();
+        //     }
+        // }
     }
     instance_activate_object(obj_star);
 }

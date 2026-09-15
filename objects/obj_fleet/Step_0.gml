@@ -1,6 +1,4 @@
-// if (woohoo<60) then woohoo+=1;
-
-if (beg != 0) /* and (instance_exists(obj_fleet_controller))*/ {
+if (beg != 0) {
     if ((combat_end > -1) && (!instance_exists(obj_en_ship))) {
         combat_end -= 1;
         victory = true;
@@ -58,7 +56,50 @@ if (start == 5) {
             }
         }
     }
+
+    if (speed_button.is_clicked) {
+        speed_mode = (speed_mode + 1) % 3;
+        var new_speed = 0;
+        if (speed_mode == 0) {
+            new_speed = original_speed;
+        } else {
+            new_speed = original_speed + 30 * speed_mode;
+        }
+        game_set_speed(new_speed, gamespeed_fps);
+    }
 }
 
-/* */
-/*  */
+if (control) {
+    if (mouse_check_button_pressed(mb_left)) {
+        sel_x1 = mouse_x;
+        sel_y1 = mouse_y;
+
+        with (obj_p_ship) {
+            if (point_distance(mouse_x, mouse_y, x, y) < 60) {
+                selected = 1;
+            } else if (!keyboard_check(vk_shift)) {
+                selected = 0;
+            }
+        }
+    }
+
+    if (mouse_check_button(mb_left)) {
+        drag_selecting = true;
+
+        with (obj_p_ship) {
+            if (point_distance(min(other.sel_x1, mouse_x), min(other.sel_y1, mouse_y), max(other.sel_x1, mouse_x), max(other.sel_y1, mouse_y)) < 30) {
+                break;
+            }
+
+            if (point_in_rectangle(x, y, min(other.sel_x1, mouse_x), min(other.sel_y1, mouse_y), max(other.sel_x1, mouse_x), max(other.sel_y1, mouse_y))) {
+                selected = 1;
+            } else if (!keyboard_check(vk_shift)) {
+                selected = 0;
+            }
+        }
+    }
+
+    if (mouse_check_button_released(mb_left)) {
+        drag_selecting = false;
+    }
+}

@@ -1,4 +1,4 @@
-function scr_chapter_master() constructor {
+function ChapterMaster() constructor {
     favours = {
         faction_leaders: array_create(15, 0),
         minor_characters: {},

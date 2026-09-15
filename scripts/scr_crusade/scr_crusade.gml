@@ -1,10 +1,10 @@
+/// @self Id.Instance.obj_fleet
 function scr_crusade() {
     // Executed to kill the fuck out of the player's marines
     // Think it is ran in the obj_p_fleet object when arriving back from crusade
 
-    var unit;
+    var _unit;
     var co = 0, i = 0, apoth = 0, death_determination = 0, death_determination_2 = 0, roll3 = 0, type = "", artifacts = 0, clean = 0;
-    good = 0;
     seed = 0;
     marines_lost = 0;
     var heroics_strings = [];
@@ -18,8 +18,8 @@ function scr_crusade() {
             40,
             [
                 5,
-                10
-            ]
+                10,
+            ],
         ],
         hard: [
             60,
@@ -27,8 +27,8 @@ function scr_crusade() {
             30,
             [
                 20,
-                20
-            ]
+                20,
+            ],
         ],
         brutal: [
             20,
@@ -36,8 +36,8 @@ function scr_crusade() {
             20,
             [
                 40,
-                20
-            ]
+                20,
+            ],
         ],
     };
 
@@ -47,7 +47,7 @@ function scr_crusade() {
     if (death_determination <= 50) {
         type = "normal";
         artifacts = choose(0, 0, 0, 0, 0, 1);
-    } else if (death_determination > 50) {
+    } else if (death_determination > 50 && death_determination <= 80) {
         type = "hard";
         artifacts = choose(0, 0, 1);
     } else if (death_determination > 80) {
@@ -57,63 +57,61 @@ function scr_crusade() {
 
     var death_data = death_sets[$ type];
 
-    for (co = 0; co <= 10; co++) {
+    for (co = 0; co <= obj_ini.companies; co++) {
         clean[co] = 0;
     }
     var total_ship_id = array_concat(capital_num, frigate_num, escort_num);
 
-    for (co = 0; co <= 10; co++) {
-        for (i = 0; i <= 500; i++) {
-            good = 0;
+    for (co = 0; co <= obj_ini.companies; co++) {
+        for (i = 0; i < company_length(co); i++) {
             dead = false;
-            if (obj_ini.name[co][i] == "") {
+            _unit = fetch_unit([co, i]);
+            if (!is_struct(_unit)) {
                 continue;
             }
-            unit = fetch_unit([co, i]);
-            if (unit.ship_location == -1) {
+            if (_unit.ship_location == -1) {
                 continue;
             }
-            if (array_contains(total_ship_id, unit.ship_location)) {
-                unit = obj_ini.TTRPG[co][i];
+            if (array_contains(total_ship_id, _unit.ship_location)) {
                 death_determination = floor(random(100)) + 1;
                 //specialist trait greatly reduces death risk
                 //TODO figure out how to quantify and present these risks so the player knows to protect dudes with trait
-                if (unit.has_trait("very_hard_to_kill")) {
+                if (_unit.has_trait("very_hard_to_kill")) {
                     death_determination -= 20;
                 }
                 death_determination_2 = death_determination;
-                death_determination -= unit.experience / 2;
+                death_determination -= _unit.experience / 2;
 
                 //more generalised trait bonus mainly linked to chapter advantage of same name
-                if (unit.has_trait("slow_and_purposeful")) {
+                if (_unit.has_trait("slow_and_purposeful")) {
                     death_determination -= 10;
                 }
 
-                var dead = false;
+                var _dead = false;
                 if (death_determination > death_data[0] || death_determination_2 > death_data[1]) {
-                    dead = true;
-                    if (unit.role() == obj_ini.role[100][5]) {
-                        if (irandom(20) < unit.luck) {
-                            dead = false;
+                    _dead = true;
+                    if (_unit.role() == obj_ini.player_role_data[eROLE.CAPTAIN].role) {
+                        if (irandom(20) < _unit.luck) {
+                            _dead = false;
                         } else {
-                            if (irandom(100) < unit.weapon_skill) {
-                                var heroic_deed = choose("holding a breach in imperial defenses allowing allied forces to regroup,", "slaying the enemy leader in glorious combat, while victorious he ultimately succumbed to his wounds,", "leading an imortant boarding mission,",);
+                            if (irandom(100) < _unit.weapon_skill) {
+                                var heroic_deed = choose("holding a breach in imperial defenses allowing allied forces to regroup,", "slaying the enemy leader in glorious combat, while victorious he ultimately succumbed to his wounds,", "leading an imortant boarding mission,");
                                 //TODO figure out a blance in reward for captains or high rnaking death on crusade
                                 //adds dynamacism as itt creates reward for the potential loss of men and talent during crusades
                                 //var consolations = ["ship", "req",""]
                                 //var consolation_prize = irandom(2)
-                                var heroic_death = $"{unit.full_title()} died {heroic_deed} {unit.name()} dies a hero of the {global.chapter_name}";
+                                var heroic_death = $"{_unit.full_title()} died {heroic_deed} {_unit.name()} dies a hero of the {global.chapter_name}";
                                 array_push(heroics_strings, heroic_death);
                             }
                         }
-                    } else if (unit.role() == obj_ini.role[100][11] || unit.role() == obj_ini.role[100][eROLE.CHAPTERMASTER]) {
-                        dead = false;
+                    } else if (_unit.role() == obj_ini.player_role_data[eROLE.ANCIENT].role || _unit.role() == obj_ini.player_role_data[eROLE.CHAPTERMASTER].role) {
+                        _dead = false;
                     }
                 }
-                if (dead) {
+                if (_dead) {
                     var man_size = 0;
-                    obj_ini.ship_carrying[unit.ship_location] -= unit.get_unit_size();
-                    if (unit.IsSpecialist(SPECIALISTS_STANDARD, true)) {
+                    obj_ini.ship_carrying[_unit.ship_location] -= _unit.get_unit_size();
+                    if (_unit.IsSpecialist(SPECIALISTS_STANDARD, true)) {
                         obj_controller.command--;
                     } else {
                         obj_controller.marines--;
@@ -121,18 +119,17 @@ function scr_crusade() {
 
                     clean[co] = 1;
                     marines_lost++;
-                    scr_kill_unit(co, i);
-                    seed += 2;
+                    _unit.kill(false, true);
                 } else {
-                    if (unit.IsSpecialist(SPECIALISTS_APOTHECARIES) && (obj_ini.gear[co][i] == "Narthecium")) {
+                    if (_unit.IsSpecialist(SPECIALISTS_APOTHECARIES) && (_unit.gear() == "Narthecium")) {
                         apoth++;
                     }
-                    unit.add_exp(irandom(death_data[3][0]) + death_data[3][1]);
+                    _unit.add_exp(irandom(death_data[3][0]) + death_data[3][1]);
 
-                    if (irandom(99) == 1 && irandom(20) < unit.luck) {
+                    if (irandom(99) == 1 && irandom(20) < _unit.luck) {
                         var heroic_deed = choose("still_standing", "lone_survivor", "beast_slayer");
-                        unit.add_trait(heroic_deed);
-                        array_push(heroics_strings, string(global.trait_list[$ heroic_deed].flavour_text, unit.full_title()));
+                        _unit.add_trait(heroic_deed);
+                        array_push(heroics_strings, string(global.trait_list[$ heroic_deed].flavour_text, _unit.full_title()));
                     }
                 }
             }
@@ -149,15 +146,11 @@ function scr_crusade() {
         obj_controller.gene_seed += seed;
     }
 
-    // i=-1;
-    // repeat(11){
-    // i+=1;
     with (obj_ini) {
         for (i = 0; i <= 10; i++) {
             scr_company_order(i);
         }
     }
-    // }
 
     if (roll3 <= 10) {
         artifacts += 1;
@@ -165,10 +158,10 @@ function scr_crusade() {
     if (artifacts > 0) {
         repeat (artifacts) {
             if (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD) {
-                scr_add_artifact("random", "", 4, obj_ini.home_name, 2);
+                scr_add_artifact("random", "", 4, obj_ini.home_name, -1);
             }
             if (obj_ini.fleet_type != ePLAYER_BASE.HOME_WORLD) {
-                scr_add_artifact("random", "", 4, obj_ini.ship[0], 501);
+                scr_add_artifact("random", "", 4, obj_ini.ship[0], 0);
             }
         }
     }
@@ -188,10 +181,10 @@ function scr_crusade() {
 
     if (obj_ini.doomed == 0) {
         if ((apoth > 0) && (seed > 0)) {
-            tixt += "  The " + string(apoth) + " surviving " + string(obj_ini.role[100][15]) + " were able to recover " + string(seed) + " Gene-Seed.";
+            tixt += "  The " + string(apoth) + " surviving " + string(obj_ini.player_role_data[eROLE.APOTHECARY].role) + " were able to recover " + string(seed) + " Gene-Seed.";
         }
         if ((apoth == 0) && (seed > 0)) {
-            tixt += "  You had no able-bodied " + string(obj_ini.role[100][15]) + ", or all of them perished in the Crusade.  Foreign Apothecaries were able to recover " + string(seed) + " of your Gene-Seed.";
+            tixt += "  You had no able-bodied " + string(obj_ini.player_role_data[eROLE.APOTHECARY].role) + ", or all of them perished in the Crusade.  Foreign Apothecaries were able to recover " + string(seed) + " of your Gene-Seed.";
         }
     }
     if (obj_ini.doomed == 1) {
@@ -220,13 +213,13 @@ function scr_crusade() {
 //TODO never place the star out of reach of a player fleet, eiter increase allowed response time or find nearer planet
 function launch_crusade() {
     var star_id = scr_random_find(2, true, "", "");
-    if (star_id == undefined) {
+    if (star_id == noone) {
         LOGGER.error("RE: Crusade, couldn't find a star for the crusade");
         return false;
     } else {
         //TODO decide the target/purpose of the crusade to create more variety and to help with post crusade rewards
         var _nearest_player_fleet = get_nearest_player_fleet(star_id.x, star_id.y);
-        if (_nearest_player_fleet == "none") {
+        if (_nearest_player_fleet == noone) {
             return false;
         }
         var travel_leeway = 10;

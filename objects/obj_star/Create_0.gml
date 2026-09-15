@@ -1,5 +1,5 @@
 // Creates all variables, sets up default variables for different planets and if there is a fleet orbiting a system/planet
-craftworld = 0; // orbit_angle=0;orbit_radius=0;
+craftworld = 0;
 space_hulk = 0;
 old_x = 0;
 old_y = 0;
@@ -10,9 +10,8 @@ if ((((x >= (room_width - 150)) && (y <= 450)) || (y < 100)) && (global.load == 
 }
 
 scale = 1;
-var run = 0;
 name = "";
-star = "";
+star = noone;
 planets = 0;
 owner = eFACTION.IMPERIUM;
 image_speed = 0;
@@ -72,51 +71,51 @@ p_problem = array_create_advanced(_planet_array_size, array_create(8, ""));
 p_problem_other_data = array_create_advanced(_planet_array_size, array_create_advanced(8, {}));
 p_timer = array_create_advanced(_planet_array_size, array_create(8, -1));
 
+system_datas = array_create(8, undefined);
+system_garrison = array_create(8, undefined);
+system_sabatours = array_create(8, undefined);
 
-system_datas = array_create(8, 0);
-system_garrison = array_create(8, false);
-system_sabatours = array_create(8, 0);
-
-get_garrison = function(planet){
+get_garrison = function(planet) {
     var _gar = system_garrison[planet];
-    if (_gar == false){
-        system_garrison[planet] = new GarrisonForce(self, planet);
+    if (is_undefined(_gar)) {
+        system_garrison[planet] = new GarrisonForce(id, planet);
         _gar = system_garrison[planet];
-        _gar.star = self;
+        _gar.star = id;
         _gar.planet = planet;
-    } else  {
+    } else {
         _gar.update();
     }
     return _gar;
-}
+};
 
-get_sabatours = function(planet){
+get_sabatours = function(planet) {
     var _gar = system_sabatours[planet];
-    if (_gar == false){
-        system_sabatours[planet] = new GarrisonForce(self, planet, "sabotage");
+    if (is_undefined(_gar)) {
+        system_sabatours[planet] = new GarrisonForce(id, planet, "sabotage");
         _gar = system_sabatours[planet];
-        _gar.star = self;
+        _gar.star = id;
         _gar.planet = planet;
-    } else  {
+    } else {
         _gar.update();
     }
     return _gar;
-}
+};
 
-get_planet_data = function(planet){
+/// @returns {Struct.PlanetData}
+get_planet_data = function(planet) {
     var _gar = system_datas[planet];
-    if (_gar == false){
-        system_datas[planet] = new PlanetData(planet, self);
+    if (is_undefined(_gar)) {
+        system_datas[planet] = new PlanetData(planet, id);
         _gar = system_datas[planet];
-    } else  {
+    } else {
         _gar.refresh_data();
     }
-    return _gar;    
-}
+    return _gar;
+};
 
-add_feature = function(planet, feature){
+add_feature = function(planet, feature) {
     array_push(p_feature[planet], feature);
-}
+};
 
 system_player_ground_forces = 0;
 garrison = false;
@@ -125,8 +124,6 @@ var _array_size = 23;
 present_fleet = array_create(_array_size, 0);
 
 vision = 1;
-// present_fleets=0;
-// tau_fleets=0;
 
 ai_a = -1;
 ai_b = -1;
@@ -134,29 +131,11 @@ ai_c = -1;
 ai_d = -1;
 ai_e = -1;
 
-global.star_name_colors = [
-    c_gray,
-    c_white, //player
-    c_gray, //imperium
-    c_red, // toaster fuckers
-    CM_GREEN_COLOR, //nothing for inquisition
-    c_white, //ecclesiarchy
-    #FF8000, //Hi, I'm Elfo
-    #009500, // waagh
-    #FECB01, // the greater good
-    #AD5272, // bug boys
-    c_dkgray, // chaos
-    CM_GREEN_COLOR, //nothing for heretics either
-    #AD5272, //why 12 is skipped in general, we will never know
-    #80FF00 // Sleepy robots
-];
-
 #region save/load serialization
 
 /// Called from save function to take all object variables and convert them to a json savable format and return it
 serialize = function() {
-    var object_star = self;
-
+    var object_star = id;
     var planet_data = [];
 
     for (var p = 1; p <= object_star.planets; p++) {
@@ -164,7 +143,7 @@ serialize = function() {
             dispo: object_star.dispo[p],
             planet: object_star.planet[p],
         };
-        var var_names = variable_struct_get_names(object_star);
+        var var_names = variable_instance_get_names(object_star);
         for (var n = 0; n < array_length(var_names); n++) {
             var var_name = var_names[n];
             if (string_starts_with(var_name, "p_")) {
@@ -178,17 +157,10 @@ serialize = function() {
         obj: object_get_name(object_index),
         x,
         y,
-        present_fleet: object_star.present_fleet,
         planet_data: planet_data,
     };
-    if (struct_exists(object_star, "system_garrison")) {
-        save_data.system_garrison = object_star.system_garrison;
-    }
-    if (struct_exists(object_star, "system_sabatours")) {
-        save_data.system_sabatours = object_star.system_sabatours;
-    }
 
-    if (struct_exists(object_star, "p_governor")) {
+    if (!is_undefined(object_star.p_governor)) {
         save_data.p_governor = object_star.p_governor;
     }
 
@@ -196,7 +168,11 @@ serialize = function() {
         "temp",
         "serialize",
         "deserialize",
-        "arraysum"
+        "arraysum",
+        "system_garrison",
+        "system_sabatours",
+        "system_datas",
+        "present_fleet",
     ];
     var excluded_from_save_start = ["p_"];
 
@@ -215,32 +191,24 @@ function deserialize(save_data) {
 
     // Automatic var setting
     var all_names = struct_get_names(save_data);
-    var _len = array_length(all_names);
-    for (var i = 0; i < _len; i++) {
+    for (var i = 0; i < array_length(all_names); i++) {
         var var_name = all_names[i];
         if (array_contains(exclusions, var_name)) {
             continue;
         }
         var loaded_value = struct_get(save_data, var_name);
-        variable_struct_set(self, var_name, loaded_value);
+        variable_instance_set(id, var_name, loaded_value);
     }
 
-    // Set explicit vars here
-    if (struct_exists(save_data, "present_fleet")) {
-        variable_struct_set(self, "present_fleet", save_data.present_fleet);
-    }
-
-    var _temp_features = false;
     if (struct_exists(save_data, "planet_data")) {
         var planet_arr = save_data.planet_data;
-        var _len = array_length(planet_arr);
-        for (var p = 1; p < _len; p++) {
+        for (var p = 1; p < array_length(planet_arr); p++) {
             var planet = planet_arr[p];
             var var_names = struct_get_names(planet);
             for (var v = 0; v < array_length(var_names); v++) {
                 var var_name = var_names[v];
 
-                if (var_name == "p_feature"){
+                if (var_name == "p_feature") {
                     var _planet_features = planet[$ var_name];
                     for (var f = 0; f < array_length(_planet_features); f++) {
                         var _feat = _planet_features[f];
@@ -252,33 +220,19 @@ function deserialize(save_data) {
 
                         _new_feat.load_json_data(_feat);
 
-                        array_push(self.p_feature[p], _new_feat);
+                        array_push(p_feature[p], _new_feat);
                     }
-                     continue;
+                    continue;
                 }
                 var val = planet[$ var_name];
-                // var_name = "p_type"
-                // planet = {"p_type":"hive"};
-                // val = planet[$var_name] = "hive"
-
                 self[$ var_name][p] = val;
-                // variable_struct_set(self, var_name, planet[$var_name]);
             }
         }
     }
 
-    if (struct_exists(save_data, "system_sabatours")) {
-        variable_struct_set(self, "system_sabatours", save_data.system_sabatours);
-    }
-    if (struct_exists(save_data, "system_garrison")) {
-        variable_struct_set(self, "system_garrison", save_data.system_garrison);
-    }
-
     if (struct_exists(save_data, "p_governor")) {
-        variable_struct_set(self, "p_governor", save_data.p_governor);
+        variable_instance_set(id, "p_governor", save_data.p_governor);
     }
-
-
 }
 
 #endregion

@@ -6,15 +6,14 @@ function add_marines_to_recovery() {
         if (is_struct(_unit) && ally[i] == false) {
             if (marine_dead[i] == 1 && marine_type[i] != "") {
                 var _role_priority_bonus = 0;
-                var _chief_librarian = $"Chief {_roles[eROLE.LIBRARIAN]}";
                 switch (_unit.role()) {
-                    case obj_ini.role[100][eROLE.CHAPTERMASTER]:
+                    case obj_ini.player_role_data[eROLE.CHAPTERMASTER].role:
                         _role_priority_bonus = 720;
                         break;
-                    case "Forge Master":
-                    case "Master of Sanctity":
-                    case "Master of the Apothecarion":
-                    case _chief_librarian:
+                    case _roles[eROLE.FORGEMASTER]:
+                    case _roles[eROLE.CHIEFLIBRARIAN]:
+                    case _roles[eROLE.MASTERAPOTHECARY]:
+                    case _roles[eROLE.MASTERCHAPLAIN]:
                         _role_priority_bonus = 360;
                         break;
                     case _roles[eROLE.CAPTAIN]:
@@ -33,8 +32,8 @@ function add_marines_to_recovery() {
                     case _roles[eROLE.APOTHECARY]:
                     case _roles[eROLE.TECHMARINE]:
                     case _roles[eROLE.LIBRARIAN]:
-                    case "Codiciery":
-                    case "Lexicanum":
+                    case _roles[eROLE.CODICIERY]:
+                    case _roles[eROLE.LEXICANUM]:
                         _role_priority_bonus = 40;
                         break;
                     case _roles[eROLE.TACTICAL]:
@@ -132,7 +131,7 @@ function distribute_experience(_units, _total_exp) {
 function after_battle_slime_and_equipment_maintenance(unit) {
     if (unit.base_group == "astartes") {
         if (unit.gene_seed_mutations.mucranoid == 1) {
-            var muck = roll_dice_unit(1, 100, "high", unit);
+            var muck = roll_dice_unit(unit, 1, 100, "high");
             if (muck == 1) {
                 //slime  armour damaged due to mucranoid
                 if (unit.armour != "") {
@@ -275,9 +274,9 @@ function after_combat_recover_marine_gene_seed(unit) {
     if (unit.IsSpecialist(SPECIALISTS_STANDARD, true)) {
         obj_ncombat.final_command_deaths += 1;
         var recent = true;
-        if (is_specialist(unit.role, SPECIALISTS_TRAINEES)) {
+        if (unit.IsSpecialist(SPECIALISTS_TRAINEES)) {
             recent = false;
-        } else if (array_contains([string("Venerable {0}", obj_ini.role[100][6]), "Codiciery", "Lexicanum"], unit.role())) {
+        } else if (unit.IsSpecialist(SPECIALISTS_LIBRARIANS)) {
             recent = false;
         }
         if (recent == true) {
@@ -291,7 +290,7 @@ function after_combat_recover_marine_gene_seed(unit) {
     // show_message("ded; increase final deaths");
 
     if (obj_controller.blood_debt == 1) {
-        if (unit.role() == obj_ini.role[100][eROLE.SCOUT]) {
+        if (unit.role() == obj_ini.player_role_data[eROLE.SCOUT].role) {
             obj_controller.penitent_current += 2;
         } else {
             obj_controller.penitent_current += 4;
@@ -301,26 +300,13 @@ function after_combat_recover_marine_gene_seed(unit) {
     }
 
     if (unit.base_group == "astartes") {
-        var _birthday = unit.age();
-        var _current_year = (obj_controller.millenium * 1000) + obj_controller.year;
-        var _seed_harvestable = 0;
-        var _seed_lost = 0;
+        var _unit_seed = unit.recoverable_geneseed();
 
-        if (_birthday <= (_current_year - 10) && unit.gene_seed_mutations.zygote == 0) {
-            _seed_lost++;
-            if (irandom_range(1, 10) > 1) {
-                _seed_harvestable++;
-            }
-        }
-        if (_birthday <= (_current_year - 5)) {
-            _seed_lost++;
-            if (irandom_range(1, 10) > 1) {
-                _seed_harvestable++;
-            }
+        if (irandom_range(1, 10) < 9) {
+            obj_ncombat.seed_harvestable += _unit_seed;
         }
 
-        obj_ncombat.seed_harvestable += _seed_harvestable;
-        obj_ncombat.seed_lost += _seed_lost;
+        obj_ncombat.seed_lost += _unit_seed;
     }
 
     var last = 0;
@@ -339,7 +325,7 @@ function after_combat_recover_marine_gene_seed(unit) {
 function after_combat_dead_marine_equipment_recovered(unit) {
     var _equipment = unit.unit_equipment_data();
 
-    var _equip_slots = struct_get_names(_equipment);
+    var _equip_slots = _equipment.present_items;
 
     var basic_recover_chance = 40;
 
@@ -360,18 +346,13 @@ function after_combat_dead_marine_equipment_recovered(unit) {
     for (var i = 0; i < array_length(_equip_slots); i++) {
         var _recover = true;
         var _slot = _equip_slots[i];
-        var _item = _equipment[$ _slot];
-
-        if (!is_struct(_item)) {
-            continue;
-        }
+        var _item = _equipment.get_item(_slot);
 
         var _specific_item_chance = roll_dice_chapter(1, 100, "low");
 
         if (obj_ncombat.dropping && obj_ncombat.defeat) {
             _specific_item_chance = 9999;
         }
-        //if (obj_ini.race[marine_co[i], marine_id[i]]!=1) then _specific_item_chance=9999;
 
         var _specific_type_recovery = basic_recover_chance + _item.recovery_chance;
 
@@ -403,15 +384,15 @@ function after_combat_dead_marine_equipment_recovered(unit) {
         }
 
         switch (_slot) {
-            case "armour_data":
+            case "armour":
                 unit.update_armour("", false, _recover);
-            case "weapon_one_data":
-                unit.weapon_one("", false, _recover);
-            case "weapon_two_data":
+            case "wep1":
+                unit.update_weapon_one("", false, _recover);
+            case "wep2":
                 unit.update_weapon_two("", false, _recover);
-            case "gear_data":
+            case "gear":
                 unit.update_gear("", false, _recover);
-            case "mobility_item_data":
+            case "mobi":
                 unit.update_mobility_item("", false, _recover);
         }
     }

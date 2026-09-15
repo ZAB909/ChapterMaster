@@ -121,6 +121,13 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
             arp = 1;
             rang = 1;
             break;
+        case "RAM":
+            atta = 100;
+            arp = 3;
+            rang = 1;
+            amm = -1;
+            spli = 6;
+            break;
         default:
             break;
     }
@@ -643,6 +650,11 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
                 arp = 3;
                 rang = 1;
                 break;
+            case "Hybrid Claws":
+                atta = 50;
+                arp = 2;
+                rang = 1;
+                break;
             case "Witchfire":
                 atta = 100;
                 arp = 3;
@@ -665,6 +677,57 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
                 arp = 2;
                 rang = 2;
                 amm = 1;
+                break;
+            case "Hand Flamer":
+                atta = 40;
+                arp = 1;
+                rang = 2;
+                amm = 5;
+                break;
+            case "Force Staff":
+                atta = 100;
+                arp = 3;
+                rang = 1;
+                break;
+            case "Heavy Maul":
+                atta = 80;
+                arp = 2;
+                rang = 1;
+                break;
+            case "Heavy Mining Laser":
+                atta = 100;
+                arp = 4;
+                rang = 4;
+                amm = 6;
+                break;
+            case "Heavy Stubber":
+                atta = 100;
+                arp = 1;
+                rang = 6;
+                amm = 8;
+                break;
+            case "Demolition Charges":
+                atta = 100;
+                arp = 3;
+                rang = 2;
+                amm = 3;
+                break;
+            case "Drilldozer Blade":
+                atta = 120;
+                arp = 3;
+                rang = 1;
+                spli = 2;
+                break;
+            case "Autocannon":
+                atta = 80;
+                arp = 3;
+                rang = 12;
+                amm = 10;
+                break;
+            case "Melee Weapon":
+                atta = 50;
+                arp = 1;
+                rang = 1;
                 break;
             default:
                 break;
@@ -1069,7 +1132,6 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
     }
 
     atta = round(atta * obj_ncombat.global_defense);
-    arp = round(arp * obj_ncombat.global_defense);
 
     if (obj_ncombat.enemy == eFACTION.PLAYER) {
         // more attack crap here
@@ -1094,7 +1156,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
     for (var b = 0; b < 30; b++) {
         if ((wep[b] == name) && (goody == 0)) {
             att[b] += atta * man_number;
-            apa[b] += arp;
+            apa[b] = arp;
             range[b] = rang;
             wep_num[b] += man_number;
             if (obj_ncombat.started == 0) {
@@ -1117,7 +1179,7 @@ function scr_en_weapon(name, is_man, man_number, man_type, group) {
         wep[first] = name;
         splash[first] = spli;
         att[first] += atta * man_number;
-        apa[first] += arp;
+        apa[first] = arp;
         range[first] = rang;
         wep_num[first] += man_number;
         if (obj_ncombat.started == 0) {
@@ -1197,7 +1259,7 @@ global.en_weapons = {
             40,
             60,
             80,
-            100
+            100,
         ],
         "armor_penetration": 0,
         "range": 5,
@@ -1246,7 +1308,7 @@ global.en_weapons = {
         "attack": [
             105,
             105,
-            130
+            130,
         ],
         "armor_penetration": 1,
         "range": 1,
@@ -1378,21 +1440,21 @@ global.en_weapons = {
     "Daemonhost Powers": {
         "attack": [
             100,
-            300
+            300,
         ],
         "armor_penetration": [
             100,
-            300
+            300,
         ],
         "range": [
             1,
-            6
+            6,
         ],
         "splash": [
             0,
             0,
             1,
-            1
+            1,
         ], // Doubled up to keep convention
     },
     // =====================
@@ -1424,7 +1486,7 @@ global.en_weapons = {
             30,
             50,
             50,
-            70
+            70,
         ],
         "armor_penetration": 1, // Original code had no armor penetration for this weapon, Flayer Array has arp 1 so will this does as well
         "range": 6.1,
@@ -1437,7 +1499,7 @@ global.en_weapons = {
             70,
             70,
             70,
-            100
+            100,
         ],
         "armor_penetration": [
             0,
@@ -1445,7 +1507,7 @@ global.en_weapons = {
             0,
             0,
             0,
-            1
+            1,
         ],
         "range": 6.1,
         "splash": 0,
@@ -2112,7 +2174,7 @@ global.en_weapons = {
             60,
             75,
             90,
-            105
+            105,
         ],
         "armor_penetration": 0,
         "range": 10,
@@ -2249,7 +2311,7 @@ global.en_weapons = {
             80,
             80,
             80,
-            150
+            150,
         ],
         "armor_penetration": 0,
         "range": 5,

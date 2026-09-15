@@ -65,7 +65,7 @@ try {
                     obj_controller.disposition[10] -= 10;
                     text = "The heretic is killed in a most violent fashion.  With a lack of go-between the meeting cannot proceed.";
                     reset_popup_options();
-                    mission = ""; // image="";
+                    mission = "";
                     if (obj_controller.blood_debt == 1) {
                         obj_controller.penitent_current += 1;
                         obj_controller.penitent_turn = 0;
@@ -151,15 +151,25 @@ try {
                 }
 
                 with (obj_event) {
+                    var _popup_disp_arti = undefined;
+                    if (obj_controller.fest_display > -1) {
+                        _popup_disp_arti = fetch_artifact(obj_controller.fest_display);
+                    }
                     var ide = 0;
                     repeat (700) {
                         ide += 1;
                         if ((attend_corrupted[ide] == 0) && (attend_id[ide] > 0)) {
-                            if (string_count("chaos", obj_ini.artifact_tags[obj_controller.fest_display]) > 0) {
-                                obj_ini.TTRPG[attend_co[ide]][attend_id[ide]].corruption += choose(1, 2, 3, 4);
+                            if (is_struct(_popup_disp_arti) && _popup_disp_arti.has_tag("chaos")) {
+                                var _unit = fetch_unit([attend_co[ide], attend_id[ide]]);
+                                if (is_struct(_unit)) {
+                                    _unit.corruption += choose(1, 2, 3, 4);
+                                }
                             }
-                            if (string_count("daemonic", obj_ini.artifact_tags[obj_controller.fest_display]) > 0) {
-                                obj_ini.TTRPG[attend_co[ide]][attend_id[ide]].corruption += choose(6, 7, 8, 9);
+                            if (is_struct(_popup_disp_arti) && _popup_disp_arti.has_tag("daemonic")) {
+                                var _unit = fetch_unit([attend_co[ide], attend_id[ide]]);
+                                if (is_struct(_unit)) {
+                                    _unit.corruption += choose(6, 7, 8, 9);
+                                }
                             }
                             attend_corrupted[ide] = 1;
                         }
@@ -199,8 +209,6 @@ try {
 
     if ((press == 0) && array_length(options) || ((demand == 1) && (mission != "") && (string_count("Inquisition", title) > 0)) || ((demand == 1) && (title == "Inquisition Recon"))) {
         if (title == "Inquisition Recon") {
-            var mission_star, onceh;
-            onceh = 0;
             obj_controller.temp[200] = string(loc);
             var mission_star = find_star_by_name(obj_controller.temp[200]);
             if (add_new_problem(planet, "recon", estimate, mission_star)) {
@@ -215,12 +223,10 @@ try {
 
         if ((mission != "") && (title == "Inquisition Mission")) {
             obj_controller.temp[200] = string(loc);
-            var mission_star, onceh;
-            mission_star = 0;
-            onceh = 0;
+            var onceh = 0;
             var mission_star = find_star_by_name(obj_controller.temp[200]);
             var mission_is_go = false;
-            if (mission_star != "none" && planet > 0) {
+            if (mission_star != noone && planet > 0) {
                 var _estimate = estimate;
                 var _planet = planet;
                 var _mission = mission;
@@ -314,10 +320,10 @@ try {
                         if (obj_ini.home_type == "Lava") {
                             image = "fortress_lava";
                         }
-                        last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.home_name, 2);
+                        last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.home_name, -1);
                     } else if (obj_ini.fleet_type != ePLAYER_BASE.HOME_WORLD) {
                         image = "artifact_given";
-                        last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.ship[0], 501);
+                        last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.ship[0], 0);
                     }
 
                     title = "New Artifact";
@@ -332,7 +338,7 @@ try {
                     }
                     scr_event_log("", "Inquisition Mission Accepted: The Inquisition has left an Artifact in your care.");
 
-                    text += $"  It is some form of {obj_ini.artifact[last_artifact]}.";
+                    text += $"  It is some form of {fetch_artifact(last_artifact).get_type_name()}.";
                     reset_popup_options();
                     obj_controller.cooldown = 10;
                     exit;

@@ -1,7 +1,6 @@
 /// @self Asset.GMObject.obj_en_fleet
 function navy_orbiting_planet_end_turn_action() {
     end_sequence_finished = false;
-    orbiting = instance_nearest(x, y, obj_star);
 
     var _war_with_player = obj_controller.faction_status[eFACTION.IMPERIUM] == "War";
     if (trade_goods != "player_hold") {
@@ -86,11 +85,9 @@ function navy_orbiting_planet_end_turn_action() {
 
 /// @self Asset.GMObject.obj_en_fleet
 function check_navy_guard_still_live() {
-    var o = 0;
     if (guardsmen_unloaded) {
-        var o = 0, guardsmen_dead = true;
-        repeat (orbiting.planets) {
-            o += 1;
+        var guardsmen_dead = true;
+        for (var o = 1; o <= orbiting.planets; o++) {
             if (orbiting.p_guardsmen[o] > 0) {
                 guardsmen_dead = false;
                 break;
@@ -106,21 +103,15 @@ function check_navy_guard_still_live() {
 
 function build_new_navy_fleet(construction_forge) {
     /// @type {Asset.GMObject.obj_en_fleet}
-    var new_navy_fleet = instance_create(construction_forge.x, construction_forge.y, obj_en_fleet);
+    var new_navy_fleet = create_enemy_fleet(construction_forge.x, construction_forge.y, eFACTION.IMPERIUM);
 
     with (new_navy_fleet) {
-        owner = eFACTION.IMPERIUM;
-
         capital_number = 0;
         frigate_number = 0;
         escort_number = 1;
         home_x = x;
         home_y = y;
         warp_able = true;
-        with (construction_forge) {
-            present_fleet[2] += 1;
-        }
-        orbiting = construction_forge;
         navy = 1;
 
         var total_ships = 0;
@@ -141,10 +132,9 @@ function build_new_navy_fleet(construction_forge) {
 /// @self Asset.GMObject.obj_en_fleet
 function new_navy_ships_forge() {
     if (trade_goods == "building_ships") {
-        var onceh = 0, advance = false, p = 0;
+        var onceh = 0;
+        var advance = false;
 
-        p = 0;
-        is_orbiting();
         for (var p = 1; p <= orbiting.planets; p++) {
             if (orbiting.p_type[p] == "Forge") {
                 //if no non-imperium,player, or eldar aligned fleets or ground forces, continue
@@ -198,7 +188,6 @@ function new_navy_ships_forge() {
             trade_goods = "";
         }
 
-        //if (trade_goods="building_ships" || !advance) then exit;
         end_sequence_finished = true;
     }
 }
@@ -268,11 +257,11 @@ function imperial_navy_bombard() {
         if (orbiting.p_type[p] != "Daemon") {
             if (orbiting.p_population[p] == 0 && orbiting.p_tyranids[p] > 0) {
                 _bombard = p;
-            } else if (orbiting.p_population[p] == 0 && orbiting.p_orks[p] > 0 && orbiting.p_owner[p] == 7) {
+            } else if (orbiting.p_population[p] == 0 && orbiting.p_orks[p] > 0 && orbiting.p_owner[p] == eFACTION.ORK) {
                 _bombard = p;
-            } else if (orbiting.p_owner[p] == 8 && orbiting.p_tau[p] + orbiting.p_pdf[p] > 0) {
+            } else if (orbiting.p_owner[p] == eFACTION.TAU && orbiting.p_tau[p] + orbiting.p_pdf[p] > 0) {
                 _bombard = p;
-            } else if (orbiting.p_owner[p] == 10 && (orbiting.p_chaos[p] + orbiting.p_traitors[p] + orbiting.p_pdf[p] > 0 || orbiting.p_heresy[p] >= 50)) {
+            } else if (orbiting.p_owner[p] == eFACTION.CHAOS && (orbiting.p_chaos[p] + orbiting.p_traitors[p] + orbiting.p_pdf[p] > 0 || orbiting.p_heresy[p] >= 50)) {
                 _bombard = p;
             } else {
                 var _cults = return_planet_features(orbiting.p_feature[p], eP_FEATURES.GENE_STEALER_CULT);
@@ -289,7 +278,7 @@ function imperial_navy_bombard() {
         if (guardsmen_unloaded) {
             navy_load_guardsmen();
         }
-        var _p_data = new PlanetData(_bombard, orbiting);
+        var _p_data = orbiting.get_planet_data(_bombard);
         scare = (capital_number * 3) + frigate_number;
         _p_data.suffer_navy_bombard(scare);
         end_sequence_finished = true;
@@ -306,9 +295,9 @@ function navy_hunt_player_assets() {
     if (hold) {
         // Chase player fleets
         var chase_fleet = get_nearest_player_fleet(x, y, false, true);
-        if (chase_fleet != "none") {
+        if (chase_fleet != noone) {
             var thatp, my_dis;
-            etah = chase_fleet.eta;
+            etah = chase_fleet.action_eta;
 
             var intercept = fleet_intercept_time_calculate(chase_fleet);
             if (intercept) {
@@ -420,22 +409,6 @@ function navy_hunt_player_assets() {
         with (obj_temp8) {
             instance_destroy();
         }
-
-        /*var homeworld_distance,homeworld_nearby,fleet_nearby,fleet_distance;
-        homeworld_distance=9999;fleet_distance=9999;fleet_nearby=0;homeworld_nearby=0;
-    
-        with(obj_p_fleet){if (action!="") then y-=20000;}// Disable non-stationary player fleets
-        if (instance_exists(obj_p_fleet)){fleet_nearby=instance_nearest(x,y,obj_p_fleet);fleet_distance=point_distance(x,y,fleet_nearby.x,fleet_nearby.y);}// Get closest player fleet
-        with(obj_star){if (owner  = eFACTION.PLAYER) then instance_create(x,y,obj_temp7);}// Create temp7 at player stars
-        if (instance_exists(obj_temp7)){homeworld_nearby=instance_nearest(x,y,obj_temp7);homeworld_distance=point_distance(x,y,homeworld_nearby.x,homeworld_nearby.y);}// Get closest star
-        with(obj_p_fleet){if (y<-10000) then y+=20000;}// Enable non-stationary player fleets
-    
-        if (homeworld_distance<=fleet_distance && homeworld_distance<7000 && instance_exists(homeworld_nearby)){// Go towards planet
-            action_x=homeworld_nearby.x;action_y=homeworld_nearby.y;set_fleet_movement();;exit;
-        }
-    
-    
-    */
     }
 }
 
@@ -447,7 +420,7 @@ function navy_finish_destroying_player_world() {
         function(prev, _curr, idx) {
             return _curr > 0 ? idx : prev;
         },
-        0
+        0,
     );
 
     if (tar == 0) {
@@ -456,7 +429,7 @@ function navy_finish_destroying_player_world() {
         action = "";
     } else {
         //this was always a dead path previously since tar could never be bigger than i, now it will
-        var _targ = new PlanetData(tar, orbiting);
+        var _targ = orbiting.get_planet_data(tar);
         if (orbiting.p_owner[tar] == eFACTION.PLAYER && orbiting.p_player[tar] == 0 && planet_feature_bool(orbiting.p_feature[tar], eP_FEATURES.MONASTERY) == 0) {
             _targ.return_to_first_owner();
             _targ.add_disposition(-50);
@@ -471,33 +444,26 @@ function navy_attack_player_world() {
     if (obj_controller.faction_status[eFACTION.IMPERIUM] == "War" && trade_goods == "invade_player" && guardsmen_unloaded == 0) {
         if (instance_exists(orbiting)) {
             var tar = 0;
-            var i = 0;
-            for (i = 1; i <= orbiting.planets; i++) {
+            for (var i = 1; i <= orbiting.planets; i++) {
                 if ((orbiting.p_owner[i] == eFACTION.PLAYER) && (planet_feature_bool(orbiting.p_feature[i], eP_FEATURES.MONASTERY) == 0) && (orbiting.p_guardsmen[i] == 0)) {
                     tar = i;
                 }
             }
             if (tar) {
                 guardsmen_unloaded = 1;
-                i = 0;
-                repeat (20) {
-                    i += 1;
+                for (var i = 1; i <= 20; i++) {
                     if (capital_imp[i] > 0) {
                         orbiting.p_guardsmen[tar] += capital_imp[i];
                         capital_imp[i] = 0;
                     }
                 }
-                i = 0;
-                repeat (30) {
-                    i += 1;
+                for (var i = 1; i <= 30; i++) {
                     if (frigate_imp[i] > 0) {
                         orbiting.p_guardsmen[tar] += frigate_imp[i];
                         frigate_imp[i] = 0;
                     }
                 }
-                i = 0;
-                repeat (30) {
-                    i += 1;
+                for (var i = 1; i <= 30; i++) {
                     if (escort_imp[i] > 0) {
                         orbiting.p_guardsmen[tar] += escort_imp[i];
                         escort_imp[i] = 0;
@@ -513,7 +479,7 @@ function navy_attack_player_world() {
 /// @self Asset.GMObject.obj_en_fleet
 function navy_bombard_player_world() {
     var bombard = false;
-    if (orbiting != noone) {
+    if (instance_exists(orbiting)) {
         if (orbiting.object_index == obj_star) {
             bombard = true;
         }
@@ -529,7 +495,7 @@ function navy_bombard_player_world() {
                 hostile_fleet_count += present_fleet[eFACTION.PLAYER] + present_fleet[eFACTION.ELDAR] + present_fleet[eFACTION.ORK] + present_fleet[eFACTION.TAU] + present_fleet[eFACTION.TYRANIDS] + present_fleet[eFACTION.CHAOS] + present_fleet[eFACTION.NECRONS];
             }
             if (hostile_fleet_count == 0) {
-                var bombard = 0, deaths = 0, hurss = 0, onceh = 0, wob = 0, kill = 0;
+                var deaths = 0, hurss = 0, onceh = 0, wob = 0, kill = 0;
 
                 for (var o = 1; o <= orbiting.planets; o++) {
                     if (orbiting.p_owner[o] == eFACTION.PLAYER) {
@@ -541,7 +507,7 @@ function navy_bombard_player_world() {
                 }
 
                 if (bombard) {
-                    var _orbiting_data = new PlanetData(bombard, orbiting);
+                    var _orbiting_data = orbiting.get_planet_data(bombard);
                     scare = (capital_number * 3) + frigate_number;
 
                     if (scare > 2) {
@@ -646,7 +612,7 @@ function fleet_remaining_guard_ratio() {
     var _maxi = fleet_max_guard();
     guardsmen_ratio = 0;
     if (guardsmen_unloaded) {
-        if (is_orbiting()) {
+        if (instance_exists(orbiting)) {
             _curr = array_sum(orbiting.p_guardsmen);
         }
 
@@ -679,7 +645,7 @@ function scr_navy_unload_guard(planet) {
 
 /// @self Asset.GMObject.obj_en_fleet
 function scr_navy_planet_action() {
-    if (action == "" && is_orbiting() && !guardsmen_unloaded) {
+    if (action == "" && !guardsmen_unloaded && instance_exists(orbiting)) {
         // Unload if problem sector, otherwise patrol
         var selected_planet = 0, highest = 0, _target_pop = 0, _popu_large = false;
 
@@ -709,7 +675,7 @@ function scr_navy_planet_action() {
             }
 
             if (obj_controller.faction_status[eFACTION.IMPERIUM] == "War") {
-                if (orbiting.p_owner[p] == 1 && orbiting.p_player[p] == 0 && highest == 0) {
+                if (orbiting.p_owner[p] == eFACTION.PLAYER && orbiting.p_player[p] == 0 && highest == 0) {
                     selected_planet = p;
                     highest = 0.5;
                 }
@@ -823,7 +789,7 @@ function scr_navy_planet_action() {
 /// @self Asset.GMObject.obj_en_fleet
 function navy_load_up_guardsmen_or_move_planet(planet, valid_next_planet) {
     var _player_war = false;
-    var _pdata = new PlanetData(planet, orbiting);
+    var _pdata = orbiting.get_planet_data(planet);
     if (_pdata.player_forces > 0 && obj_controller.faction_status[eFACTION.IMPERIUM] == "War") {
         _player_war = true;
     }
@@ -890,9 +856,9 @@ function scr_navy_has_unloaded_guardsmen_turn_end() {
 
 /// @self Asset.GMObject.obj_en_fleet
 function scr_navy_recruit_new_guard() {
-    var o = 0, that = 0, te = 0, te_large = 0;
+    var that = 0, te = 0, te_large = 0;
     for (var o = 1; o <= orbiting.planets; o++) {
-        if (orbiting.p_owner[o] <= 5) {
+        if (orbiting.p_owner[o] <= eFACTION.ECCLESIARCHY) {
             var _imp_enemies = has_imperial_enemies(o, orbiting);
             if (_imp_enemies) {
                 continue;
@@ -912,9 +878,8 @@ function scr_navy_recruit_new_guard() {
 
     var guard_wanted = fleet_max_guard() - fleet_guard_current();
 
-    var recruit_planet = new PlanetData(that, orbiting);
+    var recruit_planet = orbiting.get_planet_data(that);
 
-    // if (orbiting.p_population[that]<guard_wanted && orbiting.p_large[that]=0) then trade_goods="";
     if (recruit_planet.population > guard_wanted || recruit_planet.large_population) {
         if (recruit_planet.large_population) {
             guard_wanted = recruit_planet.population_large_conversion(1000000000);
@@ -1016,7 +981,7 @@ function create_start_imperial_fleets() {
                 eFACTION.IMPERIUM,
                 eFACTION.MECHANICUS,
                 eFACTION.INQUISITION,
-                eFACTION.ECCLESIARCHY
+                eFACTION.ECCLESIARCHY,
             ];
 
             for (var b = 1; b <= 4; b++) {
@@ -1090,14 +1055,9 @@ function create_start_imperial_fleets() {
 
 function setup_start_imperial_navy_fleet(system) {
     var ii = 0;
-    /// @type {Asset.GMObject.obj_en_fleet} 
-    var nav = instance_create(system.x, system.y, obj_en_fleet);
-    var _star = system;
-    _star.present_fleet[eFACTION.IMPERIUM] += 1;
+    /// @type {Asset.GMObject.obj_en_fleet}
+    var nav = create_enemy_fleet(system.x, system.y, eFACTION.IMPERIUM);
     with (nav) {
-        orbiting = system;
-
-        owner = eFACTION.IMPERIUM;
         navy = 1;
 
         capital_number = choose(1, 2, 3);

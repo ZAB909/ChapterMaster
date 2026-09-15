@@ -1,39 +1,20 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 function squeeze_map_forces() {
     try {
         var _player_front_row = get_rightmost();
         var _enemy_front = get_leftmost(obj_enunit, false);
-        if (_player_front_row != "none" && _enemy_front != "none") {
+        if (_player_front_row != noone && _enemy_front != noone) {
             if (!collision_point(_player_front_row.x + 10, _player_front_row.y, obj_enunit, 0, 1)) {
-                var _enemy_front = get_leftmost(obj_enunit, false);
-                if (_enemy_front != "none") {
-                    var _move_distance = calculate_block_distances(_player_front_row, _enemy_front) - 2;
-                    with (obj_pnunit) {
-                        move_unit_block("east", _move_distance, true);
-                    }
+                var _move_distance = calculate_block_distances(_player_front_row, _enemy_front) - 2;
+                with (obj_pnunit) {
+                    move_unit_block("east", _move_distance, true);
                 }
             }
         }
 
-        /* var _enemy_front =  get_leftmost(obj_enunit, false);
-		if (_enemy_front!="none"){
-			var _player_front_row=get_rightmost();
-			if (_player_front_row!="none"){
-				var _move_distance = calculate_block_distances(_player_front_row, _enemy_front) -1;
-				with (obj_enunit){
-					if (!flank && _player_front_row.x<x){
-						move_unit_block("west", _move_distance);
-					}
-				}
-			}
-		}*/
-
         var _player_rear = get_leftmost();
-        if (_player_rear != "none") {
+        if (_player_rear != noone) {
             var _enemy_flank = get_rightmost(obj_enunit, true, false);
-            if (_enemy_flank != "none") {
+            if (_enemy_flank != noone) {
                 if (_enemy_flank.flank) {
                     var _move_distance = calculate_block_distances(_player_rear, _enemy_flank) - 1;
                     with (obj_enunit) {
@@ -52,16 +33,16 @@ function squeeze_map_forces() {
 function target_block_is_valid(target, desired_type) {
     try {
         var _is_valid = false;
-        if (target == "none") {
-            return false;
+        if (target == noone) {
+            return _is_valid;
         }
         if (instance_exists(target)) {
-            if (target.x > 0 && target.object_index == desired_type) {
+            if (target.x > -100 && target.object_index == desired_type) {
                 if (target.men + target.veh + target.dreads > 0) {
                     _is_valid = true;
                 } else {
-                    x = -5000;
-                    instance_deactivate_object(id);
+                    target.x = -5000;
+                    instance_deactivate_object(target);
                 }
             }
         }
@@ -73,7 +54,7 @@ function target_block_is_valid(target, desired_type) {
 
 function get_rightmost(block_type = obj_pnunit, include_flanking = true, include_main_force = true) {
     try {
-        var rightmost = "none";
+        var rightmost = noone;
         if (instance_exists(block_type)) {
             with (block_type) {
                 if (!include_flanking && flank) {
@@ -82,7 +63,7 @@ function get_rightmost(block_type = obj_pnunit, include_flanking = true, include
                 if (!include_main_force && !flank) {
                     continue;
                 }
-                if (x <= 0) {
+                if (x < -100) {
                     continue;
                 }
                 if (block_type == obj_pnunit) {
@@ -92,8 +73,8 @@ function get_rightmost(block_type = obj_pnunit, include_flanking = true, include
                         continue;
                     }
                 }
-                if (rightmost == "none" && x > 0) {
-                    rightmost = block_type.id;
+                if (rightmost == noone && x > -100) {
+                    rightmost = id;
                 } else {
                     if (x > rightmost.x) {
                         rightmost = id;
@@ -117,13 +98,13 @@ function block_has_armour(target) {
 
 function get_leftmost(block_type = obj_pnunit, include_flanking = true) {
     try {
-        var left_most = "none";
+        var left_most = noone;
         if (instance_exists(block_type)) {
             with (block_type) {
                 if (!include_flanking && flank) {
                     continue;
                 }
-                if (x <= 0) {
+                if (x < -100) {
                     continue;
                 }
                 if (block_type == obj_pnunit) {
@@ -133,10 +114,10 @@ function get_leftmost(block_type = obj_pnunit, include_flanking = true) {
                         continue;
                     }
                 }
-                if (left_most == "none" && x > 0) {
-                    left_most = block_type.id;
+                if (left_most == noone && x > -100) {
+                    left_most = id;
                 } else {
-                    if (x < left_most.x && x > 0) {
+                    if (x < left_most.x && x > -100) {
                         left_most = id;
                     }
                 }
@@ -241,9 +222,7 @@ function move_enemy_blocks() {
 
 /// @self Asset.GMObject.obj_enunit|Asset.GMObject.obj_pnunit
 function block_composition_string() {
-    var _composition_string = "";
-
-    _composition_string = $"{unit_count}x Total; ";
+    var _composition_string = $"{unit_count}x Total; ";
     if (men > 0) {
         _composition_string += $"{string_plural_count("Normal Unit", men)}; ";
     }
@@ -284,10 +263,98 @@ function draw_block_fadein() {
 
 /// @self Asset.GMObject.obj_enunit|Asset.GMObject.obj_pnunit
 function update_block_size() {
-    column_size = (men * 0.5) + medi + (dreads * 2) + (veh * 2.5);
+    column_size = men + (medi * 3) + (dreads * 6) + (veh * 8);
 }
 
 /// @self Asset.GMObject.obj_enunit|Asset.GMObject.obj_pnunit
 function update_block_unit_count() {
     unit_count = men + medi + dreads + veh;
+}
+
+/// @description Check if a column has the given target type.
+/// @param {Id.Instance.obj_enunit} column  Enemy battle block to check
+/// @param {string} target_type  "veh", "medi", or "men"
+/// @param {string} mode  "ranged" or "melee"
+/// @returns {bool}  true if the column has units matching the target type
+function has_target_type(column, target_type, mode = "ranged") {
+    try {
+        switch (target_type) {
+            case "veh":
+                return column.veh > 0;
+            case "medi":
+                return column.medi > 0;
+            case "men":
+                return mode == "ranged" ? column.men + column.medi > 0 : column.men > 0;
+        }
+
+        return false;
+    } catch (_exception) {
+        ERROR_HANDLER.handle_exception(_exception);
+        return false;
+    }
+}
+
+/// @description Find an enemy column that has the given target type. Checks the current enemy column first, then cycles through other columns in ranged mode.
+/// @param {string} target_type  "veh", "medi", or "men"
+/// @param {string} mode  "ranged" or "melee"
+/// @returns {Id.Instance|undefined}  The column instance, or undefined if none found
+/// @self Asset.GMObject.obj_pnunit
+function pick_target_column(target_type, mode) {
+    try {
+        if (has_target_type(enemy, target_type, mode)) {
+            return enemy;
+        }
+
+        if (mode == "ranged" && instance_number(obj_enunit) > 1) {
+            var _x2 = enemy.x;
+            repeat (instance_number(obj_enunit) - 1) {
+                _x2 += 10;
+                var _enemy2 = instance_nearest(_x2, y, obj_enunit);
+
+                if (has_target_type(_enemy2, target_type, mode) && !check_column_obstruction(enemy.column_size, _enemy2.column_size)) {
+                    return _enemy2;
+                }
+            }
+        }
+
+        return undefined;
+    } catch (_exception) {
+        ERROR_HANDLER.handle_exception(_exception);
+        return undefined;
+    }
+}
+
+function check_column_obstruction(front_size, back_size) {
+    if (back_size < front_size) {
+        return true;
+    } else {
+        var _pass_chance = ((back_size / front_size) - 1) * 100;
+        if (irandom_range(1, 100) < min(_pass_chance, 80)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/// @description Returns a human-readable label for a unit block instance.
+/// @param {Id.Instance.obj_pnunit|Id.Instance.obj_enunit} _inst
+/// @returns {String}
+function resolve_block_label(_inst) {
+    if (!instance_exists(_inst)) {
+        return string(_inst);
+    }
+
+    var _object_index = _inst.object_index;
+
+    if (_object_index == obj_nfort) {
+        return "Fort";
+    }
+
+    if (_object_index != obj_pnunit && _object_index != obj_enunit) {
+        return $"inst({_inst.id})";
+    }
+
+    var _desc = arrays_to_string_with_counts(_inst.dudes, _inst.dudes_num, true, false);
+    return $"<{_desc}>";
 }

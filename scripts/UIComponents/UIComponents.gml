@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function NullComponent() constructor {
     static is_null = function() {
         return true;
@@ -89,7 +87,7 @@ function UIEventComponent(owner, name) : UIComponent(owner, name) constructor {
             is_canceled = false;
         },
         [],
-        -1
+        -1,
     );
     time_source_start(event_time_source);
 
@@ -206,7 +204,7 @@ function UIMouseEventComponent(owner, name = "") : UIEventComponent(owner, name)
             var dx = window_mouse_get_delta_x();
             var dy = window_mouse_get_delta_y();
             return (dx * dx + dy * dy) <= move_threshold;
-        }
+        },
     ];
     ev_type = MOUSE_EV_TYPE.ON_ENTER;
 }
@@ -423,4 +421,4 @@ function UIMouseEventComponent(owner, name = "") : UIEventComponent(owner, name)
 //         .set_image_speed(0)
 //         .finalize()
 //         .finalize();
-// }
+// } 

@@ -20,6 +20,7 @@ player_fleet = false;
 
 helpful_navigator = new HelpfulPlaces();
 
+/// @self Id.Instance.obj_fleet_select
 selection_window.inside_method = function() {
     var mnz = 0;
     var xx = selection_window.XX;
@@ -29,27 +30,38 @@ selection_window.inside_method = function() {
     var width = selection_window.width;
     var height = selection_window.height;
 
-    // draw_text(view_xview[0]+46,view_yview[0]+117,"Title");
-    // draw_text(view_xview[0]+46,view_yview[0]+142,"1#2#3#4#5#6#7#8#9#10#11#1#13#14#15#16#17#18#19#20#21#22#23#24#25");
+    var lines = 0;
+    var posi = -1;
+    var colu = 1;
+    var y3 = 60;
+    var ty = 0;
+    var name = "";
+    var selection_box = "";
+    var scale = 1;
+    var void_h = 122;
+    var shew = 0;
+    var ship_health = 0;
+    var escorts = escort;
+    var frigates = frigate;
+    var capitals = capital;
 
-    var type = "capital", lines = 0, posi = -1, colu = 1, x3 = 48, y3 = 60, escorts, frigates, capitals, ty = 0, current_ship = 0, current_fleet = 0, name = "", sal = 0, selection_box, scale = 1, void_h = 122, shew, ship_health = 0;
-    escorts = escort;
-    frigates = frigate;
-    capitals = capital;
-
-    current_fleet = instance_nearest(x, y, obj_p_fleet);
+    var current_fleet = instance_nearest(x, y, obj_p_fleet);
 
     if (escorts > 0) {
         ty++;
     }
+
     if (frigates > 0) {
         ty++;
     }
+
     if (capitals > 0) {
         ty++;
     }
+
     draw_set_halign(fa_center);
-    var set = "capitol";
+    var ship_select = 0;
+    var set = "capital";
     var fleet_sel = "[X]";
     if (!fleet_all) {
         fleet_sel = "[ ]";
@@ -72,7 +84,7 @@ selection_window.inside_method = function() {
     }
 
     draw_set_halign(fa_center);
-    var ship_type, current_ship, sel_set, full_id;
+    var ship_type, current_ship, full_id;
     if (screen_expansion > 0) {
         for (var j = 0; j < (escorts + frigates + capitals); j++) {
             draw_set_color(c_gray);
@@ -80,6 +92,7 @@ selection_window.inside_method = function() {
             if (y3 > height - 5) {
                 break;
             }
+
             lines++;
             posi++;
             scale = 1;
@@ -91,13 +104,15 @@ selection_window.inside_method = function() {
 
             if (posi == 0) {
                 if (mnz == 0) {
-                    draw_text(center_draw, yy + y3, string_hash_to_newline("=Capital Ships="));
+                    draw_text(center_draw, yy + y3, "=Capital Ships=");
                 }
+
                 y3 += 20;
                 if (y3 > height - 50) {
                     break;
                 }
-                set = "capitol";
+
+                set = "capital";
             }
 
             if ((posi == capitals) && (frigates > 0)) {
@@ -105,9 +120,11 @@ selection_window.inside_method = function() {
                 if (y3 > height - 50) {
                     break;
                 }
+
                 if (mnz == 0) {
-                    draw_text(center_draw, yy + y3, string_hash_to_newline("=Frigates="));
+                    draw_text(center_draw, yy + y3, "=Frigates=");
                 }
+
                 y3 += 20;
                 if (y3 > height - 50) {
                     break;
@@ -115,28 +132,34 @@ selection_window.inside_method = function() {
 
                 set = "frigate";
             }
+
             if ((posi == capitals + frigates) && (escorts > 0)) {
                 y3 += 20;
                 if (y3 > height - 50) {
                     break;
                 }
+
                 if (mnz == 0) {
-                    draw_text(center_draw, yy + y3, string_hash_to_newline("=Escorts="));
+                    draw_text(center_draw, yy + y3, "=Escorts=");
                 }
+
                 y3 += 20;
                 if (y3 > height - 50) {
                     break;
                 }
+
                 set = "escort";
             }
+
             switch (set) {
-                case "capitol":
+                case "capital":
                     current_ship = posi;
                     if (current_ship < array_length(current_fleet.capital)) {
                         ship_type = current_fleet.capital;
                         ship_select = current_fleet.capital_sel[current_ship];
                         full_id = current_fleet.capital_num[current_ship];
                     }
+
                     break;
                 case "frigate":
                     ship_type = current_fleet.frigate;
@@ -145,6 +168,7 @@ selection_window.inside_method = function() {
                         ship_select = current_fleet.frigate_sel[current_ship];
                         full_id = current_fleet.frigate_num[current_ship];
                     }
+
                     break;
                 case "escort":
                     ship_type = current_fleet.escort;
@@ -153,19 +177,13 @@ selection_window.inside_method = function() {
                         ship_select = current_fleet.escort_sel[current_ship];
                         full_id = current_fleet.escort_num[current_ship];
                     }
+
                     break;
             }
+
             if (fleet_all_click) {
                 ship_select = fleet_all;
             }
-
-            /*if (y3>670) and (posi<=escorts+frigates+capitals){
-	            lines=1;
-	            y3=30;
-	            x3+=223;
-	            posi++;
-	            colu++;
-	        }*/
 
             if ((posi <= escorts + frigates + capitals) && is_array(ship_type) && current_ship < array_length(ship_type)) {
                 name = ship_type[current_ship];
@@ -176,6 +194,7 @@ selection_window.inside_method = function() {
                         }
                     }
                 }
+
                 if (scr_hit(xx + 10, yy + y3, xx + width - 10, yy + y3 + 18)) {
                     if (string_width(name) * scale > 135) {
                         for (var i = 0; i < 9; i++) {
@@ -184,8 +203,10 @@ selection_window.inside_method = function() {
                             }
                         }
                     }
+
                     shew = 2;
                 }
+
                 if (point_and_click([xx + 10, yy + y3, xx + width - 10, yy + y3 + 18])) {
                     if (!(obj_controller.fest_scheduled > 0 && obj_controller.fest_sid == full_id)) {
                         if (ship_select == 1) {
@@ -195,8 +216,9 @@ selection_window.inside_method = function() {
                         }
                     }
                 }
-                if (obj_ini.ship_maxhp[current_ship] > 0) {
-                    ship_health = round((obj_ini.ship_hp[current_ship] / obj_ini.ship_maxhp[current_ship]) * 100);
+
+                if (obj_ini.ship_maxhp[full_id] > 0) {
+                    ship_health = round((obj_ini.ship_hp[full_id] / obj_ini.ship_maxhp[full_id]) * 100);
                 }
 
                 if (ship_select == 0) {
@@ -204,28 +226,35 @@ selection_window.inside_method = function() {
                 } else if (ship_select == 1) {
                     selection_box = "[x] ";
                 }
+
                 if (mnz == 0) {
                     draw_text(xx + width - 25, yy + y3, selection_box);
                     if (shew == 2) {
                         draw_text(xx + width - 60, yy + y3, $"{ship_health}%");
                     }
                 }
+
                 if ((ship_health <= 60) && (ship_health > 40)) {
                     draw_set_color(c_yellow);
                 }
+
                 if ((ship_health <= 40) && (ship_health > 20)) {
                     draw_set_color(c_orange);
                 }
+
                 if (ship_health <= 20) {
                     draw_set_color(c_red);
                 }
+
                 if (mnz == 0) {
                     draw_text_transformed(center_draw, yy + y3, name, scale, 1, 0);
                 }
+
                 draw_set_color(c_gray);
             }
+
             switch (set) {
-                case "capitol":
+                case "capital":
                     current_fleet.capital_sel[current_ship] = ship_select;
                     break;
                 case "frigate":
@@ -237,5 +266,6 @@ selection_window.inside_method = function() {
             }
         }
     }
+
     selection_window.currently_entered = scr_hit([xx, yy, xx + width, yy + selection_window.height]) || helpful_navigator.entered();
 };

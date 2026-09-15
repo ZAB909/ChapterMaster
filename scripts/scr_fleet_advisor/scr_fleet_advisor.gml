@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 /// @self Asset.GMObject.obj_controller
 function scr_fleet_advisor() {
     //TODO swap this xx yy stuff out for a surface
@@ -7,83 +5,84 @@ function scr_fleet_advisor() {
     var yy = camera_get_view_y(view_camera[0]);
     draw_sprite(spr_rock_bg, 0, xx, yy);
     draw_set_alpha(0.75);
-    draw_set_color(0);
-    draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 0);
+    draw_set_color(c_black);
+    draw_rectangle(xx + 342, yy + 66, xx + 903, yy + 818, 0);
     draw_set_alpha(1);
     draw_set_color(c_gray);
-    draw_rectangle(xx + 326 + 16, yy + 66, xx + 887 + 16, yy + 818, 1);
-    draw_line(xx + 326 + 16, yy + 426, xx + 887 + 16, yy + 426);
+    draw_rectangle(xx + 342, yy + 66, xx + 903, yy + 818, 1);
+    draw_line(xx + 342, yy + 426, xx + 903, yy + 426);
     draw_set_alpha(0.75);
-    draw_set_color(0);
+    draw_set_color(c_black);
     draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 0);
     draw_set_alpha(1);
     draw_set_color(c_gray);
     draw_rectangle(xx + 945, yy + 66, xx + 1580, yy + 818, 1);
 
+    var ini = instance_find(obj_ini, 0);
+    if (ini == noone) {
+        return;
+    }
+    var cn = id;
+
+    var _blurp = "";
+
     if (menu_adept == 0) {
-        if (struct_exists(obj_ini.custom_advisors, "admiral")) {
-            scr_image("advisor/splash", obj_ini.custom_advisors.admiral, xx + 16, yy + 43, 310, 828);
+        if (struct_exists(ini.custom_advisors, "admiral")) {
+            scr_image("advisor/splash", ini.custom_advisors.admiral, xx + 16, yy + 43, 310, 828);
         } else {
             scr_image("advisor/splash", 7, xx + 16, yy + 43, 310, 828);
-        } // draw_sprite(spr_advisors,6,xx+16,yy+43);
+        }
         draw_set_halign(fa_left);
         draw_set_color(c_gray);
-        draw_set_font(fnt_40k_30b);
-        draw_text_transformed(xx + 336 + 16, yy + 66, "Flagship Bridge", 1, 1, 0);
-        draw_text_transformed(xx + 336 + 16, yy + 100, $"Master of the Fleet {obj_ini.lord_admiral_name}", 0.6, 0.6, 0);
-        draw_set_font(fnt_40k_14);
-        blurp = "Greetings, Chapter Master.\n\nYou requested a report?  Our fleet contains ";
+        draw_set_font(cjk_font(fnt_40k_30b));
+        draw_text_transformed(xx + 352, yy + 66, localize("Flagship Bridge"), 1, 1, 0);
+        draw_text_transformed(xx + 352, yy + 100, localize("Master of the Fleet {0}", [ini.lord_admiral_name]), 0.6, 0.6, 0);
+        draw_set_font(cjk_font(fnt_40k_14));
+        _blurp = localize("Greetings, Chapter Master.\n\nYou requested a report?  Our fleet contains ");
     }
     if (menu_adept == 1) {
         scr_image("advisor/splash", 1, xx + 16, yy + 43, 310, 828);
-        // draw_sprite(spr_advisors,0,xx+16,yy+43);
         draw_set_halign(fa_left);
         draw_set_color(c_gray);
-        draw_set_font(fnt_40k_30b);
-        draw_text_transformed(xx + 336 + 16, yy + 40, "Flagship Bridge", 1, 1, 0);
-        draw_text_transformed(xx + 336 + 16, yy + 100, $"Adept {obj_controller.adept_name}", 0.6, 0.6, 0);
-        draw_set_font(fnt_40k_14);
-        blurp = "Your fleet contains ";
+        draw_set_font(cjk_font(fnt_40k_30b));
+        draw_text_transformed(xx + 352, yy + 40, localize("Flagship Bridge"), 1, 1, 0);
+        draw_text_transformed(xx + 352, yy + 100, localize("Adept {0}", [cn.adept_name]), 0.6, 0.6, 0);
+        draw_set_font(cjk_font(fnt_40k_14));
+        _blurp = localize("Your fleet contains ");
     }
 
-    blurp += string(temp[37]) + " Capital Ships, ";
-    blurp += string(temp[38]) + " Frigates, and ";
-    blurp += string(temp[39]) + " Escorts";
+    var _adept = menu_adept == 1;
 
-    va = real(temp[41]);
+    _blurp += localize("{0} Capital Ships, ", [string(temp[37])]);
+    _blurp += localize("{0} Frigates, and ", [string(temp[38])]);
+    _blurp += localize("{0} Escorts", [string(temp[39])]);
 
-    if (va >= 1) {
-        blurp += ", none of which are damaged.";
-    }
-    if (va < 1) {
-        blurp += $".  Our most damaged vessel is the {temp[40]} - it has {min(99, round(va * 100))}% Hull Integrity.";
-    }
+    var _hull_normalized = real(temp[41]);
 
-    va = real(temp[42]);
-    if (va == 2) {
-        blurp += "  Two of our ships are highly damaged.  You may wish to purchase a Repair License from the Sector Governerner.";
-    }
-    if (va > 2) {
-        blurp += "  Several of our ships are highly damaged.  It is advisable that you purchase a Repair License from the Sector Governer.";
-    }
-    blurp += "\n\nHere are the current positions of our ships and their contents:";
-
-    if (menu_adept == 1) {
-        blurp = string_replace(blurp, "Our", "Your");
-        blurp = string_replace(blurp, " our", " your");
-        blurp = string_replace(blurp, "We", "You");
+    if (_hull_normalized >= 1) {
+        _blurp += localize(", none of which are damaged.");
+    } else if (_hull_normalized < 1) {
+        _blurp += localize(_adept ? ".  Your most damaged vessel is the {0} - it has {1}% Hull Integrity." : ".  Our most damaged vessel is the {0} - it has {1}% Hull Integrity.", [temp[40], string(min(99, round(_hull_normalized * 100)))]);
     }
 
-    draw_text_ext(xx + 336 + 16, yy + 130, blurp, -1, 536);
+    var _crippled_ships = real(temp[42]);
 
-    draw_set_font(fnt_40k_30b);
+    if (_crippled_ships == 2) {
+        _blurp += localize(_adept ? "  Two of your ships are highly damaged.  You may wish to purchase a Repair License from the Sector Governerner." : "  Two of our ships are highly damaged.  You may wish to purchase a Repair License from the Sector Governerner.");
+    } else if (_crippled_ships > 2) {
+        _blurp += localize(_adept ? "  Several of your ships are highly damaged.  It is advisable that you purchase a Repair License from the Sector Governer." : "  Several of our ships are highly damaged.  It is advisable that you purchase a Repair License from the Sector Governer.");
+    }
+
+    _blurp += localize(_adept ? "\n\nHere are the current positions of your ships and their contents:" : "\n\nHere are the current positions of our ships and their contents:");
+
+    draw_text_ext(xx + 352, yy + 130, _blurp, -1, 536);
+
+    draw_set_font(cjk_font(fnt_40k_30b));
     draw_set_halign(fa_center);
-    draw_text_transformed(xx + 1262, yy + 40, "Fleet", 0.6, 0.6, 0);
+    draw_text_transformed(xx + 1262, yy + 40, localize("Fleet"), 0.6, 0.6, 0);
 
-    draw_set_font(fnt_40k_14);
+    draw_set_font(cjk_font(fnt_40k_14));
     draw_set_halign(fa_left);
-
-    var cn = obj_controller;
 
     // TODO: Probably a good idea to turn this whole interactive list/sheet generating logic into a constructor, that can be reused on many screens.
     // I have no passion for this atm.
@@ -91,27 +90,27 @@ function scr_fleet_advisor() {
         var _columns = {
             name: {
                 w: 176,
-                text: "Name",
+                text: localize("Name"),
                 h_align: fa_left,
             },
             class: {
                 w: 154,
-                text: "Class",
+                text: localize("Class"),
                 h_align: fa_left,
             },
             location: {
                 w: 130,
-                text: "Location",
+                text: localize("Location"),
                 h_align: fa_left,
             },
             hp: {
                 w: 44,
-                text: "HP",
+                text: localize("HP"),
                 h_align: fa_right,
             },
             carrying: {
                 w: 84,
-                text: "Carrying",
+                text: localize("Carrying"),
                 h_align: fa_right,
             },
         };
@@ -123,7 +122,7 @@ function scr_fleet_advisor() {
             "class",
             "location",
             "hp",
-            "carrying"
+            "carrying",
         ];
 
         for (var i = 0; i < array_length(_columns_array); i++) {
@@ -154,10 +153,10 @@ function scr_fleet_advisor() {
         var _row_height = 20;
         var _row_gap = 2;
         for (var i = ship_current; i < ship_current + 34; i++) {
-            if (i >= array_length(obj_ini.ship)) {
+            if (i >= array_length(ini.ship)) {
                 continue;
             }
-            if (obj_ini.ship[i] != "") {
+            if (ini.ship[i] != "") {
                 var _row_y = _columns[$ "name"].y1 + _row_height + (i * (_row_height + _row_gap));
                 draw_rectangle(xx + 950, _row_y, xx + 1546, _row_y + _row_height, 1);
 
@@ -178,11 +177,11 @@ function scr_fleet_advisor() {
                 }
 
                 with (_columns) {
-                    name.contents = string_truncate(obj_ini.ship[i], _columns.name.w - 6);
-                    class.contents = obj_ini.ship_class[i];
-                    location.contents = obj_ini.ship_location[i];
-                    hp.contents = $"{round(obj_ini.ship_hp[i] / obj_ini.ship_maxhp[i] * 100)}%";
-                    carrying.contents = $"{obj_ini.ship_carrying[i]}/{obj_ini.ship_capacity[i]}";
+                    name.contents = string_truncate(ini.ship[i], _columns.name.w - 6);
+                    class.contents = localize(ini.ship_class[i]);
+                    location.contents = ini.ship_location[i];
+                    hp.contents = $"{round(ini.ship_hp[i] / ini.ship_maxhp[i] * 100)}%";
+                    carrying.contents = $"{ini.ship_carrying[i]}/{ini.ship_capacity[i]}";
                 }
 
                 for (var g = 0; g < array_length(_columns_array); g++) {
@@ -204,44 +203,44 @@ function scr_fleet_advisor() {
                 }
 
                 if (scr_hit(xx + 950, _row_y, xx + 1546, _row_y + _row_height)) {
-                    if (cn.temp[101] != obj_ini.ship[i]) {
-                        cn.temp[101] = obj_ini.ship[i];
-                        cn.temp[102] = obj_ini.ship_class[i];
+                    if (cn.temp[101] != ini.ship[i]) {
+                        cn.temp[101] = ini.ship[i];
+                        cn.temp[102] = ini.ship_class[i];
 
-                        cn.temp[103] = string(obj_ini.ship_hp[i]);
-                        cn.temp[104] = string(obj_ini.ship_maxhp[i]);
-                        cn.temp[105] = string(obj_ini.ship_shields[i] * 100);
+                        cn.temp[103] = string(ini.ship_hp[i]);
+                        cn.temp[104] = string(ini.ship_maxhp[i]);
+                        cn.temp[105] = string(ini.ship_shields[i] * 100);
 
-                        cn.temp[106] = string(obj_ini.ship_speed[i]);
+                        cn.temp[106] = string(ini.ship_speed[i]);
 
-                        cn.temp[107] = string(obj_ini.ship_front_armour[i]);
-                        cn.temp[108] = string(obj_ini.ship_other_armour[i]);
+                        cn.temp[107] = string(ini.ship_front_armour[i]);
+                        cn.temp[108] = string(ini.ship_other_armour[i]);
 
-                        cn.temp[109] = string(obj_ini.ship_turrets[i]);
+                        cn.temp[109] = string(ini.ship_turrets[i]);
 
-                        var facing_length = array_length(obj_ini.ship_wep_facing[i]);
-                        var wep_length = array_length(obj_ini.ship_wep[i]);
+                        var facing_length = array_length(ini.ship_wep_facing[i]);
+                        var wep_length = array_length(ini.ship_wep[i]);
                         var max_weapons = min(facing_length, wep_length, 5);
 
                         for (var s = 1; s < max_weapons; s++) {
-                            cn.temp[110 + ((s - 1) * 2)] = obj_ini.ship_wep[i][s];
-                            cn.temp[110 + ((s - 1) * 2) + 1] = obj_ini.ship_wep_facing[i][s];
+                            cn.temp[110 + ((s - 1) * 2)] = ini.ship_wep[i][s];
+                            cn.temp[110 + ((s - 1) * 2) + 1] = ini.ship_wep_facing[i][s];
                         }
 
-                        cn.temp[118] = $"{obj_ini.ship_carrying[i]}/{obj_ini.ship_capacity[i]}";
+                        cn.temp[118] = $"{ini.ship_carrying[i]}/{ini.ship_capacity[i]}";
                         cn.temp[119] = "";
-                        if (obj_ini.ship_carrying[i] > 0) {
+                        if (ini.ship_carrying[i] > 0) {
                             cn.temp[119] = scr_ship_occupants(i);
                         }
                     }
-                    tooltip_draw($"Carrying ({cn.temp[118]}): {cn.temp[119]}");
+                    tooltip_draw(localize("Carrying ({0}): {1}", [cn.temp[118], cn.temp[119]]));
                     if (_goto_button.click()) {
                         with (obj_p_fleet) {
                             var _fleet_ships = fleet_full_ship_array();
                             if (array_contains(_fleet_ships, i)) {
-                                obj_controller.x = x;
-                                obj_controller.y = y;
-                                obj_controller.menu = 0;
+                                cn.x = x;
+                                cn.y = y;
+                                cn.menu = 0;
                                 with (obj_fleet_show) {
                                     instance_destroy();
                                 }
@@ -254,10 +253,10 @@ function scr_fleet_advisor() {
         }
 
         if (cn.temp[101] != "") {
-            draw_set_font(fnt_40k_30b);
+            draw_set_font(cjk_font(fnt_40k_30b));
             draw_set_halign(fa_center);
             draw_text_transformed(xx + 622, yy + 434, cn.temp[101], 0.75, 0.75, 0);
-            draw_text_transformed(xx + 622, yy + 464, cn.temp[102], 0.5, 0.5, 0);
+            draw_text_transformed(xx + 622, yy + 464, localize(cn.temp[102]), 0.5, 0.5, 0);
 
             draw_set_color(c_gray);
             draw_rectangle(xx + 488, yy + 492, xx + 756, yy + 634, 1);
@@ -265,7 +264,7 @@ function scr_fleet_advisor() {
                 "Battle Barge",
                 "Strike Cruiser",
                 "Gladius",
-                "Hunter"
+                "Hunter",
             ];
             var ship_im = 0;
             for (var i = 0; i < array_length(ships); i++) {
@@ -278,32 +277,25 @@ function scr_fleet_advisor() {
             draw_sprite(spr_ship_back_white, ship_im, xx + 488, yy + 492);
 
             draw_set_color(c_gray);
-            draw_set_font(fnt_40k_14);
+            draw_set_font(cjk_font(fnt_40k_14));
             draw_set_halign(fa_left);
 
-            draw_text(xx + 383, yy + 655, $"Health: {cn.temp[103]}/{cn.temp[104]}");
-            draw_text(xx + 588, yy + 655, $"Shields: {cn.temp[105]}");
-            draw_text(xx + 768, yy + 655, $"Armour: {cn.temp[107]},{cn.temp[108]}");
+            draw_text(xx + 383, yy + 655, localize("Health: {0}/{1}", [cn.temp[103], cn.temp[104]]));
+            draw_text(xx + 588, yy + 655, localize("Shields: {0}", [cn.temp[105]]));
+            draw_text(xx + 768, yy + 655, localize("Armour: {0},{1}", [cn.temp[107], cn.temp[108]]));
 
-            draw_text(xx + 495, yy + 675, $"Speed: {cn.temp[106]}");
-            draw_text(xx + 680, yy + 675, $"Turrets: {cn.temp[109]}");
+            draw_text(xx + 495, yy + 675, localize("Speed: {0}", [cn.temp[106]]));
+            draw_text(xx + 680, yy + 675, localize("Turrets: {0}", [cn.temp[109]]));
 
-            if (cn.temp[110] != "") {
-                draw_text(xx + 383, yy + 705, $"-{cn.temp[110]} ({cn.temp[111]})");
-            }
-            if (cn.temp[112] != "") {
-                draw_text(xx + 383, yy + 725, "-" + cn.temp[112] + " (" + string(cn.temp[113]) + ")");
-            }
-            if (cn.temp[114] != "") {
-                draw_text(xx + 383, yy + 745, "-" + cn.temp[114] + " (" + string(cn.temp[115]) + ")");
-            }
-            if (cn.temp[116] != "") {
-                draw_text(xx + 383, yy + 765, "-" + cn.temp[116] + " (" + string(cn.temp[117]) + ")");
+            for (var s = 0; s < 4; s++) {
+                var _wep = 110 + (s * 2);
+                if (cn.temp[_wep] != "") {
+                    draw_text(xx + 383, yy + 705 + (s * 20), localize("-{0} ({1})", [localize(cn.temp[_wep]), cn.temp[_wep + 1]]));
+                }
             }
 
-            draw_set_font(fnt_40k_12);
-            // draw_text_ext(xx + 352, 775, $"Carrying ({cn.temp[118]}): {cn.temp[119]}", -1, 542);
-            draw_set_font(fnt_40k_14);
+            draw_set_font(cjk_font(fnt_40k_12));
+            draw_set_font(cjk_font(fnt_40k_14));
         }
     }
     // 31 wide

@@ -4,9 +4,7 @@ if ((image == "chaos_symbol") && (title == "Concealed Heresy") && instance_exist
         // ** Starts the battle **
         is_in_combat = true;
 
-        instance_deactivate_all(true);
-        instance_activate_object(obj_controller);
-        instance_activate_object(obj_ini);
+        instance_deactivate_all_safe();
         instance_activate_object(obj_drop_select);
 
         instance_create(0, 0, obj_ncombat);
@@ -15,7 +13,7 @@ if ((image == "chaos_symbol") && (title == "Concealed Heresy") && instance_exist
         obj_ncombat.battle_id = obj_controller.selecting_planet;
         obj_ncombat.dropping = 0;
         obj_ncombat.attacking = 10;
-        obj_ncombat.enemy = 10;
+        obj_ncombat.enemy = eFACTION.CHAOS;
         obj_ncombat.formation_set = 2;
         obj_ncombat.leader = 1;
         obj_ncombat.threat = 5;
@@ -40,7 +38,7 @@ if (instance_exists(obj_controller)) {
         instance_create(0, 0, obj_ncombat);
         obj_ncombat.battle_special = "cs_meeting_battle10";
 
-        var meeting_star = "none";
+        var meeting_star = noone;
         var meeting_planet;
         with (obj_star) {
             var meeting = has_problem_star("meeting");
@@ -54,16 +52,17 @@ if (instance_exists(obj_controller)) {
                 }
             }
         }
-        if (meeting_star == "none") {
+        if (meeting_star == noone) {
             instance_activate_object(obj_star);
+            var _cm = obj_controller.chapter_master.get_struct();
             with (obj_star) {
-                if (string_count(name, scr_master_loc()) > 0) {
+                if (_cm.planet_location > 0 && _cm.location_string == name) {
                     meeting_star = self.id;
-                    meeting_planet = obj_ini.TTRPG[0][1].planet_location;
+                    meeting_planet = _cm.planet_location;
                 }
             }
         }
-        if (meeting_star != "none") {
+        if (meeting_star != noone) {
             obj_ncombat.battle_object = meeting_star;
             obj_ncombat.battle_loc = meeting_star.name;
             obj_ncombat.battle_id = meeting_planet;
@@ -72,7 +71,7 @@ if (instance_exists(obj_controller)) {
         obj_ncombat.dropping = 0;
         obj_ncombat.attacking = 1;
         obj_ncombat.local_forces = 0;
-        obj_ncombat.enemy = 10;
+        obj_ncombat.enemy = eFACTION.CHAOS;
         obj_ncombat.threat = 3;
 
         with (obj_star) {
@@ -88,7 +87,7 @@ if (instance_exists(obj_controller)) {
             if (obj_temp_meeting.present[v] == 1) {
                 var _unit_array = [
                     obj_temp_meeting.co[v],
-                    obj_temp_meeting.ide[v]
+                    obj_temp_meeting.ide[v],
                 ];
                 add_unit_to_battle(_unit_array, meeting_star, true);
             }
@@ -96,9 +95,7 @@ if (instance_exists(obj_controller)) {
 
         scr_civil_roster(obj_ncombat.battle_loc, obj_ncombat.battle_id, true);
 
-        instance_deactivate_all(true);
-        instance_activate_object(obj_controller);
-        instance_activate_object(obj_ini);
+        instance_deactivate_all_safe();
         instance_activate_object(obj_temp_meeting);
         instance_activate_object(obj_ncombat);
         instance_activate_object(obj_centerline);

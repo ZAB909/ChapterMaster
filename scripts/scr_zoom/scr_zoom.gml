@@ -31,9 +31,10 @@ function set_zoom_to_default() {
 /// @description This script will zoom in and out of the game view based on the keys pressed.
 /// @self obj_controller
 function scr_zoom_keys() {
-    static zoom_speed = 0.1;
     static min_zoom = 0.3;
     static max_zoom = 2.5;
+
+    var zoom_speed = 0.1;
 
     if (keyboard_check(vk_shift)) {
         zoom_speed *= 2;
@@ -48,7 +49,7 @@ function scr_zoom_keys() {
     }
     if (keyboard_check(vk_add) || mouse_wheel_up()) {
         if (obj_controller.map_scale < max_zoom) {
-            zoom_delta = +1
+            zoom_delta = +1;
         }
     }
     if (zoom_delta != 0) {
@@ -63,17 +64,19 @@ function scr_zoom_keys() {
         var old_y = camera_get_view_y(view_camera[0]);
         var old_w = camera_get_view_width(view_camera[0]);
         var old_h = camera_get_view_height(view_camera[0]);
-        var zoom_factor = 1 - zoom_speed * zoom_delta;
-        var new_w = old_w * zoom_factor;
-        var new_h = old_h * zoom_factor;
-        camera_set_view_size(view_camera[0], new_w, new_h);
-        var new_x = mouse_x_ - (mouse_x_ - old_x) * (new_w / old_w);
-        var new_y = mouse_y_ - (mouse_y_ - old_y) * (new_h / old_h);
-        camera_set_view_pos(view_camera[0], new_x, new_y)
+        if (old_w > 0 && old_h > 0) {
+            var zoom_factor = max(0.1, 1 - zoom_speed * zoom_delta);
+            var new_w = old_w * zoom_factor;
+            var new_h = old_h * zoom_factor;
+            camera_set_view_size(view_camera[0], new_w, new_h);
+            var new_x = mouse_x_ - (mouse_x_ - old_x) * (new_w / old_w);
+            var new_y = mouse_y_ - (mouse_y_ - old_y) * (new_h / old_h);
+            camera_set_view_pos(view_camera[0], new_x, new_y);
 
-        // update obj_controller as the new center of the view
-        obj_controller.x = new_x + new_w / 2;
-        obj_controller.y = new_y + new_h / 2;
+            // update obj_controller as the new center of the view
+            obj_controller.x = new_x + new_w / 2;
+            obj_controller.y = new_y + new_h / 2;
+        }
         camera_set_view_target(view_camera[0], old_target);
     }
 

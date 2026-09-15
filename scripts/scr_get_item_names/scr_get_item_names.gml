@@ -148,22 +148,20 @@ function push_marine_mobility_item_names(_item_names) {
 /// @param {array} _item_names - The list to append to.
 /// @returns {void}
 function push_dreadnought_ranged_weapons_item_names(_item_names) {
-    var item_count = 11;
+    var item_count = 9;
     var initial_size = array_length(_item_names);
     array_resize(_item_names, initial_size + item_count);
 
     var index = initial_size;
     _item_names[@ index++] = "Multi-Melta";
-    _item_names[@ index++] = "Twin Linked Heavy Flamer Sponsons";
     _item_names[@ index++] = "Plasma Cannon";
     _item_names[@ index++] = "Assault Cannon";
     _item_names[@ index++] = "Autocannon";
     _item_names[@ index++] = "Missile Launcher";
     _item_names[@ index++] = "Twin Linked Lascannon";
-    _item_names[@ index++] = "Twin Linked Assault Cannon Mount";
     _item_names[@ index++] = "Twin Linked Heavy Bolter";
     _item_names[@ index++] = "Heavy Conversion Beam Projector";
-    _item_names[@ index++] = "Twin-linked Volkite Culverins"; // 10
+    _item_names[@ index++] = "Twin-linked Volkite Culverins"; // 8
 }
 
 /// @description This function appends the list of dreadnought melee weapons to the given list.
@@ -690,7 +688,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                                 undefined, // no required tags
                                 ["vehicle"], // exclude vehicle weapons
                                 _with_none_if_not_skip,
-                                true // with_any
+                                true, // with_any
                             );
                         } else {
                             get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -706,7 +704,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                                 undefined, // no required tags
                                 ["vehicle"], // exclude vehicle weapons
                                 _with_none_if_not_skip,
-                                true // with_any
+                                true, // with_any
                             );
                             if (_include_company_standard) {
                                 _item_names[@ array_length(_item_names)] = "Company Standard";
@@ -725,7 +723,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                                 undefined, // no required tags
                                 ["vehicle"], // exclude vehicle weapons
                                 _with_none_if_not_skip,
-                                true // with_any
+                                true, // with_any
                             );
                         } else {
                             get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -747,7 +745,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                             undefined, // no required tags
                             ["vehicle"], // exclude vehicle armour
                             _with_none_if_not_skip,
-                            true // with_any
+                            true, // with_any
                         );
                     } else {
                         get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -762,9 +760,9 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                             undefined, // no range filter
                             false, // not master crafted
                             undefined, // no required tags
-                            ["vehicle"], // exclude vehicle gear
+                            ["vehicle", "no_equip"], // exclude vehicle gear + unequippable items
                             _with_none_if_not_skip,
-                            true // with_any
+                            true, // with_any
                         );
                     } else {
                         get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -781,7 +779,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                             undefined, // no required tags
                             ["vehicle"], // exclude vehicle mobility
                             _with_none_if_not_skip,
-                            true // with_any
+                            true, // with_any
                         );
                     } else {
                         get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -807,7 +805,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                                 ["dreadnought"], // required tags
                                 undefined, // no excluded tags
                                 _with_none_if_not_skip,
-                                true // with_any
+                                true, // with_any
                             );
                         } else {
                             get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -823,7 +821,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                                 ["dreadnought"], // required tags
                                 undefined, // no excluded tags
                                 _with_none_if_not_skip,
-                                true // with_any
+                                true, // with_any
                             );
                         } else {
                             get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);
@@ -839,7 +837,7 @@ function scr_get_item_names(_item_names, _role, _slot, _engagement, _include_com
                                 ["dreadnought"], // required tags
                                 undefined, // no excluded tags
                                 _with_none_if_not_skip,
-                                true // with_any
+                                true, // with_any
                             );
                         } else {
                             get_none_or_any_item_names(_item_names, _with_none_if_not_skip, false);

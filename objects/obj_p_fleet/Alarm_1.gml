@@ -1,23 +1,14 @@
 try {
-    var spid, dir;
-    spid = 0;
-    dir = 0;
-
     acted = 0;
 
     if (action == "Lost") {
         set_fleet_location("Lost");
         exit;
     } else if (action == "") {
-        spid = instance_nearest(x, y, obj_star);
-        // spid.present_fleets+=1;
-        spid.present_fleet[1] += 1;
-        if (spid.vision == 0) {
-            spid.vision = 1;
-        }
-        orbiting = spid;
+        var spid = instance_nearest(x, y, obj_star);
+        fleet_register_at_star(self, spid);
 
-        if ((orbiting != 0) && instance_exists(orbiting)) {
+        if (instance_exists(orbiting)) {
             if (orbiting.visited == 0) {
                 for (var planet_num = 1; planet_num <= orbiting.planets; planet_num += 1) {
                     if (array_length(orbiting.p_feature[planet_num]) != 0) {
@@ -32,16 +23,15 @@ try {
             meet_system_governors(orbiting);
         }
     } else if (array_contains(global.fleet_move_options, action)) {
-        var i;
         set_fleet_location("Warp");
 
         if (instance_nearest(action_x, action_y, obj_star).storm > 0) {
             exit;
         }
 
-        spid = point_distance(x, y, action_x, action_y);
+        var spid = point_distance(x, y, action_x, action_y);
         spid = spid / action_eta;
-        dir = point_direction(x, y, action_x, action_y);
+        var dir = point_direction(x, y, action_x, action_y);
 
         x = x + lengthdir_x(spid, dir);
         y = y + lengthdir_y(spid, dir);
@@ -63,7 +53,7 @@ try {
                 }
                 var enemies = false;
                 for (var i = 6; i < 13; i++) {
-                    if (scr_orbiting_fleet(i) != "none") {
+                    if (scr_orbiting_fleet(i) != noone) {
                         enemies = true;
                         break;
                     }
@@ -93,13 +83,11 @@ try {
             if (steh.vision == 0) {
                 steh.vision = 1;
             }
-            steh.present_fleet[1] += 1;
-            orbiting = steh;
-            // show_message("Present Fleets at alarm[1]: "+string(steh.present_fleets));
+            fleet_register_at_star(id, steh);
 
             meet_system_governors(steh);
 
-            if ((steh.p_owner[1] == 5) || (steh.p_owner[2] == 5) || (steh.p_owner[3] == 5) || (steh.p_owner[4] == 5)) {
+            if ((steh.p_owner[1] == eFACTION.ECCLESIARCHY) || (steh.p_owner[2] == eFACTION.ECCLESIARCHY) || (steh.p_owner[3] == eFACTION.ECCLESIARCHY) || (steh.p_owner[4] == eFACTION.ECCLESIARCHY)) {
                 if ((obj_controller.faction_defeated[5] == 0) && (obj_controller.known[eFACTION.ECCLESIARCHY] == 0)) {
                     obj_controller.known[eFACTION.ECCLESIARCHY] = 1;
                 }
@@ -144,16 +132,13 @@ try {
             }
         }
 
-        var steh;
-        steh = instance_nearest(x, y, obj_star);
+        var steh = instance_nearest(x, y, obj_star);
         if (instance_exists(steh) && (steh != 0)) {
             if (steh.p_type[1] == "Craftworld") {
                 var dist, rando;
                 dist = 999;
                 rando = floor(random(100)) + 1;
                 dist = point_distance(x, y, steh.old_x, steh.old_y);
-
-                // show_message("Dist: "+string(dist)+", Rando: "+string(rando));
 
                 if ((rando >= 95) && (dist <= 300)) {
                     obj_controller.known[eFACTION.ELDAR] = 1;

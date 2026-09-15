@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 //enums in GML are global regardless of where they are declared, but declaring it here for clarity
 
 enum UINODE_STATUS {
@@ -154,7 +151,10 @@ function UINode(elem, gui_x, gui_y, padding = 0, margin = 0, parent = undefined)
                 yoffset += parent.height - height - margin - parent.padding;
             }
         }
-        return {xoffset, yoffset};
+        return {
+            xoffset,
+            yoffset,
+        };
     };
 
     static recalc = function() {

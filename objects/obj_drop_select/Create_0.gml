@@ -1,9 +1,16 @@
-if (!variable_instance_exists(self, "attack")) {
-    attack = 0;
-}
 set_zoom_to_default(); //bandaid the purge screen flying off screen if zoomed out
 
 once_only = 0;
+var _vars = [
+    "purge",
+    "planet_number",
+    "attack",
+];
+for (var i = 0; i < array_length(_vars); i++) {
+    if (!variable_instance_exists(self, _vars[i])) {
+        variable_instance_set(self, _vars[i], 0);
+    }
+}
 
 raid_tact = 1;
 raid_vet = 1;
@@ -16,14 +23,11 @@ raid_wounded = obj_controller.select_wounded;
 refresh_raid = 0;
 remove_local = 1;
 
-//
-
 main_slate = new DataSlate();
 draw = drop_select_draw;
 main_slate.inside_method = draw;
 roster_slate = new DataSlate();
 local_content_slate = new DataSlate();
-var i = -1;
 formation_current = -1;
 via = array_create(100, 0);
 formation_possible = [];
@@ -59,7 +63,6 @@ if (!instance_exists(obj_saveload)) {
     tooltip2 = "";
     all_sel = 0;
 
-    var i = -1;
     var _ship_index = array_length(obj_ini.ship);
     ship = array_create(_ship_index, "");
     ship_size = array_create(_ship_index, 0);
@@ -68,13 +71,12 @@ if (!instance_exists(obj_saveload)) {
     ship_max = array_create(_ship_index, 0);
     ship_ide = array_create(_ship_index, -1);
 
-    i = 500;
-    ship[i] = "Local";
-    ship_size[i] = 0;
-    ship_all[i] = 0;
-    ship_use[i] = 0;
-    ship_max[i] = 0;
-    ship_ide[i] = -42;
+    ship[500] = "Local";
+    ship_size[500] = 0;
+    ship_all[500] = 0;
+    ship_use[500] = 0;
+    ship_max[500] = 0;
+    ship_ide[500] = -42;
 
     menu = 0;
 
@@ -96,12 +98,12 @@ if (!instance_exists(obj_saveload)) {
     tau = 0;
     traitors = 0;
     tyranids = 0;
-    csm = 0;
+    chaos = 0;
     necrons = 0;
     demons = 0;
 
     // Formation check
-    var i = 0, is = 0, arright = false;
+    var is = 0;
     var _formations = obj_controller.bat_formation;
     var _formation_types = obj_controller.bat_formation_type;
 
@@ -114,25 +116,16 @@ if (!instance_exists(obj_saveload)) {
         }
     }
 
-    if (attack == 0) {
-        formation_current = obj_controller.last_raid_form;
-        for (var i = 0; i < array_length(formation_possible); i++) {
-            if (formation_possible[i] == formation_current) {
-                formation_current = i;
-                break;
-            }
-        }
-    } else if (attack == 1) {
-        formation_current = obj_controller.last_attack_form;
-        for (var i = 0; i < array_length(formation_possible); i++) {
-            if (formation_possible[i] == formation_current) {
-                formation_current = i;
-                break;
-            }
+    formation_current = 0;
+    var _stored_form = (attack == 1) ? obj_controller.last_attack_form : obj_controller.last_raid_form;
+    for (var i = 0; i < array_length(formation_possible); i++) {
+        if (formation_possible[i] == _stored_form) {
+            formation_current = i;
+            break;
         }
     }
-    if (formation_current == -1) {
-        formation_current = 0;
+    if (array_length(formation_possible) > 0) {
+        formation_current = clamp(formation_current, 0, array_length(formation_possible) - 1);
     }
 
     fighting = array_create(11, array_create(501));
@@ -148,8 +141,8 @@ y1 = 0;
 x2 = 0;
 y2 = 0;
 
-formation = new InteractiveButton();
-target = new InteractiveButton();
+btn_formation = new InteractiveButton();
+btn_target = new InteractiveButton();
 
 btn_attack = new InteractiveButton();
 btn_attack.text_color = CM_GREEN_COLOR;
@@ -167,7 +160,7 @@ if (purge == 0) {
     ork = p_target.p_orks[planet_number];
     tau = p_target.p_tau[planet_number];
     tyranids = p_target.p_tyranids[planet_number];
-    csm = p_target.p_chaos[planet_number];
+    chaos = p_target.p_chaos[planet_number];
     traitors = p_target.p_traitors[planet_number];
     necrons = p_target.p_necrons[planet_number];
     demons = p_target.p_demons[planet_number];
@@ -197,13 +190,13 @@ if (purge == 0) {
         bes = 9;
         bes_score = tyranids;
     }
-    if (traitors > bes_score) {
+    if (chaos > bes_score) {
         bes = 10;
-        bes_score = traitors;
+        bes_score = chaos;
     }
-    if (csm > bes_score) {
+    if (traitors > bes_score) {
         bes = 11;
-        bes_score = csm;
+        bes_score = traitors;
     }
     if (necrons > bes_score) {
         bes = 13;
@@ -227,9 +220,7 @@ if (purge == 0) {
         attacking = 9;
     }
 
-    var forces, t_attack;
-    forces = 0;
-    t_attack = 0;
+    var forces = 0;
     if (sisters > 0) {
         forces += 1;
         force_present[forces] = 5;
@@ -250,11 +241,11 @@ if (purge == 0) {
         forces += 1;
         force_present[forces] = 9;
     }
-    if ((traitors > 0) || ((traitors == 0) && (spesh == true))) {
+    if (chaos > 0) {
         forces += 1;
         force_present[forces] = 10;
     }
-    if (csm > 0) {
+    if ((traitors > 0) || ((traitors == 0) && (spesh == true))) {
         forces += 1;
         force_present[forces] = 11;
     }
@@ -275,10 +266,10 @@ if (purge == 0) {
         ork,
         tau,
         tyranids,
+        chaos,
         traitors,
-        csm,
         demons,
-        necrons
+        necrons,
     ];
     races = [
         "",
@@ -287,10 +278,10 @@ if (purge == 0) {
         "Orks",
         "Tau",
         "Tyranids",
+        "Chaos",
         "Heretics",
-        "CSMs",
         "Daemons",
-        "Necrons"
+        "Necrons",
     ];
     threat_levels = [
         "",
@@ -299,7 +290,7 @@ if (purge == 0) {
         "Moderatus (3)",
         "Significus (4)",
         "Enormicus (5)",
-        "Extremis (6)"
+        "Extremis (6)",
     ];
 } else {
     var _viable_ground_forces = roster.marines_total();
@@ -323,6 +314,6 @@ if (purge == 0) {
         bombard_purge,
         fire_purge,
         selective_purge,
-        assasinate_purge
+        assasinate_purge,
     ];
 }

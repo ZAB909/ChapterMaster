@@ -13,27 +13,15 @@ if (obj_controller.menu == 60) {
 }
 
 add_draw_return_values();
-draw_set_font(fnt_40k_14b);
+draw_set_font(cjk_font(fnt_40k_14b));
 draw_set_halign(fa_center);
 draw_set_valign(fa_top);
 draw_set_color(0);
 
 try {
-    var temp1 = 0;
-    var xx = 0;
-    var yy = 0;
     if (loading == 1) {
-        xx = xx;
-        yy = yy;
-    } else if (loading == 1) {
-        var temp1, dist;
-        dist = 999;
-
         obj_controller.selecting_planet = 0;
-        button1 = "";
-        button2 = "";
-        button3 = "";
-        button4 = "";
+        buttons = [];
 
         if (instance_exists(target)) {
             if (target.space_hulk == 1) {
@@ -48,11 +36,10 @@ try {
     var click_accepted = (!obj_controller.menu) && (!obj_controller.zoomed) && (!instance_exists(obj_bomb_select)) && (!instance_exists(obj_drop_select));
     if (click_accepted && (!debug || !debug_slate.entered())) {
         if (mouse_button_clicked(, 0)) {
-            var closes = 0, sta1 = 0, sta2 = 0;
             var mouse_consts = return_mouse_consts();
-            sta1 = instance_nearest(mouse_consts[0], mouse_consts[1], obj_star);
-            sta2 = point_distance(mouse_consts[0], mouse_consts[1], sta1.x, sta1.y);
-            closes = true;
+            var sta1 = instance_nearest(mouse_consts[0], mouse_consts[1], obj_star);
+            var sta2 = point_distance(mouse_consts[0], mouse_consts[1], sta1.x, sta1.y);
+            var closes = true;
             if (sta2 > 15) {
                 if (scr_hit(27, 165, 300, 165 + 294)) {
                     closes = false;
@@ -70,15 +57,8 @@ try {
                         }
                     }
                 }
-                var shutter_button;
-                var shutters = [
-                    shutter_1,
-                    shutter_2,
-                    shutter_3,
-                    shutter_4
-                ];
-                for (var i = 0; i < 4; i++) {
-                    shutter_button = shutters[i];
+                for (var i = 0; i < array_length(shutters); i++) {
+                    var shutter_button = shutters[i];
                     if (shutter_button.hit()) {
                         closes = false;
                         break;
@@ -115,7 +95,7 @@ try {
     draw_sprite_ext(spr_servo_right_arm, 0, 27, 165 + _screen_height / 3, 2, 2, 0, c_white, 1);
     draw_sprite_ext(spr_servo_skull_head, 0, 27 + _screen_width / 2, 165, 2, 2, 0, c_white, 1);
 
-    var system_string = $"{target.name} System";
+    var system_string = target.name + " " + localize("System");
 
     draw_set_color(target.owner == eFACTION.PLAYER ? c_blue : 0);
 
@@ -129,14 +109,14 @@ try {
         draw_planet_debug_options();
     }
 
-    if (obj_controller.menu == 0 && !debug) {
+    if (obj_controller.menu == eMENU.DEFAULT && !debug) {
         if (manage_units_button.draw(has_player_forces)) {
             var _viewer = obj_controller.location_viewer;
             _viewer.update_garrison_log();
             var _unit_dispersement = _viewer.garrison_log;
             var _sys_name = target.name;
             if (struct_exists(_unit_dispersement, target.name)) {
-                group_selection(_unit_dispersement[$ _sys_name].units, {purpose: $"{target.name} Management", purpose_code: "manage", number: 0, system: target.id, feature: "none", planet: 0, selections: []});
+                group_selection(_unit_dispersement[$ _sys_name].units, {purpose: localize("{0} Management", [target.name]), purpose_code: "manage", number: 0, system: target.id, feature: "none", planet: 0, selections: []});
                 instance_destroy();
                 pop_draw_return_values();
                 exit;
@@ -145,9 +125,9 @@ try {
     }
 
     if (loading != 0) {
-        draw_set_font(fnt_40k_14);
+        draw_set_font(cjk_font(fnt_40k_14));
         draw_set_color(CM_GREEN_COLOR);
-        draw_text(184, 202, "Select Destination");
+        draw_text(184, 202, localize("Select Destination"));
     }
 
     //the draw and click on planets logic
@@ -155,74 +135,59 @@ try {
         planet_selection_action();
     }
 
-    draw_set_font(fnt_40k_14b);
+    draw_set_font(cjk_font(fnt_40k_14b));
 
-    if (obj_controller.selecting_planet != 0) {
-        if (p_data.planet != obj_controller.selecting_planet) {
-            p_data = new PlanetData(obj_controller.selecting_planet, target);
-            target.system_datas[obj_controller.selecting_planet] = p_data;
+    var _planet = obj_controller.selecting_planet;
+    if (_planet != 0) {
+        if (p_data.planet != _planet) {
+            p_data = target.get_planet_data(_planet);
         }
+
         // Buttons that are available
         if (!buttons_selected) {
-            if ((obj_controller.faction_status[eFACTION.IMPERIUM] != "War" && p_data.current_owner > 5) || (obj_controller.faction_status[eFACTION.IMPERIUM] == "War" && p_data.at_war(0, 1, 1) && p_data.player_disposition <= 50)) {
-                var is_enemy = true;
-            } else {
-                var is_enemy = false;
-            }
+            buttons = [];
 
             if (p_data.planet > 0) {
-                if (target.present_fleet[1] == 0) /* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/ {
-                    if (p_data.player_forces > 0) {
-                        if (is_enemy) {
-                            button1 = "Attack";
-                            if (p_data.population) {
-                                button2 = "Purge";
-                            }
-                        }
+                if (target.present_fleet[1] > 0) {
+                    if (p_data.has_any_force()) {
+                        array_push(buttons, "Attack", "Raid", "Bombard");
                     }
-                }
-                if (target.present_fleet[1] > 0) /* and (target.p_type[obj_controller.selecting_planet]!="Dead")*/ {
-                    if (is_enemy) {
-                        button1 = "Attack";
-                        button2 = "Raid";
-                        button3 = "Bombard";
-                    } else {
-                        button1 = "Attack";
-                        button2 = "Raid";
-                        if (p_data.population) {
-                            button2 = "Purge";
-                        }
+
+                    if (p_data.population > 0) {
+                        array_push(buttons, "Purge");
                     }
 
                     if (torpedo > 0) {
                         var pfleet = instance_nearest(x, y, obj_p_fleet);
                         if (instance_exists(pfleet) && (point_distance(pfleet.x, pfleet.y, target.x, target.y) <= 40) && (pfleet.action == "")) {
-                            if ((pfleet.capital_number + pfleet.frigate_number > 0) && (button4 == "")) {
-                                button4 = "Cyclonic Torpedo";
+                            if (pfleet.capital_number + pfleet.frigate_number > 0) {
+                                array_push(buttons, "Cyclonic Torpedo");
                             }
                         }
+                    }
+                } else if (p_data.player_forces > 0) {
+                    if (p_data.has_any_force()) {
+                        array_push(buttons, "Attack");
+                    }
+
+                    if (p_data.population > 0) {
+                        array_push(buttons, "Purge");
                     }
                 }
             }
             var planet_upgrades = target.p_upgrades[obj_controller.selecting_planet];
             if (((p_data.planet_type == "Dead") || (array_length(p_data.upgrades) > 0)) && ((target.present_fleet[1] > 0) || (target.p_player[obj_controller.selecting_planet] > 0))) {
                 if ((array_length(p_data.features) == 0) || (array_length(planet_upgrades) > 0)) {
-                    chock = !p_data.xenos_and_heretics();
-                    if (chock == 1) {
-                        if (p_data.has_upgrade(eP_FEATURES.SECRET_BASE)) {
-                            button1 = "Base";
+                    if (!p_data.has_enemy_force()) {
+                        buttons = [];
+                        if (array_length(p_data.upgrades) == 0) {
+                            array_push(buttons, "Build");
+                        } else if (p_data.has_upgrade(eP_FEATURES.SECRET_BASE)) {
+                            array_push(buttons, "Base");
                         } else if (p_data.has_upgrade(eP_FEATURES.ARSENAL)) {
-                            button1 = "Arsenal";
+                            array_push(buttons, "Arsenal");
                         } else if (p_data.has_upgrade(eP_FEATURES.GENE_VAULT)) {
-                            button1 = "Gene-Vault";
-                        } else if (array_length(p_data.upgrades) == 0) {
-                            button1 = "Build";
-                        }
-                        if (array_contains(["Build", "Gene-Vault", "Arsenal", "Base"], button1)) {
-                            button2 = "";
-                            button3 = "";
-                            button4 = "";
-                            button5 = "";
+                            array_push(buttons, "Gene-Vault");
                         }
                     }
                 }
@@ -230,17 +195,26 @@ try {
 
             if (obj_controller.recruiting_worlds_bought > 0 && !p_data.at_war()) {
                 if (!p_data.has_feature(eP_FEATURES.RECRUITING_WORLD) && p_data.planet_type != "Dead" && !target.space_hulk) {
-                    button4 = "+Recruiting";
+                    array_push(buttons, "+Recruiting");
                 }
             }
             if (target.space_hulk) {
                 if (target.present_fleet[1] > 0) {
-                    button1 = "Raid";
-                    button2 = "Bombard";
-                    button3 = "";
-                    button4 = "";
+                    buttons = [
+                        "Raid",
+                        "Bombard",
+                    ];
                 }
             }
+
+            while (array_length(shutters) < array_length(buttons)) {
+                array_push(shutters, new ShutterButton());
+            }
+
+            while (array_length(shutters) > array_length(buttons)) {
+                array_delete(shutters, array_length(shutters) - 1, 1);
+            }
+
             buttons_selected = true;
         }
 
@@ -260,17 +234,19 @@ try {
                     exit;
                 }
             }
-        } else if (garrison != "" && !population) {
+        } else if (garrison != "" && !population && garrison.planet == obj_controller.selecting_planet) {
             if (garrison.garrison_force) {
-                draw_set_font(fnt_40k_14);
-                if (!garrison.garrison_leader) {
-                    garrison.find_leader();
-                    garrison.garrison_disposition_change(true);
-                    garrison_data_slate.sub_title = $"Garrison Leader {garrison.garrison_leader.name_role()}";
-                    garrison_data_slate.body_text = garrison.garrison_report();
+                draw_set_font(cjk_font(fnt_40k_14));
+
+                if (!is_undefined(garrison.garrison_leader)) {
+                    garrison_data_slate.sub_title = localize("Garrison Leader {0}", [garrison.garrison_leader.name_role()]);
+                } else {
+                    garrison_data_slate.sub_title = "";
                 }
+                garrison_data_slate.body_text = garrison.garrison_report();
+
                 garrison_data_slate.inside_method = function() {
-                    garrison_data_slate.title = "Garrison Report";
+                    garrison_data_slate.title = localize("Garrison Report");
                     draw_set_color(c_gray);
                     var xx = garrison_data_slate.XX;
                     var yy = garrison_data_slate.YY;
@@ -279,25 +255,25 @@ try {
                     draw_set_halign(fa_left);
                     draw_line(xx + 10, half_way, garrison_data_slate.width - 10, half_way);
                     var defence_data = determine_pdf_defence(target.p_pdf[cur_planet], garrison, target.p_fortified[cur_planet]);
-                    var defence_string = $"Planetary Defence : {defence_data[0]}";
+                    var defence_string = localize("Planetary Defence : {0}", [defence_data[0]]);
                     draw_text(xx + 20, half_way, defence_string);
                     if (scr_hit(xx + 20, half_way + 10, xx + 20 + string_width(defence_string), half_way + 10 + 20)) {
                         tooltip_draw(defence_data[1], 400);
                     }
-                    if (garrison.dispo_change != "none") {
-                        if (garrison.dispo_change > 55) {
-                            draw_text(xx + 20, half_way + 30, $"Garrison Disposition Effect : Positive");
-                        } else if (garrison.dispo_change > 44) {
-                            draw_text(xx + 20, half_way + 30, $"Garrison Disposition Effect : Neutral");
-                        } else {
-                            draw_text(xx + 20, half_way + 30, $"Garrison Disposition Effect : Negative");
-                        }
+
+                    var _dispo_change = garrison.dispo_change;
+                    if (_dispo_change > 55) {
+                        draw_text(xx + 20, half_way + 30, localize("Garrison Disposition Effect : Positive"));
+                    } else if (_dispo_change > 44 || _dispo_change == 0) {
+                        draw_text(xx + 20, half_way + 30, localize("Garrison Disposition Effect : Neutral"));
+                    } else {
+                        draw_text(xx + 20, half_way + 30, localize("Garrison Disposition Effect : Negative"));
                     }
                 };
                 garrison_data_slate.draw(340 + main_data_slate.width, 160, 0.6, 0.6);
             }
         } else if (population) {
-            garrison_data_slate.title = "Population Report";
+            garrison_data_slate.title = localize("Population Report");
             garrison_data_slate.inside_method = function() {
                 p_data.draw_planet_population_controls();
             };
@@ -310,21 +286,15 @@ try {
         var shutter_x = main_data_slate.XX - 165;
         var shutter_y = 296 + 165;
         if (!debug) {
-            if (shutter_1.draw_shutter(shutter_x, shutter_y, button1, 0.5, true)) {
-                current_button = button1;
-            }
-            if (shutter_2.draw_shutter(shutter_x, shutter_y + 47, button2, 0.5, true)) {
-                current_button = button2;
-            }
-            if (shutter_3.draw_shutter(shutter_x, shutter_y + (47 * 2), button3, 0.5, true)) {
-                current_button = button3;
-            }
-            if (shutter_4.draw_shutter(shutter_x, shutter_y + (47 * 3), button4, 0.5, true)) {
-                current_button = button4;
+            for (var i = 0; i < array_length(buttons); i++) {
+                if (shutters[i].draw_shutter(shutter_x, shutter_y + (47 * i), localize(buttons[i]), 0.5, true)) {
+                    current_button = buttons[i];
+                }
             }
         }
         if (current_button != "") {
             if (array_contains(["Build", "Base", "Arsenal", "Gene-Vault"], current_button)) {
+                /// @type {Id.Instance.obj_temp_build}
                 var building = instance_create(x, y, obj_temp_build);
                 building.target = target;
                 building.planet = obj_controller.selecting_planet;
@@ -335,34 +305,39 @@ try {
                 if (p_data.has_upgrade(eP_FEATURES.GENE_VAULT)) {
                     building.gene_vault = 1;
                 }
-                obj_controller.temp[104] = string(scr_master_loc());
+                //is cm at this location
+                var _cm = cm_obj().get_struct();
+                obj_controller.temp[104] = _cm.is_at_location(target.name, obj_controller.selecting_planet);
                 obj_controller.menu = 60;
                 with (obj_star_select) {
                     instance_destroy();
                 }
             } else if (current_button == "Raid" && instance_nearest(x, y, obj_p_fleet).acted <= 1) {
+                // feather ignore once GM2064
                 instance_create_layer(x, y, layer_get_all()[0], obj_drop_select, {p_target: target, planet_number: obj_controller.selecting_planet, sh_target: instance_nearest(x, y, obj_p_fleet), purge: 0});
             } else if (current_button == "Attack") {
                 var _allow_attack = true;
-                var _targ = !target.present_fleet[1] ? -50 : instance_nearest(x, y, obj_p_fleet);
+                var _targ = !target.present_fleet[1] ? noone : instance_nearest(x, y, obj_p_fleet);
                 if (instance_exists(_targ)) {
                     if (_targ.acted >= 2) {
                         _allow_attack = false;
                     }
                 }
                 if (_allow_attack) {
+                    // feather ignore once GM2064
                     instance_create_layer(x, y, layer_get_all()[0], obj_drop_select, {p_target: target, planet_number: obj_controller.selecting_planet, attack: true, sh_target: _targ, purge: 0});
                 }
             } else if (current_button == "Purge") {
                 var _allow_attack = true;
-                var _targ = !target.present_fleet[1] ? -50 : instance_nearest(x, y, obj_p_fleet);
+                var _targ = !target.present_fleet[1] ? noone : instance_nearest(x, y, obj_p_fleet);
                 if (instance_exists(_targ)) {
                     if (_targ.acted >= 2) {
                         _allow_attack = false;
                     }
                 }
                 if (_allow_attack) {
-                    instance_create_layer(x, y, layer_get_all()[0], obj_drop_select, {p_target: target, purge: 1, planet_number: obj_controller.selecting_planet, sh_target: _targ});
+                    // feather ignore once GM2064
+                    instance_create_layer(x, y, layer_get_all()[0], obj_drop_select, {p_target: target, planet_number: obj_controller.selecting_planet, sh_target: _targ, purge: 1});
                 }
             } else if (current_button == "Bombard") {
                 instance_create(x, y, obj_bomb_select);
@@ -388,20 +363,12 @@ try {
                             obj_controller.recruiting_worlds += planet_numeral_name(obj_controller.selecting_planet, target);
                         }
                         if (obj_controller.recruiting_worlds_bought == 0) {
-                            if (button1 == "+Recruiting") {
-                                button1 = "";
-                            }
-                            if (button2 == "+Recruiting") {
-                                button2 = "";
-                            }
-                            if (button3 == "+Recruiting") {
-                                button3 = "";
-                            }
-                            if (button4 == "+Recruiting") {
-                                button4 = "";
+                            var _idx = array_get_index(buttons, "+Recruiting");
+                            if (_idx > -1) {
+                                array_delete(buttons, _idx, 1);
                             }
                         }
-                        // 135 ; popup?
+                        // popup?
                     }
                 }
             } else if (current_button == "Cyclonic Torpedo") {
@@ -417,24 +384,20 @@ try {
             draw_rectangle(37, 413, 270, 452, 0);
             draw_set_alpha(1);
 
-            /*draw_set_color(CM_GREEN_COLOR);draw_rectangle(40,247,253,273,1);*/
-
             draw_set_halign(fa_left);
 
             draw_set_color(0);
-            draw_set_font(fnt_40k_14b);
-            draw_text(37, 413, "Select Fleet Combat");
+            draw_set_font(cjk_font(fnt_40k_14b));
+            draw_text(37, 413, localize("Select Fleet Combat"));
 
             draw_set_color(CM_GREEN_COLOR);
-            draw_set_font(fnt_40k_14b);
-            draw_text(37.5, 413.5, "Select Fleet Combat");
+            draw_set_font(cjk_font(fnt_40k_14b));
+            draw_text(37.5, 413.5, localize("Select Fleet Combat"));
 
-            // x3=46;y3=252;
             var x3 = 49, y3 = 441;
 
             for (var i = 1; i <= 7; i++) {
                 if (en_fleet[i] > 0) {
-                    // draw_sprite_ext(spr_force_icon,en_fleet[i],x3,y3,0.5,0.5,0,c_white,1);
                     scr_image("ui/force", en_fleet[i], x3 - 16, y3 - 16, 32, 32);
                     x3 += 64;
                 }
@@ -447,7 +410,3 @@ try {
     ERROR_HANDLER.handle_exception(_exception);
     instance_destroy();
 }
-
-/* */
-
-/*  */

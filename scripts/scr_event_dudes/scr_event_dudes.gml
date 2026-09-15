@@ -27,51 +27,29 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
         }
     }
 
-    var coh, ide, oc, ocn, ty, g, good, blur, unit;
-    coh = -1;
+    var ty, g, good, blur;
     ide = 0;
-    ide = -1;
     ty = 0;
     g = 0;
     good = 0;
     blur = "";
-    repeat (200) {
-        ide += 1;
-        oc[ide] = "";
-        ocn[ide] = 0;
-    }
 
-    co = -1;
-    ide = 0;
-    repeat (11) {
-        coh += 1;
-        ide = 0;
-        repeat (300) {
-            ide += 1;
+    var oc = array_create(200, "");
+    var ocn = array_create(200, 0);
+
+    for (var coh = 0; coh <= obj_ini.companies; coh++) {
+        for (var ide = 0; ide < array_length(obj_ini.TTRPG[coh]); ide++) {
             var adding;
             adding = false;
-            if (obj_ini.name[coh][ide] == "") {
-                continue;
-            }
-            unit = obj_ini.TTRPG[coh][ide];
+            var _unit = fetch_unit([coh, ide]);
 
-            if ((is_planet == 0) && (unit.ship_location == location_id)) {
-                if ((obj_ini.race[coh][ide] == 1) || (obj_ini.race[coh][ide] == 5)) {
-                    adding = true;
-                }
-            } else if ((is_planet == 1) && (unit.location_string == system_name) && (unit.planet_location == location_id)) {
-                if ((obj_ini.race[coh][ide] == 1) || (obj_ini.race[coh][ide] == 5)) {
-                    adding = true;
-                }
+            if ((is_planet == 0) && (_unit.ship_location == location_id)) {
+                adding = true;
+            } else if ((is_planet == 1) && (_unit.location_string == system_name) && (_unit.planet_location == location_id)) {
+                adding = true;
             }
 
-            if (obj_ini.role[coh][ide] == obj_ini.role[100][6]) {
-                adding = false;
-            }
-            if (obj_ini.role[coh][ide] == "Venerable " + string(obj_ini.role[100][6])) {
-                adding = false;
-            }
-            if (string_count("Dread", obj_ini.armour[coh][ide]) > 0) {
+            if (_unit.is_dreadnought()) {
                 adding = false;
             }
 
@@ -82,7 +60,7 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
                 repeat (100) {
                     g += 1;
                     if (good == 0) {
-                        if (oc[g] == obj_ini.role[coh][ide]) {
+                        if (oc[g] == _unit.role()) {
                             good = 1;
                             ocn[g] += 1;
                         }
@@ -90,7 +68,7 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
                 }
                 if (good == 0) {
                     ty += 1;
-                    oc[ty] = obj_ini.role[coh][ide];
+                    oc[ty] = _unit.role();
                     ocn[ty] = 1;
                     good = 1;
                 }
@@ -99,15 +77,15 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
             // Don't compile a list and create an array in obj_event instead
             if ((adding == true) && (do_action == 1)) {
                 var speshul = false;
-                if (unit.IsSpecialist(SPECIALISTS_HEADS)) {
+                if (_unit.IsSpecialist(SPECIALISTS_HEADS)) {
                     speshul = true;
                 }
 
                 if (speshul == true) {
                     obj_event.avatars += 1;
 
-                    obj_event.avatar_name[obj_event.avatars] = obj_ini.name[coh][ide];
-                    obj_event.avatar_rank[obj_event.avatars] = obj_ini.role[coh][ide];
+                    obj_event.avatar_name[obj_event.avatars] = _unit.name();
+                    obj_event.avatar_rank[obj_event.avatars] = _unit.role();
                     if (obj_controller.trim == 0) {
                         obj_event.avatar_image[obj_event.avatars] = 1;
                     }
@@ -120,9 +98,10 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
                     if (obj_controller.trim == 3) {
                         obj_event.avatar_image[obj_event.avatars] = 2;
                     }
-                    if (obj_ini.race[coh][ide] == 5) {
+                    /*if (obj_ini.race[coh][ide] == 5) {
                         obj_event.avatar_image[obj_event.avatars] = 3;
-                    }
+                    }*/
+                    //replace with check agaiinsst role or base_group
                     obj_event.avatar_co[obj_event.avatars] = coh;
                     obj_event.avatar_id[obj_event.avatars] = ide;
                 }
@@ -130,7 +109,7 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
                 obj_event.attendants += 1;
                 obj_event.attend_co[obj_event.attendants] = coh;
                 obj_event.attend_id[obj_event.attendants] = ide;
-                obj_event.attend_corruption[obj_event.attendants] = unit.corruption;
+                obj_event.attend_corruption[obj_event.attendants] = _unit.corruption;
                 obj_event.attend_race[obj_event.attendants] = obj_ini.race[coh][ide];
 
                 // Determine attend confused here
@@ -144,13 +123,13 @@ function scr_event_dudes(do_action, is_planet, system_name, location_id) {
                     if (obj_controller.fest_feature2 == 1) {
                         base_confusion += 1;
                     }
-                    if ((obj_controller.fest_feature3 == 1) && (unit.corruption < 50)) {
+                    if ((obj_controller.fest_feature3 == 1) && (_unit.corruption < 50)) {
                         base_confusion += 1;
                     }
-                    if (unit.corruption > 20) {
+                    if (_unit.corruption > 20) {
                         base_confusion -= 1;
                     }
-                    if (unit.corruption > 50) {
+                    if (_unit.corruption > 50) {
                         base_confusion -= 2;
                     }
                 }

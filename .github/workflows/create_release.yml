@@ -1,0 +1,305 @@
+name: Create Release
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        type: choice
+        description: "What type of release is this?"
+        required: true
+        default: Development
+        options:
+          - Development
+          - Stable
+      stable_version:
+        type: string
+        description: "Version string (e.g., v1.0.0). REQUIRED if Stable is selected."
+        required: false
+        default: ""
+      compiler:
+        type: choice
+        description: "What compiler to use?"
+        required: true
+        default: YYC
+        options:
+          - YYC
+          - VM
+      prerelease:
+        type: boolean
+        description: "Post as a pre-release?"
+        default: false
+      make_latest:
+        type: boolean
+        description: "Mark this release as latest?"
+        default: true
+      send_discord:
+        type: boolean
+        description: "Send Discord notification?"
+        default: true
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  build_needed:
+    name: Build needed?
+    runs-on: ubuntu-latest
+    outputs:
+      needed: ${{ steps.commit_check.outputs.needed }}
+      last_tag: ${{ steps.commit_check.outputs.last_tag }}
+      release_type: ${{ steps.determine_type.outputs.release_type }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          lfs: true
+
+      - name: Determine Release Type
+        id: determine_type
+        run: |
+          TYPE="${{ github.event.inputs.release_type || 'Development' }}"
+          echo "Determined release type: $TYPE"
+          echo "release_type=$TYPE" >> $GITHUB_OUTPUT
+
+      - name: Check commit range
+        id: commit_check
+        run: |
+          echo "needed=false" >> $GITHUB_OUTPUT
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "last_tag=$LAST_TAG" >> $GITHUB_OUTPUT
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manually triggered -> build."
+            echo "needed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          if [ -n "$LAST_TAG" ]; then
+            RANGE="$LAST_TAG..HEAD"
+            echo "Checking commits in range: $RANGE (since last tag '$LAST_TAG')"
+          else
+            RANGE="HEAD"
+            echo "No previous tags found. Checking all commits up to HEAD."
+          fi
+
+          COMMITS_IN_RANGE=$(git log $RANGE -n 1 --format=%H 2>/dev/null || echo "")
+          if [ -z "$COMMITS_IN_RANGE" ]; then
+            echo "No new commits found in the range '$RANGE'. HEAD is likely the same as the last tag ($LAST_TAG)."
+            echo "Skipping build as no changes since the last tagged build."
+            exit 0
+          fi
+
+          echo "New commits found in range '$RANGE'. Checking their messages."
+          ALL_MSGS=$(git log $RANGE --pretty=%s)
+          echo "Messages in range:"
+          echo "$ALL_MSGS" | sed 's/^/  /'
+
+          INCLUDE="^(feat|fix)"
+          if echo "$ALL_MSGS" | grep -Eq "$INCLUDE"; then
+            echo "Found at least one commit message matching the include pattern '$INCLUDE'."
+            echo "Build needed."
+            echo "needed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No new commit messages match the include pattern '$INCLUDE'."
+            echo "Skipping build."
+          fi
+
+  prepare_release:
+    name: Prepare the tags
+    runs-on: ubuntu-latest
+    needs: build_needed
+    if: needs.build_needed.outputs.needed == 'true'
+    outputs:
+      tag_name: ${{ steps.tag_info.outputs.tag_name }}
+      build_date: ${{ steps.tag_info.outputs.build_date }}
+      release_name: ${{ steps.tag_info.outputs.release_name }}
+      from_tag: ${{ needs.build_needed.outputs.last_tag }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set tag and release metadata
+        id: tag_info
+        run: |
+          TYPE="${{ needs.build_needed.outputs.release_type }}"
+          
+          if [ "$TYPE" = "Stable" ]; then
+            TAG_NAME="${{ github.event.inputs.stable_version }}"
+            if [ -z "$TAG_NAME" ]; then
+              echo "ERROR: stable_version input is required for Stable releases."
+              exit 1
+            fi
+            RELEASE_NAME="ChapterMaster $TAG_NAME"
+            BUILD_DATE=""
+            echo "Resolved TAG_NAME=$TAG_NAME"
+            echo "Calculated release name: $RELEASE_NAME"
+          else
+            BRANCH_SUFFIX="${GITHUB_REF_NAME##*/}"
+            DATE_TAG=$(date -u +"%Y-%m-%d-%H%M")
+            TAG_NAME="$BRANCH_SUFFIX/$DATE_TAG"
+            formattedTagName="${TAG_NAME//\//-}"
+            RELEASE_NAME="$formattedTagName"
+            BUILD_DATE="$DATE_TAG"
+            echo "Resolved DATE_TAG=$DATE_TAG"
+            echo "Resolved BRANCH_SUFFIX=$BRANCH_SUFFIX"
+            echo "Resolved TAG_NAME=$TAG_NAME"
+            echo "Calculated release name: $RELEASE_NAME"
+          fi
+
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          echo "release_name=$RELEASE_NAME" >> $GITHUB_OUTPUT
+          echo "build_date=$BUILD_DATE" >> $GITHUB_OUTPUT
+
+      - name: Cleanup old dev releases
+        run: |
+          set -euo pipefail
+          TYPE="${{ needs.build_needed.outputs.release_type }}"
+          
+          if [ "$TYPE" = "Stable" ]; then
+            echo "Stable release logic skipping old dev build cleanup."
+            exit 0
+          fi
+
+          TAG_NAME="${{ steps.tag_info.outputs.tag_name }}"
+          BRANCH_PREFIX="${TAG_NAME%%/*}/"
+
+          echo "Starting cleanup for releases with prefix: ${BRANCH_PREFIX}"
+          echo "--- All tag names found by 'gh release list --json tagName': ---"
+
+          ALL_TAG_NAMES=$(gh release list --limit 100 --json tagName | jq -r '.[].tagName' || true)
+          if [ -z "$ALL_TAG_NAMES" ]; then
+            echo "No releases found at all."
+            echo "-----------------------------------------------------------"
+            exit 0
+          else
+            echo "$ALL_TAG_NAMES" | cat -n
+          fi
+          echo "-----------------------------------------------------------"
+
+          TAGS_TO_PROCESS=$(echo "$ALL_TAG_NAMES" | grep "^${BRANCH_PREFIX}" | sort -r || true)
+          if [ -z "$TAGS_TO_PROCESS" ]; then
+            echo "No releases found matching prefix '${BRANCH_PREFIX}'. No cleanup needed."
+            exit 0
+          fi
+
+          NUM_MATCHING=$(echo "$TAGS_TO_PROCESS" | wc -l)
+          RELEASES_TO_KEEP=20
+          echo "Found ${NUM_MATCHING} releases matching prefix '${BRANCH_PREFIX}'. Will keep the latest $RELEASES_TO_KEEP."
+
+          COUNT=0
+          IFS=$'\n'
+          for TAG in $TAGS_TO_PROCESS; do
+            COUNT=$((COUNT + 1))
+            if [ $COUNT -gt $RELEASES_TO_KEEP ]; then
+              echo "Deleting old release+tag: $TAG"
+              gh release delete "$TAG" -y --cleanup-tag || echo "Warning: Failed to delete release $TAG. It may have been deleted already."
+            else
+              echo "Keeping release+tag: $TAG (it's within the latest $RELEASES_TO_KEEP)"
+            fi
+          done
+          unset IFS
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  gamemaker_build:
+    name: Build
+    uses: ./.github/workflows/gamemaker_build.yml
+    secrets: inherit
+    needs: [prepare_release, build_needed]
+    if: needs.build_needed.outputs.needed == 'true'
+    with:
+      yyc: ${{ (github.event.inputs.compiler || 'YYC') == 'YYC' }}
+      build_date: ${{ needs.prepare_release.outputs.build_date }}
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [prepare_release, build_needed, gamemaker_build]
+    if: needs.build_needed.outputs.needed == 'true'
+    permissions:
+      contents: write
+    steps:
+      - name: Download all built artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: ./build_output
+          merge-multiple: true
+
+      - name: List downloaded files
+        run: ls -R ./build_output
+
+      - id: build_changelog
+        name: Build Changelog
+        uses: mikepenz/release-changelog-builder-action@v6.1.0
+        with:
+          mode: "COMMIT"
+          fromTag: ${{ needs.prepare_release.outputs.from_tag }}
+          toTag: ${{ github.sha }}
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}**Changed Lines:** #{{CHANGES}}\n**Full Diff:** #{{RELEASE_DIFF}}",
+              "commit_template": "- [#{{TITLE}}](https://github.com/Adeptus-Dominus/ChapterMaster/commit/#{{MERGE_SHA}}) by #{{AUTHOR}}",
+              "sort": {
+                "order": "ASC",
+                "on_property": "title"
+              },
+              "categories": [
+                {
+                    "title": "### Save Breaking!",
+                    "labels": ["breaking"]
+                },
+                {
+                    "title": "### Features",
+                    "labels": ["feat"]
+                },
+                {
+                    "title": "### Fixes",
+                    "labels": ["fix"]
+                },
+                {
+                    "title": "### Other",
+                    "labels": []
+                }
+              ],
+              "label_extractor": [
+                {
+                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|merge){1}(\\([\\w\\-\\.]+\\))?: ([\\w ])+([\\s\\S]*)",
+                  "on_property": "title",
+                  "target": "$1"
+                },
+                {
+                  "pattern": "^(breaking.*:|.*!.*:).*",
+                  "on_property": "title",
+                  "target": "breaking",
+                  "flags": "i"
+                }
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: create_release
+        name: Create a release and upload files
+        uses: softprops/action-gh-release@v2.3.2
+        with:
+          name: ${{ needs.prepare_release.outputs.release_name }}
+          body: ${{ steps.build_changelog.outputs.changelog }}
+          token: ${{ secrets.RELEASE_TOKEN_SECRET }}
+          tag_name: ${{ needs.prepare_release.outputs.tag_name }}
+          prerelease: ${{ github.event.inputs.prerelease || 'false' }}
+          make_latest: ${{ github.event.inputs.make_latest || 'true' }}
+          files: |
+            ./build_output/**/*.zip
+
+      - name: Send Discord Notification
+        if: ${{ github.event.inputs.send_discord != 'false' && needs.build_needed.outputs.release_type == 'Development' }}
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          username: "GitHub Releases"
+          content: "<@&1318332223232938014>"
+          embed-title: "${{ needs.prepare_release.outputs.release_name }}"
+          embed-description: |
+            **Download:** ${{ steps.create_release.outputs.url }}
+            ${{ steps.build_changelog.outputs.changelog }}
+          embed-footer-text: "These builds are auto-generated every 12 hours. Their stability is unpredictable. 20 last builds retained at the same time. You can always revert to an older one."

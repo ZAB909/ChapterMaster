@@ -1,13 +1,13 @@
+if (os_type == os_macosx) {
+    exit;
+}
+
 if (gc_timer > 0) {
     gc_timer -= 1;
     // show_debug_message($"obj_garbage_collector: gc_timer = {gc_timer}");
 } else {
     gc_timer = 50;
-    switch (os_type) {
-        case os_macosx:
-            gc_timer = 10000;
-            break;
-    }
+
     gc_collect();
 
     wait_and_execute(0, function() {
@@ -20,7 +20,7 @@ if (gc_timer > 0) {
             _gc_touched,
             _gc_collected,
             _gc_traversal_t,
-            _gc_collection_t
+            _gc_collection_t,
         ];
         // show_debug_message_time($"(GC{_gc_stats.gc_frame}) Garbage Collected!");
 

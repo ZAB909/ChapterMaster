@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 function MissionHandler(planet, system) : PlanetData(planet, system) constructor {}
 
 function location_out_of_player_control(unit_loc) {
@@ -8,7 +5,7 @@ function location_out_of_player_control(unit_loc) {
         "Terra",
         "Mechanicus Vessel",
         "Lost",
-        "Mars"
+        "Mars",
     ];
     return array_contains(_locs, unit_loc);
 }
@@ -41,7 +38,7 @@ global.planet_problem_keys = [
     "artifact_loan",
     "necron",
     "ethereal",
-    "demon_world"
+    "demon_world",
 ];
 
 function mission_name_key(mission) {
@@ -81,6 +78,184 @@ function mission_name_key(mission) {
         return mission_key[$ mission];
     } else {
         return "none";
+    }
+}
+
+/// @self Struct.PlanetData
+function problem_end_turn_checks() {
+    /// @self Struct.PlanetData
+    static problem_functions = {
+        "succession": function(problem_index) {
+            if (problem_timers[problem_index] > 0) {
+                return;
+            }
+            var result, _alert_text;
+            var dice1 = roll_dice(1, 100);
+            var dice2 = roll_dice(1, 100);
+
+            result = eFACTION.IMPERIUM;
+            _alert_text = "";
+            if (dice1 <= (corruption * 2)) {
+                result = eFACTION.CHAOS;
+            }
+            if (dice2 <= (population_influences[eFACTION.TAU] * 2)) {
+                result = eFACTION.TAU;
+            }
+
+            if (current_owner == eFACTION.IMPERIUM && result != eFACTION.IMPERIUM) {
+                edit_pdf(guardsmen);
+                edit_guardsmen(-guardsmen);
+                set_new_owner(result);
+            }
+
+            _alert_text = $"War of Succession on {name()} has ended";
+
+            if (result == eFACTION.CHAOS) {
+                _alert_text += " with Chaos in control.";
+                set_player_disposition(0);
+                scr_alert("red", "succession", _alert_text, x, y);
+                scr_event_log("purple", _alert_text);
+            } else if (result == eFACTION.TAU) {
+                _alert_text += " with a Tau sympathizer in control.";
+                set_player_disposition(10 + choose(1, 2, 3, 4, 5, 6));
+                add_forces(eFACTION.TAU, 2);
+                scr_alert("red", "succession", _alert_text, x, y);
+                scr_event_log("red", _alert_text);
+            } else if (result == eFACTION.IMPERIUM) {
+                _alert_text += " The resultant governor is the most staunch pillar of the imperium.";
+                _alert_text += ".";
+                scr_alert("green", "succession", _alert_text, x, y);
+                scr_event_log("", _alert_text);
+            } else {
+                //At the moment does not fire but a worty flavour option for down the line
+                _alert_text += " Word is the new Governor has Heretical leanings and sympathises with xenos.";
+            }
+
+            delete_feature(eP_FEATURES.SUCCESSION_WAR);
+            remove_problem("succession");
+        },
+        "recon": function(problem_index) {
+            if (problem_timers[problem_index] > 0) {
+                return;
+            }
+            var _alert_text = "Inquisition Mission Failed: Investigate ";
+            alter_disposition(eFACTION.INQUISITION, -5);
+            _alert_text += $"{name()}.";
+            scr_alert("red", "mission_failed", _alert_text, 0, 0);
+            scr_event_log("red", _alert_text);
+            remove_problem("recon");
+        },
+        "great_crusade": function(problem_index) {
+            if (problem_timers[problem_index] > 0) {
+                return;
+            }
+            var _crusade_direction;
+            var _join_crusade = false;
+            var _player_fleet = instance_nearest(system.x, system.y, obj_p_fleet);
+
+            if (_player_fleet.action == "") {
+                if (point_distance(system.x, system.y, _player_fleet.x, _player_fleet.y) < 10) {
+                    _join_crusade = true;
+                }
+            }
+
+            if (_join_crusade) {
+                _crusade_direction = point_direction(room_width / 2, room_height / 2, x, y);
+                with (_player_fleet) {
+                    action_x = x + lengthdir_x(1200, _crusade_direction);
+                    action_y = y + lengthdir_y(1200, _crusade_direction);
+                    set_fleet_movement(false, "crusade1");
+                }
+
+                scr_alert("green", "crusade", "Fleet embarks upon Crusade.", x, y);
+                scr_event_log("", "Fleet embarks upon Crusade.");
+            } else {
+                // hit loyalty here
+                alter_dispositions([[eFACTION.INQUISITION, -10], [eFACTION.IMPERIUM, -5]]);
+                var _string = $"No ships designated for Crusade.";
+                if (obj_controller.penitent == 1) {
+                    obj_controller.penitent_current = 0;
+                    _string += "Your penitence crusade has been lengthened for your failings";
+                }
+
+                scr_alert("red", "crusade", _string, system.x, system.y);
+                scr_loyalty("Refusing to Crusade", "+");
+                scr_event_log("red", "No ships designated for Crusade.");
+            }
+            remove_problem("great_crusade");
+        },
+        "necron": function(problem_index) {
+            if (problem_timers[problem_index] > 0) {
+                return;
+            }
+
+            alter_disposition(eFACTION.INQUISITION, -8);
+            var _alert_text = $"The Necron Tomb of planet {name()} has not been deactivated in time.  It has awakened, rank upon rank of Necrons pouring out to the planet's surface.  The Inquisition is not pleased with your failure.";
+            scr_popup("Inquisition Mission Failed", _alert_text, "necron_army", "");
+            scr_event_log("red", $"Inquisition Mission Failed: Bombing run failed; the Necron Tomb on {name()} has become active.");
+
+            add_forces(eFACTION.NECRONS, 4);
+            if (awake_tomb_world(features) == 0) {
+                awaken_tomb_world(features);
+            }
+            remove_problem("necron");
+        },
+        "spyrer": function(problem_index) {
+            if (problem_timers[problem_index] > 0) {
+                return;
+            }
+            var _planet_name = name();
+            alter_disposition(eFACTION.INQUISITION, -3);
+            var _alert_text = $"The Spyrer on {_planet_name} has been left unchecked.  In the ensuing carnage some high-ranking officials have been killed, along with several Nobles.  Panic is running amock in several parts of the hives and the Inquisition is less than pleased.";
+            var _text = "Inquisition Mission Failed: The Spyrer on {_planet_name} was not removed.";
+            scr_popup("Inquisition Mission Failed", _alert_text, "spyrer", "");
+            scr_event_log("red", _text);
+            remove_problem("spyrer");
+        },
+        "fallen": function(problem_index) {
+            //TODO marker point for cohesion mechanics
+            if (problem_timers[problem_index] > 0) {
+                return;
+            }
+            var alert_text = "";
+            if (irandom(100) > 33) {
+                // Give all marines +3d6 corruption and reduce loyalty by 20*/
+                for (var co = 0; co <= obj_ini.companies; co++) {
+                    for (var me = 0; me < company_length(co); me++) {
+                        var _unit = fetch_unit([co, me]);
+                        if (_unit.base_group != "astartes") {
+                            continue;
+                        }
+                        _unit.edit_corruption(irandom_range(3, 6));
+                        _unit.alter_loyalty(-10);
+                    }
+                }
+            }
+            alert_text = $"Any Fallen that may have been on {name()} ";
+            alert_text += "have been given sufficient time to escape.  Morale within your chapter has plummeted; some of your battle brothers have become restless and speak among eachother in hushed tones.";
+            scr_popup("Hunt the Fallen Failed", alert_text + "\n\n(Chapter wide loyalty: -10)\nChaplains note marked changes in behaviour of some brothers", "fallen", "");
+            obj_controller.loyalty -= 10;
+            obj_controller.loyalty_hidden -= 10;
+            remove_problem("fallen");
+            scr_event_log("red", $"Mission Failed: Any Fallen within the {system.name} system have been given time to escape.");
+        },
+        "provide_garrison": complete_garrison_mission,
+    };
+
+    for (var i = 0; i < array_length(problems); i++) {
+        var _problem = problems[i];
+        if (_problem == "") {
+            continue;
+        }
+
+        if (struct_exists(problem_functions, _problem)) {
+            try {
+                var _problem_action = method(self, problem_functions[$ _problem]);
+                _problem_action(i);
+            } catch (_exception) {
+                ERROR_HANDLER.handle_exception(_exception);
+            }
+        }
     }
 }
 
@@ -144,7 +319,6 @@ function scr_new_governor_mission(planet, problem = "") {
 }
 
 function init_marine_acting_strange() {
-    LOGGER.info("RE: Strange Behavior");
     var marine_and_company = scr_random_marine("", 0);
     if (marine_and_company == "none") {
         LOGGER.error("RE: Strange Behavior, couldn't pick a space marine");
@@ -152,6 +326,9 @@ function init_marine_acting_strange() {
     }
 
     var unit = fetch_unit(marine_and_company);
+    if (!is_struct(unit)) {
+        exit;
+    }
     var role = unit.role();
     var text = unit.name_role();
     var company_text = scr_convert_company_to_string(unit.company);
@@ -172,12 +349,10 @@ function init_garrison_mission(planet, star, mission_slot) {
         mission_data.stage = "active";
         var garrison_length = 10 + irandom(6);
         star.p_timer[planet][mission_slot] = garrison_length;
-        //pop.image="ancient_ruins";
         var gar_pop = instance_create(0, 0, obj_popup);
         //TODO some new universal methods for popups
         gar_pop.title = $"Requested Garrison Provided to {numeral_name}";
         gar_pop.text = $"The governor of {numeral_name} Thanks you for considering his request for a garrison, you agree that the garrison will remain for at least {garrison_length} months.";
-        //pip.image="event_march"
         gar_pop.add_option("Commence Garrison");
         gar_pop.image = "";
         gar_pop.cooldown = 8;
@@ -194,12 +369,10 @@ function init_beast_hunt_mission(planet, star, mission_slot) {
         mission_data.stage = "active";
         var _mission_length = irandom_range(2, 5);
         star.p_timer[planet][mission_slot] = _mission_length;
-        //pop.image="ancient_ruins";
         var gar_pop = instance_create(0, 0, obj_popup);
         //TODO some new universal methods for popups
         gar_pop.title = $"Marines assigned to hunt beasts around {numeral_name}";
         gar_pop.text = $"The govornor of {numeral_name} Thanks you for the participation of your elite warriors in your execution of such a menial task.";
-        //pip.image="event_march"
         gar_pop.add_option("Happy Hunting");
         gar_pop.image = "";
         gar_pop.cooldown = 8;
@@ -208,35 +381,31 @@ function init_beast_hunt_mission(planet, star, mission_slot) {
     }
 }
 
-function role_compare(unit, role) {
-    return unit.role() == obj_ini.role[100][role];
-}
-
 function init_protect_raider_mission(squad) {
-    var _squad_units = squad.get_squad_structs();
+    var _squad_units = squad.members;
     var _squad_wisdom = stat_average(_squad_units, "wisdom");
     var _squad_dex = stat_average(_squad_units, "dexterity");
     var _tester = global.character_tester;
 
-    var _pdata = new PlanetData(selection_data.planet, selection_data.system);
+    var _pdata = selection_data.system.get_planet_data(selection_data.planet);
     var _mod = _squad_wisdom + _squad_dex / 20;
     if (scr_has_adv("Ambushers")) {
         _mod += 10;
     }
 
-    var _leader = fetch_unit(squad.determine_leader());
-
+    var _leader = squad.determine_leader();
+    if (!is_struct(_leader)) {
+        return;
+    }
     var _wis_test = _tester.standard_test(_leader, "wisdom", _mod, ["ambush"]);
 
     if (!_wis_test[0]) {
-        var _mission_data = variable_clone(selection_data);
         if (_wis_test[1] < -25) {
             scr_toggle_manage();
             var gar_pop = instance_create(0, 0, obj_popup);
             gar_pop.title = $"Strange Disappearance";
             gar_pop.pdata = _pdata;
             gar_pop.text = $"Your Marines make planet fall and are directed to report to the governor for the duration of the operation after a period of reconnaissance dig in for their ambush. After a two weeks have passed A message from the governor reaches your astropaths that your marines have not been heard of for some time, The raiders also were not noted to have arrived onor left the planet";
-            //pip.image="event_march"
             var _dead_marine = array_random_index(_squad_units);
             for (var i = 0; i < array_length(_dead_marine); i++) {
                 if (i == _dead_marine) {
@@ -261,8 +430,6 @@ function init_protect_raider_mission(squad) {
             var gar_pop = instance_create(0, 0, obj_popup);
             gar_pop.title = $"Ineffective Ambush";
             gar_pop.text = $"Your Marines Are ineffective at setting up an ambush the assailants clearly got wind of the operation or the plan was otherwise so ill thought out that by the time your forces arrived there was little that could be done to intercept them";
-            //pip.image="event_march"
-            //var _dead_marine = array_random_index(_squad_units);
             gar_pop.text += $"";
             gar_pop.pathway = "protect_raiders_ineffective";
             gar_pop.pdata = _pdata;
@@ -294,7 +461,7 @@ function protect_raiders_suppress_information() {
     title = "Captains Disgruntled";
     options1 = "continue";
     pathway = "";
-    var _caps = scr_role_count(obj_ini.roles[100][eROLE.CAPTAIN]);
+    var _caps = scr_role_count(obj_ini.player_role_data[eROLE.CAPTAIN].role);
     var _worst = -1;
     var _worst_hit = -1;
     for (var i = 0; i < array_length(_caps); i++) {
@@ -324,7 +491,7 @@ function protect_raiders_hold_memorial() {
 }
 
 function init_train_forces_mission(planet, star, mission_slot, marine) {
-    var _pdata = new PlanetData(planet, star);
+    var _pdata = star.get_planet_data(planet);
     var mission_data = _pdata.problems_data[mission_slot];
     if (mission_data.stage == "preliminary") {
         var numeral_name = _pdata.name();
@@ -336,7 +503,7 @@ function init_train_forces_mission(planet, star, mission_slot, marine) {
         //TODO some new universal methods for popups
         gar_pop.title = $"Training forces on {numeral_name} begins";
         gar_pop.text = $"{marine.name_role()} Has taken leave of his current post in order to aid the governor of {numeral_name} and his pdf commanders with training local forces and bolstering defences.";
-        var _is_cap = role_compare(marine, eROLE.CAPTAIN);
+        var _is_cap = marine.has_role(eROLE.CAPTAIN);
 
         if (_is_cap) {
             gar_pop.text += "the governor seems to be impressed that such a high ranking officer has been assigned to his request (disp +3)";
@@ -353,64 +520,74 @@ function init_train_forces_mission(planet, star, mission_slot, marine) {
 }
 
 /// @self Asset.GMObject.obj_star
-function complete_garrison_mission(targ_planet, problem_index) {
-    var planet = new PlanetData(targ_planet, self);
-    if (problem_has_key_and_value(targ_planet, problem_index, "stage", "active")) {
-        if (planet.current_owner == eFACTION.IMPERIUM && system_garrison[targ_planet - 1].garrison_force) {
-            var _mission_string = $"The garrison on {planet_numeral_name(targ_planet)} has finished the period of garrison support agreed with the planetary governor.";
-            var p_garrison = system_garrison[targ_planet - 1];
-            var result = p_garrison.garrison_disposition_change();
-            if (!p_garrison.garrison_leader) {
-                p_garrison.find_leader();
-            }
-            if (result == "none") {
-                //TODO make a dedicated plus minus string function if there isn't one already
-            } else if (!result) {
-                var effect = result * irandom_range(1, 5);
-                dispo[targ_planet] += effect;
-                _mission_string += $"A number of diplomatic incidents occured over the period which had considerable negative effects on our disposition with the planetary governor (disposition -{effect})";
-            } else {
-                var effect = result * irandom_range(1, 5);
-                dispo[targ_planet] += result * effect;
-                _mission_string += $"As a diplomatic mission the duration of the stay was a success with our political position with the planet being enhanced greatly (disposition +{effect})";
-            }
-            var tester = global.character_tester;
-            var widom_test = tester.standard_test(p_garrison.garrison_leader, "wisdom", 0, ["siege"]);
-            if (widom_test[0]) {
-                p_fortified[targ_planet]++;
-                _mission_string += $"while stationed {p_garrison.garrison_leader.name_role()} makes several notable observations and is able to instruct the planets defense core leaving the world better defended (fortifications++).";
-            }
-            //TODO just generall apply this each turn with a garrison to see if a cult is found
-            if (planet_feature_bool(p_feature[targ_planet], eP_FEATURES.GENE_STEALER_CULT)) {
-                var cult = return_planet_features(planet.features, eP_FEATURES.GENE_STEALER_CULT)[0];
-                if (cult.hiding) {
-                    widom_test = tester.standard_test(p_garrison.garrison_leader, "wisdom", 0, ["tyranids"]);
-                    if (widom_test[0]) {
-                        cult.hiding = false;
-                        _mission_string += "Most alarmingly signs of a genestealer cult are noted by the garrison. how far the rot has gone will now need to be investigated and the xenos taint purged.";
-                    }
-                }
-            }
-            scr_popup($"Agreed Garrison of {planet_numeral_name(targ_planet)} complete", _mission_string, "", "");
-        } else {
-            planet.add_disposition(-20);
-            scr_popup($"Agreed Garrison of {planet_numeral_name(targ_planet)}", $"your agreed garrison of  {planet_numeral_name(targ_planet)} was cut short by your chapter the planetary governor has expressed his displeasure (disposition -20)", "", "");
-        }
-        remove_planet_problem(targ_planet, "provide_garrison");
-    } else {
-        remove_planet_problem(targ_planet, "provide_garrison");
+function complete_garrison_mission(problem_index) {
+    if (problem_timers[problem_index] > 0) {
+        return;
     }
+    var _problem_data = problems_data[problem_index];
+    if (!struct_has_value(_problem_data, "stage", "active")) {
+        remove_problem("provide_garrison");
+        return;
+    }
+
+    garrisons.update();
+    if (current_owner != eFACTION.IMPERIUM || !garrisons.garrison_force) {
+        remove_problem("provide_garrison");
+        add_disposition(-20);
+        scr_popup($"Agreed Garrison of {name()}", $"your agreed garrison of  {name()} was cut short by your chapter the planetary governor has expressed his displeasure (disposition -20)", "", "");
+        return;
+    }
+
+    var _mission_string = $"The garrison on {name()} has finished the period of garrison support agreed with the planetary governor.";
+    var _result = garrisons.garrison_disposition_change();
+    if (!garrisons.garrison_leader) {
+        garrisons.find_leader();
+    }
+
+    var _effect = 0;
+    if (_result == "none") {
+        //TODO make a dedicated plus minus string function if there isn't one already
+    } else if (_result < 0) {
+        _effect = _result * irandom_range(1, 5);
+        _mission_string += $"A number of diplomatic incidents occured over the period which had considerable negative effects on our disposition with the planetary governor (disposition -{_effect})";
+    } else {
+        _effect = _result * irandom_range(1, 5);
+        _mission_string += $"As a diplomatic mission the duration of the stay was a success with our political position with the planet being enhanced greatly (disposition +{_effect})";
+    }
+
+    add_disposition(_effect);
+    var tester = global.character_tester;
+    var widom_test = tester.standard_test(garrisons.garrison_leader, "wisdom", 0, ["siege"]);
+
+    if (widom_test[0]) {
+        alter_fortification(1);
+        _mission_string += $"while stationed {garrisons.garrison_leader.name_role()} makes several notable observations and is able to instruct the planets defense core leaving the world better defended (fortifications+1).";
+    }
+    //TODO just generall apply this each turn with a garrison to see if a cult is found
+    if (has_feature(eP_FEATURES.GENE_STEALER_CULT)) {
+        var cult = get_features(eP_FEATURES.GENE_STEALER_CULT)[0];
+        if (cult.hiding) {
+            widom_test = tester.standard_test(garrisons.garrison_leader, "wisdom", 0, ["tyranids"]);
+            if (widom_test[0]) {
+                cult.hiding = false;
+                _mission_string += "Most alarmingly signs of a genestealer cult are noted by the garrison. how far the rot has gone will now need to be investigated and the xenos taint purged.";
+            }
+        }
+    }
+    scr_popup($"Agreed Garrison of {name()} complete", _mission_string, "", "");
+
+    remove_problem("provide_garrison");
 }
 
 function complete_train_forces_mission(targ_planet, problem_index) {
-    var planet = new PlanetData(targ_planet, self);
+    var planet = get_planet_data(targ_planet);
     if (problem_has_key_and_value(targ_planet, problem_index, "stage", "active")) {
         var man_conditions = {
             "job": "train_forces",
             "max": 1,
         };
         var _mission_string = "";
-        var _trainer = collect_role_group("all", [name, targ_planet, 0], false, man_conditions);
+        var _trainer = collect_role_group("all", [planet.system.name, targ_planet, 0], false, man_conditions);
         if (array_length(_trainer)) {
             var _unit_report_string = "";
             var _tester = global.character_tester;
@@ -483,7 +660,7 @@ function complete_train_forces_mission(targ_planet, problem_index) {
                         "blood_for_blood",
                         "blunt",
                         "brute",
-                        "brawler"
+                        "brawler",
                     ];
                     var _hard_loss = false;
                     for (var i = 0; i < array_length(_hard_loss_traits); i++) {
@@ -507,16 +684,15 @@ function complete_train_forces_mission(targ_planet, problem_index) {
     }
 }
 
-
 function complete_beast_hunt_mission(targ_planet, problem_index) {
-    var planet = new PlanetData(targ_planet, self);
+    var planet = get_planet_data(targ_planet);
     if (problem_has_key_and_value(targ_planet, problem_index, "stage", "active")) {
         var _mission_string = "";
         var man_conditions = {
             "job": "hunt_beast",
             "max": 3,
         };
-        var _hunters = collect_role_group("all", [name, targ_planet, 0], false, man_conditions);
+        var _hunters = collect_role_group("all", [planet.system.name, targ_planet, 0], false, man_conditions);
         var _success = false;
         var _tester = global.character_tester;
         var _unit_pass;
@@ -544,7 +720,7 @@ function complete_beast_hunt_mission(targ_planet, problem_index) {
                 if (!_tough_check[0]) {
                     if (_tough_check[1] < -10) {
                         _unit_report_string += $"{_unit.name_role()} Was mauled to death\n";
-                        scr_kill_unit(_unit.company, _unit.marine_number);
+                        _unit.kill(true, false);
                         _deaths++;
                     } else if (_tough_check[1] >= -10) {
                         if (irandom(100) < _unit.luck) {
@@ -569,7 +745,7 @@ function complete_beast_hunt_mission(targ_planet, problem_index) {
             _mission_string = $"The mission was a failiure. The governor is disapointed and the legend of your chapter has undoubtedly been diminished";
             _mission_string += $"\n{_unit_report_string}";
         }
-        scr_popup($"Beast Hunt on {planet_numeral_name(i)}", _mission_string, "", "");
+        scr_popup($"Beast Hunt on {planet_numeral_name(i, id)}", _mission_string, "", "");
         remove_planet_problem(targ_planet, "hunt_beast");
     } else {
         remove_planet_problem(targ_planet, "hunt_beast");
@@ -579,8 +755,8 @@ function complete_beast_hunt_mission(targ_planet, problem_index) {
 //TODO allow most of these functions to be condensed and allow arrays of problems or planets and maybe increase filtering options
 //filtering options could be done via universal methods that all the filters to be passed to many other game systems
 /// @self Asset.GMObject.obj_star
-function has_any_problem_planet(planet, star = "none") {
-    if (star == "none") {
+function has_any_problem_planet(planet, star = noone) {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] != "") {
                 return true;
@@ -595,9 +771,9 @@ function has_any_problem_planet(planet, star = "none") {
 }
 
 /// @self Asset.GMObject.obj_star
-function planet_problemless(planet, star = "none") {
+function planet_problemless(planet, star = noone) {
     var _problemless = true;
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] != "") {
                 _problemless = false;
@@ -612,21 +788,15 @@ function planet_problemless(planet, star = "none") {
     return _problemless;
 }
 
-/*
-//may not be needed but will be a loop of planet_problemless
-function star_problemless(){
-
-}*/
-
 // returns a bool for if any planet on a given star has the given problem
 /// @self Asset.GMObject.obj_star
-function has_problem_star(problem, star = "none") {
+function has_problem_star(problem, star = noone) {
     var has_problem = false;
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 1; i <= planets; i++) {
             has_problem = has_problem_planet(i, problem);
             if (has_problem) {
-                has_problem = i;
+                has_problem = true;
                 break;
             }
         }
@@ -640,8 +810,8 @@ function has_problem_star(problem, star = "none") {
 
 //returns a bool for if a planet has a given problem
 /// @self Asset.GMObject.obj_star
-function has_problem_planet(planet, problem, star = "none") {
-    if (star == "none") {
+function has_problem_planet(planet, problem, star = noone) {
+    if (star == noone) {
         return array_contains(p_problem[planet], problem);
     } else {
         with (star) {
@@ -652,9 +822,9 @@ function has_problem_planet(planet, problem, star = "none") {
 
 //returns the array position of a given problem on a given planet if the specfied time is given
 /// @self Asset.GMObject.obj_star
-function has_problem_planet_and_time(planet, problem, time, star = "none") {
+function has_problem_planet_and_time(planet, problem, time, star = noone) {
     var _had_problem = -1;
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] == problem) {
                 if (p_timer[planet][i] == time) {
@@ -672,9 +842,9 @@ function has_problem_planet_and_time(planet, problem, time, star = "none") {
 
 //returns the array position of a given problem on a given planet if the specfied time is above 0
 /// @self Asset.GMObject.obj_star
-function has_problem_planet_with_time(planet, problem, star = "none") {
+function has_problem_planet_with_time(planet, problem, star = noone) {
     var _had_problem = -1;
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] == problem) {
                 if (p_timer[planet][i] > 0) {
@@ -692,8 +862,8 @@ function has_problem_planet_with_time(planet, problem, star = "none") {
 
 //returns the array position of a gien problem on a given planet
 /// @self Asset.GMObject.obj_star
-function find_problem_planet(planet, problem, star = "none") {
-    if (star == "none") {
+function find_problem_planet(planet, problem, star = noone) {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] == problem) {
                 return i;
@@ -709,9 +879,9 @@ function find_problem_planet(planet, problem, star = "none") {
 
 ///removie all of a given problem from a planet
 /// @self Asset.GMObject.obj_star
-function remove_planet_problem(planet, problem, star = "none") {
-    var _had_problem = -1;
-    if (star == "none") {
+function remove_planet_problem(planet, problem, star = noone) {
+    var _had_problem = false;
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] == problem) {
                 p_problem[planet][i] = "";
@@ -725,13 +895,13 @@ function remove_planet_problem(planet, problem, star = "none") {
             _had_problem = remove_planet_problem(planet, problem);
         }
     }
-    return -1;
+    return _had_problem;
 }
 
 //find an open problem slot on a given planet
 /// @self Asset.GMObject.obj_star
-function open_problem_slot(planet, star = "none") {
-    if (star == "none") {
+function open_problem_slot(planet, star = noone) {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] == "") {
                 return i;
@@ -747,14 +917,14 @@ function open_problem_slot(planet, star = "none") {
 
 //remove all of a given problem types from a star
 /// @self Asset.GMObject.obj_star
-function remove_star_problem(problem, star = "none") {
-    if (star == "none") {
+function remove_star_problem(problem, star = noone) {
+    if (star == noone) {
         for (var i = 1; i <= planets; i++) {
             remove_planet_problem(i, problem);
         }
     } else {
         with (star) {
-            remove_remove_star_problem(problem);
+            remove_star_problem(problem);
         }
     }
 }
@@ -775,21 +945,21 @@ function problem_count_down(planet, count_change = 1) {
 
 //add a new problem
 /// @self Asset.GMObject.obj_star
-function add_new_problem(planet, problem, timer, star = "none", other_data = {}) {
+function add_new_problem(planet, problem, timer, star = noone, other_data = {}) {
     var problem_added = false;
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 0; i < array_length(p_problem[planet]); i++) {
             if (p_problem[planet][i] == "") {
                 p_problem[planet][i] = problem;
                 p_problem_other_data[planet][i] = other_data;
                 p_timer[planet][i] = timer;
-                problem_added = i;
+                problem_added = true;
                 break;
             }
         }
     } else {
         with (star) {
-            problem_added = add_new_problem(planet, problem, timer, "none", other_data);
+            problem_added = add_new_problem(planet, problem, timer, noone, other_data);
         }
     }
     return problem_added;
@@ -811,9 +981,9 @@ function increment_mission_completion(mission_data) {
 //search problem data for a given and key and iff applicable value on that key
 //TODO increase filtering and search options
 /// @self Asset.GMObject.obj_star
-function problem_has_key_and_value(planet, problem, key, value = "", star = "none") {
+function problem_has_key_and_value(planet, problem, key, value = "", star = noone) {
     var has_data = false;
-    if (star == "none") {
+    if (star == noone) {
         var problem_data = p_problem_other_data[planet][problem];
         if (struct_exists(problem_data, key)) {
             if (value == "") {

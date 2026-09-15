@@ -2,10 +2,6 @@ if (!instance_exists(obj_star)) {
     exit;
 }
 
-if (instance_exists(orbiting) && (obj_controller.is_test_map == true)) {
-    draw_set_color(c_red);
-    draw_line_width(x, y, orbiting.x, orbiting.y, 1);
-}
 var scale = obj_controller.scale_mod;
 
 if ((x < 0) || (x > room_width) || (y < 0) || (y > room_height)) {
@@ -17,14 +13,14 @@ if (image_alpha == 0) {
 
 var coords = [
     0,
-    0
+    0,
 ];
 
 var near_star = instance_nearest(x, y, obj_star);
 if (x == near_star.x && y == near_star.y) {
-    var coords = [
+    coords = [
         24,
-        -24
+        -24,
     ];
 }
 
@@ -49,7 +45,7 @@ if (!select_instance) {
 }
 if (!keyboard_check(vk_shift)) {
     if (within) {
-        if (mouse_check_button_pressed(mb_left) && obj_controller.menu == 0 && !selected) {
+        if (mouse_check_button_pressed(mb_left) && obj_controller.menu == eMENU.DEFAULT && !selected) {
             alarm[3] = 1;
         }
     } else {
@@ -65,45 +61,27 @@ if (!keyboard_check(vk_shift)) {
         }
     }
 }
-// if (obj_controller.selected!=0) and (selected=1) then within=1;
 
-if (obj_controller.selecting_planet > 0) {
-    if ((mouse_x >= camera_get_view_x(view_camera[0]) + 529) && (mouse_y >= camera_get_view_y(view_camera[0]) + 234) && (mouse_x < camera_get_view_x(view_camera[0]) + 611) && (mouse_y < camera_get_view_y(view_camera[0]) + 249)) {
-        if (instance_exists(obj_star_select)) {
-            if (obj_star_select.button1 != "") {
-                within = 0;
-            }
-        }
-    }
-    if ((mouse_x >= camera_get_view_x(view_camera[0]) + 529) && (mouse_y >= camera_get_view_y(view_camera[0]) + 234 + 16) && (mouse_x < camera_get_view_x(view_camera[0]) + 611) && (mouse_y < camera_get_view_y(view_camera[0]) + 249 + 16)) {
-        if (instance_exists(obj_star_select)) {
-            if (obj_star_select.button2 != "") {
-                within = 0;
-            }
-        }
-    }
-    if ((mouse_x >= camera_get_view_x(view_camera[0]) + 529) && (mouse_y >= camera_get_view_y(view_camera[0]) + 234 + 32) && (mouse_x < camera_get_view_x(view_camera[0]) + 611) && (mouse_y < camera_get_view_y(view_camera[0]) + 249 + 32)) {
-        if (instance_exists(obj_star_select)) {
-            if (obj_star_select.button3 != "") {
-                within = 0;
-            }
+if (obj_controller.selecting_planet > 0 && instance_exists(obj_star_select)) {
+    var _btn_count = array_length(obj_star_select.buttons);
+    for (var i = 0; i < _btn_count; i++) {
+        if ((mouse_x >= camera_get_view_x(view_camera[0]) + 529) && (mouse_y >= camera_get_view_y(view_camera[0]) + 234 + (16 * i)) && (mouse_x < camera_get_view_x(view_camera[0]) + 611) && (mouse_y < camera_get_view_y(view_camera[0]) + 249 + (16 * i))) {
+            within = 0;
         }
     }
 }
 
-var line_width = obj_controller.zoomed ? 6 : 1;
-var line_width = sqr(scale);
-var text_size = sqr(scale);
+var line_width = 2 * scale;
+var text_size = obj_controller.zoomed ? 2 * scale : scale;
 
 if (action != "") {
     draw_set_halign(fa_left);
     draw_set_alpha(1);
-    draw_set_color(c_white);
+    draw_set_color(CM_GREEN_COLOR);
     draw_line_width(x, y, action_x, action_y, line_width);
-    //
     draw_set_font(fnt_40k_14b);
+    draw_text_transformed_outline(x + 12, y, $"ETA {action_eta}", text_size, text_size, 0);
 
-    draw_text_transformed(x + 12, y, string_hash_to_newline("ETA " + string(action_eta)), text_size, text_size, 0);
     if (array_length(complex_route) > 0) {
         var next_loc = instance_nearest(action_x, action_y, obj_star);
         for (var i = 0; i < array_length(complex_route); i++) {
@@ -130,8 +108,6 @@ if ((within == 1) || (selected > 0)) {
     if ((capital_number == 0) && (frigate_number == 0) && (escort_number == 1)) {
         ppp = escort[0];
     }
-    // ppp=acted;
-    //
     draw_set_color(CM_GREEN_COLOR);
     draw_set_font(fnt_40k_14b);
     draw_set_halign(fa_center);
@@ -148,12 +124,5 @@ if ((within == 1) || (selected > 0)) {
     draw_set_alpha(1);
 }
 
-// if (is_orbiting()){
-//     orbiting = instance_nearest(x,y ,obj_star);
-//     var draw_x = x - orbiting.x;
-//     var draw_y = y - orbiting.y;
-// }
-
+draw_set_color(c_white);
 draw_sprite_ext(sprite_index, image_index, x + (coords[0] * scale), y + (coords[1] * scale), 1 * scale, 1 * scale, 0, c_white, 1);
-
-// draw_sprite_ext(sprite_index,image_index,(draw_x*scale),(draw_y*scale),1*scale,1*scale,0,c_white,1) 

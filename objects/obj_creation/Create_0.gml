@@ -7,28 +7,30 @@ keyboard_string = "";
 #region Icon Grid settings for chapter selection
 icon_width = 48;
 icon_height = 48;
-/// distance between 2 rows of icons in the grid
+// distance between 2 rows of icons in the grid
 icon_row_gap = 60;
-/// distance between section heading and icon grid row
+// distance between section heading and icon grid row
 icon_gap_y = 34;
-/// distance between columns in icon grid
+// distance between columns in icon grid
 icon_gap_x = 53;
-/// x coord of left edge of the icon grid
+// x coord of left edge of the icon grid
 icon_grid_left_edge = 441;
-/// Max number of columns of icons until a new row is made
+// Max number of columns of icons until a new row is made
 max_cols = 10;
-/// x coord of the right edge of the icon grid
+// x coord of the right edge of the icon grid
 icon_grid_right_edge = function() {
     return icon_grid_left_edge + (icon_gap_x * max_cols - 1);
 }; // icon_gap_x * max number of desired columns - 1
-/// y coord of Founding section heading
+// y coord of Founding section heading
 founding_y = 133;
-/// y coord of Successor section heading
+// y coord of Successor section heading
 successor_y = 250;
-/// y coord of Custom section heading
+// y coord of Custom section heading
 custom_y = 463;
-/// y coord of Other section heading
+// y coord of Other section heading
 other_y = 593;
+
+sector_handler = new SectorHandler();
 
 var view = new DebugView("Obj Creation Grid", self);
 view.add_section("Icon Grid").add_slider_int("max_cols", 1, 15).add_slider_int("icon_width", 1, 100).add_slider_int("icon_height", 1, 100).add_slider_int("icon_grid_left_edge", 1, 1000).add_slider_int("icon_gap_y", 1, 300).add_slider_int("icon_gap_x", 1, 300).add_slider_int("icon_row_gap", 1, 300).add_section("Heading Positions").add_slider_int("founding_y", 1, 1000).add_slider_int("successor_y", 1, 1000).add_slider_int("custom_y", 1, 1000).add_slider_int("other_y", 1, 1000).hide();
@@ -41,9 +43,7 @@ custom_icon = 0;
 /// Stores the chapter icon in one spot so we dont have to keep checking whether we're using a custom image or not every time we wanna display it somewhere
 global.chapter_id = 0;
 
-audio_stop_all();
-audio_play_sound(snd_diboz, 0, true, 0.1);
-audio_sound_gain(snd_diboz, 1, 5000);
+global.audio_manager.play_playlist(CONTEXT_CREATION, 5000);
 
 global.load = -1;
 planet_types = global.planet_types;
@@ -60,6 +60,7 @@ company_liveries = "";
 complex_livery = false;
 complex_selection = "sgt";
 complex_depth_selection = 0;
+allow_colour_click = false;
 //TODO probably make this array based at some point ot match other unit data
 complex_livery_data = complex_livery_default();
 left_data_slate = new DataSlate();
@@ -85,7 +86,7 @@ cooldown = 0;
 name_bad = 0;
 heheh = 0;
 turn_selection_change = false;
-draw_helms = true;
+default_marine_draw_variables();
 
 var _culture_styles_array = [];
 
@@ -95,14 +96,158 @@ for (var i = 0; i < array_length(global.culture_styles); i++) {
 
 buttons = {
     home_world_recruit_share: new ToggleButton(),
-    complex_homeworld: new ToggleButton({x1: 550, y1: 422, active: false, str1: "Spawn System Options", tooltip: "Click for Complex Spawn System Options", button_color: CM_GREEN_COLOR}),
-    home_spawn_loc_options: new RadioSet([{str1: "Fringe", font: fnt_40k_30b, tooltip: "Your home system sits at the edge of the sector"}, {str1: "Central", font: fnt_40k_30b, tooltip: "Your home system is relativly central in the sector"}], "Home Spwan\nLocation"),
-    recruit_home_relationship: new RadioSet([{str1: "Share Planet", font: fnt_40k_14b, tooltip: "Your recruit world will be the same planet as your home world"}, {str1: "Share System", font: fnt_40k_14b, tooltip: "Your recruit world will be in the the same system as your home world"}, {str1: "Seperate", font: fnt_40k_14b, tooltip: "Your recruit world will be in a different system to your homeworld"}], "Recruit world"),
-    home_warp: new RadioSet([{str1: "Secluded", font: fnt_40k_14b, tooltip: "Your home system is logistically secluded with no major warp routes"}, {str1: "Connected", font: fnt_40k_14b, tooltip: "Your home system is connected to the larger imperium and system by warp routes"}, {str1: "Warp Hub", font: fnt_40k_14b, tooltip: "Your home system is in a very stable warp area, accessible by several warp lanes"}], "Home warp access"),
-    home_planets: new RadioSet([{str1: "one", font: fnt_40k_14b}, {str1: "two", font: fnt_40k_14b}, {str1: "three", font: fnt_40k_14b}, {str1: "four", font: fnt_40k_14b}], "Home System Planets"),
+    complex_homeworld: new ToggleButton({
+        x1: 550,
+        y1: 422,
+        active: false,
+        str1: "Spawn System Options",
+        tooltip: "Click for Complex Spawn System Options",
+        button_color: CM_GREEN_COLOR,
+    }),
+    home_spawn_loc_options: new RadioSet(
+        [
+            {
+                str1: "Fringe",
+                font: fnt_40k_30b,
+                tooltip: "Your home system sits at the edge of the sector",
+            },
+            {
+                str1: "Central",
+                font: fnt_40k_30b,
+                tooltip: "Your home system is relativly central in the sector",
+            },
+        ],
+        "Home Spwan\nLocation",
+    ),
+    recruit_home_relationship: new RadioSet(
+        [
+            {
+                str1: "Share Planet",
+                font: fnt_40k_14b,
+                tooltip: "Your recruit world will be the same planet as your homeworld.",
+            },
+            {
+                str1: "Share System",
+                font: fnt_40k_14b,
+                tooltip: "Your recruit world will be in the same system as your homeworld.",
+            },
+            {
+                str1: "Separate",
+                font: fnt_40k_14b,
+                tooltip: "Your recruit world will be in a different system to your homeworld.",
+            },
+        ],
+        "Recruit world",
+    ),
+    home_warp: new RadioSet(
+        [
+            {
+                str1: "Secluded",
+                font: fnt_40k_14b,
+                tooltip: "Your home system is logistically secluded with no major warp routes",
+            },
+            {
+                str1: "Connected",
+                font: fnt_40k_14b,
+                tooltip: "Your home system is connected to the larger imperium and system by warp routes",
+            },
+            {
+                str1: "Warp Hub",
+                font: fnt_40k_14b,
+                tooltip: "Your home system is in a very stable warp area, accessible by several warp lanes",
+            },
+        ],
+        "Home warp access",
+    ),
+    home_planets: new RadioSet(
+        [
+            {
+                str1: "one",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "two",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "three",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "four",
+                font: fnt_40k_14b,
+            },
+        ],
+        "Home System Planets",
+    ),
     culture_styles: new MultiSelect(_culture_styles_array, "Chapter Visual Styles"),
-    company_liveries_choice: new RadioSet([{str1: "HQ", font: fnt_40k_14b}, {str1: "I", font: fnt_40k_14b}, {str1: "II", font: fnt_40k_14b}, {str1: "III", font: fnt_40k_14b}, {str1: "IV", font: fnt_40k_14b}, {str1: "V", font: fnt_40k_14b}, {str1: "VI", font: fnt_40k_14b}, {str1: "VII", font: fnt_40k_14b}, {str1: "VIII", font: fnt_40k_14b}, {str1: "IX", font: fnt_40k_14b}, {str1: "X", font: fnt_40k_14b}], "Companies"),
-    livery_switch: new UnitButtonObject({x1: 570, y1: 215, label: "Simple Livery"}),
+    company_liveries_choice: new RadioSet(
+        [
+            {
+                str1: "HQ",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "I",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "II",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "III",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "IV",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "V",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "VI",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "VII",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "VIII",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "IX",
+                font: fnt_40k_14b,
+            },
+            {
+                str1: "X",
+                font: fnt_40k_14b,
+            },
+        ],
+        "Companies",
+    ),
+    livery_switch: new UnitButtonObject({
+        x1: 570,
+        y1: 215,
+        label: "Simple Livery",
+    }),
+    millenium_shifter: new ValueShifter("Millenium", {
+        max_clamp: 41,
+        min_clamp: 31,
+        shift_value: 1,
+    }),
+    year_shifter: new ValueShifter("Year", {
+        max_clamp: 900,
+        min_clamp: 0,
+        shift_value: 100,
+    }),
+    game_date: new ReactiveString("Game Date", 0, 0, {
+        tooltip: "edit the date your playthrough takes place in",
+    }),
 };
 
 with (buttons) {
@@ -131,8 +276,8 @@ temp = 0;
 target_gear = 0;
 tab = 0;
 role_names_all = "";
+custom_roles = {};
 
-//
 chapter_name = "Unnamed";
 chapter_string = "Unnamed";
 chapter_year = 0;
@@ -149,8 +294,6 @@ strength = 5;
 cooperation = 5;
 purity = 5;
 stability = 90;
-
-var i = 9;
 
 homeworld = "Temperate";
 homeworld_name = global.name_generator.GenerateFromSet("star", false);
@@ -203,7 +346,7 @@ squad_distribution = 0;
 load_to_ships = [
     2,
     0,
-    0
+    0,
 ];
 
 successors = 0;
@@ -224,14 +367,7 @@ secretions = 0;
 occulobe = 0;
 mucranoid = 0;
 
-disposition[0] = 0;
-disposition[1] = 0; // Prog
-disposition[2] = 0; // Imp
-disposition[3] = 0; // Mech
-disposition[4] = 0; // Inq
-disposition[5] = 0; // Ecclesiarchy
-disposition[6] = 0; // Astartes
-disposition[7] = 0; // Reserved
+disposition = array_create(eFACTION._COUNT, 0);
 
 chapter_master_name = global.name_generator.ChapterMemberNameGeneration();
 chapter_master_melee = 1;
@@ -272,6 +408,7 @@ enum eCHAPTERS {
     CUSTOM_8 = 28,
     CUSTOM_9 = 29,
     CUSTOM_10 = 30,
+    DEATHWATCH = 33,
 }
 enum eCHAPTER_ORIGINS {
     NONE,
@@ -305,37 +442,37 @@ function ChapterDataLite(_id, _origin, _progenitor, _name, _tooltip, _icon_name 
 // For new additions, as long as the order in the array is the same as the enum order,
 //you will be able to index the array by using syntax like so: `var dark_angels = all_chapters[CHAPTERS.DARK_ANGELS]`
 all_chapters = [
-    new ChapterDataLite(eCHAPTERS.UNKNOWN, eCHAPTER_ORIGINS.NONE, 0, "Unknown", "Error: The tooltip is missing", "unknown"),
-    new ChapterDataLite(eCHAPTERS.DARK_ANGELS, eCHAPTER_ORIGINS.FOUNDING, 0, "Dark Angels", "The Dark Angels claim complete allegiance and service to the Emperor of Mankind, though their actions and secret goals seem to run counter to this- above all other things they strive to atone for an ancient crime of betrayal.", "dark_angels"),
-    new ChapterDataLite(eCHAPTERS.WHITE_SCARS, eCHAPTER_ORIGINS.FOUNDING, 0, "White Scars", "Known and feared for their highly mobile way of war, the White Scars are the masters of lightning strikes and hit-and-run tactics.  They are particularly adept in the use of Attack Bikes and field large numbers of them.", "white_scars"),
-    new ChapterDataLite(eCHAPTERS.SPACE_WOLVES, eCHAPTER_ORIGINS.FOUNDING, 0, "Space Wolves", "Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.", "space_wolves"),
-    new ChapterDataLite(eCHAPTERS.IMPERIAL_FISTS, eCHAPTER_ORIGINS.FOUNDING, 0, "Imperial Fists", "Siege-masters of utmost excellence, the Imperial Fists stoicism has lead them to great victories and horrifying defeats. To them, the idea of a tactical retreat is utterly inconsiderable. They hold ground on Inwit vigilantly, refusing to back down from any fight.", "imperial_fists"),
-    new ChapterDataLite(eCHAPTERS.BLOOD_ANGELS, eCHAPTER_ORIGINS.FOUNDING, 0, "Blood Angels", "One of the most noble and renowned chapters, their combat record belies a dark flaw in their gene-seed caused by the death of their primarch. Their primarch had wings and a propensity for close combat, and this shows in their extensive use of jump packs and close quarters weapons.", "blood_angels"),
-    new ChapterDataLite(eCHAPTERS.IRON_HANDS, eCHAPTER_ORIGINS.FOUNDING, 0, "Iron Hands", "The flesh is weak, and the weak shall perish. Such is the creed of these mercilessly efficient cyborg warriors. A chapter with strong ties to the Mechanicum, they crush the foes of the Emperor and Machine God alike with a plethora of exotic technology and ancient weaponry.", "iron_hands"),
-    new ChapterDataLite(eCHAPTERS.ULTRAMARINES, eCHAPTER_ORIGINS.FOUNDING, 0, "Ultramarines", "An honourable and venerated chapter, the Ultramarines are considered to be amongst the best of the best. Their Primarch was the author of the great tome of the “Codex Astartes”, and they are considered exemplars of what a perfect Space Marine Chapter should be like.", "ultramarines"),
-    new ChapterDataLite(eCHAPTERS.SALAMANDERS, eCHAPTER_ORIGINS.FOUNDING, 0, "Salamanders", "Followers of the Promethean Cult, the jet-black skinned Salamanders are forgemasters of legend. They are armed with the best wargear available and prefer flame based weaponry. Their only drawback is their low numbers and slow recruiting.", "salamanders"),
-    new ChapterDataLite(eCHAPTERS.RAVEN_GUARD, eCHAPTER_ORIGINS.FOUNDING, 0, "Raven Guard", "Clinging to the shadows and riding the edge of lightning the Raven Guard strike out at the hated enemy with stealth and speed. Using lightning strikes, hit and run tactics, and guerrilla warfare, they are known for being there one second and gone the next.", "raven_guard"),
+    new ChapterDataLite(eCHAPTERS.UNKNOWN, eCHAPTER_ORIGINS.NONE, eCHAPTERS.UNKNOWN, "Unknown", "Error: The tooltip is missing", "unknown"),
+    new ChapterDataLite(eCHAPTERS.DARK_ANGELS, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Dark Angels", "The Dark Angels claim complete allegiance and service to the Emperor of Mankind, though their actions and secret goals seem to run counter to this- above all other things they strive to atone for an ancient crime of betrayal.", "dark_angels"),
+    new ChapterDataLite(eCHAPTERS.WHITE_SCARS, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "White Scars", "Known and feared for their highly mobile way of war, the White Scars are the masters of lightning strikes and hit-and-run tactics.  They are particularly adept in the use of Attack Bikes and field large numbers of them.", "white_scars"),
+    new ChapterDataLite(eCHAPTERS.SPACE_WOLVES, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Space Wolves", "Brave sky warriors hailing from the icy deathworld of Fenris, the Space Wolves are a non-Codex compliant chapter, and deadly in close combat.  They fight on their own terms and damn any who wish otherwise.", "space_wolves"),
+    new ChapterDataLite(eCHAPTERS.IMPERIAL_FISTS, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Imperial Fists", "Siege-masters of utmost excellence, the Imperial Fists stoicism has lead them to great victories and horrifying defeats. To them, the idea of a tactical retreat is utterly inconsiderable. They hold ground on Inwit vigilantly, refusing to back down from any fight.", "imperial_fists"),
+    new ChapterDataLite(eCHAPTERS.BLOOD_ANGELS, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Blood Angels", "One of the most noble and renowned chapters, their combat record belies a dark flaw in their gene-seed caused by the death of their primarch. Their primarch had wings and a propensity for close combat, and this shows in their extensive use of jump packs and close quarters weapons.", "blood_angels"),
+    new ChapterDataLite(eCHAPTERS.IRON_HANDS, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Iron Hands", "The flesh is weak, and the weak shall perish. Such is the creed of these mercilessly efficient cyborg warriors. A chapter with strong ties to the Mechanicum, they crush the foes of the Emperor and Machine God alike with a plethora of exotic technology and ancient weaponry.", "iron_hands"),
+    new ChapterDataLite(eCHAPTERS.ULTRAMARINES, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Ultramarines", "An honourable and venerated chapter, the Ultramarines are considered to be amongst the best of the best. Their Primarch was the author of the great tome of the “Codex Astartes”, and they are considered exemplars of what a perfect Space Marine Chapter should be like.", "ultramarines"),
+    new ChapterDataLite(eCHAPTERS.SALAMANDERS, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Salamanders", "Followers of the Promethean Cult, the jet-black skinned Salamanders are forgemasters of legend. They are armed with the best wargear available and prefer flame based weaponry. Their only drawback is their low numbers and slow recruiting.", "salamanders"),
+    new ChapterDataLite(eCHAPTERS.RAVEN_GUARD, eCHAPTER_ORIGINS.FOUNDING, eCHAPTERS.UNKNOWN, "Raven Guard", "Clinging to the shadows and riding the edge of lightning the Raven Guard strike out at the hated enemy with stealth and speed. Using lightning strikes, hit and run tactics, and guerrilla warfare, they are known for being there one second and gone the next.", "raven_guard"),
     new ChapterDataLite(eCHAPTERS.BLACK_TEMPLARS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.IMPERIAL_FISTS, "Black Templars", "Not adhering to the Codex Astartes, Black Templars are a Chapter on an Eternal Crusade with unique organization and high numbers. Masters of assault, they charge at the enemy with zeal unmatched. They hate psykers, and as such, have no Librarians.", "black_templars"),
     new ChapterDataLite(eCHAPTERS.MINOTAURS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.IMPERIAL_FISTS, "Minotaurs", "Bronze-clad Astartes of unknown Founding, the Minotaurs prefer to channel their righteous fury in a massive storm of fire, with tanks and artillery. They could be considered the Inquisition’s attack dog, since they often attack fellow chapters suspected of heresy.", "minotaurs"),
-    new ChapterDataLite(eCHAPTERS.BLOOD_RAVENS, eCHAPTER_ORIGINS.SUCCESSOR, 0, "Blood Ravens", "Of unknown origins and Founding, the origins of the Blood Ravens are shrouded in mystery and are believed to be tied to a dark truth. This elusive Chapter is drawn to the pursuit of knowledge and ancient lore and produces an unusually high number of Librarians.", "blood_ravens"),
+    new ChapterDataLite(eCHAPTERS.BLOOD_RAVENS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.UNKNOWN, "Blood Ravens", "Of unknown origins and Founding, the origins of the Blood Ravens are shrouded in mystery and are believed to be tied to a dark truth. This elusive Chapter is drawn to the pursuit of knowledge and ancient lore and produces an unusually high number of Librarians.", "blood_ravens"),
     new ChapterDataLite(eCHAPTERS.CRIMSON_FISTS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.IMPERIAL_FISTS, "Crimson Fists", "An Imperial Fists descendant, the Crimson Fists are more level-minded than their Progenitor and brother chapters.  They suffer the same lacking zygotes as their ancestors, and more resemble the Ultramarines in their balanced approach to combat. After surviving a devastating Ork WAAAGH! the chapter clings dearly to its future.", "crimson_fists"),
     new ChapterDataLite(eCHAPTERS.LAMENTERS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.BLOOD_ANGELS, "Lamenters", "The Lamenter's accursed and haunted legacy seems to taint much of what they have achieved; their victories often become bitter ashes in their hands.  Nearly extinct, they fight their last days on behalf of the common folk in a crusade of endless penitence.", "lamenters"),
     new ChapterDataLite(eCHAPTERS.CARCHARODONS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.RAVEN_GUARD, "Carcharodons", "Rumored to be Successors of the Raven Guard, these Astartes are known for their sudden attacks and shock assaults. Travelling through the Imperium via self-sufficient Nomad-Predation based fleets, no enemy is safe from the fury of these bloodthirsty Space Marines.", "carcharodons"),
     new ChapterDataLite(eCHAPTERS.SOUL_DRINKERS, eCHAPTER_ORIGINS.SUCCESSOR, eCHAPTERS.IMPERIAL_FISTS, "Soul Drinkers", "Sharing ancestry of the Black Templars or Crimson fists. As proud sons of Dorn they share the strong void combat traditions, fielding a large amount of Battle Barges. As well as being fearsome in close combat. Whispers of the Ruinous Powers are however quite enticing.", "soul_drinkers"),
-    new ChapterDataLite(eCHAPTERS.ANGRY_MARINES, eCHAPTER_ORIGINS.NON_CANON, 0, "Angry Marines", "Frothing with pathological rage since the day their Primarch emerged from his pod with naught but a dented copy of battletoads.  Every last Angry Marine is a homicidal, suicidal berserker with a voice that projects, and are always angry, all the time.  A /tg/ classic.", "angry_marines"),
-    new ChapterDataLite(eCHAPTERS.EMPERORS_NIGHTMARE, eCHAPTER_ORIGINS.NON_CANON, 0, "Emperor’s Nightmare", "The Emperor's Nightmare bear the curse of a bizarre mutation within their gene-seed. The Catalepsean Node is in a state of decay and thus do not sleep for months at a time until falling asleep suddenly. They prefer shock and awe tactics with stealth.", "emperors_nightmare"),
-    new ChapterDataLite(eCHAPTERS.STAR_KRAKENS, eCHAPTER_ORIGINS.NON_CANON, 0, "Star Krakens", "In darkness, they dwell in The Deep. The Star Krakens stand divided in individual companies but united in the form of the Ten-Flag Council. They utilize boarding tactics and are the sole guardians of the ancient sensor array called “The Lighthouse”.", "star_krakens"),
-    new ChapterDataLite(eCHAPTERS.CONSERVATORS, eCHAPTER_ORIGINS.NON_CANON, 0, "Conservators", "Hailing from the Asharn Marches and having established their homeworld on the planet Dekara, these proud sons of Dorn suffer from an extreme lack of supplies, Ork raids, and more. Though under strength and lacking equipment, they managed to forge an interstellar kingdom loyal to both Emperor and Imperium.", "conservators"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_1, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_2, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_3, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_4, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_5, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_6, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_7, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_8, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_9, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter"),
-    new ChapterDataLite(eCHAPTERS.CUSTOM_10, eCHAPTER_ORIGINS.CUSTOM, 0, "Custom", "Your Chapter")
+    new ChapterDataLite(eCHAPTERS.ANGRY_MARINES, eCHAPTER_ORIGINS.NON_CANON, eCHAPTERS.UNKNOWN, "Angry Marines", "Frothing with pathological rage since the day their Primarch emerged from his pod with naught but a dented copy of battletoads.  Every last Angry Marine is a homicidal, suicidal berserker with a voice that projects, and are always angry, all the time.  A /tg/ classic.", "angry_marines"),
+    new ChapterDataLite(eCHAPTERS.EMPERORS_NIGHTMARE, eCHAPTER_ORIGINS.NON_CANON, eCHAPTERS.UNKNOWN, "Emperor’s Nightmare", "The Emperor's Nightmare bear the curse of a bizarre mutation within their gene-seed. The Catalepsean Node is in a state of decay and thus do not sleep for months at a time until falling asleep suddenly. They prefer shock and awe tactics with stealth.", "emperors_nightmare"),
+    new ChapterDataLite(eCHAPTERS.STAR_KRAKENS, eCHAPTER_ORIGINS.NON_CANON, eCHAPTERS.UNKNOWN, "Star Krakens", "In darkness, they dwell in The Deep. The Star Krakens stand divided in individual companies but united in the form of the Ten-Flag Council. They utilize boarding tactics and are the sole guardians of the ancient sensor array called “The Lighthouse”.", "star_krakens"),
+    new ChapterDataLite(eCHAPTERS.CONSERVATORS, eCHAPTER_ORIGINS.NON_CANON, eCHAPTERS.UNKNOWN, "Conservators", "Hailing from the Asharn Marches and having established their homeworld on the planet Dekara, these proud sons of Dorn suffer from an extreme lack of supplies, Ork raids, and more. Though under strength and lacking equipment, they managed to forge an interstellar kingdom loyal to both Emperor and Imperium.", "conservators"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_1, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_2, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_3, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_4, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_5, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_6, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_7, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_8, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_9, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
+    new ChapterDataLite(eCHAPTERS.CUSTOM_10, eCHAPTER_ORIGINS.CUSTOM, eCHAPTERS.UNKNOWN, "Custom", "Your Chapter"),
 ];
 
 var missing_splash = 99;
@@ -372,7 +509,7 @@ for (var c = 1; c < 40; c++) {
     var json_chapter = new ChapterData();
     var success = json_chapter.load_from_json(c, use_app_data);
     if (success) {
-        all_chapters[c] = new ChapterDataLite(json_chapter.id, json_chapter.origin, json_chapter.founding, json_chapter.name, json_chapter.flavor,);
+        all_chapters[c] = new ChapterDataLite(json_chapter.id, json_chapter.origin, json_chapter.founding, json_chapter.name, json_chapter.flavor);
         all_chapters[c].json = true;
         all_chapters[c].icon_name = json_chapter.icon_name;
         all_chapters[c].splash = json_chapter.splash;
@@ -390,6 +527,7 @@ all_chapters[eCHAPTERS.UNKNOWN].disabled = true; //this should always be disable
 all_chapters[eCHAPTERS.EMPERORS_NIGHTMARE].disabled = true;
 all_chapters[eCHAPTERS.STAR_KRAKENS].disabled = true;
 all_chapters[eCHAPTERS.CONSERVATORS].disabled = true;
+all_chapters[eCHAPTERS.DEATHWATCH].disabled = true;
 
 founding_chapters = array_filter(all_chapters, function(item) {
     return item.origin == eCHAPTER_ORIGINS.FOUNDING;
@@ -403,11 +541,6 @@ custom_chapters = array_filter(all_chapters, function(item) {
 other_chapters = array_filter(all_chapters, function(item) {
     return item.origin == eCHAPTER_ORIGINS.NON_CANON;
 });
-// LOGGER.debug($"founding: {founding_chapters}");
-// LOGGER.debug($"successor: {successor_chapters}");
-// LOGGER.debug($"custom: {custom_chapters}");
-// LOGGER.debug($"other: {other_chapters}");
-
 // TODO refactor into struct constructors stored in which are struct arrays
 
 // meta provides a universal way to control not having contradictory advatages and disadvantages
@@ -419,79 +552,19 @@ chapter_trait_meta = [];
 
 setup_chapter_traits();
 
-// disadvantage[i]="Embargo";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;// Greatly increases the cost of common wargear and disallows advanced items.
-// disadvantage[i]="First In, Last Out";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;
-// disadvantage[i]="Rival Brotherhood";dis_tooltip[i]="NOT IMPLEMENTED YET.";i+=1;
+player_role_data = [];
+setup_default_gears();
+player_role_data = variable_clone(default_role_data);
 
-race = [];
-role = [];
-wep1 = [];
-wep2 = [];
-armour = [];
-gear = [];
-mobi = [];
+/// @description
+/// @param {Real} _role_id
+/// @param {String} _role_name
+/// @param {String} _wep1
+/// @param {String} _wep2
+/// @param {String} _armour
+/// @param {String} _mobi
+/// @param {String} _gear
 
-// Default Marine Loadouts
-for (var slot = 99; slot <= 103; slot++) {
-    for (var i = 0; i <= 50; i++) {
-        race[slot][i] = 1;
-        role[slot][i] = "";
-        wep1[slot][i] = "";
-        wep2[slot][i] = "";
-        armour[slot][i] = "";
-        gear[slot][i] = "";
-        mobi[slot][i] = "";
-    }
-}
-
-defaults_slot = 100;
-
-load_default_gear = function(_role_id, _role_name, _wep1, _wep2, _armour, _mobi, _gear) {
-    role[defaults_slot][_role_id] = _role_name;
-    wep1[defaults_slot][_role_id] = _wep1;
-    wep2[defaults_slot][_role_id] = _wep2;
-    armour[defaults_slot][_role_id] = _armour;
-    mobi[defaults_slot][_role_id] = _mobi;
-    gear[defaults_slot][_role_id] = _gear;
-    race[defaults_slot][_role_id] = 1;
-}
-
-load_default_gear(eROLE.CHAPTERMASTER, "Chapter Master", "Power Sword", "Bolter", "Artificer Armour", "", "");
-load_default_gear(eROLE.HONOURGUARD, "Honour Guard", "Power Sword", "Bolter", "Artificer Armour", "", "");
-load_default_gear(eROLE.VETERAN, "Veteran", "Combiflamer", "Combat Knife", STR_ANY_POWER_ARMOUR, "", "");
-load_default_gear(eROLE.TERMINATOR, "Terminator", "Power Fist", "Storm Bolter", "Terminator Armour", "", "");
-load_default_gear(eROLE.CAPTAIN, "Captain", "Power Sword", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "Iron Halo");
-load_default_gear(eROLE.DREADNOUGHT, "Dreadnought", "Dreadnought Lightning Claw", "Lascannon", "Dreadnought", "", "");
-load_default_gear(eROLE.CHAMPION, "Champion", "Power Sword", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "Combat Shield");
-load_default_gear(eROLE.TACTICAL, "Tactical", "Bolter", "Combat Knife", STR_ANY_POWER_ARMOUR, "", "");
-load_default_gear(eROLE.DEVASTATOR, "Devastator", "", "Combat Knife", STR_ANY_POWER_ARMOUR, "", "");
-load_default_gear(eROLE.ASSAULT, "Assault", "Chainsword", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "Jump Pack", "");
-load_default_gear(eROLE.ANCIENT, "Ancient", "Company Standard", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "");
-load_default_gear(eROLE.SCOUT, "Scout", "Bolter", "Combat Knife", "Scout Armour", "", "");
-load_default_gear(eROLE.CHAPLAIN, "Chaplain", "Crozius Arcanum", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "Rosarius");
-load_default_gear(eROLE.APOTHECARY, "Apothecary", "Chainsword", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "Narthecium");
-load_default_gear(eROLE.TECHMARINE, "Techmarine", "Power Axe", "Bolt Pistol", "Artificer Armour", "Servo-arm", "");
-load_default_gear(eROLE.LIBRARIAN, "Librarian", "Force Staff", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "Psychic Hood");
-load_default_gear(eROLE.SERGEANT, "Sergeant", "Chainsword", "Bolt Pistol", STR_ANY_POWER_ARMOUR, "", "");
-load_default_gear(eROLE.VETERANSERGEANT, "Veteran Sergeant", "Chainsword", "Plasma Pistol", STR_ANY_POWER_ARMOUR, "", "");
-
-if (global.restart > 0) {
-    fade_in = -1;
-    slate1 = -1;
-    slate = 22;
-    slate3 = 22;
-    slate4 = 50;
-
-    change_slide = 0;
-    slide = 2;
-    slide_show = 2;
-
-    reset_creation_variables();
-    //with(obj_restart_vars){instance_destroy();}
-    global.restart = 0;
-}
-
-/* */
 col = [];
 col_r = [];
 col_g = [];
@@ -507,12 +580,12 @@ colour_to_set1 = shader_get_uniform(sReplaceColor, "f_Replace1");
 body_colour_find = [
     0 / 255,
     0 / 255,
-    255 / 255
+    255 / 255,
 ];
 body_colour_replace = [
     col_r[main_color] / 255,
     col_g[main_color] / 255,
-    col_b[main_color] / 255
+    col_b[main_color] / 255,
 ];
 
 colour_to_find2 = shader_get_uniform(sReplaceColor, "f_Colour2");
@@ -520,12 +593,12 @@ colour_to_set2 = shader_get_uniform(sReplaceColor, "f_Replace2");
 secondary_colour_find = [
     255 / 255,
     0 / 255,
-    0 / 255
+    0 / 255,
 ];
 secondary_colour_replace = [
     col_r[secondary_color] / 255,
     col_g[secondary_color] / 255,
-    col_b[secondary_color] / 255
+    col_b[secondary_color] / 255,
 ];
 
 colour_to_find3 = shader_get_uniform(sReplaceColor, "f_Colour3");
@@ -534,12 +607,12 @@ colour_to_set3 = shader_get_uniform(sReplaceColor, "f_Replace3");
 pauldron_colour_find = [
     255 / 255,
     255 / 255,
-    0 / 255
+    0 / 255,
 ];
 pauldron_colour_replace = [
     col_r[right_pauldron] / 255,
     col_g[right_pauldron] / 255,
-    col_b[right_pauldron] / 255
+    col_b[right_pauldron] / 255,
 ];
 
 colour_to_find4 = shader_get_uniform(sReplaceColor, "f_Colour4");
@@ -547,12 +620,12 @@ colour_to_set4 = shader_get_uniform(sReplaceColor, "f_Replace4");
 lens_colour_find = [
     0 / 255,
     255 / 255,
-    0 / 255
+    0 / 255,
 ];
 lens_colour_replace = [
     col_r[lens_color] / 255,
     col_g[lens_color] / 255,
-    col_b[lens_color] / 255
+    col_b[lens_color] / 255,
 ];
 
 colour_to_find5 = shader_get_uniform(sReplaceColor, "f_Colour5");
@@ -560,12 +633,12 @@ colour_to_set5 = shader_get_uniform(sReplaceColor, "f_Replace5");
 trim_colour_find = [
     255 / 255,
     0 / 255,
-    255 / 255
+    255 / 255,
 ];
 trim_colour_replace = [
     col_r[main_trim] / 255,
     col_g[main_trim] / 255,
-    col_b[main_trim] / 255
+    col_b[main_trim] / 255,
 ];
 
 colour_to_find6 = shader_get_uniform(sReplaceColor, "f_Colour6");
@@ -573,12 +646,12 @@ colour_to_set6 = shader_get_uniform(sReplaceColor, "f_Replace6");
 pauldron2_colour_find = [
     250 / 255,
     250 / 255,
-    250 / 255
+    250 / 255,
 ];
 pauldron2_colour_replace = [
     col_r[left_pauldron] / 255,
     col_g[left_pauldron] / 255,
-    col_b[left_pauldron] / 255
+    col_b[left_pauldron] / 255,
 ];
 
 colour_to_find7 = shader_get_uniform(sReplaceColor, "f_Colour7");
@@ -587,13 +660,12 @@ colour_to_set7 = shader_get_uniform(sReplaceColor, "f_Replace7");
 weapon_colour_find = [
     0 / 255,
     255 / 255,
-    255 / 255
+    255 / 255,
 ];
 weapon_colour_replace = [
     col_r[weapon_color] / 255,
     col_g[weapon_color] / 255,
-    col_b[weapon_color] / 255
+    col_b[weapon_color] / 255,
 ];
-/* */
+
 alarm_set(1, 30);
-/*  */

@@ -1,28 +1,15 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
-global.force_strength_descriptions = [
-    "none",
-    "Minimal",
-    "Sparse",
-    "Moderate",
-    "Numerous",
-    "Very Numerous",
-    "Overwhelming"
-];
-
-/// @param {real} planet
-/// @param {Asset.GMObject.obj_star} system
-function PlanetData(planet, system) constructor {
+/// @self Asset.GMObject.obj_star
+/// @param {Real} _planet
+/// @param {Id.Instance.obj_star} _system
+function PlanetData(_planet, _system) constructor {
     //safeguards // TODO LOW DEBUG_LOGGING // Log when tripped somewhere
     //disposition
-    //
     static large_pop_conversion = 1000000000;
 
-    self.planet = planet;
-    self.system = system;
+    planet = _planet;
+    system = _system;
 
-    static refresh_data = function(){
+    static refresh_data = function() {
         features = system.p_feature[planet];
         current_owner = system.p_owner[planet];
         origional_owner = system.p_first[planet];
@@ -34,11 +21,10 @@ function PlanetData(planet, system) constructor {
         is_hulk = system.space_hulk;
         x = system.x;
         y = system.y;
-        player_disposition = system.dispo[planet];
         planet_type = system.p_type[planet];
         operatives = system.p_operatives[planet];
         pdf = system.p_pdf[planet];
-        fortification_level  = system.p_fortified[planet];
+        fortification_level = system.p_fortified[planet];
         star_station = system.p_station[planet];
         pdf_loss_reduction = 0;
 
@@ -50,42 +36,38 @@ function PlanetData(planet, system) constructor {
         ground_defences = system.p_defenses[planet];
         upgrades = system.p_upgrades[planet];
         // v how much of a problem they are from 1-5
-        planet_forces = array_create(14, 0);
+        planet_forces = array_create(eFACTION._COUNT, 0);
         guardsmen = system.p_guardsmen[planet];
         pdf = system.p_pdf[planet];
 
-        try{
+        try {
             planet_forces[eFACTION.PLAYER] = player_forces;
 
-            planet_forces[eFACTION.IMPERIUM] =  guardsmen;
+            planet_forces[eFACTION.IMPERIUM] = guardsmen;
 
-            planet_forces[eFACTION.ECCLESIARCHY] =  system.p_sisters[planet];
-            planet_forces[eFACTION.ELDAR] =  system.p_eldar[planet];
-            planet_forces[eFACTION.ORK] =  system.p_orks[planet];
-            planet_forces[eFACTION.TAU] =  system.p_tau[planet];
-            planet_forces[eFACTION.TYRANIDS] =  system.p_tyranids[planet];
-            planet_forces[eFACTION.CHAOS] = system.p_chaos[planet]+ system.p_demons[planet];
-            planet_forces[eFACTION.HERETICS] = system.p_traitors[planet];     
+            planet_forces[eFACTION.ECCLESIARCHY] = system.p_sisters[planet];
+            planet_forces[eFACTION.ELDAR] = system.p_eldar[planet];
+            planet_forces[eFACTION.ORK] = system.p_orks[planet];
+            planet_forces[eFACTION.TAU] = system.p_tau[planet];
+            planet_forces[eFACTION.TYRANIDS] = system.p_tyranids[planet];
+            planet_forces[eFACTION.CHAOS] = system.p_chaos[planet] + system.p_demons[planet];
+            planet_forces[eFACTION.HERETICS] = system.p_traitors[planet];
 
             planet_forces[eFACTION.NECRONS] = system.p_necrons[planet];
-        }catch(_exception){
-            handle_exception(_exception);
+        } catch (_exception) {
+            ERROR_HANDLER.handle_exception(_exception);
         }
-        
-        fortification_level  = system.p_fortified[planet];
+
+        fortification_level = system.p_fortified[planet];
 
         is_heretic = system.p_hurssy[planet];
 
         heretic_timer = system.p_hurssy_time[planet];
 
-        secret_corruption = system.p_heresy_secret[planet];
-
-        corruption = system.p_heresy[planet];
-
         population_influences = system.p_influence[planet];
 
         raided_this_turn = system.p_raided[planet];
-        // 
+
         governor = system.p_governor[planet];
 
         problems = system.p_problem[planet];
@@ -97,16 +79,24 @@ function PlanetData(planet, system) constructor {
 
         requests_help = system.p_halp[planet];
 
-    //safeguards // TODO LOW DEBUG_LOGGING // Log when tripped somewhere
+        //safeguards // TODO LOW DEBUG_LOGGING // Log when tripped somewhere
         //disposition
-        if (system.dispo[planet] < -100 && system.dispo[planet] > -1000 && system.p_owner[planet] != eFACTION.PLAYER ) { // Personal Rule code be doing some interesting things
+        if (system.dispo[planet] < -100 && system.dispo[planet] > -1000 && system.p_owner[planet] != eFACTION.PLAYER) {
+            // Personal Rule code be doing some interesting things
             system.dispo[planet] = -100; // TODO LOW DISPOSITION_REVAMP // Consider revamping the disposition system
         } else if (system.dispo[planet] > 100) {
             system.dispo[planet] = 100;
         }
 
+        player_disposition = system.dispo[planet];
         garrisons = system.system_garrison[planet];
+        if (is_undefined(garrisons)) {
+            garrisons = system.get_garrison(planet);
+        }
         sabatours = system.system_sabatours[planet];
+        if (is_undefined(sabatours)) {
+            sabatours = system.get_sabatours(planet);
+        }
         system.system_datas[planet] = self;
 
         // current planet heresy
@@ -117,14 +107,17 @@ function PlanetData(planet, system) constructor {
                 system.p_influence[planet][i] = 0;
             }
         }
-    }
+
+        secret_corruption = system.p_heresy_secret[planet];
+
+        corruption = system.p_heresy[planet];
+    };
 
     refresh_data();
 
-
-    static total_corruption = function(){
+    static total_corruption = function() {
         return secret_corruption + corruption;
-    }
+    };
 
     function add_operatives(new_ops) {
         array_push(system.p_operatives[planet], new_ops);
@@ -165,28 +158,28 @@ function PlanetData(planet, system) constructor {
         return pop_value;
     };
 
-    static population_as_small = function(){
+    static population_as_small = function() {
         if (large_population) {
             return population * large_pop_conversion;
         } else {
             return population;
         }
-    }
+    };
 
-    static end_turn_population_growth = function(){
+    static end_turn_population_growth = function() {
         if ((population < max_population) && (planet_type != "Dead") && (planet_type != "Craftworld") && (current_owner <= 5) && (planet_forces[eFACTION.HERETICS] == 0) && (planet_forces[eFACTION.TAU] == 0) && (planet_forces[eFACTION.ORK] == 0) && (planet_forces[eFACTION.NECRONS] == 0) && (planet_forces[eFACTION.TYRANIDS] == 0)) {
             if (!large_population) {
                 set_population(round(population * 1.0008));
             } else if (large_population == 1) {
                 edit_population(choose(0, 0.01));
             }
-        }        
-    }
+        }
+    };
 
-    static alter_influence = function(faction,value){
+    static alter_influence = function(faction, value) {
         adjust_influence(faction, value, planet, system);
         population_influences = system.p_influence[planet];
-    }
+    };
 
     static send_colony_ship = function(target, targ_planet, type) {
         new_colony_fleet(system, planet, target, targ_planet, type);
@@ -253,6 +246,11 @@ function PlanetData(planet, system) constructor {
         guardsmen = system.p_guardsmen[planet];
     };
 
+    static edit_pdf = function(edit_val) {
+        system.p_pdf[planet] = max(0, system.p_pdf[planet] + edit_val);
+        pdf = system.p_pdf[planet];
+    };
+
     pdf = system.p_pdf[planet];
     fortification_level = system.p_fortified[planet];
 
@@ -267,8 +265,7 @@ function PlanetData(planet, system) constructor {
         if (large_population) {
             new_pdf *= large_pop_conversion;
         }
-        pdf += new_pdf;
-        system.p_pdf[planet] = pdf;
+        edit_pdf(new_pdf);
         return new_pdf;
     };
 
@@ -283,31 +280,31 @@ function PlanetData(planet, system) constructor {
         player_forces = system.p_player[planet];
     };
 
-    static collect_planet_group = function(group="all",opposite=false,search_conditions = {companies:"all"} , return_as_UnitGroup = true){
-        return collect_role_group(group,[system.name,planet],opposite,search_conditions, return_as_UnitGroup);
-    }
+    static collect_planet_group = function(group = "all", opposite = false, search_conditions = {companies: "all"}, return_as_UnitGroup = true) {
+        return collect_role_group(group, [system.name, planet, -1], opposite, search_conditions, return_as_UnitGroup);
+    };
 
     defence_lasers = system.p_lasers[planet];
     defence_silos = system.p_silo[planet];
     ground_defences = system.p_defenses[planet];
     upgrades = system.p_upgrades[planet];
     // v how much of a problem they are from 1-5
-    planet_forces = array_create(14, 0);
+    planet_forces = array_create(eFACTION._COUNT, 0);
 
     try {
-        planet_forces[1] = player_forces;
+        planet_forces[eFACTION.PLAYER] = player_forces;
 
-        planet_forces[2] = guardsmen;
+        planet_forces[eFACTION.IMPERIUM] = guardsmen;
 
-        planet_forces[5] = system.p_sisters[planet];
-        planet_forces[6] = system.p_eldar[planet];
-        planet_forces[7] = system.p_orks[planet];
-        planet_forces[8] = system.p_tau[planet];
-        planet_forces[9] = system.p_tyranids[planet];
-        planet_forces[10] = system.p_traitors[planet];
-        planet_forces[11] = system.p_chaos[planet] + system.p_demons[planet];
+        planet_forces[eFACTION.ECCLESIARCHY] = system.p_sisters[planet];
+        planet_forces[eFACTION.ELDAR] = system.p_eldar[planet];
+        planet_forces[eFACTION.ORK] = system.p_orks[planet];
+        planet_forces[eFACTION.TAU] = system.p_tau[planet];
+        planet_forces[eFACTION.TYRANIDS] = system.p_tyranids[planet];
+        planet_forces[eFACTION.CHAOS] = system.p_chaos[planet] + system.p_demons[planet];
+        planet_forces[eFACTION.HERETICS] = system.p_traitors[planet];
 
-        planet_forces[13] = system.p_necrons[planet];
+        planet_forces[eFACTION.NECRONS] = system.p_necrons[planet];
     } catch (_exception) {
         ERROR_HANDLER.handle_exception(_exception);
     }
@@ -351,164 +348,175 @@ function PlanetData(planet, system) constructor {
     };
 
     static assasinate_governor = function(assaination_type, discovery_modifier) {
-        var randa = roll_dice_chapter(1, 100, "high");
-        var randa2 = roll_dice(1, 100);
+        var _discovery_threshold = roll_dice(1, 100);
+        var _text = localize("All of the successors for {0} are removed or otherwise made indisposed.  Paperwork is slightly altered.  Rather than any sort of offical one of your Chapter Serfs is installed as the Planetary Governor.  The planet is effectively under your control.", [name()]);
+        var _discovery_rate = 25;
 
         //type 1 is install a sympathectic else it's a straight serf installation
         if (assaination_type == 1) {
-            var _discovery_rate = 10;
+            _discovery_rate = 10;
             set_player_disposition(70 + floor(random_range(5, 15)) + 1);
-            var _text = $"Many of the successors for {name()} are removed or otherwise made indisposed.  Your chapter ensures that the new Planetary Governor is sympathetic to your plight and more than willing to heed your advice.  A powerful new ally may be in the making.";
-            scr_event_log("", $"Planetary Governor of {name()} assassinated.  A more suitable Governor is installed.");
+            _text = localize("Many of the successors for {0} are removed or otherwise made indisposed.  Your chapter ensures that the new Planetary Governor is sympathetic to your plight and more than willing to heed your advice.  A powerful new ally may be in the making.", [name()]);
+            scr_event_log("", localize("Planetary Governor of {0} assassinated.  A more suitable Governor is installed.", [name()]));
         } else {
-            var _discovery_rate = 25;
             if (origional_owner != 3) {
                 set_new_owner(eFACTION.PLAYER);
+                system.p_first[planet] = eFACTION.PLAYER;
             }
-            set_player_disposition(101);
-            scr_event_log("", $"Planetary Governor of {name()} assassinated.  One of your Chapter Serfs take their position.");
-            var _text = $"All of the successors for {name()} are removed or otherwise made indisposed.  Paperwork is slightly altered.  Rather than any sort of offical one of your Chapter Serfs is installed as the Planetary Governor.  The planet is effectively under your control.";
+            set_player_disposition(100);
+            scr_event_log("", localize("Planetary Governor of {0} assassinated.  One of your Chapter Serfs take their position.", [name()]));
         }
 
-        if (randa2 <= (_discovery_rate * discovery_modifier)) {
+        if (_discovery_threshold <= (_discovery_rate * discovery_modifier)) {
+            var _duration = (choose(1, 2) * 6) + choose(-3, -2, -1, 0, 1, 2, 3);
             if (assaination_type == 1) {
-                var _duration = ((choose(1, 2, 3, 4, 5, 6) + choose(1, 2, 3, 4, 5, 6)) * 6) + choose(-3, -2, -1, 0, 1, 2, 3);
-            } else {
-                var _duration = (choose(1, 2) * 6) + choose(-3, -2, -1, 0, 1, 2, 3);
+                _duration = ((choose(1, 2, 3, 4, 5, 6) + choose(1, 2, 3, 4, 5, 6)) * 6) + choose(-3, -2, -1, 0, 1, 2, 3);
             }
-            add_event({
-                duration: _duration, e_id: 
-                "governor_assassination", 
-                variant: assaination_type, 
-                system: system.name, 
-                planet
-            });
+            add_event({duration: _duration, e_id: "governor_assassination", variant: assaination_type, system: system.name, planet});
         }
         return _text;
     };
+
     static purge = scr_purge_world;
 
-    static assasinate_governor_setup = function(action_score){
-        var aroll=roll_dice_chapter(1, 100, "high");
+    static assasinate_governor_setup = function(action_score) {
+        var aroll = roll_dice_chapter(1, 100, "high");
         var chance = 100;
-        // var siz_penalty=0;
-        var o=0;
-        var yep=0;
-    
+        var yep = 0;
+
         // Disposition
         aroll += floor(player_disposition / 10);
 
         // Advantages
-        if (scr_has_adv("Ambushers")){
-            aroll+=10;
+        if (scr_has_adv("Ambushers")) {
+            aroll += 10;
         }
-        if (scr_has_adv("Lightning Warriors")){
-            aroll+=5;
+        if (scr_has_adv("Lightning Warriors")) {
+            aroll += 5;
         }
 
         // Size - unused
-        // if ((action_score > 5) && (action_score <= 10)) { siz_penalty = 5; }
-        // if ((action_score > 10) && (action_score <= 20)) { siz_penalty = 20; }
-        // if ((action_score > 20) && (action_score <= 50)) { siz_penalty = 30; }
-        // if ((action_score > 50) && (action_score <= 100)) { siz_penalty = 50; }
-        // if ((action_score > 100) && (action_score <= 200)) { siz_penalty = 75; }
-        // if (action_score > 200) { siz_penalty = 125; }
-    
-        var spec1=0,spec2=0,txt=""; // TODO consider making it a battle with Planetary governor's guards
-        txt=$"Your Astartes descend upon the surface of {name()} and plot the movements and schedule of the governor.  ";    
-        txt+="Once the time is right their target is ambushed "
-        txt+=choose("in their home","in the streets","while driving","taking a piss")+" and tranquilized.  ";
-    
-        if (scr_has_disadv("Never Forgive")){
-            spec1=1;
+        // TODO consider making it a battle with Planetary governor's guards
+        var spec1 = 0;
+        var spec2 = 0;
+        var txt = localize("Your Astartes descend upon the surface of {0} and plot the movements and schedule of the governor.  ", [name()]);
+        var _ambush_place = choose("in their home", "in the streets", "while driving", "taking a piss");
+        txt += localize("Once the time is right their target is ambushed {0} and tranquilized.  ", [localize(_ambush_place)]);
+
+        if (scr_has_disadv("Never Forgive")) {
+            spec1 = 1;
         }
-        if (global.chapter_name="Space Wolves" || obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
-            spec1=3;
+        if (global.chapter_name == "Space Wolves" || obj_ini.progenitor == ePROGENITOR.SPACE_WOLVES) {
+            spec1 = 3;
+        } else if (scr_has_adv("Tech-Brothers")) {
+            spec1 = 6;
         }
-        else if (scr_has_adv("Tech-Brothers")) {
-            spec1=6;
-        }
-        if (obj_ini.omophagea=1){
-            spec1=choose(spec1,20);
+        if (obj_ini.omophagea == 1) {
+            spec1 = choose(spec1, 20);
         }
 
         var _gov_gender = set_gender();
         var _gender_third = string_gender_third_person(_gov_gender);
         var _gender_pronouns = string_gender_pronouns(_gov_gender);
-    
-        if (spec1=1) then txt+=$"They are brought to the already-prepared facilities for Fallen, tortured to make {_gender_pronouns} appear a heretic, and then incinerated.  ";
-        if (spec1=3) then txt+=$"{_gender_third} is tossed to the Fenrisian Wolves and viciously mauled, torn apart, and eaten.  The beasts leave nothing but bloody scraps.  ";
-        if (spec1=6) then txt+=$"{_gender_third} is stuck in with the other criminals, and scum, to be turned into a servitor.  Soon nothing remains that could be likened to the former Governor.  ";
-        if (spec1=20){
-            if (action_score>1) then txt+=$"Things get out of hand, and the Governor is torn limb from limb and consumed.  {_gender_pronouns}flesh is torn off and eaten, bone pulverized, and marrow sucked free.  ";
-            if (action_score=1) then txt+=$"Your battle brother chops apart the Governor and eats a sizeable portion of {_gender_pronouns} flesh, focusing upon the eyes, teeth, and fingers.  Once full the rest is disposed of.  ";
+
+        if (spec1 == 1) {
+            txt += localize("They are brought to the already-prepared facilities for Fallen, tortured to make {0} appear a heretic, and then incinerated.  ", [_gender_pronouns]);
         }
-    
-        if (spec1=0){
-            spec2=choose(1,2,3,4,5,5,5);
-            if (spec2=1) then txt+=$"Their still-living body is disintegrated by acid.  ";
-            if (spec2=2) then txt+=$"The Governor is jettisoned into the local star at the first opportunity.  ";
-            if (spec2=3) then txt+=$"{_gender_third} is burned as fuel for one of your vessels.  ";
-            if (spec2=4) then txt+=$"A few grenades is all it takes to blow {_gender_pronouns} body to smithereens.  ";
-            if (spec2=5) then txt+=$"{_gender_third} is executed in a mundane fashion and buried.  ";
+        if (spec1 == 3) {
+            txt += localize("{0} is tossed to the Fenrisian Wolves and viciously mauled, torn apart, and eaten.  The beasts leave nothing but bloody scraps.  ", [_gender_third]);
         }
-    
-        txt+="What is thy will?";
-    
-        var pip = instance_create(0,0,obj_popup);
-        pip.title = "Planetary Governor Assassinated";
-        pip.text = txt;
+        if (spec1 == 6) {
+            txt += localize("{0} is stuck in with the other criminals, and scum, to be turned into a servitor.  Soon nothing remains that could be likened to the former Governor.  ", [_gender_third]);
+        }
+        if (spec1 == 20) {
+            if (action_score > 1) {
+                txt += localize("Things get out of hand, and the Governor is torn limb from limb and consumed.  {0}flesh is torn off and eaten, bone pulverized, and marrow sucked free.  ", [_gender_pronouns]);
+            }
+            if (action_score == 1) {
+                txt += localize("Your battle brother chops apart the Governor and eats a sizeable portion of {0} flesh, focusing upon the eyes, teeth, and fingers.  Once full the rest is disposed of.  ", [_gender_pronouns]);
+            }
+        }
+
+        if (spec1 == 0) {
+            spec2 = choose(1, 2, 3, 4, 5, 5, 5);
+            if (spec2 == 1) {
+                txt += localize("Their still-living body is disintegrated by acid.  ");
+            }
+            if (spec2 == 2) {
+                txt += localize("The Governor is jettisoned into the local star at the first opportunity.  ");
+            }
+            if (spec2 == 3) {
+                txt += localize("{0} is burned as fuel for one of your vessels.  ", [_gender_third]);
+            }
+            if (spec2 == 4) {
+                txt += localize("A few grenades is all it takes to blow {0} body to smithereens.  ", [_gender_pronouns]);
+            }
+            if (spec2 == 5) {
+                txt += localize("{0} is executed in a mundane fashion and buried.  ", [_gender_third]);
+            }
+        }
+
+        txt += localize("What is thy will?");
+
+        var pip = instance_create(0, 0, obj_popup);
+        pip.title = localize("Planetary Governor Assassinated");
+        pip._text = txt;
         pip.planet = planet;
         pip.p_data = self;
         var options = [
             {
-                str1 : "Allow the official successor to become Planetary Governor.",
-                choice_func : allow_governor_successor,
-            }, 
-            {
-                str1 : "Ensure that a sympathetic successor will be the one to rule.",
-                choice_func : install_sympathetic_successor,
+                str1: localize("Allow the official successor to become Planetary Governor."),
+                choice_func: allow_governor_successor,
             },
             {
-                str1 : "Remove all successors and install a loyal Chapter Serf.",
-                choice_func : install_chapter_surf,
+                str1: localize("Ensure that a sympathetic successor will be the one to rule."),
+                choice_func: install_sympathetic_successor,
             },
-        ]
-        pip.add_option(options);    
-        pip.cooldown=20;
-    
+            {
+                str1: localize("Remove all successors and install a loyal Chapter Serf."),
+                choice_func: install_chapter_surf,
+            },
+        ];
+        pip.add_option(options);
+        pip.cooldown = 20;
+
         // Result-  this is the multiplier for the chance of discovery with the inquisition, can also be used to determine
         // the new Governor disposition if they are the official successor
-        if (aroll < chance){// Discovered
-            pip.estimate=2;
-        } else if (aroll >= chance){// Success
-            pip.estimate=1;
+        if (aroll < chance) {
+            // Discovered
+            pip.estimate = 2;
+        } else if (aroll >= chance) {
+            // Success
+            pip.estimate = 1;
         }
         // If there are enemy non-chaos forces then they may be used as a cover
         // Does not work with chaos because if the governor dies, with chaos present, the new governor would possibly be investigated
-        if (planet_forces[eFACTION.ORK]>=4) or (planet_forces[eFACTION.NECRONS]>=3) or (planet_forces[eFACTION.TYRANIDS]>=5){
-            pip.estimate = pip.estimate*0.5;
+        if ((planet_forces[eFACTION.ORK] >= 4) || (planet_forces[eFACTION.NECRONS] >= 3) || (planet_forces[eFACTION.TYRANIDS] >= 5)) {
+            pip.estimate = pip.estimate * 0.5;
         }
-    }
-    static grow_ork_forces = function(){
-        var contin = 0;
-        var _rando = roll_dice(1,100);// This part handles the spreading
-        // if (_rando<30){
+    };
+
+    static grow_ork_forces = function() {
+        var _rando = roll_dice(1, 100); // This part handles the spreading
         var _non_deads = planets_without_type("dead", system);
 
         var _has_warboss = has_feature(eP_FEATURES.ORKWARBOSS);
         var _has_stronghold = has_feature(eP_FEATURES.ORKSTRONGHOLD);
         var _build_ships = false;
-        if (_has_stronghold){
-            var _stronghold = get_features(eP_FEATURES.ORKSTRONGHOLD)[0];
+        var _stronghold = [];
+        var _warboss = [];
+        var _orks = planet_forces[eFACTION.ORK];
+
+        if (_has_stronghold) {
+            _stronghold = get_features(eP_FEATURES.ORKSTRONGHOLD)[0];
         }
 
-        if (_has_warboss){
-            var _warboss = get_features(eP_FEATURES.ORKWARBOSS)[0];
+        if (_has_warboss) {
+            _warboss = get_features(eP_FEATURES.ORKWARBOSS)[0];
             _warboss.turns_static++;
         }
         var _roll_num = 100;
-        if (_has_stronghold){
+        if (_has_stronghold) {
             _roll_num -= (_has_stronghold + 1) * 3;
         }
         var _ork_growth = roll_dice_chapter(1, 100, "high");
@@ -516,211 +524,209 @@ function PlanetData(planet, system) constructor {
 
         var _ork_growth_threshold = 13;
 
-        if (_has_warboss){
+        if (_has_warboss) {
             _ork_growth_threshold *= 2;
         }
 
-        var _orks = planet_forces[eFACTION.ORK];
         if ((current_owner == eFACTION.ORK) && (_orks < 5) && (planet_forces[eFACTION.HERETICS] == 0) && (player_forces <= 0 || !is_garrison_force)) {
-            if ((_orks> 0) && (_ork_growth <= _ork_growth_threshold)) {
+            if ((_orks > 0) && (_ork_growth <= _ork_growth_threshold)) {
                 var _grow_orks = true;
                 if (sabatours.garrison_force) {
                     if (irandom(3) < 2) {
-                        scr_event_log("green", $"sabotage force on {name()} disrupts ork forces", name);
+                        scr_event_log("green", localize("sabotage force on {0} disrupts ork forces", [name()]), name);
                         _grow_orks = false;
                     }
                 }
-                if (_grow_orks){
-                    add_forces(eFACTION.ORK,1);
+                if (_grow_orks) {
+                    add_forces(eFACTION.ORK, 1);
                 }
             }
         }
 
-        if (array_length(_non_deads)>0 && _rando>40){
+        if (array_length(_non_deads) > 0 && _rando > 40) {
             var _ork_spread_planet = array_random_element(_non_deads);
-            var _orks = planet_forces[eFACTION.ORK]
             var _ork_target = system.p_orks[_ork_spread_planet];
-            var _spread_orks = (current_owner==eFACTION.ORK &&  ((pdf + guardsmen + planet_forces[8] + planet_forces[10]+planet_forces[1]) == 0 ));
-            if (_spread_orks){
+            var _spread_orks = current_owner == eFACTION.ORK && ((pdf + guardsmen + planet_forces[eFACTION.TAU] + planet_forces[eFACTION.CHAOS] + planet_forces[eFACTION.PLAYER]) == 0);
+            if (_spread_orks) {
                 // determine maximum Ork presence on the source planet
                 var _ork_max = planet_forces[eFACTION.ORK];
 
-                if (_ork_max<5 && _ork_target<2) then  system.p_orks[_ork_spread_planet]++;
-                if (_orks>4 && _ork_target<3){
+                if (_ork_max < 5 && _ork_target < 2) {
                     system.p_orks[_ork_spread_planet]++;
-                    if (_ork_target<3){
+                }
+                if (_orks > 4 && _ork_target < 3) {
+                    system.p_orks[_ork_spread_planet]++;
+                    if (_ork_target < 3) {
                         system.p_orks[_ork_spread_planet]++;
                         add_forces(eFACTION.ORK, -1);
                     }
                 }
-
             }
         }
-        contin=0;
-        _rando=roll_dice(1,100);// This part handles the ship building
-        if (population>0 && pdf==0 && guardsmen==0 && planet_forces[10]==0) and (planet_forces[eFACTION.TAU]==0){
-            if (!large_population){
-                set_population(population*0.97);
-            }else {
+        _rando = roll_dice(1, 100); // This part handles the ship building
+        if ((population > 0 && pdf == 0 && guardsmen == 0 && planet_forces[eFACTION.CHAOS] == 0) && (planet_forces[eFACTION.TAU] == 0)) {
+            if (!large_population) {
+                set_population(population * 0.97);
+            } else {
                 edit_population(-0.01);
             }
-            
-        };
-    
-        var enemies_present=false;
-        with (system){
-            for (var n=0;n<array_length(_non_deads);n++){
+        }
+
+        var enemies_present = false;
+        with (system) {
+            for (var n = 0; n < array_length(_non_deads); n++) {
                 var plan = _non_deads[n];
 
-                if (planets>=1) and ((p_pdf[plan]>0) or (p_guardsmen[plan]>0) or (p_traitors[plan]>0) or (p_tau[plan]>0)){
-                    enemies_present=true;
+                if ((planets >= 1) && ((p_pdf[plan] > 0) || (p_guardsmen[plan] > 0) || (p_traitors[plan] > 0) || (p_tau[plan] > 0))) {
+                    enemies_present = true;
                 }
             }
         }
 
-        if (_has_warboss && !_has_stronghold){
-            _rando=roll_dice_chapter(1,100, "low");
-            if (_rando<30){
+        if (_has_warboss && !_has_stronghold) {
+            _rando = roll_dice_chapter(1, 100, "low");
+            if (_rando < 30) {
                 add_feature(eP_FEATURES.ORKSTRONGHOLD);
             }
         } else {
-            if (_has_stronghold){
+            if (_has_stronghold) {
                 growth = 0.01;
-                if (_has_warboss){
+                if (_has_warboss) {
                     growth *= 2;
                 }
-                if (_stronghold.tier<planet_forces[eFACTION.ORK]){
+                if (_stronghold.tier < planet_forces[eFACTION.ORK]) {
                     _stronghold.tier += growth;
                 }
             }
         }
 
-        if (!enemies_present){
-            _rando=roll_dice_chapter(1,150, "low");
-            if (_has_warboss){
+        var _ork_fleet = noone;
+        if (!enemies_present) {
+            _rando = roll_dice_chapter(1, 150, "low");
+            if (_has_warboss) {
                 _rando -= 20;
             }
-            if (_has_stronghold){
-                _rando -= _stronghold.tier*5;
+            if (_has_stronghold) {
+                _rando -= _stronghold.tier * 5;
             }
-            if (obj_controller.known[eFACTION.ORK]>0) then _rando-=10;// Empire bonus, was 15 before
-        
-            // Check for industrial facilities
-            var fleet_buildable = ((planet_type!="Dead" && planet_type!="Lava") || _has_warboss || _has_stronghold);
-            if (fleet_buildable && planet_forces[eFACTION.ORK]>=4){// Used to not have Ice either
+            if (obj_controller.known[eFACTION.ORK] > 0) {
+                _rando -= 10;
+            } // Empire bonus, was 15 before
 
-                if (instance_exists(obj_p_fleet)){
-                    var ppp=instance_nearest(x,y,obj_p_fleet);
-                    if (point_distance(x,y,ppp.x,ppp.y)<50) and (ppp.action=""){
+            // Check for industrial facilities
+            var fleet_buildable = (planet_type != "Dead" && planet_type != "Lava") || _has_warboss || _has_stronghold;
+            if (fleet_buildable && planet_forces[eFACTION.ORK] >= 4) {
+                // Used to not have Ice either
+
+                if (instance_exists(obj_p_fleet)) {
+                    var ppp = instance_nearest(x, y, obj_p_fleet);
+                    if ((point_distance(x, y, ppp.x, ppp.y) < 50) && (ppp.action == "")) {
                         exit;
-                    };
+                    }
                 }
-                if (planet_type == "Forge"){
-                    _rando-=80;
-                } else if (planet_type == "Hive" || planet_type == "Temperate"){
-                    _rando-=30;
-                }else if (planet_type == "Agri"){
-                    _rando-=10;
+                if (planet_type == "Forge") {
+                    _rando -= 80;
+                } else if (planet_type == "Hive" || planet_type == "Temperate") {
+                    _rando -= 30;
+                } else if (planet_type == "Agri") {
+                    _rando -= 10;
                 }
-                var _ork_fleet = scr_orbiting_fleet(eFACTION.ORK, system); 
-                if (_ork_fleet=="none"){
-                    if (_rando<=20){
-                        new_ork_fleet(x,y);
+                _ork_fleet = scr_orbiting_fleet(eFACTION.ORK, system);
+                if (_ork_fleet == noone) {
+                    if (_rando <= 20) {
+                        new_ork_fleet(x, y);
                     }
                 } else {
-
                     _build_ships = true;
-
-                }              
-            } 
-        }
-        if (_build_ships){
-            var _pdata = self;
-            with (_ork_fleet){
-            // Increase ship number for this object?
-                var _rando=irandom(101);
-                if (obj_controller.known[eFACTION.ORK]>0) then _rando-=10;
-                var _planet_type = _pdata.planet_type;
-                if (_planet_type=="Forge"){
-                    _rando-=20;
-                } else if (_planet_type=="Hive"){
-                    _rando-=10;
-                }else if (_planet_type=="Shrine" || _planet_type=="Temperate"){
-                    _rando-=5;
                 }
-                if (_rando<=15){// was 25
-                    _rando=choose(1,1,1,1,1,1,1,2,2,2);
-                    var _big_stronghold = false
-                    if (_has_stronghold){
-                        if (_stronghold.tier>=2){
+            }
+        }
+        if (_build_ships) {
+            var _pdata = self;
+            with (_ork_fleet) {
+                // Increase ship number for this object?
+                _rando = irandom(101);
+                if (obj_controller.known[eFACTION.ORK] > 0) {
+                    _rando -= 10;
+                }
+                var _planet_type = _pdata.planet_type;
+                if (_planet_type == "Forge") {
+                    _rando -= 20;
+                } else if (_planet_type == "Hive") {
+                    _rando -= 10;
+                } else if (_planet_type == "Shrine" || _planet_type == "Temperate") {
+                    _rando -= 5;
+                }
+                if (_rando <= 15) {
+                    // was 25
+                    _rando = choose(1, 1, 1, 1, 1, 1, 1, 2, 2, 2);
+                    var _big_stronghold = false;
+                    if (_has_stronghold) {
+                        if (_stronghold.tier >= 2) {
                             _big_stronghold = true;
                         }
                     }
-                    if (_planet_type=="Forge" || _big_stronghold || _has_warboss){
-                        if (!irandom(10)){
+                    if (_planet_type == "Forge" || _big_stronghold || _has_warboss) {
+                        if (!irandom(10)) {
                             _rando = 3;
                         }
-                    }else if (_has_stronghold || _planet_type=="Hive"){
-                        if (!irandom(30)){
+                    } else if (_has_stronghold || _planet_type == "Hive") {
+                        if (!irandom(30)) {
                             _rando = 3;
                         }
                     }
-                    if (capital_number<=0){
+                    if (capital_number <= 0) {
                         _rando = 3;
                     }
-                    switch(_rando){
+                    switch (_rando) {
                         case 3:
-                            capital_number+=1;
+                            capital_number += 1;
                             break;
                         case 2:
-                            frigate_number+=1;
+                            frigate_number += 1;
                             break;
                         case 1:
-                            escort_number+=1;
+                            escort_number += 1;
                             break;
-
                     }
                 }
-                var ii=round(standard_fleet_strength_calc());
-                if (ii<=1) then ii=1;
-                image_index=ii; 
+                var ii = max(round(standard_fleet_strength_calc()), 1);
+                image_index = ii;
                 //if big enough flee bugger off to new star
-                if (image_index>=5){
+                if (image_index >= 5) {
                     instance_deactivate_object(_pdata.system);
-                    with(obj_star){
-                        if (is_dead_star()){
+                    with (obj_star) {
+                        if (is_dead_star()) {
                             instance_deactivate_object(id);
                         } else {
-                            if (owner == eFACTION.ORK || array_contains(p_owner, eFACTION.ORK)){
+                            if (owner == eFACTION.ORK || array_contains(p_owner, eFACTION.ORK)) {
                                 instance_deactivate_object(id);
-                            }                   
+                            }
                         }
                     }
-                    var new_wagh_star = instance_nearest(x,y,obj_star);
-                    if (instance_exists(new_wagh_star)){
-                        action_x=new_wagh_star.x;
-                        action_y=new_wagh_star.y;
+                    var new_wagh_star = instance_nearest(x, y, obj_star);
+                    if (instance_exists(new_wagh_star)) {
+                        action_x = new_wagh_star.x;
+                        action_y = new_wagh_star.y;
                         action = "";
                         set_fleet_movement();
                     }
-                
                 }
                 instance_activate_object(obj_star);
             }
         }
-        if (_has_warboss){
-            _rando=roll_dice(1,100)+10;
-            var _ork_fleet = scr_orbiting_fleet(eFACTION.ORK, system);
-            if (_ork_fleet!="none" && _rando <  _warboss.turns_static){
+        if (_has_warboss) {
+            _rando = roll_dice(1, 100) + 10;
+            _ork_fleet = scr_orbiting_fleet(eFACTION.ORK, system);
+            if (_ork_fleet != noone && _rando < _warboss.turns_static) {
                 _warboss.turns_static = 0;
                 _ork_fleet.cargo_data.ork_warboss = _warboss;
                 delete_feature(eP_FEATURES.ORKWARBOSS);
-                if (!_warboss.player_hidden || !irandom(5)){
-                     scr_alert("red","ork",$"{_warboss.name} departs {name()} as his waaagh gains momentum",0,0);
+                if (!_warboss.player_hidden || !irandom(5)) {
+                    scr_alert("red", "ork", localize("{0} departs {1} as his waaagh gains momentum", [_warboss.name, name()]), 0, 0);
                 }
             }
         }
-    
     };
 
     deamons = system.p_demons[planet];
@@ -735,7 +741,7 @@ function PlanetData(planet, system) constructor {
         corruption = system.p_heresy[planet];
     };
 
-    static set_corruption = function(value){
+    static set_corruption = function(value) {
         system.p_heresy[planet] = value;
         corruption = system.p_heresy[planet];
     };
@@ -749,7 +755,7 @@ function PlanetData(planet, system) constructor {
     population_influences = system.p_influence[planet];
 
     raided_this_turn = system.p_raided[planet];
-    //
+
     governor = system.p_governor[planet];
 
     problems = system.p_problem[planet];
@@ -757,7 +763,7 @@ function PlanetData(planet, system) constructor {
     problem_timers = system.p_timer[planet];
 
     static has_problem = function(problem) {
-        has_problem_planet(planet, problem, system);
+        return has_problem_planet(planet, problem, system);
     };
 
     static remove_problem = function(problem) {
@@ -773,19 +779,33 @@ function PlanetData(planet, system) constructor {
     };
 
     static name = function() {
-        var _name = "";
-
-        _name = planet_numeral_name(planet, system);
-
-        return _name;
+        return planet_numeral_name(planet, system);
     };
 
     static xenos_and_heretics = function() {
         var xh_force = 0;
-        for (var i = 5; i < array_length(planet_forces); i++) {
+        for (var i = 6; i < array_length(planet_forces); i++) {
             xh_force += planet_forces[i];
         }
         return xh_force;
+    };
+
+    static has_enemy_force = function() {
+        for (var i = 2; i < array_length(planet_forces); i++) {
+            if (planet_forces[i] > 0 && obj_controller.faction_status[i] == "War") {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    static has_any_force = function() {
+        for (var i = 2; i < array_length(planet_forces); i++) {
+            if (planet_forces[i] > 0) {
+                return true;
+            }
+        }
+        return false;
     };
 
     static has_feature = function(feature) {
@@ -834,14 +854,14 @@ function PlanetData(planet, system) constructor {
         if (has_feature(eP_FEATURES.RECRUITING_WORLD)) {
             if (obj_controller.gene_seed == 0 && obj_controller.recruiting > 0) {
                 obj_controller.recruiting = 0;
-                scr_alert("red", "recruiting", "The Chapter has run out of gene-seed!", 0, 0);
+                scr_alert("red", "recruiting", localize("The Chapter has run out of gene-seed!"), 0, 0);
             } else if (obj_controller.recruiting > 0) {
                 if (local_screening_points > 0) {
                     marine_training(local_screening_points);
 
                     _training_happend = true;
                 } else {
-                    scr_alert("red", "recruiting", $"Recruitment on {name()} halted due to insufficient apothecary rescources", 0, 0);
+                    scr_alert("red", "recruiting", localize("Recruitment on {0} halted due to insufficient apothecary rescources", [name()]), 0, 0);
                 }
             }
         }
@@ -855,12 +875,11 @@ function PlanetData(planet, system) constructor {
                 //TODO allow total tech point usage here
                 var _starship = get_features(eP_FEATURES.STARSHIP)[0];
 
-                var _engineer_score_start = _starship.engineer_score;
                 if (_starship.engineer_score < 2000) {
                     for (var v = 0; v < engineer_count; v++) {
                         _starship.engineer_score += techs[v].technology / 2;
                     }
-                    scr_alert("green", "owner", $"Ancient ship repairs {min((_starship.engineer_score / 2000) * 100, 100)}% complete", system.x, system.y);
+                    scr_alert("green", "owner", localize("Ancient ship repairs {0}% complete", [string(min((_starship.engineer_score / 2000) * 100, 100))]), system.x, system.y);
                 }
 
                 var _target_spend = 10000;
@@ -871,22 +890,18 @@ function PlanetData(planet, system) constructor {
                 _starship.funds_spent += _requisition_spend;
 
                 if (_requisition_spend > 0 && _starship.funds_spent < _target_spend) {
-                    scr_alert("green", "owner", $"{_requisition_spend} Requision spent on Ancient Ship repairs in materials and outfitting (outfitting {(_starship.funds_spent / _target_spend) * 100}%)", system.x, system.y);
+                    scr_alert("green", "owner", localize("{0} Requision spent on Ancient Ship repairs in materials and outfitting (outfitting {1}%)", [_requisition_spend, string((_starship.funds_spent / _target_spend) * 100)]), system.x, system.y);
                 }
                 if (_starship.funds_spent >= _target_spend && _starship.engineer_score >= 2000) {
-                    // u2=tar;
                     //TODO refactor into general new ship logic
                     delete_feature(eP_FEATURES.STARSHIP);
 
                     var locy = $"{name()}";
 
-                    var flit = instance_create(system.x, system.y, obj_p_fleet);
-
                     var _slaughter = new_player_ship("Gloriana", system.name, "Slaughtersong");
-                    add_ship_to_fleet(_slaughter, flit);
-                    flit.oribiting = system.id;
+                    var flit = create_player_fleet(system.x, system.y, [_slaughter]);
 
-                    scr_popup($"Ancient Ship Restored", $"The ancient ship within the ruins of {locy} has been fully repaired.  It is determined to be a Gloriana Class vessel and is bristling with golden age weaponry and armour.  Your {string(obj_ini.role[100][16])}s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.", "", "");
+                    scr_popup(localize("Ancient Ship Restored"), localize("The ancient ship within the ruins of {0} has been fully repaired.  It is determined to be a Gloriana Class vessel and is bristling with golden age weaponry and armour.  Your {1}s are excited; the Slaughtersong is ready for it's maiden voyage, at your command.", [locy, obj_ini.player_role_data[eROLE.TECHMARINE].role]), "", "");
                 }
             }
         } catch (_exception) {
@@ -895,7 +910,7 @@ function PlanetData(planet, system) constructor {
     };
 
     static guard_score_calc = function() {
-        guard_score = 0;
+        guard_score = 0.5;
         if (guardsmen < 500 && guardsmen > 0) {
             guard_score = 0.1;
         } else if (guardsmen >= 100000000) {
@@ -912,8 +927,6 @@ function PlanetData(planet, system) constructor {
             guard_score = 2;
         } else if (guardsmen >= 2000) {
             guard_score = 1;
-        } else {
-            guard_score = 0.5;
         }
 
         return guard_score;
@@ -934,7 +947,7 @@ function PlanetData(planet, system) constructor {
 
         if (stop) {
             if ((planet_forces[eFACTION.ORK] > 0) && (planet_forces[eFACTION.ECCLESIARCHY] > 0)) {
-                stop = 0;
+                stop = false;
             }
         }
 
@@ -942,7 +955,7 @@ function PlanetData(planet, system) constructor {
 
         if (stop) {
             if (planet_forces[eFACTION.NECRONS] >= 5 || planet_forces[eFACTION.TYRANIDS] >= 5 && imperium_forces) {
-                stop = 0;
+                stop = false;
             }
         }
 
@@ -950,20 +963,20 @@ function PlanetData(planet, system) constructor {
         if (stop) {
             if (current_owner == eFACTION.TAU) {
                 if (((guardsmen > 0) || (planet_forces[eFACTION.ECCLESIARCHY] > 0)) && ((pdf > 0) || (planet_forces[eFACTION.TAU] > 0))) {
-                    stop = 0;
+                    stop = false;
                 }
             }
         }
 
         // Attack heretics whenever possible, even player controlled ones
         if (stop) {
-            if ((player_forces + pdf > 0) && (guardsmen > 0) && (obj_controller.faction_status[2] == "War")) {
-                stop = 0;
+            if ((player_forces + pdf > 0) && (guardsmen > 0) && (obj_controller.faction_status[eFACTION.IMPERIUM] == "War")) {
+                stop = false;
             }
         }
         if (stop) {
-            if ((player_forces + pdf > 0) && (planet_forces[eFACTION.ECCLESIARCHY] > 0) && (obj_controller.faction_status[5] == "War")) {
-                stop = 0;
+            if ((player_forces + pdf > 0) && (planet_forces[eFACTION.ECCLESIARCHY] > 0) && (obj_controller.faction_status[eFACTION.ECCLESIARCHY] == "War")) {
+                stop = false;
             }
         }
 
@@ -978,7 +991,7 @@ function PlanetData(planet, system) constructor {
             return false;
         }
 
-        if ((current_owner == 1 || obj_controller.faction_status[2] != "War") && pdf) {
+        if ((current_owner == eFACTION.PLAYER || obj_controller.faction_status[eFACTION.IMPERIUM] != "War") && pdf) {
             return true;
         }
         return false;
@@ -986,8 +999,6 @@ function PlanetData(planet, system) constructor {
 
     static guard_attack_matrix = function() {
         var guard_attack = "";
-        // if (p_eldar[planet]>0) and (p_owner[planet]!=6) then guard_attack="eldar";
-        //if (planet_forces[eFACTION.TAU] + planet_forces[eFACTION.ORK] + planet_forces[eFACTION.HERETICS]+ planet_forces[eFACTION.CHAOS])
         if (planet_forces[eFACTION.TAU] > 0) {
             guard_attack = "tau";
         }
@@ -1002,7 +1013,7 @@ function PlanetData(planet, system) constructor {
             }
         }
         if (planet_forces[eFACTION.CHAOS] > 0) {
-            guard_attack = "csm";
+            guard_attack = "chaos";
         }
         if ((pdf > 0) && (current_owner == eFACTION.TAU)) {
             guard_attack = "pdf";
@@ -1016,7 +1027,6 @@ function PlanetData(planet, system) constructor {
         if ((planet_forces[eFACTION.TYRANIDS] <= 1) && (planet_forces[eFACTION.ORK] >= 4)) {
             guard_attack = "ork";
         }
-        // if (p_tyranids[planet]>0) and (guard_attack="") then guard_attack="tyranids";
         if (planet_forces[eFACTION.TYRANIDS] >= 4) {
             guard_attack = "tyranids";
         } else if (planet_forces[eFACTION.TYRANIDS] > 0) {
@@ -1065,7 +1075,7 @@ function PlanetData(planet, system) constructor {
 
         if (_pdf_attack == "") {
             if (planet_forces[eFACTION.CHAOS] > 0) {
-                _pdf_attack = "csm";
+                _pdf_attack = "chaos";
             } else if (planet_forces[eFACTION.HERETICS] > 0) {
                 _pdf_attack = "traitors";
             } else if (planet_forces[eFACTION.ORK] > 0) {
@@ -1111,31 +1121,28 @@ function PlanetData(planet, system) constructor {
         if (!instance_exists(obj_star_select)) {
             exit;
         }
+
         var improve = 0;
         var xx = 15;
         var yy = 25;
         var current_planet = planet;
-        var nm = scr_roman(current_planet), temp1 = 0;
+        var nm = scr_roman(current_planet);
+        var _succession = has_problem("succession");
+        var _xenos_and_heretics = xenos_and_heretics();
+
         draw_set_halign(fa_center);
         draw_set_valign(fa_top);
-        draw_set_font(fnt_40k_14);
+        draw_set_font(cjk_font(fnt_40k_14));
 
-        var _xenos_and_heretics = xenos_and_heretics();
         if ((current_owner <= 5) && (!_xenos_and_heretics)) {
-            if (planet_forces[eFACTION.PLAYER] > 0 || system.present_fleet[1] > 0) {
+            if (planet_forces[eFACTION.PLAYER] > 0 || system.present_fleet[eFACTION.PLAYER] > 0) {
                 if (fortification_level < 5) {
                     improve = 1;
                 }
             }
         }
 
-        // Draw disposition here
-        var yyy = 0;
-
-        var _succession = has_problem("succession");
-
-        if ((player_disposition >= 0 && current_owner <= 5 && population > 0) && (_succession == 0)) {
-            var wack = 0;
+        if ((player_disposition >= 0 && current_owner <= eFACTION.ECCLESIARCHY && population > 0) && !_succession) {
             draw_set_color(c_blue);
             draw_rectangle(xx + 349, yy + 175, xx + 349 + (min(100, player_disposition) * 3.68), yy + 192, 0);
         }
@@ -1144,27 +1151,26 @@ function PlanetData(planet, system) constructor {
         draw_set_color(c_white);
 
         if (!_succession) {
-            if ((player_disposition >= 0) && (origional_owner <= 5) && (current_owner <= 5) && (population > 0)) {
-                draw_text(xx + 534, yy + 176, "Disposition: " + string(min(100, player_disposition)) + "/100");
+            if ((player_disposition >= 0) && (origional_owner <= eFACTION.ECCLESIARCHY) && (current_owner <= eFACTION.ECCLESIARCHY) && (population > 0)) {
+                draw_text(xx + 534, yy + 176, localize("Disposition: {0}/100", [string(min(100, player_disposition))]));
             }
-            if ((player_disposition > -30) && (player_disposition < 0) && (current_owner <= 5) && (population > 0)) {
-                draw_text(xx + 534, yy + 176, "Disposition: ???/100");
+            if ((player_disposition > -30) && (player_disposition < 0) && (current_owner <= eFACTION.ECCLESIARCHY) && (population > 0)) {
+                draw_text(xx + 534, yy + 176, localize("Disposition: ???/100"));
             }
-            if (((player_disposition >= 0) && (origional_owner <= 5) && (current_owner > 5)) || (population <= 0)) {
+            if (((player_disposition >= 0) && (origional_owner <= eFACTION.ECCLESIARCHY) && (current_owner > eFACTION.ECCLESIARCHY)) || (population <= 0)) {
                 draw_text(xx + 534, yy + 176, "-------------");
             }
 
             if (player_disposition <= -3000) {
-                draw_text(xx + 534, yy + 176, "Disposition: N/A");
+                draw_text(xx + 534, yy + 176, localize("Disposition: N/A"));
             }
         } else if (_succession) {
-            draw_text(xx + 534, yy + 176, "War of _Succession");
+            draw_text(xx + 534, yy + 176, localize("War of _Succession"));
         }
-        draw_set_color(c_gray);
         // End draw disposition
         draw_set_color(c_gray);
         draw_rectangle(xx + 349, yy + 193, xx + 717, yy + 210, 0);
-        var bar_width = 717 - 349;
+        var bar_width = 368;
         var bar_start_point = xx + 349;
         var bar_percent_length = bar_width / 100;
         var current_bar_percent = 0;
@@ -1183,32 +1189,29 @@ function PlanetData(planet, system) constructor {
                 draw_rectangle(current_start, yy + 193, current_start + (bar_percent_length * population_influences[i]), yy + 210, 0);
                 current_bar_percent += population_influences[i];
             }
-            draw_set_color(c_gray);
         }
 
         draw_set_color(c_white);
-        draw_text(xx + 534, yy + 194, "Population Influence");
+        draw_text(xx + 534, yy + 194, localize("Population Influence"));
         yy += 20;
-        draw_set_font(fnt_40k_14b);
+        draw_set_font(cjk_font(fnt_40k_14b));
         draw_set_halign(fa_left);
         if (!is_craftworld && !is_hulk) {
-            draw_text(xx + 480, yy + 196, $"{system.name} {nm}  ({planet_type})");
+            var _planet_type_key = planet_type == "Forge" ? "Forge World" : planet_type;
+            draw_text(xx + 480, yy + 196, localize("{0} {1}  ({2})", [system.name, nm, localize(_planet_type_key)]));
         }
         if (is_craftworld) {
-            draw_text(xx + 480, yy + 196, $"{system.name} (Craftworld)");
+            draw_text(xx + 480, yy + 196, localize("{0} (Craftworld)", [system.name]));
         }
-        // if (is_craftworld=0) and (is_hulk=0) then draw_text(xx+534,yy+214,string(planet_type)+" World");
-        // if (is_craftworld=1) then draw_text(xx+594,yy+214,"Craftworld");
         if (is_hulk) {
-            draw_text(xx + 480, yy + 196, "Space Hulk");
+            draw_text(xx + 480, yy + 196, localize("Space Hulk"));
         }
 
-        // draw_sprite(spr_planet_splash,temp1,xx+349,yy+194);
         scr_image("ui/planet", scr_planet_image_numbers(planet_type), xx + 349, yy + 194, 128, 128);
         draw_rectangle(xx + 349, yy + 194, xx + 477, yy + 322, 1);
-        draw_set_font(fnt_40k_14);
+        draw_set_font(cjk_font(fnt_40k_14));
 
-        var pop_string = $"Population: {display_population()}";
+        var pop_string = localize("Population: {0}", [display_population()]);
 
         var _button_manager = obj_star_select.button_manager;
         _button_manager.update({label: pop_string, tooltip: "population data toggle with 'P'", keystroke: press_exclusive(ord("P")), x1: xx + 480, y1: yy + 217, w: 200, h: 22});
@@ -1220,18 +1223,19 @@ function PlanetData(planet, system) constructor {
             }
         }
 
-        if ((is_craftworld == 0) && (is_hulk == 0)) {
-            var y7 = 240, temp3 = string(scr_display_number(guardsmen));
+        if (!is_craftworld && !is_hulk) {
+            var y7 = 240;
+            var temp3 = string(scr_display_number(guardsmen));
             if (guardsmen > 0) {
-                draw_text(xx + 480, yy + y7, $"Imperial Guard: {temp3}");
+                draw_text(xx + 480, yy + y7, localize("Imperial Guard: {0}", [temp3]));
                 y7 += 20;
             }
             var temp4 = string(scr_display_number(pdf));
             if (current_owner != 8) {
-                draw_text(xx + 480, yy + y7, $"Defense Force: {temp4}");
+                draw_text(xx + 480, yy + y7, localize("Defense Force: {0}", [temp4]));
             }
             if (current_owner == 8) {
-                draw_text(xx + 480, yy + y7, $"Gue'Vesa Force:  {temp4}");
+                draw_text(xx + 480, yy + y7, localize("Gue'Vesa Force:  {0}", [temp4]));
             }
         }
 
@@ -1243,16 +1247,16 @@ function PlanetData(planet, system) constructor {
                 draw_rectangle(xx + 481, yy + 280, xx + 716, yy + 298, 0);
                 draw_sprite(spr_requisition, 0, xx + 657, yy + 283);
 
-                var improve_cost = 1500, yep = 0, o = 0;
+                var improve_cost = 1500;
 
                 if (scr_has_adv("Siege Masters")) {
                     improve_cost = 1100;
                 }
 
-                draw_text_glow(xx + 671, yy + 281, improve_cost, 16291875, 0);
+                draw_text_glow(xx + 671, yy + 281, improve_cost, COL_REQUISITION, 0);
 
                 if (scr_hit(xx + 481, yy + 282, xx + 716, yy + 300)) {
-                    draw_set_color(0);
+                    draw_set_color(c_black);
                     draw_set_alpha(0.2);
                     draw_rectangle(xx + 481, yy + 280, xx + 716, yy + 298, 0);
                     if (mouse_button_clicked() && (obj_controller.requisition >= improve_cost)) {
@@ -1265,26 +1269,18 @@ function PlanetData(planet, system) constructor {
                     }
                 }
                 draw_set_alpha(1);
-                draw_set_color(0);
+                draw_set_color(c_black);
             }
-            var forti_string = [
-                "None",
-                "Sparse",
-                "Light",
-                "Moderate",
-                "Heavy",
-                "Major",
-                "Extreme"
-            ];
-            var planet_forti = $"Defenses: {forti_string[fortification_level]}";
+            var forti_string = global.planet_forti;
+            var planet_forti = localize("Defenses: {0}", [forti_string[fortification_level]]);
 
             draw_text(xx + 480, yy + 280, planet_forti);
         }
 
         draw_set_color(c_gray);
 
-        if (is_hulk == 1) {
-            temp5 = "Integrity: " + string(floor(fortification_level * 20)) + "%";
+        if (is_hulk) {
+            temp5 = localize("Integrity: {0}%", [string(floor(fortification_level * 20))]);
             draw_text(xx + 480, yy + 280, temp5);
         }
 
@@ -1292,61 +1288,45 @@ function PlanetData(planet, system) constructor {
         var target_planet_heresy = corruption;
 
         if (target_planet_heresy < 0) {
-            temp6 = "DEBUG: Heresy below 0!";
+            temp6 = localize("DEBUG: Heresy below 0!");
         } else if (target_planet_heresy <= 10) {
-            temp6 = "None";
+            temp6 = localize("None");
         } else if (target_planet_heresy <= 30) {
-            temp6 = "Little";
+            temp6 = localize("Little");
         } else if (target_planet_heresy <= 50) {
-            temp6 = "Major";
+            temp6 = localize("Major");
         } else if (target_planet_heresy <= 70) {
-            temp6 = "Heavy";
+            temp6 = localize("Heavy");
         } else if (target_planet_heresy <= 96) {
-            temp6 = "Extreme";
+            temp6 = localize("Extreme");
         } else if (target_planet_heresy <= 100) {
-            temp6 = "Maximum";
+            temp6 = localize("Maximum");
         } else if (target_planet_heresy > 100) {
-            temp6 = "DEBUG: Heresy above 100!";
+            temp6 = localize("DEBUG: Heresy above 100!");
         } else {
-            temp6 = "DEBUG: Heresy somehow unknown value!";
+            temp6 = localize("DEBUG: Heresy somehow unknown value!");
         }
 
-        draw_text(xx + 480, yy + 300, $"Corruption: {temp6}");
+        draw_text(xx + 480, yy + 300, localize("Corruption: {0}", [temp6]));
 
-        draw_set_font(fnt_40k_14b);
-        draw_text(xx + 349, yy + 326, "Planetary Presence");
-        draw_text(xx + 535, yy + 326, "Planetary Features");
-        draw_set_font(fnt_40k_14);
+        draw_set_font(cjk_font(fnt_40k_14b));
+        draw_text(xx + 349, yy + 326, localize("Planetary Presence"));
+        draw_text(xx + 535, yy + 326, localize("Planetary Features"));
+        draw_set_font(cjk_font(fnt_40k_14));
 
         var presence_text = "";
-        var faction_names = [
-            "Adeptas",
-            "Orks",
-            "Tau",
-            "Tyranids",
-            "Chaos",
-            "Traitors",
-            "Daemons",
-            "Necrons"
-        ];
+        var faction_names = global.presence_factions;
         var faction_ids = [
             "p_sisters",
             "p_orks",
             "p_tau",
             "p_tyranids",
-            "p_traitors",
             "p_chaos",
+            "p_traitors",
             "p_demons",
-            "p_necrons"
+            "p_necrons",
         ];
-        var blurbs = [
-            "Minima",
-            "Parvus",
-            "Moderatus",
-            "Significus",
-            "Enormicus",
-            "Extremis"
-        ];
+        var blurbs = global.presence_blurbs;
 
         for (var t = 0; t < array_length(faction_names); t++) {
             var faction = faction_names[t];
@@ -1356,7 +1336,7 @@ function PlanetData(planet, system) constructor {
 
             // Special condition for "Cultists" -> "Daemons"
             if (faction_id == "p_chaos" && level > 6) {
-                faction = "Daemons";
+                faction = localize("Daemons");
             }
 
             if (level >= 1 && level <= 6) {
@@ -1366,28 +1346,18 @@ function PlanetData(planet, system) constructor {
             }
 
             if (faction != "" && level > 0) {
-                presence_text += $"{faction}: {blurb} ({level})\n";
+                presence_text += localize("{0}: {1} ({2})\n", [faction, blurb, level]);
             }
         }
 
         draw_text(xx + 349, yy + 346, string_hash_to_newline(string(presence_text)));
 
-        var to_show = 0, temp9 = "";
-        t = -1;
-
-        var fit = array_create(11, "");
-        var planet_displays = [], i;
-        var feat_count, _cur_feature;
+        var planet_displays = [];
         var feat_count = array_length(features);
         var upgrade_count = array_length(upgrades);
-        var size = [
-            "",
-            "Small",
-            "",
-            "Large"
-        ];
+        var size = global.planet_size;
         if (feat_count > 0) {
-            for (i = 0; i < feat_count; i++) {
+            for (var i = 0; i < feat_count; i++) {
                 var cur_feature = features[i];
                 try {
                     if (cur_feature.planet_display != 0) {
@@ -1403,7 +1373,7 @@ function PlanetData(planet, system) constructor {
                         if (cur_feature.f_type == eP_FEATURES.MONASTERY) {
                             if (cur_feature.forge > 0) {
                                 var forge = cur_feature.forge_data;
-                                var size_string = $"{size[forge.size]} Chapter Forge";
+                                var size_string = localize("{0} Chapter Forge", [size[forge.size]]);
                                 array_push(planet_displays, [size_string, forge]);
                             }
                         }
@@ -1415,26 +1385,26 @@ function PlanetData(planet, system) constructor {
             }
         }
         if (upgrade_count > 0) {
-            for (i = 0; i < upgrade_count; i++) {
+            for (var i = 0; i < upgrade_count; i++) {
                 var _upgrade = upgrades[i];
                 if (_upgrade.f_type == eP_FEATURES.SECRET_BASE) {
                     if (_upgrade.forge > 0) {
                         var forge = _upgrade.forge_data;
-                        var size_string = $"{size[forge.size]} Chapter Forge";
+                        var size_string = localize("{0} Chapter Forge", [size[forge.size]]);
                         array_push(planet_displays, [size_string, forge]);
                     }
                 }
             }
         }
 
-        for (i = 0; i < array_length(problems); i++) {
+        for (var i = 0; i < array_length(problems); i++) {
             if (problems[i] == "") {
                 continue;
             }
             var problem_data = problems_data[i];
             if (struct_exists(problem_data, "stage")) {
                 if (problem_data.stage == "preliminary") {
-                    var mission_string = $"{problem_data.applicant} Audience";
+                    var mission_string = localize("{0} Audience", [problem_data.applicant]);
                     problem_data.f_type = eP_FEATURES.MISSION;
                     problem_data.time = problem_timers[i];
                     problem_data.problem = problems[i];
@@ -1444,9 +1414,10 @@ function PlanetData(planet, system) constructor {
             }
         }
 
-        t = 0;
-        var button_size, y_move = 0, button_colour;
-        for (i = 0; i < array_length(planet_displays); i++) {
+        var button_size;
+        var y_move = 0;
+        var button_colour;
+        for (var i = 0; i < array_length(planet_displays); i++) {
             button_colour = c_green;
             if (planet_displays[i][0] == "????") {
                 button_colour = c_red;
@@ -1462,30 +1433,9 @@ function PlanetData(planet, system) constructor {
             }
         }
         if (planet > 0) {
-            var current_planet = planet;
+            current_planet = planet;
             draw_set_color(c_black);
             draw_set_halign(fa_center);
-
-            /*if (obj_controller.recruiting_worlds_bought>0) and (system.p_owner[planet]<=5) and (obj_controller.faction_status[system.p_owner[planet]]!="War"){
-                if (string_count("Recr",system.p_feature[planet])=0){
-                    button4="+Recruiting";
-                }
-            }*/
-
-            /*if (origional_owner=1){
-                if (mouse_x>=xx+363) and (mouse_y>=yy+194) and (mouse_x<xx+502) and (mouse_y<yy+204){
-                    if (string_count("Monastery",features)>0){
-                        var wid,hei,tex;draw_set_halign(fa_left);
-                        tex=string(system.p_lasers[current_planet])+" Defense Laser, "+string(system.p_defenses[current_planet])+" Weapon Emplacements, "+string(system.p_silo[current_planet])+" Missile Silo";
-                        hei=string_height_ext(tex,-1,200)+4;wid=string_width_ext(tex,-1,200)+4;
-                        draw_set_color(c_black);
-                        draw_rectangle(xx+363,yy+210,xx+363+wid,yy+210+hei,0);
-                        draw_set_color(CM_GREEN_COLOR);
-                        draw_rectangle(xx+363,yy+210,xx+363+wid,yy+210+hei,1);
-                        draw_text_ext(xx+365,yy+212,tex,-1,200);
-                    }
-                }
-            }*/
         }
     };
 
@@ -1519,7 +1469,7 @@ function PlanetData(planet, system) constructor {
             strength = strength > 2 ? 2 : 0;
 
             if (system.p_chaos[planet] > 0) {
-                system.p_chaos[planet] = max(0, system.p_traitors[planet] - 1);
+                system.p_chaos[planet] = max(0, system.p_chaos[planet] - 1);
             } else if (system.p_traitors[planet] > 0) {
                 system.p_traitors[planet] = max(0, system.p_traitors[planet] - 2);
             }
@@ -1545,9 +1495,9 @@ function PlanetData(planet, system) constructor {
             }
         }
 
-        if ((population + pdf <= 0) && (current_owner == 1) && (obj_controller.faction_status[eFACTION.IMPERIUM] == "War")) {
+        if ((population + pdf <= 0) && (current_owner == eFACTION.PLAYER) && (obj_controller.faction_status[eFACTION.IMPERIUM] == "War")) {
             if (!has_feature(eP_FEATURES.MONASTERY)) {
-                current_owner = 2;
+                current_owner = eFACTION.IMPERIUM;
                 add_disposition(-50);
             }
         }
@@ -1581,16 +1531,31 @@ function PlanetData(planet, system) constructor {
         instance_destroy(obj_star_select);
     };
 
+    static set_star_select_planet = function() {
+        obj_star_select.garrison = garrisons;
+        system.garrison = garrisons.garrison_force;
+        obj_star_select.feature = "";
+        buttons_selected = false;
+        garrisons.update();
+        if (garrisons.garrison_force) {
+            garrisons.find_leader();
+            garrisons.garrison_disposition_change(true);
+        }
+    };
+
     static planet_selection_logic = function() {
+        if (!instance_exists(obj_star_select)){
+            exit;
+        }
         var planet_is_allies = scr_is_planet_owned_by_allies(system, planet);
         var garrison_issue = !planet_is_allies || pdf <= 0;
-        var _mission = variable_instance_exists(obj_star_select, "mission") ? obj_star_select.mission : "";
+        var _mission = obj_star_select.mission;
 
         var _loading = obj_star_select.loading;
         var garrison_assignment = obj_controller.view_squad && _loading;
         if (garrison_assignment && (garrison_issue && _mission == "garrison")) {
             planet_draw = c_red;
-            tooltip_draw("Can't garrison on non-friendly planet or planet with no friendly PDF", 150);
+            tooltip_draw(localize("Can't garrison on non-friendly planet or planet with no friendly PDF"), 150);
         }
         if (!mouse_check_button_pressed(mb_left)) {
             return;
@@ -1602,10 +1567,7 @@ function PlanetData(planet, system) constructor {
                 exit;
             }
         } else if (!_loading) {
-            obj_star_select.garrison = system.get_garrison(planet);
-            system.garrison = obj_star_select.garrison.garrison_force;
-            obj_star_select.feature = "";
-            buttons_selected = false;
+            set_star_select_planet();
         } else if (_loading && planet > 0) {
             obj_controller.unload = planet;
             obj_controller.return_object = system;
@@ -1645,18 +1607,19 @@ function PlanetData(planet, system) constructor {
     };
 
     static draw_planet_population_controls = function() {
-        draw_set_color(c_gray);
-        var _gar_slate = obj_star_select.garrison_data_slate;
-        _gar_slate.sub_title = "";
-        _gar_slate.body_text = "";
-        _gar_slate.title = "";
-        var xx = _gar_slate.XX;
-        var yy = _gar_slate.YY;
-        var _half_way = _gar_slate.height / 2;
-        var spacing_x = 100;
-        var spacing_y = 65;
-        draw_set_halign(fa_left);
         if (!is_hulk) {
+            draw_set_color(c_gray);
+            var _gar_slate = obj_star_select.garrison_data_slate;
+            _gar_slate.sub_title = "";
+            _gar_slate.body_text = "";
+            _gar_slate.title = "";
+            var xx = _gar_slate.XX;
+            var yy = _gar_slate.YY;
+            var _half_way = _gar_slate.height / 2;
+            var spacing_x = 100;
+            var spacing_y = 65;
+            draw_set_halign(fa_left);
+
             var _imperium_status = obj_controller.faction_status[eFACTION.IMPERIUM];
             if ((_imperium_status != "War" && current_owner <= 5) || (_imperium_status == "War")) {
                 var _col_button = obj_star_select.colonist_button;
@@ -1676,11 +1639,11 @@ function PlanetData(planet, system) constructor {
                 }
 
                 var _recruit_world = get_features(eP_FEATURES.RECRUITING_WORLD)[0];
-                var _recruit_string = "Abduct";
+                var _recruit_string = localize("Abduct");
                 if ((_recruit_world.recruit_type == 0) && (owner_status() != "War" && owner_status() != "Antagonism" || player_disposition >= 50)) {
-                    _recruit_string = "Open: Voluntery";
+                    _recruit_string = localize("Open: Voluntery");
                 } else if (_recruit_world.recruit_type == 0 && player_disposition <= 50) {
-                    _recruit_string = "Covert: Voluntery";
+                    _recruit_string = localize("Covert: Voluntery");
                 }
 
                 draw_text(xx + (spacing_x * 3) + 35, _half_way - 20, _recruit_string);
@@ -1690,7 +1653,7 @@ function PlanetData(planet, system) constructor {
 
                 _type_button.draw(true);
 
-                draw_text(xx + (spacing_x * 3) - 15, _half_way + spacing_y - 20, $"Req:{_recruit_world.recruit_cost * 2}");
+                draw_text(xx + (spacing_x * 3) - 15, _half_way + spacing_y - 20, localize("Req:{0}", [_recruit_world.recruit_cost * 2]));
 
                 if (_recruit_world.recruit_cost > 0) {
                     obj_star_select.recruitment_costdown_button.update({x1: xx + (spacing_x * 2) + 35, y1: _half_way + spacing_y, allow_click: true});
@@ -1704,8 +1667,7 @@ function PlanetData(planet, system) constructor {
         }
     };
 
-    static end_of_turn_population_influence_and_enemy_growth = function(){
-
+    static end_of_turn_population_influence_and_enemy_growth = function() {
         sabotage_force = sabatours.garrison_force;
         total_garrison = garrisons.total_garrison;
         is_garrison_force = garrisons.garrison_force;
@@ -1716,8 +1678,7 @@ function PlanetData(planet, system) constructor {
 
         // increasing necrons
         if (array_length(features) != 0) {
-            var has_awake_tomb = false,
-                nfleet = 0;
+            var has_awake_tomb = false, nfleet = 0;
             if (awake_tomb_world(features) == 1) {
                 has_awake_tomb = true;
             }
@@ -1730,13 +1691,13 @@ function PlanetData(planet, system) constructor {
             }
             if (sabotage_force && irandom(2) < 2) {
                 planet_forces[eFACTION.NECRONS]--;
-                scr_event_log("green", $"sabotage force on {name()} disrupts necron forces", name);
+                scr_event_log("green", localize("sabotage force on {0} disrupts necron forces", [name()]), name);
             }
 
             if (has_awake_tomb) {
                 // Necron fleets, woooo
                 //necrons kill populatin
-                if ((population > 0) && (player_forces + pdf  + guardsmen + planet_forces[eFACTION.TYRANIDS] == 0)) {
+                if ((population > 0) && (player_forces + pdf + guardsmen + planet_forces[eFACTION.TYRANIDS] == 0)) {
                     set_population(population * 0.75);
                     if ((large_population == 0) && (population <= 5000)) {
                         set_population(0);
@@ -1760,24 +1721,18 @@ function PlanetData(planet, system) constructor {
                             }
                         }
                     } else if (system.present_fleet[eFACTION.NECRONS] == 0) {
-                        necron_fleet = instance_create(x, y, obj_en_fleet);
-                        necron_fleet.owner = eFACTION.NECRONS;
+                        necron_fleet = create_enemy_fleet(x, y, eFACTION.NECRONS);
                         necron_fleet.capital_number = 1;
                         necron_fleet.sprite_index = spr_fleet_necron;
                         necron_fleet.image_speed = 0;
                         necron_fleet.image_index = 1;
-                        system.present_fleet[eFACTION.NECRONS] += 1;
                     }
                     var enemy_fleets = 0;
-                    with(necron_fleet) {
+                    with (necron_fleet) {
                         if (owner == eFACTION.NECRONS) {
-                            var ii = 0;
-                            ii += capital_number;
+                            var ii = capital_number;
                             ii += round((frigate_number / 2));
                             ii += round((escort_number / 4));
-                            if (ii <= 1) {
-                                ii = 1;
-                            } // image_index=max(8,round(ii));
 
                             if ((ii >= 7) && (capital_number > 1)) {
                                 for (var fleet_n = 1; fleet_n <= 10; fleet_n++) {
@@ -1789,16 +1744,12 @@ function PlanetData(planet, system) constructor {
                         }
                     }
                     if (enemy_fleets > 0) {
-                        var necron_fleet2;
-                        necron_fleet2 = instance_create(x, y, obj_en_fleet);
-                        necron_fleet2.owner = eFACTION.NECRONS;
+                        var necron_fleet2 = create_enemy_fleet(x, y, eFACTION.NECRONS);
                         necron_fleet2.sprite_index = spr_fleet_necron;
-                        // necron_fleet2.image_index=0;
                         necron_fleet.image_speed = 0;
                         necron_fleet2.capital_number = 1;
                         necron_fleet2.frigate_number = round(necron_fleet.frigate_number / 2);
                         necron_fleet2.escort_number = round(necron_fleet.escort_number / 2);
-                        system.present_fleet[eFACTION.NECRONS] += 1;
 
                         necron_fleet.capital_number -= 1;
                         necron_fleet.frigate_number -= necron_fleet2.frigate_number;
@@ -1807,8 +1758,8 @@ function PlanetData(planet, system) constructor {
                         var _found_near_planet = false;
                         var _distance = 0;
                         var _start_star = system.id;
-                        with(obj_star) {
-                            if (id == _start_star){
+                        with (obj_star) {
+                            if (id == _start_star) {
                                 continue;
                             }
                             if (present_fleet[eFACTION.NECRONS] > 0) {
@@ -1820,19 +1771,19 @@ function PlanetData(planet, system) constructor {
 
                             var _valid_owners = false;
                             for (var plan = 1; plan <= planets; plan++) {
-                                if (p_owner[plan] <= 5) {
+                                if (p_owner[plan] <= eFACTION.ECCLESIARCHY) {
                                     _valid_owners = true;
                                     break;
                                 }
                             }
 
-                            if (!_valid_owners){
+                            if (!_valid_owners) {
                                 continue;
                             }
 
                             var _point_dist = object_distance(_start_star, self);
 
-                            if (_distance == 0 || _point_dist < _distance){
+                            if (_distance == 0 || _point_dist < _distance) {
                                 _nearest_planet = self.id;
                                 _found_near_planet = true;
                                 _distance = _point_dist;
@@ -1840,11 +1791,9 @@ function PlanetData(planet, system) constructor {
                         }
 
                         if (_found_near_planet) {
-                            var tgt1, tgt2;
-
                             necron_fleet2.action_x = _nearest_planet.x;
                             necron_fleet2.action_y = _nearest_planet.y;
-                            with (necron_fleet2){
+                            with (necron_fleet2) {
                                 set_fleet_movement();
                             }
                         }
@@ -1857,37 +1806,32 @@ function PlanetData(planet, system) constructor {
 
         end_turn_genestealer_cults();
 
-
         // Spread influence on controlled sector
         if ((planet_type != "Space Hulk") && (planet_type != "Dead")) {
-            if ((corruption < 70 && current_owner == 10)) {
-                if (current_owner == 10){
+            if (corruption < 70 && current_owner == eFACTION.CHAOS) {
+                if (current_owner == eFACTION.CHAOS) {
                     alter_corruption(2);
                 }
-                
             }
-            if (current_owner == eFACTION.TAU && population_influences[eFACTION.TYRANIDS]<70){
-                var _influ_chance = roll_dice(1,100);
-                if (_influ_chance <= 5 && population_influences[eFACTION.TYRANIDS]>=20){
+            if (current_owner == eFACTION.TAU && population_influences[eFACTION.TYRANIDS] < 70) {
+                var _influ_chance = roll_dice(1, 100);
+                if (_influ_chance <= 5 && population_influences[eFACTION.TYRANIDS] >= 20) {
                     alter_influence(eFACTION.TAU, 1);
                 }
             }
 
-            if (planet_type == "Daemon"){
-                if (pdf  > 0) {
-                    pdf  = 0;
+            if (planet_type == "Daemon") {
+                if (pdf > 0) {
+                    pdf = 0;
                 }
                 if (guardsmen > 0) {
                     guardsmen = 0;
                 }
             }
-
         }
-       
-    }
+    };
 
-
-    static end_turn_genestealer_cults = function(){
+    static end_turn_genestealer_cults = function() {
         // Genestealer cults grow in number
         if (has_feature(eP_FEATURES.GENE_STEALER_CULT)) {
             var cult = get_features(eP_FEATURES.GENE_STEALER_CULT)[0];
@@ -1895,20 +1839,19 @@ function PlanetData(planet, system) constructor {
             alter_influence(eFACTION.TYRANIDS, cult.cult_age / 100);
             var planet_garrison = garrisons;
             if (cult.hiding) {
-                var find_nid_chance = 50 - planet_garrison.total_garrison;
                 if (population_influences[eFACTION.TYRANIDS] > 50) {
                     var find_cult_chance = irandom(50);
-                    var alert_text = $"A hidden Genestealer Cult on {name()} Has suddenly burst forth from hiding!";
+                    var alert_text = localize("A hidden Genestealer Cult on {0} Has suddenly burst forth from hiding!", [name()]);
                     if (planet_garrison.garrison_force) {
-                        var alert_text = $"A hidden Genestealer Cult on {name()} Has been discovered by marine garrisons!";
+                        alert_text = localize("A hidden Genestealer Cult on {0} Has been discovered by marine garrisons!", [name()]);
                         find_cult_chance -= 25;
                     }
                     if (find_cult_chance < 1) {
                         cult.hiding = false;
-                        scr_popup("System Lost", alert_text, "Genestealer Cult", "");
+                        scr_popup(localize("System Lost"), alert_text, "Genestealer Cult", "");
                         set_new_owner(eFACTION.TYRANIDS);
-                        scr_event_log("red", $"A hidden Genestealer Cult on {name()} has Started a revolt.", system.name);
-                        edit_forces(eFACTION.TYRANIDS,1);
+                        scr_event_log("red", localize("A hidden Genestealer Cult on {0} has Started a revolt.", [name()]), system.name);
+                        edit_forces(eFACTION.TYRANIDS, 1);
                     }
                 }
             }
@@ -1941,15 +1884,13 @@ function PlanetData(planet, system) constructor {
                 add_feature(eP_FEATURES.GENE_STEALER_CULT);
             }
         }
-    }
+    };
 
-    static end_turn_heretics_and_corruption_growth = function(){
+    static end_turn_heretics_and_corruption_growth = function() {
         // traitors cults
-        var notixt;
-        var is_ork;
-        notixt = false;
+        var notixt = false;
 
-        var _rando = roll_dice(1,100);
+        var _rando = roll_dice(1, 100);
 
         if ((current_owner == eFACTION.CHAOS) && (corruption < 80)) {
             alter_corruption(1);
@@ -1957,30 +1898,24 @@ function PlanetData(planet, system) constructor {
 
         if ((current_owner != eFACTION.CHAOS) && (current_owner != eFACTION.HERETICS) && (current_owner != eFACTION.ELDAR) && (planet_type != "Dead") && (planet_type != "Craftworld")) {
             success = false;
-            is_ork = current_owner == eFACTION.ORK;
 
-            if (!is_ork) {
+            if (!current_owner == eFACTION.ORK) {
                 //made a linear function for this while here...now the minimum for the roll is a bit higher, but
                 var score_to_beat = (3 / 4) * (corruption + secret_corruption) - 27.5;
-
-                //if (corruption+secret_corruption>=25) and (_rando<=3) then success=true;
-                //if (corruption+secret_corruption>=50) and (_rando<=10) then success=true;
-                //if (corruption+secret_corruption>=70) and (_rando<=25) then success=true;
-                //if (corruption+secret_corruption>=90) and (_rando<=40) then success=true;
                 if (_rando < score_to_beat) {
                     success = true;
                 }
             }
 
-            if (success && (pdf  == 0) && (guardsmen == 0) && (planet_forces[eFACTION.TAU] == 0) && (planet_forces[eFACTION.ORK] == 0)) {
+            if (success && (pdf == 0) && (guardsmen == 0) && (planet_forces[eFACTION.TAU] == 0) && (planet_forces[eFACTION.ORK] == 0)) {
                 set_new_owner(eFACTION.HERETICS);
-                scr_alert("red", "owner", $"{name()} has fallen to heretics!", x, y);
+                scr_alert("red", "owner", localize("{0} has fallen to heretics!", [name()]), x, y);
 
                 if (system.visited == 1) {
                     //visited variable check whether the star has been visited or not 1 for true 0 for false
                     if (planet_type == "Forge") {
                         add_disposition(-10);
-                         // 10 disposition decreases for the respective planet
+                        // 10 disposition decreases for the respective planet
                         obj_controller.disposition[3] -= 3; // 10 disposition decrease for the toaster Fetishest since they aren't that numerous
                     } else if (has_feature(eP_FEATURES.SORORITAS_CATHEDRAL) || (planet_type == "Shrine")) {
                         add_disposition(-4); // similarly 10 disposition decrease, note those nurses are a bit pissy and
@@ -1993,8 +1928,7 @@ function PlanetData(planet, system) constructor {
             }
 
             if (success && (planet_type != "Space Hulk")) {
-                _rando = roll_dice(1,100);
-                // // // obj_controller.x=self.x;obj_controller.y=self.y;
+                _rando = roll_dice(1, 100);
                 if (is_garrison_force) {
                     _rando -= total_garrison;
                 }
@@ -2013,27 +1947,27 @@ function PlanetData(planet, system) constructor {
                     }
 
                     if (garrison_mod > 0) {
-                        var lost = floor(pdf  * garrison_mod);
+                        var lost = floor(pdf * garrison_mod);
 
-                        if (pdf  <= 500) {
-                            lost = pdf ;
+                        if (pdf <= 500) {
+                            lost = pdf;
                             edit_forces(eFACTION.HERETICS, 1);
                         }
 
                         edit_pdf(-lost);
 
                         if (planet_forces[eFACTION.HERETICS] == 0) {
-                            if (pdf  > 0) {
-                                tixt = $"{scr_display_number(lost)} PDF killed in a rebellion on {name()}.";
-                            } else if (pdf  == 0) {
-                                tixt = $"Heretic cults have appeared in {name()}.";
+                            if (pdf > 0) {
+                                tixt = localize("{0} PDF killed in a rebellion on {1}.", [scr_display_number(lost), name()]);
+                            } else if (pdf == 0) {
+                                tixt = localize("Heretic cults have appeared in {0}.", [name()]);
                             }
 
                             scr_alert("purple", "owner", tixt, x, y);
                             scr_event_log("purple", tixt, system.name);
                         }
                     } else {
-                        tixt = $"Marine garrisons prevents rebellion on {name()}";
+                        tixt = localize("Marine garrisons prevents rebellion on {0}", [name()]);
                         scr_alert("green", "owner", tixt, x, y);
                         scr_event_log("green", tixt, system.name);
                         corruption -= irandom(5);
@@ -2047,7 +1981,7 @@ function PlanetData(planet, system) constructor {
                     }
 
                     edit_forces(eFACTION.HERETICS, traitor_mod);
-                    tixt = $"Heretic cults have appeared in {name()}.";
+                    tixt = localize("Heretic cults have appeared in {0}.", [name()]);
                 } else if ((_rando >= 81) && (_rando < 91) && (planet_forces[eFACTION.HERETICS] < 3)) {
                     // Minor uprising
                     if (is_garrison_force) {
@@ -2055,42 +1989,76 @@ function PlanetData(planet, system) constructor {
                     } else {
                         traitor_mod = 3;
                     }
-                    edit_forces(eFACTION.HERETICS,traitor_mod);
-                    tixt = $"Heretic cults have spread around {name()}.";
+                    edit_forces(eFACTION.HERETICS, traitor_mod);
+                    tixt = localize("Heretic cults have spread around {0}.", [name()]);
                 } // Major uprising
 
                 // major and huge uprisings are impossible as long as a garrisons of at least 10 marines is present
                 if ((_rando >= 91) && (_rando < 100) && (planet_forces[eFACTION.HERETICS] < 4)) {
                     notixt = true;
-                    edit_forces(eFACTION.HERETICS,4);
+                    edit_forces(eFACTION.HERETICS, 4);
 
                     if ((obj_controller.faction_defeated[10] == 0) && (obj_controller.faction_gender[10] == 1)) {
-                        edit_forces(eFACTION.HERETICS,5);
+                        edit_forces(eFACTION.HERETICS, 5);
                     }
 
                     var n_name = name();
-                    scr_popup("Heretic Revolt", $"A massive heretic uprising on {n_name} threatens to plunge the star system into chaos.", "chaos_cultist", "");
-                    scr_alert("red", "owner", $"Massive heretic uprising on {n_name}.", x, y);
-                    scr_event_log("purple", $"Massive heretic uprising on {n_name}.", system.name);
+                    scr_popup(localize("Heretic Revolt"), localize("A massive heretic uprising on {0} threatens to plunge the star system into chaos.", [n_name]), "chaos_cultist", "");
+                    scr_alert("red", "owner", localize("Massive heretic uprising on {0}.", [n_name]), x, y);
+                    scr_event_log("purple", localize("Massive heretic uprising on {0}.", [n_name]), system.name);
                 } // Huge uprising
 
                 if ((_rando >= 100) && (planet_forces[eFACTION.HERETICS] < 5)) {
-                    edit_forces(eFACTION.HERETICS,6);
-                    set_new_owner(eFACTION.HERETICS)
+                    edit_forces(eFACTION.HERETICS, 6);
+                    set_new_owner(eFACTION.HERETICS);
                     add_feature(eP_FEATURES.DAEMONIC_INCURSION);
 
-                    set_corruption(corruption < 80 ? 80 : 95)
+                    set_corruption(corruption < 80 ? 80 : 95);
 
-                    tixt = $"Daemonic incursion on {name()}!";
+                    tixt = localize("Daemonic incursion on {0}!", [name()]);
                 } // Oh god what
 
                 if ((_rando >= 41) && (!notixt) && tixt != "") {
                     scr_alert("red", "owner", tixt, x, y);
                     scr_event_log("purple", tixt, system.name);
                 }
-                // if (planet_forces[eFACTION.HERETICS]>2){obj_controller.x=self.x;obj_controller.y=self.y;}
             } // End traitors cult
         }
+    };
 
-    }
+    static create_alert = function() {
+        return instance_create(system.x + 16, system.y - 24, obj_star_event);
+    };
+
+    static init_war_of_succession = function() {
+        add_feature(eP_FEATURES.SUCCESSION_WAR);
+        add_problem("succession", irandom(6) + 4);
+        set_player_disposition(-5000);
+
+        scr_popup(localize("War of Succession"), localize("The planetary governor of {0} has died.  Several subordinates and other parties each claim to be the true heir and successor- war has erupted across the planet as a result.  Heresy thrives in chaos.", [name()]), "succession", "");
+        var _star_alert = create_alert();
+        _star_alert.image_alpha = 1;
+        _star_alert.image_speed = 1;
+        _star_alert.col = "red";
+        scr_event_log("red", localize("War of Succession on {0}", [name()]));
+    };
+
+    static init_fallen_marines = function() {
+        var _eta = scr_mission_eta(system.x, system.y, 1);
+
+        var assigned_problem = add_problem("fallen", _eta);
+
+        if (!assigned_problem) {
+            LOGGER.error("RE: Hunt the Fallen, coulnd't assign a problem to the planet");
+            return;
+        }
+
+        var _text = localize("Sources indicate one of the Fallen may be upon {0}.  We have {1} months to send out a strike team and scour the planet.  Any longer and any Fallen that might be there will have escaped.", [name(), _eta]);
+        scr_popup(localize("Hunt the Fallen"), _text, "fallen", "");
+        scr_event_log("", localize("Sources indicate one of the Fallen may be upon {0}.  We have {1} months to investigate.", [name(), _eta]));
+        var star_alert = create_alert();
+        star_alert.image_alpha = 1;
+        star_alert.image_speed = 1;
+        star_alert.col = "purple";
+    };
 }

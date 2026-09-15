@@ -8,10 +8,9 @@ function scr_enemy_ai_e() {
 
     var imperium_fleets = present_fleet[2] + present_fleet[3];
 
-    var have_fleets, battle, battle2;
-    have_fleets = 0;
-    battle = 0;
-    battle2 = 0;
+    var have_fleets = 0;
+    var battle = 0;
+    var battle2 = 0;
 
     var attack = array_create(20, 0);
     var strength = array_create(20, 0);
@@ -28,12 +27,12 @@ function scr_enemy_ai_e() {
         var battle_if_war = [
             8,
             eFACTION.MECHANICUS,
-            eFACTION.IMPERIUM
+            eFACTION.IMPERIUM,
         ];
 
         var always_battle = [
             7,
-            9
+            9,
         ];
 
         for (var i = 0; i < array_length(battle_if_war); i++) {
@@ -104,13 +103,7 @@ function scr_enemy_ai_e() {
     instance_activate_object(obj_en_fleet);
     if ((battle2 > 0) && (battle == 0)) {
         // AI only battle
-        var i, f, shiyp;
-        i = 0;
-        f = 1;
-        shiyp = 0;
-
-        repeat (10) {
-            f += 1;
+        for (var f = 2; f <= 11; f++) {
             if (f == 11) {
                 f = 13;
             }
@@ -141,8 +134,6 @@ function scr_enemy_ai_e() {
                     strength[13] = strength[13] * 2;
                 }
 
-                // if (f=10) or (f=2) then show_message("["+string(f)+"] Fleet strength: "+string(strength[f]));
-
                 with (obj_en_ship) {
                     if ((x < -7000) && (y < -7000)) {
                         x += 10000;
@@ -161,18 +152,12 @@ function scr_enemy_ai_e() {
                         y += 10000;
                     }
                 }
-                // show_message(string(name)+"] Owner: "+string(f)+", strength: "+string(strength[f]));
             }
         } // This grabs the "strength" from all present fleets and adds it to the temporary variable for this AI battle
 
         // Determine who will attack who
-        var still_battling, rond;
-        still_battling = true;
-        rond = 0;
-
         repeat (5) {
-            rond += 1;
-            still_battling = false;
+            var still_battling = false;
             if ((strength[2] + strength[3] > 0) && (strength[6] + strength[7] + strength[8] + strength[9] + strength[10] + strength[13] > 0)) {
                 still_battling = true;
             }
@@ -195,14 +180,9 @@ function scr_enemy_ai_e() {
                 still_battling = true;
             }
 
-            // show_message(string(name)+" Round "+string(rond)+": "+string(still_battling));
-
             if (still_battling == true) {
-                var who;
-                who = 0;
-
                 // Imperial Fleet Attacks
-                who = 2;
+                var who = 2;
                 if (strength[who] > 0) {
                     if ((strength[9] > 0) && (attack[who] == 0)) {
                         attack[who] = 9;
@@ -223,21 +203,16 @@ function scr_enemy_ai_e() {
                         attack[who] = 6;
                     }
                     damage[attack[who]] += strength[who] / 2;
-
-                    // if (attack[who]=10) then show_message("Imperial Fleet damage: "+string(damage[10])+", Strength: "+string(strength[2]));
-                    // show_message(string(who)+" attacking "+string(attack[who])+" for "+string(strength[who]/2));
                 }
 
                 // Eldar Fleet Attacks
                 who = 6;
                 if (strength[who] > 0) {
-                    i = 11;
                     if ((strength[13] > 0) && (13 != who)) {
                         attack[who] = 13;
                     }
                     if (attack[who] != 13) {
-                        repeat (9) {
-                            i -= 1;
+                        for (var i = 10; i >= 2; i--) {
                             if ((strength[i] > 0) && (i != who)) {
                                 attack[who] = i;
                             }
@@ -268,7 +243,6 @@ function scr_enemy_ai_e() {
                         attack[who] = 6;
                     }
                     damage[attack[who]] += strength[who] / 2;
-                    // show_message(string(who)+" attacking "+string(attack[who])+" for "+string(strength[who]/2));
                 }
 
                 // Tau Fleet Attacks
@@ -295,13 +269,11 @@ function scr_enemy_ai_e() {
                 // Tyranid Fleet Attacks
                 who = 9;
                 if (strength[who] > 0) {
-                    i = 1;
                     if ((strength[13] > 0) && (13 != who)) {
                         attack[who] = 13;
                     }
                     if (attack[who] != 13) {
-                        repeat (9) {
-                            i += 1;
+                        for (var i = 2; i <= 10; i++) {
                             if ((strength[i] > 0) && (i != who)) {
                                 attack[who] = i;
                             }
@@ -332,7 +304,6 @@ function scr_enemy_ai_e() {
                         attack[who] = 8;
                     }
                     damage[attack[who]] += strength[who] / 2;
-                    // if (attack[who]=2) then show_message("Chaos Fleet damage: "+string(damage[2])+", Strength: "+string(strength[10]));
                 }
 
                 // Necron Fleet Attacks
@@ -360,15 +331,10 @@ function scr_enemy_ai_e() {
                 }
 
                 // Attacking has been determined, work out damage
-                var i;
-                i = 1;
-                repeat (9) {
-                    i += 1;
+                for (var i = 2; i <= 10; i++) {
                     strength[i] -= damage[i];
                     damage[i] = 0;
-                    //  if (strength[i]>0) and (present_fleet[i]>0) then show_message(string(name)+"] Fleet:"+string(i)+" surviving at "+string(strength[i])+" in round "+string(rond));
                     if ((strength[i] <= 0) && (present_fleet[i] > 0)) {
-                        // show_message(string(name)+"] Fleet:"+string(i)+" beat to shit in round "+string(rond));
                         obj_controller.temp[1049] = i;
                         obj_controller.temp[1050] = self.id;
                         with (obj_en_fleet) {
@@ -381,9 +347,7 @@ function scr_enemy_ai_e() {
 
                 strength[13] -= damage[13];
                 damage[13] = 0;
-                //  if (strength[i]>0) and (present_fleet[i]>0) then show_message(string(name)+"] Fleet:"+string(i)+" surviving at "+string(strength[i])+" in round "+string(rond));
                 if ((strength[13] <= 0) && (present_fleet[13] > 0)) {
-                    // show_message(string(name)+"] Fleet:"+string(i)+" beat to shit in round "+string(rond));
                     obj_controller.temp[1049] = 13;
                     obj_controller.temp[1050] = self.id;
                     with (obj_en_fleet) {
@@ -398,10 +362,7 @@ function scr_enemy_ai_e() {
         // Those 5 battle intervals have finished
         // Clean up the surviving fleet(s)
 
-        var i;
-        i = 1;
-        repeat (10) {
-            i += 1;
+        for (var i = 2; i <= 11; i++) {
             if (i == 11) {
                 i = 13;
             }
@@ -424,10 +385,6 @@ function scr_enemy_ai_e() {
                     }
                 }
 
-                // show_message("Fleet "+string(owner)+" has "+string(obj_controller.temp[1048])+" strength remaining after the battle");
-
-                // if (i=10) and (strength[i]>0) then show_message("STR "+string(strength[10])+" < "+string(obj_controller.temp[1048])+" ?");
-
                 if (strength[i] < obj_controller.temp[1048]) {
                     // Need to remove ships if !=
                     repeat (40) {
@@ -437,7 +394,6 @@ function scr_enemy_ai_e() {
                                     if ((escort_number > 0) && (escort_number + frigate_number + capital_number != 1)) {
                                         escort_number -= 1;
                                         obj_controller.temp[1047] -= 1;
-                                        // show_message("removed an escort, escorts left: "+string(escort_number));
                                         if (escort_number + frigate_number + capital_number <= 0) {
                                             instance_destroy();
                                         }
@@ -455,7 +411,6 @@ function scr_enemy_ai_e() {
                                     if ((frigate_number > 0) && (escort_number + frigate_number + capital_number != 1)) {
                                         frigate_number -= 1;
                                         obj_controller.temp[1047] -= 4;
-                                        // show_message("removed a frigate, frigates left: "+string(frigate_number));
                                         if (escort_number + frigate_number + capital_number <= 0) {
                                             instance_destroy();
                                         }
@@ -471,7 +426,6 @@ function scr_enemy_ai_e() {
                                     if ((capital_number > 0) && (escort_number + frigate_number + capital_number != 1)) {
                                         capital_number -= 1;
                                         obj_controller.temp[1047] -= 8;
-                                        // show_message("removed a capital ship, capitals left: "+string(capital_number));
                                         if (escort_number + frigate_number + capital_number <= 0) {
                                             instance_destroy();
                                         }
@@ -483,7 +437,6 @@ function scr_enemy_ai_e() {
                 }
 
                 strength[i] = obj_controller.temp[1047];
-                // show_message("Surviving fleet ("+string(i)+") strength: "+string(strength[i]));
                 // I'd hope that removes enough ships from the survivor
             }
             with (obj_en_fleet) {
@@ -497,26 +450,25 @@ function scr_enemy_ai_e() {
 
     if (battle > 0) {
         if ((present_fleet[1] > 0) && ((present_fleet[6] + present_fleet[7] + present_fleet[8] + present_fleet[9] + present_fleet[10] + present_fleet[13] > 0) || ((present_fleet[2] > 0) && (obj_controller.faction_status[2] == "War")))) {
-            var i, onceh;
-            i = 1;
-            onceh = 0;
-
-            repeat (9) {
-                i += 1;
+            for (var i = 2; i <= 10; i++) {
                 var special_stop = false;
-                if ((i == 10) || (i == 11)) {
+                if (i == 10) {
                     special_stop = has_problem_star("meeting") || has_problem_star("meeting_trap");
                 }
 
-                if ((obj_controller.faction_status[i] == "War") && (onceh == 0) && (!special_stop)) {
+                if ((obj_controller.faction_status[i] == "War") && (!special_stop) && (present_fleet[i] > 0)) {
                     // Quene battle
                     obj_turn_end.battles += 1;
                     obj_turn_end.battle[obj_turn_end.battles] = 1;
-                    obj_turn_end.battle_world[obj_turn_end.battles] = -50;
+                    obj_turn_end.battle_world[obj_turn_end.battles] = 0;
                     obj_turn_end.battle_opponent[obj_turn_end.battles] = i; // Who triggered it first
                     obj_turn_end.battle_location[obj_turn_end.battles] = name;
-                    // obj_turn_end.battle_object[obj_turn_end.battles]=instance_nearest(x,y,obj_en_fleet);
                     obj_turn_end.battle_pobject[obj_turn_end.battles] = instance_nearest(x, y, obj_p_fleet);
+
+                    if (!instance_exists(obj_turn_end.battle_pobject[obj_turn_end.battles])) {
+                        obj_turn_end.battles -= 1;
+                        break;
+                    }
 
                     if (i == 10) {
                         obj_controller.temp[1049] = string(name);
@@ -531,7 +483,7 @@ function scr_enemy_ai_e() {
                                 if (string_count("warband", trade_goods) > 0) {
                                     instance_create(x, y, obj_temp2);
                                 }
-                                if (string_lower(trade_goods) == "csm") {
+                                if (string_lower(trade_goods) == "chaos") {
                                     instance_create(x, y, obj_temp3);
                                 }
                             }
@@ -543,13 +495,13 @@ function scr_enemy_ai_e() {
                             }
                         }
                         if (instance_exists(obj_temp3)) {
-                            obj_turn_end.battle_special[obj_turn_end.battles] = "CSM";
+                            obj_turn_end.battle_special[obj_turn_end.battles] = "CHAOS";
                             with (obj_temp2) {
                                 instance_destroy();
                             }
                         }
                     }
-                    onceh = 1;
+                    break;
                 }
             }
         }
@@ -558,14 +510,9 @@ function scr_enemy_ai_e() {
     instance_activate_object(obj_p_fleet);
     instance_activate_object(obj_en_fleet);
 
-    var run = 0;
-    var force = 1;
-    var beetle = 0;
     var chaos_meeting = 0;
 
-    repeat (planets) {
-        run += 1;
-        force = 1;
+    for (var run = 1; run <= planets; run++) {
         var forces_list = [];
         var force_count = 0;
         if (p_player[run] > 0 && struct_exists(obj_controller.location_viewer.garrison_log, name)) {
@@ -574,10 +521,6 @@ function scr_enemy_ai_e() {
         }
 
         if (p_player[run] > 0 && force_count > 0) {
-            var spyrer, fallen;
-            spyrer = 0;
-            fallen = 0;
-
             if (p_player[run] > 0) {
                 if (has_problem_planet(run, "meeting")) {
                     chaos_meeting = run;
@@ -587,9 +530,7 @@ function scr_enemy_ai_e() {
             }
             if (has_problem_planet(run, "spyrer")) {
                 if (p_player[run] > 20) {
-                    var tixt;
-                    tixt = "The Spyrer on " + planet_numeral_name(run);
-                    tixt += " seems to have vanished, presumably gone into hiding.";
+                    var tixt = "The Spyrer on " + planet_numeral_name(run, id) + " seems to have vanished, presumably gone into hiding.";
                     scr_popup("Spyrer Rampage", tixt, "spyrer", "");
                 } else if (p_player[run] <= 20) {
                     obj_turn_end.battles += 1;
@@ -603,27 +544,23 @@ function scr_enemy_ai_e() {
             }
 
             if ((p_player[run] > 0) && has_problem_planet(run, "fallen")) {
-                var chan;
-                chan = choose(1, 2, 3, 4);
-                if (chan <= 2) {
+                if (choose(true, false)) {
                     obj_turn_end.battles += 1;
                     obj_turn_end.battle[obj_turn_end.battles] = 1;
                     obj_turn_end.battle_world[obj_turn_end.battles] = run;
                     obj_turn_end.battle_opponent[obj_turn_end.battles] = 10;
                     obj_turn_end.battle_location[obj_turn_end.battles] = name;
                     obj_turn_end.battle_object[obj_turn_end.battles] = id;
-                    if (chan == 1) {
+                    if (choose(true, false)) {
                         obj_turn_end.battle_special[obj_turn_end.battles] = "fallen1";
-                    }
-                    if (chan == 2) {
+                    } else {
                         obj_turn_end.battle_special[obj_turn_end.battles] = "fallen2";
                     }
-                } else if (chan >= 3) {
+                } else {
                     if (remove_planet_problem(run, "fallen")) {
-                        tixt = "Your marines have scoured " + planet_numeral_name(run);
-                        tixt += " in search of the Fallen.  Despite their best efforts, and meticulous searching, none have been found.  It appears as though the information was faulty or out of date.";
+                        var tixt = "Your marines have scoured " + planet_numeral_name(run, id) + " in search of the Fallen.  Despite their best efforts, and meticulous searching, none have been found.  It appears as though the information was faulty or out of date.";
                         scr_popup("Hunt the Fallen", tixt, "fallen", "");
-                        scr_event_log("", $"Mission Successful: No Fallen located upon {planet_numeral_name(run)}");
+                        scr_event_log("", $"Mission Successful: No Fallen located upon {planet_numeral_name(run, id)}");
                     }
                 }
             }
@@ -632,8 +569,9 @@ function scr_enemy_ai_e() {
             setup_necron_tomb_raid(run);
         }
         if ((p_player[run] > 0) && (force_count > 0)) {
-            for (force = 2; force < 14; force++) {
+            for (var force = 2; force < 14; force++) {
                 battle_opponent = 0;
+                var pause = false;
 
                 switch (force) {
                     case 3: // mechanicus aren't quite in yet
@@ -641,10 +579,10 @@ function scr_enemy_ai_e() {
                     case 12:
                         continue;
                     case 2:
-                        if (p_player[run] > 0 && p_owner[run] == 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
+                        if (p_player[run] > 0 && p_owner[run] == eFACTION.PLAYER && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
                             battle_opponent = 2;
                         }
-                        if (p_player[run] >= 10 && p_owner[run] != 1 && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
+                        if (p_player[run] >= 10 && p_owner[run] != eFACTION.PLAYER && p_guardsmen[run] > 0 && obj_controller.faction_status[2] == "War") {
                             battle_opponent = 2;
                         }
                         break;
@@ -674,14 +612,14 @@ function scr_enemy_ai_e() {
                         }
                         break;
                     case 10:
-                        var pause = has_problem_planet(run, "meeting") || has_problem_planet(run, "meeting_trap");
-                        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_traitors[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
+                        pause = has_problem_planet(run, "meeting") || has_problem_planet(run, "meeting_trap");
+                        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_chaos[run] > 0 && !pause && obj_controller.faction_status[10] == "War") {
                             battle_opponent = 10;
                         }
                         break;
                     case 11:
-                        var pause = has_problem_planet(run, "meeting") || has_problem_planet(run, "meeting_trap");
-                        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_chaos[run] > 0 && pause == 0 && obj_controller.faction_status[10] == "War") {
+                        pause = has_problem_planet(run, "meeting") || has_problem_planet(run, "meeting_trap");
+                        if (p_guardsmen[run] + p_pdf[run] == 0 && p_player[run] > 0 && p_traitors[run] > 0 && !pause && obj_controller.faction_status[10] == "War") {
                             battle_opponent = 11;
                         }
                         break;
@@ -694,7 +632,6 @@ function scr_enemy_ai_e() {
 
                 // other battle crap here
                 if (battle_opponent > 0) {
-                    // obj_controller.x=self.x;obj_controller.y=self.y;
                     obj_turn_end.battles += 1;
                     obj_turn_end.battle[obj_turn_end.battles] = 1;
                     obj_turn_end.battle_world[obj_turn_end.battles] = run;
@@ -706,30 +643,20 @@ function scr_enemy_ai_e() {
         }
 
         // Other planetary stuff
-
-        var thirdpop;
-        var halfpop;
-
-        thirdpop = p_max_population[run] / 3;
-        halfpop = p_max_population[run] / 2;
-
         if (array_length(p_feature[run])) {
-            var planet_data = new PlanetData(run, self);
-
             // Transforming billions pop number to a real number so the code can handle it
             // Otherwise, 3 and a half billions get translated as 3,50 instead of 3500000000
 
             //fortress monestary
-            if (p_owner[run] == 1) {
+            if (p_owner[run] == eFACTION.PLAYER) {
                 var monestary = search_planet_features(p_feature[run], eP_FEATURES.MONASTERY);
                 if (array_length(monestary) > 0) {
                     monestary = p_feature[run][monestary[0]];
-                    var md, ms, ml, build_rate, build_rate2;
-                    md = 225;
-                    ms = 300;
-                    ml = 32;
-                    build_rate = 4;
-                    build_rate2 = 6;
+                    var md = 225;
+                    var ms = 300;
+                    var ml = 32;
+                    var build_rate = 4;
+                    var build_rate2 = 6;
                     if (scr_has_adv("Siege Masters")) {
                         md = 300;
                         ms = 400;
@@ -772,12 +699,12 @@ function scr_enemy_ai_e() {
 
         // Work on upgrades
         if (array_length(p_upgrades[run]) > 0) {
-            var upgrade_type, tx, display_type, upgrade;
             for (var up = 0; up < array_length(p_upgrades[run]); up++) {
-                upgrade = p_upgrades[run][up];
+                var upgrade = p_upgrades[run][up];
                 if (struct_exists(upgrade, "built")) {
-                    upgrade_type = upgrade.f_type;
+                    var upgrade_type = upgrade.f_type;
                     if (upgrade.built == obj_controller.turn) {
+                        var display_type = "No Available Feature";
                         if (upgrade_type == eP_FEATURES.ARSENAL) {
                             display_type = "Arsenal";
                             obj_controller.und_armouries++;
@@ -788,7 +715,7 @@ function scr_enemy_ai_e() {
                             display_type = "Gene Vault";
                             obj_controller.und_gene_vaults++;
                         }
-                        tx = $"Hidden {display_type} on {name} {scr_roman(run)} has been completed.";
+                        var tx = $"Hidden {display_type} on {name} {scr_roman(run)} has been completed.";
                         scr_alert("green", "owner", string(tx), x, y);
                         scr_event_log("", string(tx));
                     }
@@ -811,40 +738,29 @@ function scr_enemy_ai_e() {
 
     if (chaos_meeting > 0) {
         // Run through forces and determine what all is there
+        var _meeting = instance_create(0, 0, obj_temp_meeting);
 
-        instance_create(0, 0, obj_temp_meeting);
-
-        var i, co, ii, otm, good, master_present;
-        ii = 0;
-        i = 0;
-        co = -1;
-        good = 0;
-        master_present = 0;
-        repeat (11) {
-            co += 1;
-            i = 0;
-            repeat (200) {
-                i += 1;
-                good = 0;
+        var otm = 0;
+        var master_present = false;
+        for (var co = 0; co <= obj_ini.companies; co++) {
+            for (var i = 0; i < array_length(obj_ini.TTRPG[co]); i++) {
                 var _unit = fetch_unit([co, i]);
-                if ((_unit.role() != "" && _unit.location_string == name) && (_unit.planet_location == floor(chaos_meeting))) {
-                    good += 1;
+                var _is_at_chaos_meeting = _unit.planet_location == floor(chaos_meeting);
+                if (_unit.is_dreadnought() && !_unit.has_role(eROLE.CHAPTERMASTER)) {
+                    continue;
                 }
-                if ((_unit.role() != obj_ini.role[100][6]) && (_unit.role() != "Venerable " + string(obj_ini.role[100][6]))) {
-                    good += 1;
-                }
-                if ((string_count("Dread", obj_ini.armour[co][i]) == 0) || (_unit.role() == obj_ini.role[100][eROLE.CHAPTERMASTER])) {
-                    good += 1;
+                if (_unit.location_string != name) {
+                    continue;
                 }
 
-                if (good == 3) {
-                    obj_temp_meeting.dudes += 1;
-                    otm = obj_temp_meeting.dudes;
-                    obj_temp_meeting.present[otm] = 1;
-                    obj_temp_meeting.co[otm] = co;
-                    obj_temp_meeting.ide[otm] = i;
-                    if (_unit.role() == obj_ini.role[100][eROLE.CHAPTERMASTER]) {
-                        master_present = 1;
+                if (_is_at_chaos_meeting) {
+                    _meeting.dudes += 1;
+                    otm = _meeting.dudes;
+                    _meeting.present[otm] = 1;
+                    _meeting.co[otm] = co;
+                    _meeting.ide[otm] = i;
+                    if (co == 0 && i == 0) {
+                        master_present = _unit.has_role(eROLE.CHAPTERMASTER);
                     }
                 }
             }
@@ -852,25 +768,20 @@ function scr_enemy_ai_e() {
 
         // title / text / image / speshul
         var popup_text = "A cloaked, ragged figure approaches your forces and hails you. ";
-        if ((master_present == 1) && (otm <= 21)) {
-            var effect;
-            effect = "meeting_1t";
+        if (master_present && (otm <= 21)) {
+            var effect = "meeting_1t";
             if (chaos_meeting == floor(chaos_meeting)) {
                 effect = "meeting_1";
             }
             scr_popup("Chaos Meeting", $"{popup_text}He is to bring you to meet with their master and you have few enough forces to be permitted.  What is thy will?", "chaos_messenger", effect);
         }
-        if ((master_present == 1) && (otm > 21)) {
+        if (master_present && (otm > 21)) {
             scr_popup("Chaos Meeting", $"{popup_text}He is to bring you to their master, but before the meeting proceeds, you must bring fewer forces.  Only yourself and up to two squads will be allowed in the presence of {obj_controller.faction_title[10]} {obj_controller.faction_leader[10]}.", "chaos_messenger", "meeting_2");
-            with (obj_temp_meeting) {
-                instance_destroy();
-            }
+            instance_destroy(_meeting);
         }
-        if ((master_present == 0) && (otm > 21)) {
+        if (!master_present && (otm > 21)) {
             scr_popup("Chaos Meeting", $"{popup_text}The meeting was supposed to be with the Chaos Lord, and yourself, but you are not planet-side.  Land on the planet with up to two squads and the meeting will proceed.", "chaos_messenger", "meeting_3");
-            with (obj_temp_meeting) {
-                instance_destroy();
-            }
+            instance_destroy(_meeting);
         }
     }
 

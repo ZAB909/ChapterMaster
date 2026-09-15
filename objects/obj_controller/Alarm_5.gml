@@ -2,29 +2,19 @@
 // TODO refactor
 
 try {
-    var recruit_count = 0;
-    var random_marine, marine_position;
-    var eq1 = 1, eq2 = 1, eq3 = 1, t = 0, r = 0;
-    var marine_company = 0;
-    var warn = "", w5 = 0;
-    var g1 = 0, g2 = 0;
-    var onceh = 0, stahp = 0;
-    var disc = 0, droll = 0;
-    var rund = 0;
+    var stahp = 0;
+    var disc = 0;
+    var droll = 0;
     var spikky = 0;
-    var roll = 0;
-    var novice_type = "";
-    var unit;
 
     var times = max(1, round(turn / 150));
     if ((known[eFACTION.CHAOS] == 2) && (faction_defeated[eFACTION.CHAOS] == 0)) {
         times += 1;
     }
-    var xx3, yy3, plani, _star;
-    xx3 = irandom(room_width) + 1;
-    yy3 = irandom(room_height) + 1;
-    _star = instance_nearest(xx3, yy3, obj_star);
-    plani = floor(random(_star.planets)) + 1;
+    var xx3 = irandom(room_width) + 1;
+    var yy3 = irandom(room_height) + 1;
+    var _star = instance_nearest(xx3, yy3, obj_star);
+    var plani = floor(random(_star.planets)) + 1;
 
     // ** Chaos influence / corruption **
     if ((faction_gender[eFACTION.CHAOS] == 1) && (faction_defeated[eFACTION.CHAOS] == 0) && (turn >= chaos_turn)) {
@@ -85,20 +75,19 @@ try {
         }
     }
 
-    var recruits_finished = 0, recruit_first = "";
-
+    var recruits_finished = 0;
+    var recruit_first = "";
     var total_recruits = 0;
-    var i = 0;
-    while (i < array_length(recruit_name)) {
+    for (var i = array_length(recruit_name) - 1; i >= 0; i--) {
         if (recruit_name[i] == "") {
-            i++;
             continue;
         }
+        var _recruit_role = obj_ini.player_role_data[eROLE.SCOUT];
         if (recruit_distance[i] <= 0) {
             recruit_training[i] -= 1;
         }
         if (recruit_training[i] <= 0) {
-            scr_add_man(obj_ini.role[100][12], 10, recruit_exp[i], recruit_name[i], recruit_corruption[i], false, "default", recruit_data[i]);
+            scr_add_man(_recruit_role.role, 10, recruit_exp[i], recruit_name[i], recruit_corruption[i], false, "default", recruit_data[i]);
             if (recruit_first == "") {
                 recruit_first = recruit_name[i];
             }
@@ -113,15 +102,14 @@ try {
         } else {
             total_recruits++;
         }
-        i++;
     }
     with (obj_ini) {
         scr_company_order(10);
     }
     if (recruits_finished == 1) {
-        scr_alert("green", "recruitment", $"{obj_ini.role[100][12]} {recruit_first} has joined X Company.", 0, 0);
+        scr_alert("green", "recruitment", $"{_recruit_role.role} {recruit_first} has joined X Company.", 0, 0);
     } else if (recruits_finished > 1) {
-        scr_alert("green", "recruitment", $"{recruits_finished}x {obj_ini.role[100][12]} have joined X Company.", 0, 0);
+        scr_alert("green", "recruitment", $"{recruits_finished}x {_recruit_role.role} have joined X Company.", 0, 0);
     }
 
     recruits = total_recruits;
@@ -166,14 +154,15 @@ try {
     if ((gene_tithe == 0) && (faction_status[eFACTION.IMPERIUM] != "War")) {
         gene_tithe = 24;
 
-        var expected, txt = "", mech_mad = false;
+        var txt = "";
+        var mech_mad = false;
         var onceh = 0;
-        expected = max(1, round(obj_controller.gene_seed / 20));
-        if (obj_controller.faction_status[eFACTION.MECHANICUS] == "War") {
+        var expected = max(1, round(gene_seed / 20));
+        if (faction_status[eFACTION.MECHANICUS] == "War") {
             mech_mad = true;
         }
 
-        if ((obj_controller.gene_seed <= 0) || (mech_mad == true)) {
+        if ((gene_seed <= 0) || (mech_mad == true)) {
             onceh = 2;
             gene_iou += 1;
             loyalty -= 2;
@@ -181,19 +170,19 @@ try {
             txt = "No Gene-Seed for Adeptus Mechanicus tithe.  High Lords of Terra IOU increased to " + string(gene_iou) + ".";
         }
         if (mech_mad == false) {
-            if ((obj_controller.gene_seed > 0) && (und_gene_vaults == 0) && (onceh == 0)) {
-                obj_controller.gene_seed -= expected;
+            if ((gene_seed > 0) && (und_gene_vaults == 0) && (onceh == 0)) {
+                gene_seed -= expected;
                 onceh = 1;
-                if ((obj_controller.gene_seed >= gene_iou) && (gene_iou > 0)) {
+                if ((gene_seed >= gene_iou) && (gene_iou > 0)) {
                     expected += gene_iou;
-                    obj_controller.gene_seed -= gene_iou;
+                    gene_seed -= gene_iou;
                     gene_iou = 0;
                     onceh = 3;
                 }
                 for (var i = 0; i < 50; i++) {
-                    if ((obj_controller.gene_seed < gene_iou) && (obj_controller.gene_seed > 0) && (gene_iou > 0)) {
+                    if ((gene_seed < gene_iou) && (gene_seed > 0) && (gene_iou > 0)) {
                         expected += 1;
-                        obj_controller.gene_seed -= 1;
+                        gene_seed -= 1;
                         gene_iou -= 1;
                         if (gene_iou == 0) {
                             onceh = 3;
@@ -214,14 +203,14 @@ try {
                 }
             }
 
-            if ((obj_controller.gene_seed > 0) && (und_gene_vaults > 0) && (onceh == 0)) {
+            if ((gene_seed > 0) && (und_gene_vaults > 0) && (onceh == 0)) {
                 expected = 1;
-                obj_controller.gene_seed -= expected;
+                gene_seed -= expected;
                 onceh = 1;
 
-                if ((obj_controller.gene_seed < gene_iou) && (obj_controller.gene_seed > 0) && (gene_iou > 0)) {
+                if ((gene_seed < gene_iou) && (gene_seed > 0) && (gene_iou > 0)) {
                     expected += 1;
-                    obj_controller.gene_seed -= 1;
+                    gene_seed -= 1;
                     gene_iou -= 1;
                     if (gene_iou == 0) {
                         onceh = 3;
@@ -264,7 +253,7 @@ try {
             droll = floor(random(100)) + 1;
 
             // Inquisition takes notice
-            if ((droll <= disc) && (obj_controller.known[eFACTION.INQUISITION] != 0)) {
+            if ((droll <= disc) && (known[eFACTION.INQUISITION] != 0)) {
                 var disp_change = -3;
                 if (gene_sold >= 100) {
                     disp_change = -5;
@@ -293,33 +282,38 @@ try {
             droll = floor(random(100)) + 1;
 
             // Inquisition takes notice
-            if ((droll <= disc) && (obj_controller.known[eFACTION.INQUISITION] != 0)) {
+            if ((droll <= disc) && (known[eFACTION.INQUISITION] != 0)) {
                 gene_xeno = 99999;
                 alarm[8] = 1;
             }
         }
     }
-    var p = 0, penitorium = 0, unit;
+    var p = 0;
     for (var c = 0; c < 11; c++) {
-        for (var e = 0; e < array_length(obj_ini.god[c]); e++) {
-            if (obj_ini.god[c][e] == 10) {
-                unit = fetch_unit([c, e]);
-                p += 1;
-                penit_co[p] = c;
-                penit_id[p] = e;
-                penitorium += 1;
-                unit.alter_loyalty(-1);
-                if ((unit.corruption < 90) && (unit.corruption > 0)) {
-                    var heresy_old = 0, heresy_new = 0;
-                    heresy_old = round((unit.corruption * unit.corruption) / 50) - 0.5;
-                    heresy_new = (heresy_old * 50) / unit.corruption;
-                    unit.corruption = max(0, heresy_new);
-                }
+        for (var e = 0; e < array_length(obj_ini.TTRPG[c]); e++) {
+            var _unit = fetch_unit([c, e]);
+            if (!is_struct(_unit)) {
+                continue;
+            }
+            if (_unit.god_status != 10) {
+                continue;
+            }
+
+            p += 1;
+            penit_co[p] = c;
+            penit_id[p] = e;
+            penitorium += 1;
+            _unit.alter_loyalty(-1);
+            if ((_unit.corruption < 90) && (_unit.corruption > 0)) {
+                var heresy_old = 0, heresy_new = 0;
+                heresy_old = round((_unit.corruption * _unit.corruption) / 50) - 0.5;
+                heresy_new = (heresy_old * 50) / _unit.corruption;
+                _unit.corruption = max(0, heresy_new);
             }
         }
     }
     // STC Bonuses
-    if (obj_controller.stc_ships >= 6) {
+    if (stc_ships >= 6) {
         //self healing ships logic
         for (var v = 0; v < array_length(obj_ini.ship_hp); v++) {
             if (obj_ini.ship[v] == "" || obj_ini.ship_hp[v] < 0) {
@@ -344,9 +338,9 @@ try {
             }
             with (_stars[i]) {
                 if (owner == eFACTION.IMPERIUM && planets) {
-                    if (scr_orbiting_fleet(eFACTION.IMPERIUM) != "none") {
+                    if (scr_orbiting_fleet(eFACTION.IMPERIUM) != noone) {
                         _star_found = true;
-                        _choice_star = self.id;
+                        _choice_star = id;
                         break;
                     }
                 }
@@ -386,7 +380,7 @@ try {
         if (penitent_end < 30000) {
             penitent_end += 41000;
         }
-        if ((penitent_current >= penitent_max) || (((obj_controller.millenium * 1000) + obj_controller.year) >= penitent_end)) {
+        if ((penitent_current >= penitent_max) || (obj_ini.sector_handler.game_year() >= penitent_end)) {
             penitent = 0;
             if ((known[eFACTION.INQUISITION] == 2) || (known[eFACTION.INQUISITION] >= 4)) {
                 scr_audience(4, "penitent_end", 0, "", 0, 0);
@@ -398,12 +392,8 @@ try {
             disposition[eFACTION.MECHANICUS] += 15;
             disposition[eFACTION.INQUISITION] += 20;
             disposition[eFACTION.ECCLESIARCHY] += 20;
-            var o = 0;
             if (scr_has_adv("Reverent Guardians")) {
-                o = 500;
-            }
-            if (o > 100) {
-                obj_controller.disposition[eFACTION.ECCLESIARCHY] += 10;
+                disposition[eFACTION.ECCLESIARCHY] += 10;
             }
             scr_event_log("", "Blood Debt payed off.  You may once more recruit Astartes.");
         }
@@ -430,12 +420,8 @@ try {
             disposition[eFACTION.MECHANICUS] += 15;
             disposition[eFACTION.INQUISITION] += 20;
             disposition[eFACTION.ECCLESIARCHY] += 20;
-            var o = 0;
             if (scr_has_adv("Reverent Guardians")) {
-                o = 500;
-            }
-            if (o > 100) {
-                obj_controller.disposition[eFACTION.ECCLESIARCHY] += 10;
+                disposition[eFACTION.ECCLESIARCHY] += 10;
             }
             scr_event_log("", "Penitent Crusade ends.  You may once more recruit Astartes.");
         }
@@ -491,13 +477,12 @@ try {
         scr_loyalty("Xeno Associate", "+");
     }
 
-    var loyalty_counter = 0;
-    loyalty_counter = scr_role_count(obj_ini.role[100][15], "");
+    var loyalty_counter = array_length(collect_role_group([SPECIALISTS_APOTHECARIES,false, true]));
     if (loyalty_counter == 0) {
         scr_loyalty("Lack of Apothecary", "+");
     }
 
-    loyalty_counter = scr_role_count(obj_ini.role[100][14], "");
+    loyalty_counter = array_length(collect_role_group([SPECIALISTS_CHAPLAINS,false, true]));
     if (loyalty_counter == 0) {
         scr_loyalty("Undevout", "+");
     }
@@ -527,7 +512,7 @@ try {
 
     for (var i = 1; i <= 10; i++) {
         if ((turns_ignored[i] > 0) && (turns_ignored[i] < 500)) {
-            turns_ignored[i] -= 1;
+            turns_ignored[i]--;
         }
     }
     if ((known[eFACTION.ELDAR] >= 2) && (faction_gender[6] == 2) && (turn % 10 == 0)) {
@@ -541,7 +526,7 @@ try {
 
     // ** Random events here **
     if ((hurssy_time > 0) && (hurssy > 0)) {
-        hurssy_time -= 1;
+        hurssy_time--;
     }
     if ((hurssy_time == 0) && (hurssy > 0)) {
         hurssy_time = -1;
@@ -549,7 +534,7 @@ try {
     }
     with (obj_p_fleet) {
         if ((hurssy_time > 0) && (hurssy > 0)) {
-            hurssy_time -= 1;
+            hurssy_time--;
         }
         if ((hurssy_time == 0) && (hurssy > 0)) {
             hurssy_time = -1;
@@ -558,28 +543,28 @@ try {
     }
     with (obj_star) {
         if ((p_hurssy_time[1] > 0) && (p_hurssy[1] > 0)) {
-            p_hurssy_time[1] -= 1;
+            p_hurssy_time[1]--;
         }
         if ((p_hurssy_time[1] == 0) && (p_hurssy[1] > 0)) {
             p_hurssy_time[1] = -1;
             p_hurssy[1] = 0;
         }
         if ((p_hurssy_time[2] > 0) && (p_hurssy[2] > 0)) {
-            p_hurssy_time[2] -= 1;
+            p_hurssy_time[2]--;
         }
         if ((p_hurssy_time[2] == 0) && (p_hurssy[2] > 0)) {
             p_hurssy_time[2] = -1;
             p_hurssy[2] = 0;
         }
         if ((p_hurssy_time[3] > 0) && (p_hurssy[3] > 0)) {
-            p_hurssy_time[3] -= 1;
+            p_hurssy_time[3]--;
         }
         if ((p_hurssy_time[3] == 0) && (p_hurssy[3] > 0)) {
             p_hurssy_time[3] = -1;
             p_hurssy[3] = 0;
         }
         if ((p_hurssy_time[4] > 0) && (p_hurssy[4] > 0)) {
-            p_hurssy_time[4] -= 1;
+            p_hurssy_time[4]--;
         }
         if ((p_hurssy_time[4] == 0) && (p_hurssy[4] > 0)) {
             p_hurssy_time[4] = -1;
@@ -588,20 +573,20 @@ try {
     }
 
     if (turn == 2) {
-        if ((obj_ini.master_name == "Zakis Randi") || (global.chapter_name == "Knights Inductor") && (obj_controller.faction_status[eFACTION.IMPERIUM] != "War")) {
+        if ((obj_ini.master_name == "Zakis Randi") || (global.chapter_name == "Knights Inductor") && (faction_status[eFACTION.IMPERIUM] != "War")) {
             alarm[8] = 1;
         }
     }
     // ** Player-set events **
     if ((fest_scheduled > 0) && (fest_repeats > 0)) {
-        var lock = "", cm_present = false;
-        fest_repeats -= 1;
-        lock = scr_master_loc();
+        var cm_present = false;
+        fest_repeats--;
+        var _cm = chapter_master.get_struct();
 
-        if ((fest_sid > 0) && (obj_ini.ship[fest_sid] == lock)) {
+        if (fest_sid != -1 & fest_sid == _cm.ship_location) {
             cm_present = true;
         }
-        if ((fest_wid > 0) && (string(fest_star) + "." + string(fest_wid) == lock)) {
+        if (fest_wid > 0 && _cm.is_at_location(fest_star, fest_wid)) {
             cm_present = true;
         }
 
@@ -638,21 +623,6 @@ try {
             }
         }
     }
-
-    // ** Income **
-    // if (income_controlled_planets>0){
-
-    //     var tithe_string = income_controlled_planets==1? $"-{income_tribute} Requisition granted by tithes from 1 planet.": $"-{income_tribute} Requisition granted by tithes from {income_controlled_planets} planets.";
-    //     scr_alert("yellow", "planet_tithe", tithe_string);
-    //     instance_activate_object(obj_p_fleet);
-
-    //     with(obj_star){
-    //         if (x<-10000){
-    //             x+=20000;
-    //             y+=20000;
-    //         }
-    //     }
-    // }
 
     //research and forge related actions
 

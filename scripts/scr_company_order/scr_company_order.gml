@@ -16,16 +16,48 @@ function sort_all_companies_to_map(map) {
     }
 }
 
+function company_length(company) {
+    return array_length(obj_ini.TTRPG[company]);
+}
+
+function normalise_marine_numbers(company, start_index, length) {
+    for (var l = start_index; l < length; l++) {
+        obj_ini.TTRPG[company][l].marine_number = l;
+    }
+}
+
+function tally_marines() {
+    obj_controller.command = 0;
+    obj_controller.marines = 0;
+    for (var co = 0; co <= obj_ini.companies; co++) {
+        var _len = company_length(co);
+        for (var i = _len - 1; i >= 0; i--) {
+            var _unit = fetch_unit([co, i]);
+            if (!is_struct(_unit)) {
+                array_delete(obj_ini.TTRPG[co], i, 1);
+                _len--;
+                normalise_marine_numbers(co, i, _len);
+                continue;
+            }
+            if (_unit.base_group != "astartes") {
+                continue;
+            }
+            if (!_unit.IsSpecialist()) {
+                obj_controller.marines++;
+            } else {
+                obj_controller.command++;
+            }
+        }
+    }
+}
+
 function scr_company_order(company) {
     try {
         // company : company number
         // This sorts and crunches the marine variables for the company
         var co = company;
 
-        var i = -1;
-
         var _empty_squads = [];
-        var _squadless = {};
 
         var _roles = active_roles();
 
@@ -36,9 +68,9 @@ function scr_company_order(company) {
         // find units not in a _squad
 
         //at this point check that all squads have the right types and numbers of units in them
-        var _squad, wanted_roles;
+        var wanted_roles;
         var _squad_ids = get_squad_ids();
-        for (i = 0; i < array_length(_squad_ids); i++) {
+        for (var i = 0; i < array_length(_squad_ids); i++) {
             var _squad = fetch_squad(_squad_ids[i]);
             if (_squad.base_company != co) {
                 if (!bool(array_length(_squad.members))) {
@@ -69,7 +101,7 @@ function scr_company_order(company) {
             }
         }
 
-        var _squadless = _squadless_index.turn_to_UnitGroup();
+        _squadless = _squadless_index.turn_to_UnitGroup();
 
         if (_squadless.number() > 3) {
             var _squad_index = _company_marines.index_squads();
@@ -90,115 +122,54 @@ function scr_company_order(company) {
 
             _squadless = _squadless.get_from({group: SPECIALISTS_SQUAD_LEADERS, squadless: true});
 
-            _squadless
-                .for_each(function(loop_unit) {
-                    var _sgts = role_groups(SPECIALISTS_SQUAD_LEADERS);
-                    var _role_h_len = array_length(loop_unit.role_history);
-                    for (var i = _role_h_len - 1; i >= 0; i--) {
-                        var _role = loop_unit.role_history[i][0];
-                        if (!array_contains(_sgts, _role)) {
-                            loop_unit.update_role(_role);
-                            break;
-                        }
+            _squadless.for_each(function(loop_unit) {
+                var _sgts = role_groups(SPECIALISTS_SQUAD_LEADERS);
+                var _role_h_len = array_length(loop_unit.role_history);
+                for (var i = _role_h_len - 1; i >= 0; i--) {
+                    var _role = loop_unit.role_history[i][0];
+                    if (!array_contains(_sgts, _role)) {
+                        loop_unit.update_role(_role);
+                        break;
                     }
-                });
+                }
+            });
         }
 
         _company_marines.order_by_rank();
 
-        var _squads = _company_marines.count_squads("all", true);
+        TTRPG[co] = _company_marines.units;
 
-        for (var i = 0; i < array_length(_squads); i++) {
-            _squad = fetch_squad(_squads[i]);
-            _squad.members = [];
+        for (var i = 0; i < array_length(TTRPG[co]); i++) {
+            TTRPG[co][i].marine_number = i;
         }
-
-        var _temps = [];
-        for (i = 0; i < array_length(_company_marines.units); i++) {
-            var _unit = _company_marines.units[i];
-            array_push(_temps, {unit: _unit, race: _unit.race(), name: _unit.name(), role: _unit.role(), wep1: _unit.weapon_one(true), wep2: _unit.weapon_two(true), armour: _unit.armour(true), gear: _unit.gear(true), mobi: _unit.mobility_item(true), age: _unit.age(), spe: _unit.specials(), god: _unit.god_status()});
-        }
-
-        //position 2 in role order
-        /*if (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-	i=0;repeat(300){i+=1;
-	    if (role[co][i]=_roles[Roles.CHAPLAIN]){v+=1;
-	        temp_marine_variables(co, i ,v);
-	    }
-	}*/
-
-        for (i = 0; i < array_length(_temps); i++) {
-            var _unit = _temps[i];
-            var _struc = _unit.unit;
-            TTRPG[co][i] = _struc;
-            race[co][i] = _unit.race;
-            name[co][i] = _unit.name;
-            role[co][i] = _unit.role;
-            wep1[co][i] = _unit.wep1;
-            wep2[co][i] = _unit.wep2;
-            armour[co][i] = _unit.armour;
-            gear[co][i] = _unit.gear;
-            mobi[co][i] = _unit.mobi;
-            age[co][i] = _unit.age;
-            spe[co][i] = _unit.spe;
-            god[co][i] = _unit.god;
-            if (_struc.marine_number != i) {
-                if (TTRPG[_struc.company][_struc.marine_number].uid == _struc.uid) {
-                    TTRPG[_struc.company][_struc.marine_number] = new TTRPG_stats("chapter", _struc.company, _struc.marine_number, "blank");
-                    scr_wipe_unit(_struc.company, _struc.marine_number);
-                }
-            }
-            _struc.company = co;
-            _struc.marine_number = i;
-            if (_struc.squad != "none") {
-                var _squad = _struc.get_squad();
-                array_push(_squad.members, [co, i]);
-            }
-            _struc.movement_after_math(co, i, false);
-        }
-        /*	i=0;repeat(300){i+=1;
-	    if (role[co][i]="Death Company"){
-	        if (string_count("Dreadnought",armour[co][i])>0){v+=1;
-	            temp_marine_variables(co, i ,v);
-	        }
-	    }
-	}
-
-	i=0;repeat(300){i+=1;
-	    if (role[co][i]="Death Company"){
-	        if (string_count("Dreadnought",armour[co][i])=0) and (string_count("Terminator",armour[co][i])=0) and (armour[co][i]!="Tartaros"){v+=1;
-	            temp_marine_variables(co, i ,v);
-	        }
-	    }
-	}*/
     } catch (_exception) {
         ERROR_HANDLER.handle_exception(_exception);
     }
 }
 
 function role_hierarchy() {
-    var _roles = obj_ini.role[100];
+    var _roles = active_roles();
     var hierarchy = [
         _roles[eROLE.CHAPTERMASTER],
-        "Forge Master",
-        "Master of Sanctity",
-        "Master of the Apothecarion",
-        string("Chief {0}", _roles[eROLE.LIBRARIAN]),
+        _roles[eROLE.FORGEMASTER],
+        _roles[eROLE.MASTERCHAPLAIN],
+        _roles[eROLE.MASTERAPOTHECARY],
+        _roles[eROLE.CHIEFLIBRARIAN],
         _roles[eROLE.HONOURGUARD],
         _roles[eROLE.CAPTAIN],
         _roles[eROLE.CHAPLAIN],
-        string("{0} Aspirant", _roles[eROLE.CHAPLAIN]),
+        _roles[eROLE.CHAPLAINASPIRANT],
         "Death Company",
         _roles[eROLE.TECHMARINE],
-        string("{0} Aspirant", _roles[eROLE.TECHMARINE]),
+        _roles[eROLE.TECHMARINEASPIRANT],
         "Techpriest",
         _roles[eROLE.APOTHECARY],
-        string("{0} Aspirant", _roles[eROLE.APOTHECARY]),
+        _roles[eROLE.APOTHECARYASPIRANT],
         "Sister Hospitaler",
         _roles[eROLE.LIBRARIAN],
-        "Codiciery",
-        "Lexicanum",
-        string("{0} Aspirant", _roles[eROLE.LIBRARIAN]),
+        _roles[eROLE.CODICIERY],
+        _roles[eROLE.LEXICANUM],
+        _roles[eROLE.LIBRARIANASPIRANT],
         _roles[eROLE.ANCIENT],
         _roles[eROLE.CHAMPION],
         "Death Company",
@@ -210,14 +181,13 @@ function role_hierarchy() {
         _roles[eROLE.ASSAULT],
         _roles[eROLE.DEVASTATOR],
         _roles[eROLE.SCOUT],
-        $"Venerable {_roles[eROLE.DREADNOUGHT]}",
         _roles[eROLE.DREADNOUGHT],
         "Skitarii",
         "Crusader",
         "Ranger",
         "Sister of Battle",
         "Flash Git",
-        "Ork Sniper"
+        "Ork Sniper",
     ];
 
     return hierarchy;

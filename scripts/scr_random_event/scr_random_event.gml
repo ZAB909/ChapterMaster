@@ -70,7 +70,7 @@ function scr_random_event(execute_now) {
                     eEVENT.ROGUE_TRADER,
                     eEVENT.INQUISITION_MISSION,
                     eEVENT.INQUISITION_PLANET,
-                    eEVENT.MECHANICUS_MISSION
+                    eEVENT.MECHANICUS_MISSION,
                 ];
             } else if (player_luck == eLUCK.NEUTRAL) {
                 events = [
@@ -78,7 +78,7 @@ function scr_random_event(execute_now) {
                     eEVENT.FLEET_DELAY,
                     eEVENT.HARLEQUINS,
                     eEVENT.SUCCESSION_WAR,
-                    eEVENT.RANDOM_FUN
+                    eEVENT.RANDOM_FUN,
                 ];
             } else if (player_luck == eLUCK.BAD) {
                 events = [
@@ -90,7 +90,7 @@ function scr_random_event(execute_now) {
                     eEVENT.SHIP_LOST, // Another save-scumming event, mainly due to rarity of player ships
                     //eEVENT.CHAOS_INVASION, // Spawns Chaos fleets way too close to player owned worlds with no warning and usually lots of big ships, save-scum galore and encourages fleet-based chapters // TODO LOW INVASION_EVENT // Make them spawn way farther with more warning, make them have a different goal or remove this event entirely
                     eEVENT.NECRON_AWAKEN, // Inquisitor check for this is inverted
-                    eEVENT.FALLEN // Event mission cannot be completed and never expires // TODO LOW FALLEN_EVENT // fix
+                    eEVENT.FALLEN, // Event mission cannot be completed and never expires // TODO LOW FALLEN_EVENT // fix
                 ];
             }
 
@@ -157,27 +157,27 @@ function scr_random_event(execute_now) {
                         }
                         break;
                     case eEVENT.FLEET_DELAY:
-                        var has_moving_fleet = false;
+                        var _delayed_fleet_moving = false;
                         with (obj_p_fleet) {
                             if (action == "move") {
-                                has_moving_fleet = true;
+                                _delayed_fleet_moving = true;
                                 break;
                             }
                         }
-                        if (!has_moving_fleet) {
+                        if (!_delayed_fleet_moving) {
                             events_share[i] -= 1;
                             events_total -= 1;
                         }
                         break;
                     case eEVENT.SHIP_LOST:
-                        var has_moving_fleet = false;
+                        var _lost_fleet_moving = false;
                         with (obj_p_fleet) {
                             if (action == "move") {
-                                has_moving_fleet = true;
+                                _lost_fleet_moving = true;
                                 break;
                             }
                         }
-                        if (!has_moving_fleet) {
+                        if (!_lost_fleet_moving) {
                             events_share[i] -= 1;
                             events_total -= 1;
                         }
@@ -220,17 +220,17 @@ function scr_random_event(execute_now) {
         var own = choose(1, 1, 2);
 
         var star_id = scr_random_find(own, true, "", "");
-        if (star_id == undefined && own == 1) {
+        if (star_id == noone && own == 1) {
             // find the nearest star to a player fleet and user that one, dukecode did that
             // we could also try to find to find another star but this one is owned by the imperium and not the player, this code is doing that
             own = 2;
             star_id = scr_random_find(own, true, "", "");
         }
-        if (star_id == undefined && own == 2) {
+        if (star_id == noone && own == 2) {
             star_id = scr_random_find(0, true, "", ""); // try for litteraly any star
         }
 
-        if (star_id == undefined) {
+        if (star_id == noone) {
             LOGGER.error("RE: Space Hulk, couldn't find a star for the spacehulk");
             exit;
         } else {
@@ -265,14 +265,18 @@ function scr_random_event(execute_now) {
         }
     } else if (chosen_event == eEVENT.PROMOTION) {
         LOGGER.info("RE: Promotion");
-        var marine_and_company = scr_random_marine([obj_ini.role[100][8], obj_ini.role[100][12], obj_ini.role[100][9], obj_ini.role[100][10]], 0);
+        var marine_and_company = scr_random_marine([obj_ini.player_role_data[eROLE.TACTICAL].role, obj_ini.player_role_data[eROLE.SCOUT].role, obj_ini.player_role_data[eROLE.DEVASTATOR].role, obj_ini.player_role_data[eROLE.ASSAULT].role], 0);
         if (marine_and_company == "none") {
             LOGGER.error("RE: Promotion, couldn't pick a space marine");
             exit;
         }
         var marine = marine_and_company[1];
         var company = marine_and_company[0];
-        var _unit = obj_ini.TTRPG[company][marine];
+        var _unit = fetch_unit([company, marine]);
+        if (!is_struct(_unit)) {
+            LOGGER.error("RE: Promotion, couldn't pick a space marine");
+            exit;
+        }
         var role = _unit.role();
         var text = _unit.name_role();
         var company_text = scr_convert_company_to_string(company);
@@ -300,12 +304,12 @@ function scr_random_event(execute_now) {
         own = choose(1, 2);
         var star_id = scr_random_find(own, true, "", "");
 
-        if (star_id == undefined && own == 1) {
+        if (star_id == noone && own == 1) {
             own = 2;
             star_id = scr_random_find(own, true, "", "");
         }
 
-        if (star_id == undefined) {
+        if (star_id == noone) {
             LOGGER.error("RE: Sororitas Company, couldn't find a star for the company");
             exit;
         } else {
@@ -475,18 +479,11 @@ function scr_random_event(execute_now) {
             }
         }
 
-        array_push(star.p_feature[planet], new NewPlanetFeature(eP_FEATURES.SUCCESSION_WAR));
-        add_new_problem(planet, "succession", irandom(6) + 4, star);
-        star.dispo[planet] = -5000;
-
-        var text = string(star.name) + scr_roman(planet);
-        scr_popup("War of Succession", "The planetary governor of " + string(text) + " has died.  Several subordinates and other parties each claim to be the true heir and successor- war has erupted across the planet as a result.  Heresy thrives in chaos.", "succession", "");
-        var star_alert = instance_create(star.x + 16, star.y - 24, obj_star_event);
-        star_alert.image_alpha = 1;
-        star_alert.image_speed = 1;
-        star_alert.col = "red";
-        scr_event_log("red", "War of Succession on " + string(text));
-        _evented = true;
+        if (planet > 0 && instance_exists(star)) {
+            var _pdata = star.get_planet_data(planet);
+            _pdata.init_war_of_succession();
+            _evented = true;
+        }
     } else if (chosen_event == eEVENT.RANDOM_FUN) {
         // Flavor text/events
         LOGGER.info("RE: Random");
@@ -561,16 +558,16 @@ function scr_random_event(execute_now) {
         }
 
         var star_id = scr_random_find(own, true, "", "");
-        if (star_id == undefined && own == 1) {
+        if (star_id == noone && own == 1) {
             own = 2;
             star_id = scr_random_find(own, true, "", "");
         }
-        if (star_id == undefined && own == 2) {
+        if (star_id == noone && own == 2) {
             own = 0;
             star_id = scr_random_find(own, true, "", "");
         }
 
-        if (star_id == undefined) {
+        if (star_id == noone) {
             LOGGER.error("RE: Warp Storm, couldn't pick a star for the warp storm");
             exit;
         } else {
@@ -592,16 +589,16 @@ function scr_random_event(execute_now) {
         }
 
         var star_id = scr_random_find(own, true, "", "");
-        if (star_id == undefined && own == 1) {
+        if (star_id == noone && own == 1) {
             own = 2;
             star_id = scr_random_find(own, true, "", "");
         }
-        if (star_id == undefined && own == 2) {
+        if (star_id == noone && own == 2) {
             own = 3;
             star_id = scr_random_find(own, true, "", "");
         }
 
-        if (star_id == undefined) {
+        if (star_id == noone) {
             LOGGER.error("RE: Enemy Forces, couldn't find a star for the enemy");
             exit;
         } else {
@@ -693,7 +690,7 @@ function scr_random_event(execute_now) {
                         scr_loyalty("Mutant Gene-Seed", "+");
                         popup_default_close();
                     },
-                }
+                },
             ],
         };
 
@@ -708,18 +705,15 @@ function scr_random_event(execute_now) {
         add_event({e_id: "chaos_invasion", duration: 1});
 
         var psyker_intolerant = scr_has_disadv("Psyker Intolerant");
-        var has_chief_psyker = scr_role_count("Chief " + string(obj_ini.role[100][17]), "") >= 1;
-        var cm_is_psyker = false;
-        for (var i = 1; i < 100; i++) {
-            if (obj_ini.role[0][i] == obj_ini.role[100][eROLE.CHAPTERMASTER] && string_count("0", obj_ini.spe[0][i]) > 0) {
-                cm_is_psyker = true;
-                break;
-            }
-        }
+        var _head = get_department_head(eCHAPTER_DEPARTMENTS.LIB);
+        var _has_chief_psyker = is_struct(_head);
 
-        if ((!psyker_intolerant) && has_chief_psyker) {
-            scr_popup("The Maw of the Warp Yawns Wide", "Chief " + string(obj_ini.role[100][17]) + " " + string(obj_ini.name[0][5]) + " reports that the barrier between the realm of man and the Immaterium feels thin and tested.", "Warp", "");
-        } else if ((psyker_intolerant || !has_chief_psyker) && cm_is_psyker) {
+        var _cm = cm_obj().get_struct();
+        var _cm_is_psyker = string_count("0", _cm.specials) > 0;
+
+        if ((!psyker_intolerant) && _has_chief_psyker) {
+            scr_popup("The Maw of the Warp Yawns Wide", $"Chief {_head.name_role()} reports that the barrier between the realm of man and the Immaterium feels thin and tested.", "Warp", "");
+        } else if ((psyker_intolerant || !_has_chief_psyker) && _cm_is_psyker) {
             scr_popup("The Maw of the Warp Yawns Wide", "The barrier between the realm of man and the Immaterium feels thin and tested to you.  Dark forces are afoot.", "Warp", "");
         }
     } else if (chosen_event == eEVENT.NECRON_AWAKEN) {
@@ -760,25 +754,9 @@ function event_fallen() {
 
     var star = choose_array(stars);
     var planet = scr_get_planet_with_owner(star, eFACTION.IMPERIUM);
-    var eta = scr_mission_eta(star.x, star.y, 1);
 
-    if (planet > 0) {
-        LOGGER.info($"Fallen: found star {star.name} planet {planet} as candidate");
-
-        var assigned_problem = add_new_problem(planet, "fallen", eta, star);
-        LOGGER.info($"assigned_problem {assigned_problem}");
-
-        if (!assigned_problem) {
-            LOGGER.error("RE: Hunt the Fallen, coulnd't assign a problem to the planet");
-            return;
-        }
-
-        var text = "Sources indicate one of the Fallen may be upon " + string(star.name) + " " + string(scr_roman(planet)) + ".  We have " + string(eta) + " months to send out a strike team and scour the planet.  Any longer and any Fallen that might be there will have escaped.";
-        scr_popup("Hunt the Fallen", text, "fallen", "");
-        scr_event_log("", "Sources indicate one of the Fallen may be upon " + string(star.name) + " " + string(scr_roman(planet)) + ".  We have " + string(eta) + " months to investigate.");
-        var star_alert = instance_create(star.x + 16, star.y - 24, obj_star_event);
-        star_alert.image_alpha = 1;
-        star_alert.image_speed = 1;
-        star_alert.col = "purple";
+    if (planet > 0 && instance_exists(star)) {
+        var _p_data = star.get_planet_data(planet);
+        _p_data.init_fallen_marines();
     }
 }

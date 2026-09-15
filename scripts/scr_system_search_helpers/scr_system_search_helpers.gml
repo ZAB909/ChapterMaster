@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 function stars_with_help_requests() {
     var _stars = [];
 
@@ -47,7 +44,7 @@ function NSystemSearchHelpers() constructor {
         eFACTION.IMPERIUM,
         eFACTION.MECHANICUS,
         eFACTION.INQUISITION,
-        eFACTION.ECCLESIARCHY
+        eFACTION.ECCLESIARCHY,
     ];
 }
 
@@ -60,7 +57,7 @@ function fetch_faction_group(group = "imperium_default") {
                 eFACTION.IMPERIUM,
                 eFACTION.MECHANICUS,
                 eFACTION.INQUISITION,
-                eFACTION.ECCLESIARCHY
+                eFACTION.ECCLESIARCHY,
             ];
             if (obj_controller.faction_status[eFACTION.IMPERIUM] != "War") {
                 array_push(imperium, eFACTION.PLAYER);
@@ -74,8 +71,8 @@ function scr_star_has_planet_with_feature(star, feature) {
     return scr_get_planet_with_feature(star, feature) != -1;
 }
 
-function scr_planet_owned_by_group(planet_id, group, star = "none") {
-    if (star == "none") {
+function scr_planet_owned_by_group(planet_id, group, star = noone) {
+    if (star == noone) {
         return array_contains(group, p_owner[planet_id]);
     } else {
         var is_in_group = false;
@@ -122,7 +119,7 @@ function stars_with_faction_fleets(search_faction) {
             instance_destroy();
             continue;
         }
-        if (is_orbiting()) {
+        if (instance_exists(orbiting)) {
             if (struct_exists(_stars_with_fleets, orbiting.name)) {
                 array_push(_stars_with_fleets[$ orbiting.name], id);
             } else {
@@ -133,9 +130,9 @@ function stars_with_faction_fleets(search_faction) {
     return _stars_with_fleets;
 }
 
-function planets_without_type(type, star = "none") {
+function planets_without_type(type, star = noone) {
     var return_planets = [];
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 1; i <= planets; i++) {
             if (p_type[i] != type) {
                 array_push(return_planets, i);
@@ -172,10 +169,8 @@ function scr_get_stars(shuffled = false, ownership = [], types = []) {
     var _owner_sort = array_length(ownership);
     var _types_sort = array_length(types);
     with (obj_star) {
-        if (!_owner_sort && !_types_sort) {
-            var _add = true;
-        } else {
-            var _add = true;
+        var _add = true;
+        if (_owner_sort || _types_sort) {
             if (_owner_sort && !array_contains(ownership, owner)) {
                 _add = false;
             }
@@ -208,20 +203,20 @@ function planet_imperium_ground_total(planet_check) {
 /// @function find_star_by_name(search_name)
 /// @description Searches all `obj_star` instances and returns the one with a matching name.
 /// @param {String} search_name The name of the star to find.
-/// @returns {Id.Instance.obj_star | String} Returns the `obj_star` instance that matches `search_name`, or the string `"none"` if no matching star is found.
+/// @returns {Id.Instance.obj_star | noone} Returns the `obj_star` instance that matches `search_name`, or the 'noone' object reference if no matching star is found.
 function find_star_by_name(search_name) {
     if (!instance_exists(obj_star)) {
         ERROR_HANDLER.assert_popup("Not a single instance of obj_star exists!");
-        return "none";
+        return noone;
     }
 
     with (obj_star) {
         if (name == search_name) {
-            return self;
+            return id;
         }
     }
 
-    return "none";
+    return noone;
 }
 
 //use this to quickly make a loop through a stars planets in an unordered way
@@ -229,8 +224,9 @@ function find_star_by_name(search_name) {
 /// @description
 /// Returns an array of all planet indices in a random (unordered) order.
 ///
-/// @returns {Array}
+/// @returns {Array<Real>}
 /// A shuffled array containing all planet indices from 1 to `planets`.
+/// @self Asset.GMObject.obj_star
 function shuffled_planet_array() {
     var _planets = [];
     for (var i = 1; i <= planets; i++) {
@@ -240,34 +236,15 @@ function shuffled_planet_array() {
     return _planets;
 }
 
-/// @function distance_removed_star(origional_x, origional_y, [star_offset=choose(2,3)], [disclude_hulk=true], [disclude_elder=true], [disclude_deads=true], [warp_concious=true])
-/// @description
-/// Finds a star that is a certain distance away from the given coordinates, skipping over certain disallowed star types.
-///
-/// @param {Real} origional_x
-/// The x-coordinate to start searching from.
-///
-/// @param {Real} origional_y
-/// The y-coordinate to start searching from.
-///
-/// @param {Real} [star_offset=choose(2,3)]
-/// The number of nearest stars to skip before returning a result.
-///
-/// @param {Boolean} [disclude_hulk=true]
-/// Placeholder flag to potentially exclude hulk-type stars (not yet used).
-///
-/// @param {Boolean} [disclude_elder=true]
-/// If `true`, excludes stars owned by the `eFACTION.ELDAR` faction.
-///
-/// @param {Boolean} [disclude_deads=true]
-/// If `true`, excludes any stars detected as dead via `is_dead_star()`.
-///
-/// @param {Boolean} [warp_concious=true]
-/// Placeholder flag for future warp-lane aware selection logic (currently unused).
-///
-/// @returns {Instance}
-/// Returns the `obj_star` instance found after skipping the specified number of nearby stars,
-/// ignoring any that are disqualified by the exclusion conditions.
+/// @description Finds a star that is a certain distance away from the given coordinates, skipping over certain disallowed star types.
+/// @param {Real} origional_x The x-coordinate to start searching from.
+/// @param {Real} origional_y The y-coordinate to start searching from.
+/// @param {Real} star_offset The number of nearest stars to skip before returning a result.
+/// @param {Bool} disclude_hulk Placeholder flag to potentially exclude hulk-type stars (not yet used).
+/// @param {Bool} disclude_elder If `true`, excludes stars owned by the `eFACTION.ELDAR` faction.
+/// @param {Bool} disclude_deads If `true`, excludes any stars detected as dead via `is_dead_star()`.
+/// @param {Bool} warp_concious Placeholder flag for future warp-lane aware selection logic (currently unused).
+/// @returns {Instance} Returns the `obj_star` instance found after skipping the specified number of nearby stars, ignoring any that are disqualified by the exclusion conditions.
 function distance_removed_star(origional_x, origional_y, star_offset = choose(2, 3), disclude_hulk = true, disclude_elder = true, disclude_deads = true, warp_concious = true) {
     var from = instance_nearest(origional_x, origional_y, obj_star);
     var _deactivated = [];
@@ -295,7 +272,6 @@ function distance_removed_star(origional_x, origional_y, star_offset = choose(2,
             }
         }
     }
-    //from=instance_nearest(origional_x,origional_y,obj_star);
     for (var i = 0; i < array_length(_deactivated); i++) {
         instance_activate_object(_deactivated[i]);
     }
@@ -308,44 +284,44 @@ function distance_removed_star(origional_x, origional_y, star_offset = choose(2,
 }
 
 function nearest_star_proper(xx, yy) {
-    var cur_star;
+    var cur_star = noone;
     for (var i = 0; i < 100; i++) {
         cur_star = instance_nearest(xx, yy, obj_star);
         if (!cur_star.craftworld && !cur_star.space_hulk) {
             instance_activate_object(obj_star);
-            return cur_star.id;
+            return cur_star;
         }
-        instance_deactivate_object(cur_star.id);
+        instance_deactivate_object(cur_star);
     }
-    return "none";
+    return noone;
 }
 
-function nearest_star_with_ownership(xx, yy, ownership, start_star = "none", ignore_dead = true) {
-    var nearest = "none";
+function nearest_star_with_ownership(xx, yy, ownership, start_star = noone, ignore_dead = true) {
+    var nearest = noone;
     var _deactivated = [];
     var total_stars = instance_number(obj_star);
     var i = 0;
     if (!is_array(ownership)) {
         ownership = [ownership];
     }
-    while (nearest == "none" && i < total_stars) {
+    while (nearest == noone && i < total_stars) {
         i++;
         var cur_star = instance_nearest(xx, yy, obj_star);
         if (!instance_exists(cur_star)) {
             break;
         }
-        if (start_star != "none") {
-            if (start_star.id == cur_star.id || (ignore_dead && is_dead_star(cur_star))) {
-                array_push(_deactivated, cur_star.id);
-                instance_deactivate_object(cur_star.id);
+        if (start_star != noone) {
+            if (start_star == cur_star || (ignore_dead && is_dead_star(cur_star))) {
+                array_push(_deactivated, cur_star);
+                instance_deactivate_object(cur_star);
                 continue;
             }
         }
         if (array_contains(ownership, cur_star.owner)) {
-            nearest = cur_star.id;
+            nearest = cur_star;
         } else {
-            array_push(_deactivated, cur_star.id);
-            instance_deactivate_object(cur_star.id);
+            array_push(_deactivated, cur_star);
+            instance_deactivate_object(cur_star);
         }
     }
     for (i = 0; i < array_length(_deactivated); i++) {
@@ -354,10 +330,10 @@ function nearest_star_with_ownership(xx, yy, ownership, start_star = "none", ign
     return nearest;
 }
 
-function find_population_doners(doner_to = 0) {
+function find_population_doners(doner_to = noone) {
     var pop_doner_options = [];
     with (obj_star) {
-        if (obj_star.id == doner_to) {
+        if (id == doner_to) {
             continue;
         }
         for (var r = 1; r <= planets; r++) {
@@ -369,16 +345,8 @@ function find_population_doners(doner_to = 0) {
     return pop_doner_options;
 }
 
-function planet_numeral_name(planet, star = "none") {
-    if (star == "none") {
-        //LOGGER.debug($"{planet}, numeral name")
-        return $"{name} {int_to_roman(planet)}";
-    } else {
-        with (star) {
-            //LOGGER.debug($"{planet}, numeral name")
-            return $"{name} {int_to_roman(planet)}";
-        }
-    }
+function planet_numeral_name(planet, star) {
+    return $"{star.name} {int_to_roman(planet)}";
 }
 
 function new_star_event_marker(colour) {
@@ -400,11 +368,11 @@ function nearest_from_array(xx, yy, list) {
     return _nearest;
 }
 
-function is_dead_star(star = "none") {
+function is_dead_star(star = noone) {
     var dead_star = true;
-    if (star == "none") {
+    if (star == noone) {
         for (var i = 1; i <= planets; i++) {
-            if (p_type[i] != "dead") {
+            if (string_lower(p_type[i]) != "dead") {
                 dead_star = false;
                 break;
             }
@@ -426,34 +394,34 @@ function scr_create_space_hulk(xx, yy) {
 }
 
 function scr_faction_string_name(faction) {
-    name = "";
+    var _name = "";
     switch (faction) {
         case eFACTION.IMPERIUM:
-            name = "Imperium";
+            _name = "Imperium";
             break;
         case eFACTION.MECHANICUS:
-            name = "Mechanicus";
+            _name = "Mechanicus";
             break;
         case eFACTION.INQUISITION:
-            name = "Inquisition";
+            _name = "Inquisition";
             break;
         case eFACTION.ECCLESIARCHY:
-            name = "Ecclesiarchy";
+            _name = "Ecclesiarchy";
             break;
         case eFACTION.ELDAR:
-            name = "Eldar";
+            _name = "Eldar";
             break;
         case eFACTION.TAU:
-            name = "Tau";
+            _name = "Tau";
             break;
     }
-    return name;
+    return _name;
 }
 
 function meet_system_governors(system) {
     with (system) {
         for (var i = 1; i <= planets; i++) {
-            if ((p_first[i] <= 5) && (dispo[i] > -30) && (dispo[i] < 0)) {
+            if ((p_first[i] <= eFACTION.ECCLESIARCHY) && (dispo[i] > -30) && (dispo[i] < 0)) {
                 dispo[i] = min(obj_ini.imperium_disposition, obj_controller.disposition[2]) + irandom(8) - 4;
             }
         }
@@ -479,7 +447,7 @@ function scr_planet_image_numbers(p_type) {
         "",
         "Space Hulk",
         "",
-        "Shrine"
+        "Shrine",
     ];
     for (var i = 0; i < array_length(image_map); i++) {
         if (image_map[i] == p_type) {
@@ -488,15 +456,6 @@ function scr_planet_image_numbers(p_type) {
     }
     return 0;
 }
-
-//function scr_get_player_fleets() {
-//	var player_fleets = [];
-//	with(obj_p_fleet){
-//		array_push(player_fleets,id);
-//	}
-//	return player_fleets;
-
-//}
 
 /// @param {Id.Instance.obj_star} star
 /// @param {Enum.eFACTION} faction

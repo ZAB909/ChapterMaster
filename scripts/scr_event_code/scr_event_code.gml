@@ -52,11 +52,12 @@ function event_end_turn_action() {
                 var _star_name = _event.system;
                 var _event_star = find_star_by_name(_event.system);
                 var _planet = _event.planet;
-                if (_event_star != "none") {
+                if (_event_star != noone) {
                     _event_star.dispo[_planet] = -10; // Resets
                     var twix = $"Inquisition executes Chapter Serf in control of {planet_numeral_name(_planet, _event_star)} and installs a new Planetary Governor.";
                     if (_event_star.p_owner[_planet] == eFACTION.PLAYER) {
-                        _event_star.p_owner[_planet] = _event_star.p_first[_planet];
+                        _event_star.p_first[_planet] = eFACTION.IMPERIUM;
+                        _event_star.p_owner[_planet] = eFACTION.IMPERIUM;
                     }
                     scr_alert("", "", twix, 0, 0);
                     scr_event_log("", twix, _star_name);
@@ -89,20 +90,19 @@ function event_end_turn_action() {
             if (_event.e_id == "chaos_invasion") {
                 var xx = 0, yy = 0, flee = 0, dirr = 0;
                 var star_id = scr_random_find(1, true, "", "");
-                if (star_id != undefined) {
+                if (star_id != noone) {
                     scr_event_log("purple", $"Chaos Fleets exit the warp near the {star_id.name} system.", star_id.name);
                     for (var j = 0; j < 4; j++) {
                         dirr += irandom_range(50, 100);
                         xx = star_id.x + lengthdir_x(72, dirr);
                         yy = star_id.y + lengthdir_y(72, dirr);
-                        flee = instance_create(xx, yy, obj_en_fleet);
-                        flee.owner = eFACTION.CHAOS;
+                        flee = create_enemy_fleet(xx, yy, eFACTION.CHAOS);
                         flee.sprite_index = spr_fleet_chaos;
                         flee.image_index = 4;
                         flee.capital_number = choose(0, 1);
                         flee.frigate_number = choose(2, 3);
                         flee.escort_number = choose(4, 5, 6);
-                        flee.cargo_data.csm = true;
+                        flee.cargo_data.chaos = true;
                         obj_controller.chaos_fleets += 1;
                         flee.action_x = star_id.x;
                         flee.action_y = star_id.y;
@@ -121,19 +121,15 @@ function event_end_turn_action() {
                     if (owner == eFACTION.MECHANICUS) {
                         for (f = 1; f <= planets; f++) {
                             if ((p_type[f] == "Forge") && (p_owner[f] == eFACTION.MECHANICUS)) {
-                                array_push(active_forges, new PlanetData(f, self));
+                                array_push(active_forges, get_planet_data(f));
                             }
                         }
                     }
                 }
                 if (array_length(active_forges) > 0) {
                     var ship_spawn = active_forges[irandom(array_length(active_forges) - 1)];
-                    var _new_player_fleet = instance_create(ship_spawn.system.x, ship_spawn.system.y, obj_p_fleet);
-
-                    // Creates the ship
                     var last_ship = new_player_ship(new_ship_event, ship_spawn.system.name);
-
-                    add_ship_to_fleet(last_ship, _new_player_fleet);
+                    var _new_player_fleet = create_player_fleet(ship_spawn.system.x, ship_spawn.system.y, [last_ship]);
 
                     // show_message(string(obj_ini.ship_class[last_ship])+":"+string(obj_ini.ship[last_ship]));
 
@@ -162,38 +158,43 @@ function event_end_turn_action() {
                 var comp = _event.company;
                 var marine_num = _event.marine;
                 var _unit = fetch_unit([comp, marine_num]);
+                if (!is_struct(_unit)) {
+                    LOGGER.error($"fetch_unit returned non-struct for company {comp}, marine {marine_num}");
+                    continue;
+                }
                 var item = _event.crafted;
+                var _pop_data = {};
 
                 LOGGER.warning($"comp: {comp}, marine_num: {marine_num}");
 
-                var killy = 0, tixt = $"{obj_ini.role[100][16]} {marine_name} has finished his work- ";
+                var killy = 0, tixt = $"{obj_ini.player_role_data[eROLE.TECHMARINE].role} {marine_name} has finished his work- ";
 
                 if (item == "Icon") {
                     tixt += $"it is a {global.chapter_name} Icon wrought in metal, finely decorated.  Pride for his chapter seems to have overtaken him.  There are no corrections to be made and the item is placed where many may view it.";
                 }
                 if (item == "Statue") {
-                    tixt += "it is a small, finely crafted statue wrought in metal.  The " + string(obj_ini.role[100][16]) + " is scolded for the waste of material, but none daresay the quality of the piece.";
+                    tixt += "it is a small, finely crafted statue wrought in metal.  The " + string(obj_ini.player_role_data[eROLE.TECHMARINE].role) + " is scolded for the waste of material, but none daresay the quality of the piece.";
                 }
                 if (item == "Bike") {
                     scr_add_item("Bike", 1);
-                    tixt += "it is a finely crafted Bike, conforming mostly to STC standards.  The other " + string(obj_ini.role[100][16]) + " are surprised at the rapid pace of his work.";
+                    tixt += "it is a finely crafted Bike, conforming mostly to STC standards.  The other " + string(obj_ini.player_role_data[eROLE.TECHMARINE].role) + " are surprised at the rapid pace of his work.";
                 }
                 if (item == "Rhino") {
                     scr_add_vehicle("Rhino", 0, {}, "Storm Bolter", "Storm Bolter", "", "Artificer Hull", "Dozer Blades");
-                    tixt += "it is a finely crafted Rhino, conforming to STC standards.  The other " + string(obj_ini.role[100][16]) + " are surprised at the rapid pace of his work.";
+                    tixt += "it is a finely crafted Rhino, conforming to STC standards.  The other " + string(obj_ini.player_role_data[eROLE.TECHMARINE].role) + " are surprised at the rapid pace of his work.";
                 }
                 if (item == "Artifact") {
-                    scr_event_log("", string(obj_ini.role[100][16]) + " " + string(marine_name) + " constructs an Artifact.");
+                    scr_event_log("", string(obj_ini.player_role_data[eROLE.TECHMARINE].role) + " " + string(marine_name) + " constructs an Artifact.");
                     var _last_artifact = scr_add_artifact("random_nodemon", "", 0);
 
-                    tixt += $"some form of divine inspiration has seemed to have taken hold of him.  An artifact {obj_ini.artifact[_last_artifact]} has been crafted.";
+                    tixt += $"some form of divine inspiration has seemed to have taken hold of him.  An artifact {fetch_artifact(_last_artifact).get_type_name()} has been crafted.";
                 }
                 if (item == "baby") {
                     _unit.edit_corruption(choose(8, 12, 16, 20));
                     tixt += "some form of horrendous statue.  A weird amalgram of limbs and tentacles, the sheer atrocity of it is made worse by the tiny, baby-like form, the once natural shape of a human child twisted nearly beyond recognition.";
                 } else if (item == "robot") {
                     _unit.edit_corruption(choose(2, 4, 6, 8, 10));
-                    tixt += $"some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step. {_unit.name()} maintains that it has no AI, though the other " + string(obj_ini.role[100][16]) + " express skepticism.";
+                    tixt += $"some form of small, box-like robot.  It seems to teeter around haphazardly, nearly falling over with each step. {_unit.name()} maintains that it has no AI, though the other " + string(obj_ini.player_role_data[eROLE.TECHMARINE].role) + " express skepticism.";
                     _unit.add_trait("tech_heretic");
                 } else if (item == "demon") {
                     _unit.edit_corruption(choose(8, 12, 16, 20));
@@ -202,11 +203,11 @@ function event_end_turn_action() {
                 } else if (item == "fusion") {
                     //TODO if tech heretic chosen don't kill the dude
                     // _unit.corruption+=choose(70);
-                    tixt += $"some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find {marine_name} fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a " + string(obj_ini.role[100][16]) + ".";
+                    tixt += $"some kind of ill-mannered ascension.  One of your battle-brothers enters the armamentarium to find {marine_name} fused to a vehicle, his flesh twisted and submerged into the frame.  Mechendrites and weapons fire upon the marine without warning, a windy scream eminating from the abomination.  It takes several battle-brothers to take out what was once a " + string(obj_ini.player_role_data[eROLE.TECHMARINE].role) + ".";
 
                     // This is causing the problem
 
-                    scr_kill_unit(comp, marine_num);
+                    _unit.kill(false, false);
                     with (obj_ini) {
                         scr_company_order(0);
                     }
@@ -216,7 +217,8 @@ function event_end_turn_action() {
                         {
                             str1: "Execute the heretic",
                             choice_func: function() {
-                                scr_kill_unit(pop_data.company, pop_data.marine_number);
+                                var _unit = fetch_unit([pop_data.company, pop_data.marine_number]);
+                                _unit.kill(false, false);
                                 var company_to_order = pop_data.company;
                                 with (obj_ini) {
                                     scr_company_order(company_to_order);
@@ -233,16 +235,14 @@ function event_end_turn_action() {
                         {
                             str1: "I see no problem",
                             choice_func: popup_default_close,
-                        }
+                        },
                     ];
-                    var _pop_data = {
+                    _pop_data = {
                         options: options,
                         marine_number: marine_num,
                         company: comp,
                         marine_name: marine_name,
                     };
-                } else {
-                    _pop_data = "";
                 }
 
                 scr_popup("He Built It", tixt, "tech_build", _pop_data);
@@ -301,7 +301,7 @@ function strange_build_event() {
     var _search_params = {
         trait: [
             "crafter",
-            "tinkerer"
+            "tinkerer",
         ],
         trait_any: true,
     };
@@ -314,6 +314,9 @@ function strange_build_event() {
         var marine = marine_and_company[1];
         var text = "";
         var _unit = fetch_unit(marine_and_company);
+        if (!is_struct(_unit)) {
+            exit;
+        }
         var role = _unit.role();
         text = _unit.name_role();
         text += " is taken by a strange mood and starts building!";
@@ -358,7 +361,7 @@ function strange_build_event() {
         if (marine_is_planetside && heritical_item) {
             var _system = find_star_by_name(_unit.location_string);
             var _planet = _unit.planet_location;
-            if (_system != "none") {
+            if (_system != noone) {
                 with (_system) {
                     p_hurssy[_planet] += 6;
                     p_hurssy_time[_planet] = 2;
@@ -366,7 +369,7 @@ function strange_build_event() {
             }
         } else if (!marine_is_planetside && heritical_item) {
             var _fleet = find_ships_fleet(_unit.ship_location);
-            if (_fleet != "none") {
+            if (_fleet != noone) {
                 //the intended code for here was to add some sort of chaos event on the ship stashed up ready to fire in a few turns
             }
         }

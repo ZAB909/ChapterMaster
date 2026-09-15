@@ -1,10 +1,7 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function relationship_hostility_matrix(faction) {
     var _rela = "neutral";
     var _disp = disposition[faction];
     with (obj_controller) {
-        // if (diplomacy!=8){
         if (_disp >= 60) {
             _rela = "friendly";
         }
@@ -14,7 +11,6 @@ function relationship_hostility_matrix(faction) {
         if (_disp < 20) {
             _rela = "hostile";
         }
-        // }
         if (diplomacy == 6) {
             if (_disp >= 60) {
                 _rela = "friendly";
@@ -107,6 +103,26 @@ function add_diplomacy_option(option = {}) {
     array_push(obj_controller.diplo_option, _button);
 }
 
+/// @desc Opens the trade screen for the current diplomacy faction.
+/// @returns {undefined}
+function open_trade_screen() {
+    with (obj_controller) {
+        trading = 1;
+        scr_dialogue("open_trade");
+        cooldown = 8;
+        click2 = 1;
+        trade_attempt = new TradeAttempt(diplomacy);
+    }
+}
+
+/// @desc Leaves the artifact negotiation and cleans up the associated objects.
+/// @returns {undefined}
+function leave_artifact_negotiation() {
+    with (obj_ground_mission) {
+        instance_destroy();
+    }
+}
+
 function basic_diplomacy_screen() {
     var xx = camera_get_view_x(view_camera[0]);
     var yy = camera_get_view_y(view_camera[0]);
@@ -125,7 +141,6 @@ function basic_diplomacy_screen() {
                 yy += 60;
             }
 
-            var left, top, right, base, opt;
             option_selections = [];
             var diplo_pressed = -1;
             for (var slot = 0; slot < opts; slot++) {
@@ -142,29 +157,16 @@ function basic_diplomacy_screen() {
             if (diplo_pressed > -1) {
                 evaluate_chosen_diplomacy_option(diplo_pressed);
             }
-            yy = camera_get_view_y(view_camera[0]);
         }
         if ((menu == eMENU.DIPLOMACY) && (diplomacy == 10.1)) {
             scr_emmisary_diplomacy_routes();
         }
-        /*if (force_goodbye=1){
-            draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
-            draw_set_color(0);
-            draw_text(xx+857.5,yy+797,"Exit");
-            draw_set_alpha(0.2);
-            if (mouse_x>=xx+818) and (mouse_y>=yy+796) and (mouse_x<=xx+897) and (mouse_y<=yy+815) then draw_rectangle(xx+818,yy+796,xx+897,yy+815,0);
-            draw_set_alpha(1);
-        }*/
     }
 }
 
 function draw_character_diplomacy() {
     var _diplo_unit = character_diplomacy;
     if (_diplo_unit.allegiance == global.chapter_name) {
-        /*if (advi="flee") {
-            _diplomacy_faction_name="Master of the Fleet "+string(obj_ini.lord_admiral_name);
-        }*/
-        var _splash = "";
         var _specific_splash = 0;
         _diplomacy_faction_name = _diplo_unit.name_role();
         _diplo_unit.IsSpecialist(SPECIALISTS_HEADS);
@@ -180,26 +182,21 @@ function draw_character_diplomacy() {
             _specific_splash = struct_exists(_customs, "forge_master") ? _customs.forge_master : 5;
         }
         scr_image("advisor/splash", _specific_splash, 16, 43, 310, 828);
-        /* else if (advi="") {
-            _diplomacy_faction_name="First Sergeant "+string(recruiter_name); 
-        }*/
     }
 
     var _main_slate = diplo_buttons.main_slate;
     var _meet = diplo_buttons.meet_slate;
     var _cm_slate = diplo_buttons.cm_slate;
-    with (_meet) {
-        XX = 0;
-        YY = 520;
-        width = 520;
-    }
+    _meet.XX = 0;
+    _meet.YY = 520;
+    _meet.width = 520;
 
     _meet.inside_method = function() {
         var _diplo_unit = obj_controller.character_diplomacy;
-        if (!struct_exists(obj_controller, "diplo_image")) {
+        if (!variable_instance_exists(obj_controller, "diplo_image")) {
             obj_controller.diplo_image = _diplo_unit.draw_unit_image();
         }
-        obj_controller.diplo_image.draw(210, 520 - 271, true, 1, 1, 0, CM_GREEN_COLOR, 1);
+        obj_controller.diplo_image.draw(210, 249, true, 1, 1, 0, CM_GREEN_COLOR, 1);
         _diplo_unit.stat_display(false, {x1: 10, y1: 520, w: 569, h: 303}, true);
         draw_sprite(spr_holo_pad, 0, 210, 520);
     };
@@ -214,19 +211,16 @@ function draw_character_diplomacy() {
     draw_text_transformed(622, 104, $"{_diplo_unit.name_role()}", 0.6, 0.6, 0);
     draw_set_halign(fa_left);
 
-    with (_cm_slate) {
-        XX = _main_slate.XX + _main_slate.width;
-        YY = 520;
-    }
+    _cm_slate.XX = _main_slate.XX + _main_slate.width;
+    _cm_slate.YY = 520;
     _cm_slate.inside_method = function() {
         var _master = fetch_unit([0, 0]);
-
-        if (!struct_exists(obj_controller, "master_image")) {
+        if (!variable_instance_exists(obj_controller, "master_image")) {
             obj_controller.master_image = _master.draw_unit_image();
         }
-        obj_controller.master_image.draw(1108 + 200, 520 - 271, true, 1, 1, 0, CM_GREEN_COLOR, 1);
+        obj_controller.master_image.draw(1308, 249, true, 1, 1, 0, CM_GREEN_COLOR, 1);
         _master.stat_display(false, {x1: 1108, y1: 520, w: 569, h: 303}, true);
-        draw_sprite(spr_holo_pad, 0, 1108 + 200, 520);
+        draw_sprite(spr_holo_pad, 0, 1308, 520);
     };
     _cm_slate.draw_with_dimensions();
 
@@ -251,7 +245,7 @@ function evaluate_chosen_diplomacy_option(diplo_pressed) {
     }
 }
 
-function scr_diplomacy_hit(selection, new_path = undefined, complex_path = "none") {
+function scr_diplomacy_hit(selection, new_path = undefined, complex_path = undefined) {
     if (array_length(option_selections) > selection) {
         if (point_and_click(option_selections[selection])) {
             if (!is_method(complex_path)) {
@@ -284,20 +278,19 @@ function scr_emmisary_diplomacy_routes() {
     } else if (diplomacy_pathway == "Khorne_path") {
         scr_diplomacy_hit(0,, function() {
             //TODO central get cm choice_func
-            var chapter_master = obj_ini.TTRPG[0][0];
             cooldown = 8000;
             diplomacy_pathway = "sacrifice_lib";
             //grab a random librarian
             var lib = scr_random_marine(SPECIALISTS_LIBRARIANS, 0);
             if (lib != "none") {
-                var chapter_master = obj_ini.TTRPG[0][1];
-                var dead_lib = obj_ini.TTRPG[lib[0]][lib[1]];
+                var chapter_master = fetch_unit([0, 1]);
+                var dead_lib = fetch_unit([lib[0], lib[1]]);
                 pop_up = instance_create(0, 0, obj_popup);
                 pop_up.title = "Skull for the Skull Throne";
                 pop_up.text = $"You summon {dead_lib.name_role()} to your personal chambers. Darting from the shadows you deftly strike his head from his shoulders. With the flesh removed from his skull you place the skull upon a hastily erected shrine.";
                 pop_up.type = 98;
                 pop_up.image = "chaos";
-                kill_and_recover(lib[0], lib[1]);
+                dead_lib.kill();
                 chapter_master.add_trait("blood_for_blood");
                 chapter_master.edit_corruption(20);
             } else {
@@ -309,22 +302,19 @@ function scr_emmisary_diplomacy_routes() {
         scr_diplomacy_hit(1,, function() {
             cooldown = 8000;
             diplomacy_pathway = "sacrifice_champ";
-            var champ = scr_random_marine(obj_ini.role[100][7], 0);
+            var champ = scr_random_marine(obj_ini.player_role_data[eROLE.CHAMPION].role, 0);
             if (champ != "none") {
-                var chapter_master = obj_ini.TTRPG[0][1];
+                var chapter_master = fetch_unit([0, 1]);
                 chapter_master.add_trait("blood_for_blood");
                 chapter_master.edit_corruption(20);
-                var dead_champ = obj_ini.TTRPG[champ[0]][champ[1]];
+                var dead_champ = fetch_unit([champ[0], champ[1]]);
                 //TODO make this into a real dual with consequences
                 pop_up = instance_create(0, 0, obj_popup);
                 pop_up.title = "Skull for the Skull Throne";
                 pop_up.text = $"You summon {dead_champ.name_role()} to your personal chambers. Darting from the shadows towards {dead_champ.name()} who is a cunning warrior and reacts with precision to your attack, however eventually you prevail and strike him down. With the flesh removed from his skull you place it upon a hastily erected shrine.";
                 pop_up.type = 98;
                 pop_up.image = "chaos";
-                // obj_duel = instance_create(0,0,obj_duel);
-                // obj_duel.title = "Ambush Champion";
-                // pop.type="duel";
-                kill_and_recover(champ[0], champ[1]);
+                dead_champ.kill();
             } else {
                 diplomacy_pathway = "daemon_scorn";
             }

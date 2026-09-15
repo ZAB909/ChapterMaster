@@ -2,34 +2,22 @@ try {
     var orb = orbiting;
 
     if ((round(owner) != eFACTION.IMPERIUM) && (navy == 1)) {
-        owner = noone;
+        owner = 0;
     }
 
-    //TODO centralise orbiting logic
-    var _is_orbiting = is_orbiting();
-    if (orbiting != 0 && action == "" && owner != noone) {
-        var orbiting_found = _is_orbiting;
-        if (orbiting_found) {
-            orbiting_found = variable_instance_exists(orbiting, "present_fleet");
-            if (orbiting_found) {
-                orbiting.present_fleet[owner] += 1;
-            }
-        } else if (!orbiting_found) {
-            orbiting = instance_nearest(x, y, obj_star);
-            orbiting.present_fleet[owner]++;
-        }
+    if (action == "" && owner != 0) {
+        fleet_register_at_nearest_star(id);
     }
     var _khorne_cargo = fleet_has_cargo("warband");
     if (_khorne_cargo && owner == eFACTION.CHAOS) {
         khorne_fleet_cargo();
     }
 
-    if (_is_orbiting) {
+    if (instance_exists(orbiting)) {
         turns_static++;
         if (turns_static > 5 && owner == eFACTION.ORK) {
             if (!irandom(7)) {
                 ork_fleet_move();
-                _is_orbiting = false;
             }
         }
         if (instance_exists(obj_crusade)) {
@@ -44,19 +32,18 @@ try {
     }
 
     var dir = 0;
-    var ret = 0;
 
-    if (navy && action == "" && _is_orbiting) {
+    if (navy && action == "" && instance_exists(orbiting)) {
         navy_orbiting_planet_end_turn_action();
-    } else if (action == "" && _is_orbiting) {
+    } else if (action == "" && instance_exists(orbiting)) {
         var max_dis = 400;
 
         if ((orbiting.owner == eFACTION.PLAYER) && (obj_controller.faction_status[eFACTION.IMPERIUM] == "War") && (owner == eFACTION.IMPERIUM)) {
             for (var i = 1; i <= orbiting.planets; i++) {
-                if (orbiting.p_owner[i] == 1) {
+                if (orbiting.p_owner[i] == eFACTION.PLAYER) {
                     orbiting.p_pdf[i] -= capital_number * 50000;
                 }
-                if (orbiting.p_owner[i] == 1) {
+                if (orbiting.p_owner[i] == eFACTION.PLAYER) {
                     orbiting.p_pdf[i] -= frigate_number * 10000;
                 }
                 if (orbiting.p_pdf[i] < 0) {
@@ -65,13 +52,8 @@ try {
             }
         }
 
-        // 1355;
-
         if (instance_exists(obj_crusade) && (owner == eFACTION.ORK) && (orbiting.owner == eFACTION.ORK)) {
             // Ork crusade AI
-            var max_dis;
-            max_dis = 400;
-
             var fleet_owner = owner;
             with (obj_crusade) {
                 if (owner != fleet_owner) {
@@ -127,45 +109,6 @@ try {
         instance_activate_object(obj_crusade);
         instance_activate_object(obj_en_fleet);
 
-        /*if (action="") and (owner = eFACTION.IMPERIUM){// Defend nearby systems and return when done
-            
-            with(obj_star){
-                // 137 ; might want for it to defend under other circumstances
-                if (present_fleet[8]>0) and (owner<=5) and (x>2) and (y>2) then instance_create(x,y,obj_temp3);
-            }
-            if (instance_number(obj_temp3)=0) then ret=1;
-            if (instance_number(obj_temp3)>0){
-                var you,dis,mem;
-                you=instance_nearest(x,y,obj_temp3);
-                dis=point_distance(x,y,you.x,you.y);
-                
-                if (dis<300) and (image_index>=3){
-                    action_x=you.x;action_y=you.y;
-                    home_x=instance_nearest(x,y,obj_star).x;
-                    home_y=instance_nearest(x,y,obj_star).y;
-                    set_fleet_movement();with(obj_temp3){instance_destroy();}
-                    exit;
-                }
-                if (dis>=300) then ret=1;
-            }
-            
-            if (instance_exists(obj_crusade)){
-                var cru;cru=instance_nearest(x,y,obj_crusade);
-                if (cru.owner=self.owner) and (point_distance(x,y,cru.x,cru.y)<cru.radius) then ret=0;
-            }
-            
-            if (ret=1){
-                var cls;cls=instance_nearest(x,y,obj_star);
-                if ((cls.x!=home_x) or (cls.y!=home_y)) and (home_x+home_y>0){
-                    action_x=home_x;
-                    action_y=home_y;
-                    set_fleet_movement();
-                }
-            }
-    
-            with(obj_temp3){instance_destroy();}
-        }*/
-
         if (owner == eFACTION.INQUISITION) {
             var valid = true;
             if (instance_exists(target)) {
@@ -184,59 +127,44 @@ try {
                     scr_loyalty("Xeno Associate", "+");
                 }
 
-                if ((orbiting.p_owner[2] == 1) && (orbiting.p_heresy[2] >= 60)) {
+                if ((orbiting.p_owner[2] == eFACTION.PLAYER) && (orbiting.p_heresy[2] >= 60)) {
                     scr_loyalty("Heretic Homeworld", "+");
                 }
 
-                var whom = -1;
-                whom = inquisitor;
+                var whom = inquisitor;
                 var inquisitors = obj_controller.inquisitor;
                 var inquis_string = $"Inquisitor {whom > -1 ? inquisitors[whom] : inquisitors[0]}";
 
                 // INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ; INVESTIGATE DEAD HERE 137 ;
-                var cur_star, t, type, cha, dem, tem1, tem1_base, perc, popup;
-                t = 0;
-                type = 0;
-                cha = 0;
-                dem = 0;
-                tem1 = 0;
-                popup = 0;
-                perc = 0;
-                tem1_base = 0;
+                var t = 0;
+                var type = 0;
+                var cha = 0;
+                var dem = 0;
+                var tem1 = 0;
+                var popup = 0;
+                var perc = 0;
+                var tem1_base = 0;
 
-                cur_star = instance_nearest(x, y, obj_star);
+                var cur_star = instance_nearest(x, y, obj_star);
 
                 if (string_count("investigate", trade_goods) > 0) {
                     // Check for xenos or demon-equip items on those planets
                     //TODO update this to check weapon or artifact tags
-                    var e = 0, ia = -1, ca = 0;
-                    var _unit;
-                    repeat (4400) {
-                        if ((ca <= 10) && (ca >= 0)) {
-                            ia += 1;
-                            if (ia == 400) {
-                                ca += 1;
-                                ia = 1;
-                                if (ca == 11) {
-                                    ca = -5;
-                                }
+                    for (var ca = 0; ca <= obj_ini.companies; ca++) {
+                        var _len = company_length(ca);
+                        for (var ia = 0; ia < _len; ia++) {
+                            var _unit = fetch_unit([ca, ia]);
+                            if (!is_struct(_unit)) {
+                                continue;
                             }
-                            if ((ca >= 0) && (ca < 11)) {
-                                _unit = fetch_unit([ca, ia]);
-                                if ((_unit.location_string == cur_star.name) && (_unit.planet_location > 0)) {
-                                    if ((_unit.role() == "Ork Sniper") && (obj_ini.race[ca][ia] != 1)) {
-                                        tem1_base = 3;
-                                    }
-                                    if ((_unit.role() == "Flash Git") && (obj_ini.race[ca][ia] != 1)) {
-                                        tem1_base = 3;
-                                    }
-                                    if ((_unit.role() == "Ranger") && (obj_ini.race[ca][ia] != 1)) {
-                                        tem1_base = 3;
-                                    }
-                                    if (_unit.equipped_artifact_tag("daemon")) {
-                                        tem1_base += 3;
-                                        dem += 1;
-                                    }
+                            if ((_unit.location_string == cur_star.name) && (_unit.planet_location > 0)) {
+                                var _role = _unit.role();
+                                if ((_role == "Ork Sniper") || (_role == "Flash Git") || (_role == "Ranger")) {
+                                    tem1_base = 3;
+                                }
+                                if (_unit.equipped_artifact_tag("daemon")) {
+                                    tem1_base += 3;
+                                    dem += 1;
                                 }
                             }
                         }
@@ -257,11 +185,7 @@ try {
                     obj_controller.known[eFACTION.INQUISITION] = 4;
                 }
 
-                orbiting = instance_nearest(x, y, obj_star);
-
-                // 135;
                 if (obj_controller.loyalty_hidden <= 0) {
-                    // obj_controller.alarm[7]=1;global.defeat=2;
                     var moo = false;
                     if ((obj_controller.penitent == 1) && (moo == false)) {
                         obj_controller.alarm[8] = 1;
@@ -275,7 +199,6 @@ try {
                 exit_star = distance_removed_star(x, y, choose(2, 3, 4));
                 action_x = exit_star.x;
                 action_y = exit_star.y;
-                orbiting = exit_star;
                 set_fleet_movement();
                 trade_goods = "|DELETE|";
                 exit;
@@ -289,23 +212,6 @@ try {
                     obj_controller.known[eFACTION.TAU] = 1;
                 }
             }
-
-            /*if (image_index>=4){
-                with(obj_star){
-                    if (owner = eFACTION.TAU) and (present_fleets>0) and (tau_fleets=0){
-                        instance_create(x,y,obj_temp5);
-                    }
-                }
-                if (instance_exists(obj_temp5)){
-                    var wop;wop=instance_nearest(x,y,obj_temp5);
-                    if (wop!=0) and (point_distance(x,y,wop.x,wop.y)<300) and (wop.x>5) and (wop.y>5){
-                        target_x=wop.x;target_y=wop.y;
-                        home_x=x;home_y=y;
-                        set_fleet_movement();
-                    }
-                }
-                with(obj_temp5){instance_destroy();}
-            }*/
         }
 
         if (owner == eFACTION.TYRANIDS) {
@@ -344,12 +250,11 @@ try {
             }
 
             if (n) {
-                var xx, yy, good, plin, plin2;
-                xx = 0;
-                yy = 0;
-                good = 0;
-                plin = 0;
-                plin2 = 0;
+                var xx = 0;
+                var yy = 0;
+                var good = 0;
+                var plin = 0;
+                var plin2 = 0;
 
                 if (capital_number > 5) {
                     n = 5;
@@ -381,7 +286,7 @@ try {
                             }
 
                             var new_fleet;
-                            new_fleet = instance_create(x, y, obj_en_fleet);
+                            new_fleet = create_enemy_fleet(x, y, eFACTION.TYRANIDS);
                             new_fleet.capital_number = floor(capital_number * 0.4);
                             new_fleet.frigate_number = floor(frigate_number * 0.4);
                             new_fleet.escort_number = floor(escort_number * 0.4);
@@ -389,15 +294,8 @@ try {
                             capital_number -= new_fleet.capital_number;
                             frigate_number -= new_fleet.frigate_number;
                             escort_number -= new_fleet.escort_number;
-
-                            new_fleet.owner = eFACTION.TYRANIDS;
                             new_fleet.sprite_index = spr_fleet_tyranid;
                             new_fleet.image_index = 1;
-
-                            /*with(new_fleet){
-                                var ii;ii=0;ii+=capital_number;ii+=round((frigate_number/2));ii+=round((escort_number/4));
-                                if (ii<=1) then ii=1;image_index=ii;
-                            }*/
 
                             new_fleet.action_x = plin2.x;
                             new_fleet.action_y = plin2.y;
@@ -444,17 +342,13 @@ try {
 
         var dos = 0;
         dos = point_distance(x, y, action_x, action_y);
-        orbiting = dos / action_eta;
+        var _move_step = dos / action_eta;
         dir = point_direction(x, y, action_x, action_y);
 
-        x = x + lengthdir_x(orbiting, dir);
-        y = y + lengthdir_y(orbiting, dir);
+        x = x + lengthdir_x(_move_step, dir);
+        y = y + lengthdir_y(_move_step, dir);
 
         action_eta -= 1;
-
-        /*if (owner>5){
-            
-        }*/
 
         if ((action_eta == 2) && (owner == eFACTION.INQUISITION) && (inquisitor > -1)) {
             inquisitor_ship_approaches();
@@ -462,7 +356,7 @@ try {
             action = "";
             if (array_length(complex_route) > 0) {
                 var target_loc = find_star_by_name(complex_route[0]);
-                if (target_loc != "none") {
+                if (target_loc != noone) {
                     array_delete(complex_route, 0, 1);
                     action_x = target_loc.x;
                     action_y = target_loc.y;

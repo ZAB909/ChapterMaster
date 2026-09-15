@@ -3,23 +3,15 @@ capital_number = 0;
 frigate_number = 0;
 escort_number = 0;
 selected = 0;
-orbiting = 0;
+/// @type {Id.Instance.obj_star}
+orbiting = noone;
 warp_able = true;
 ii_check = choose(8, 9, 10, 11, 12);
-
-var wop = instance_nearest(x, y, obj_star);
-if (instance_exists(wop) && (y > 0) && (x > 0)) {
-    if (point_distance(x, y, wop.x, wop.y) <= 40) {
-        orbiting = wop;
-        wop.present_fleet[1] += 1;
-    }
-}
 
 point_breakdown = single_loc_point_data();
 image_xscale = 1.25;
 image_yscale = 1.25;
 
-var i = -1;
 capital = [];
 capital_num = [];
 capital_sel = [];
@@ -68,7 +60,8 @@ serialize = function() {
     var excluded_from_save = [
         "temp",
         "serialize",
-        "deserialize"
+        "deserialize",
+        "orbiting",
     ];
 
     copy_serializable_fields(object_fleet, save_data, excluded_from_save);
@@ -95,11 +88,7 @@ deserialize = function(save_data) {
         }
     }
 
-    if (save_data.orbiting != 0) {
-        var nearest_star = instance_nearest(x, y, obj_star);
-        set_player_fleet_image();
-        orbiting = nearest_star;
-    }
+    set_player_fleet_image();
 };
 
 #endregion

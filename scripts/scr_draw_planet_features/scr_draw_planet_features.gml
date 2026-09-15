@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 /// @param {Struct.NewPlanetFeature|Struct.PlayerForge} _feature
 function FeatureSelected(_feature, _system, _planet) constructor {
     feature = _feature;
@@ -11,13 +8,13 @@ function FeatureSelected(_feature, _system, _planet) constructor {
     destroy = false;
     exit_count = 0;
     enter_count = 18;
-    planet_data = new PlanetData(_planet, _system);
+    planet_data = _system.get_planet_data(_planet);
 
     if (feature.f_type == eP_FEATURES.FORGE) {
         var _worker_caps = [
             2,
             4,
-            8
+            8,
         ];
         worker_capacity = _worker_caps[feature.size - 1];
         techs = collect_role_group(SPECIALISTS_TECHS, obj_star_select.target.name);
@@ -38,7 +35,6 @@ function FeatureSelected(_feature, _system, _planet) constructor {
     draw_planet_features = function(xx, yy) {
         draw_set_halign(fa_center);
         draw_set_font(fnt_40k_14);
-        //draw_sprite(spr_planet_screen,0,xx,yy);
         if (exit_sequence) {
             xx -= 25 * exit_count;
             main_slate.draw(xx, yy, 1.38, 1.38);
@@ -57,18 +53,14 @@ function FeatureSelected(_feature, _system, _planet) constructor {
             main_slate.draw(xx, yy, 1.4, 1.4);
         }
         var area_width = main_slate.width;
-        var area_height = main_slate.height;
         var generic = false;
-        var title = "", body = "";
+        var title = "";
+        var body = "";
         var _button_tooltip = "";
-        //draw_glow_dot(xx+150, yy+150);
-        //rack_and_pinion(xx+230, yy+170);
-        var rectangle = [];
         draw_set_color(c_green);
         if (point_and_click(draw_unit_buttons([xx + 12, yy + 20], "<---", [1, 1], c_red))) {
             exit_sequence = true;
         }
-        draw_set_halign(fa_center);
         switch (feature.f_type) {
             case eP_FEATURES.FORGE:
                 draw_text_transformed(xx + (area_width / 2), yy + 10, "Chapter Forge", 2, 2, 0);
@@ -85,14 +77,14 @@ function FeatureSelected(_feature, _system, _planet) constructor {
                 //TODO move over to using the draw button object ot streamline this
                 var next_position = [
                     xx + 10,
-                    yy + 95
+                    yy + 95,
                 ];
                 if (feature.size < 3) {
                     var upgrade_cost = 2000 * feature.size;
                     var last_button = draw_unit_buttons(next_position, $"Upgrade Forge ({upgrade_cost} req)", [1, 1], c_red);
                     next_position = [
                         last_button[0],
-                        last_button[3]
+                        last_button[3],
                     ];
                     if (point_and_click(last_button) && obj_controller.requisition >= upgrade_cost) {
                         obj_controller.requisition -= upgrade_cost;
@@ -142,7 +134,7 @@ function FeatureSelected(_feature, _system, _planet) constructor {
             case eP_FEATURES.STC_FRAGMENT:
                 generic = true;
                 title = "STC Fragment";
-                body = $"Unload a {obj_ini.role[100][16]} and whatever entourage you deem necessary to recover the STC Fragment";
+                body = $"Unload a {obj_ini.player_role_data[eROLE.TECHMARINE].role} and whatever entourage you deem necessary to recover the STC Fragment";
                 break;
             case eP_FEATURES.GENE_STEALER_CULT:
                 generic = true;
@@ -164,13 +156,6 @@ function FeatureSelected(_feature, _system, _planet) constructor {
                 draw_text_transformed(xx + (area_width / 2), yy + 10, "Victory Shrine", 2, 2, 0);
                 draw_set_halign(fa_left);
                 draw_set_color(c_gray);
-                /*if (!feature.parade){
-					if (point_and_click(draw_unit_buttons([xx+10, yy+70], "Parade (500 req)",[1,1],c_red))){
-						obj_controller.requisition-=500;
-						feature.forge=1;
-						feature.forge_data = new PlayerForge();
-					}
-				}*/
                 break;
             case eP_FEATURES.MONASTERY:
                 draw_text_transformed(xx + (area_width / 2), yy + 10, feature.name, 2, 2, 0);
@@ -196,7 +181,7 @@ function FeatureSelected(_feature, _system, _planet) constructor {
                 generic = true;
                 var _planet = planet_data.planet;
                 var _star = obj_star_select.target;
-                var p_data = new PlanetData(_planet, _star);
+                var p_data = _star.get_planet_data(_planet);
                 var _recruit_world = p_data.get_features(eP_FEATURES.RECRUITING_WORLD)[0];
                 var _spare_apoth_points = p_data.get_local_apothecary_points();
                 title = "Marine Recruitment";

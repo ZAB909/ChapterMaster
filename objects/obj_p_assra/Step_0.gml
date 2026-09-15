@@ -93,8 +93,7 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
 
     if (board_cooldown == 0) {
         board_cooldown = 60;
-        var o, challenge, boarding_odds, boarding_advantage, boarding_disadvantage, gear_bonus, marine_bonus, outcome_roll, damage_roll, attack, arp, wep, ac, dr, co, i, hits, hurt, damaged_ship, bridge_damage;
-        o = firstest - 1;
+        var challenge, boarding_odds, boarding_advantage, boarding_disadvantage, gear_bonus, marine_bonus, outcome_roll, damage_roll, attack, arp, wep, ac, dr, co, i, hits, hurt, damaged_ship, bridge_damage;
         boarding_odds = 0;
         challenge = 0;
         outcome_roll = 0;
@@ -111,19 +110,14 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
         ac = 0;
         dr = 1;
 
-        for (var o = 0; o < array_length(origin.board_co); o++) {
+        for (var o = 0; o < array_length(occupants); o++) {
             if (!instance_exists(target)) {
                 exit;
             }
 
-            // show_message(origin);
-            // show_message(string(origin.board_co[1]));
-
-            co = origin.board_co[o];
-            i = origin.board_id[o];
             ac = 0;
             dr = 1;
-            unit = fetch_unit([co, i]);
+            unit = occupants[o];
             gear_bonus = 0;
             marine_bonus = 0;
             boarding_odds = 50;
@@ -136,13 +130,13 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
 
                 var _weapons = [
                     unit.get_weapon_one_data(),
-                    unit.get_weapon_two_data()
+                    unit.get_weapon_two_data(),
                 ];
                 if (!is_struct(_weapons[0]) && !is_struct(_weapons[1])) {
                     gear_bonus -= 10;
                 } else {
-                    for (var i = 0; i <= 1; i++) {
-                        var _weapon = _weapons[i];
+                    for (var j = 0; j <= 1; j++) {
+                        var _weapon = _weapons[j];
                         if (!is_struct(_weapon)) {
                             continue;
                         }
@@ -177,16 +171,16 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
                         boarding_disadvantage -= 5;
                     }
                 }
-                if ((target.owner == eFACTION.IMPERIUM) || ((target.owner == eFACTION.CHAOS) && (obj_fleet.csm_exp == 0))) {
+                if ((target.owner == eFACTION.IMPERIUM) || ((target.owner == eFACTION.CHAOS) && (obj_fleet.chaos_exp == 0))) {
                     boarding_disadvantage -= 0;
                 } // Cultists/Pirates/Humans
                 if ((target.owner == eFACTION.PLAYER) || (target.owner == eFACTION.ECCLESIARCHY) || (target.owner == eFACTION.ORK) || (target.owner == eFACTION.ELDAR) || (target.owner == eFACTION.NECRONS)) {
                     boarding_disadvantage -= 10;
                 }
-                if ((target.owner == eFACTION.CHAOS) && (obj_fleet.csm_exp == 1)) {
+                if ((target.owner == eFACTION.CHAOS) && (obj_fleet.chaos_exp == 1)) {
                     boarding_disadvantage -= 20;
                 } //       Veteran marines
-                if (((target.owner == eFACTION.CHAOS) && (obj_fleet.csm_exp == 2)) || (target.owner == eFACTION.TYRANIDS)) {
+                if (((target.owner == eFACTION.CHAOS) && (obj_fleet.chaos_exp == 2)) || (target.owner == eFACTION.TYRANIDS)) {
                     boarding_disadvantage -= 30;
                 } // Daemons, veteran CSM, tyranids
 
@@ -200,7 +194,7 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
                         // Damaging
                         var to_bomb;
                         to_bomb = false;
-                        if ((plasma_bomb == true) && (obj_ini.gear[co][i] == "Plasma Bomb")) {
+                        if ((plasma_bomb == true) && (unit.gear() == "Plasma Bomb")) {
                             to_bomb = true;
                         }
                         if (choose(1, 2, 3, 4, 5) < 4) {
@@ -212,7 +206,7 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
                         } else if (to_bomb) {
                             target.hp -= 200;
                             damaged_ship = 2;
-                            obj_ini.gear[co][i] = "";
+                            unit.update_gear("", false, false);
                         }
                     }
 
@@ -230,10 +224,10 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
                             if ((target.owner == eFACTION.ECCLESIARCHY) || (target.owner == eFACTION.ORK) || (target.owner == eFACTION.ELDAR) || (target.owner == eFACTION.NECRONS)) {
                                 experience += 1;
                             }
-                            if ((target.owner == eFACTION.CHAOS) && (obj_fleet.csm_exp == 1)) {
+                            if ((target.owner == eFACTION.CHAOS) && (obj_fleet.chaos_exp == 1)) {
                                 experience += 2;
                             }
-                            if ((target.owner == eFACTION.CHAOS) && (obj_fleet.csm_exp == 2)) {
+                            if ((target.owner == eFACTION.CHAOS) && (obj_fleet.chaos_exp == 2)) {
                                 experience += 3;
                             }
                             if (target.owner == eFACTION.TYRANIDS) {
@@ -566,21 +560,14 @@ if ((boarding == true) && (board_cooldown >= 0) && instance_exists(target) && in
                             apothecary_had -= 1;
                         }
                     }
-
-                    // show_message(string(obj_ini.role[co][i])+" "+string(obj_ini.role[co][i])+" hit by "+string(hits)+"x "+string(wep)+", "+string(obj_ini.hp[co][i])+" HP remaining");
                 }
             }
-
-            // board_co[i]=0;board_id[i]=0;board_location[i]=0;board_raft[i]=0;
         }
 
         if (experience > 0) {
-            var o = 0, co = 0, i = 0;
             var new_exp, unit_exp, exp_roll;
-            for (var o = 0; o < array_length(origin.board_co); o++) {
-                co = origin.board_co[o];
-                i = origin.board_id[o];
-                unit = obj_ini.TTRPG[co][i];
+            for (var o = 0; o < array_length(occupants); o++) {
+                unit = occupants[o];
                 unit_exp = unit.experience;
                 exp_roll = irandom(150 + unit_exp) + 1;
                 if (exp_roll >= unit_exp) {

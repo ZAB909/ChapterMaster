@@ -10,6 +10,10 @@ function Table(data) constructor {
 
     row_key_draw = [];
 
+    localize_values = false;
+
+    localize_headings = false;
+
     halign = fa_center;
 
     colour = CM_GREEN_COLOR;
@@ -30,11 +34,16 @@ function Table(data) constructor {
         for (var i = 0; i < array_length(headings); i++) {
             var _col_width = 0;
             var _heading = headings[i];
+            var _localize_heading = localize_headings;
             if (is_string(_heading)) {
-                headings[i] = new ReactiveString(_heading, 0, 0, {scale_text: true});
+                var _heading_key = _heading;
+                headings[i] = new ReactiveString(_localize_heading ? localize(_heading_key) : _heading_key, 0, 0, {
+                    scale_text: true,
+                });
+                headings[i].loc_key = _heading_key;
             }
 
-            var _heading = headings[i];
+            _heading = headings[i];
 
             if (i < array_length(set_column_widths) && set_column_widths[i] > 0) {
                 array_push(column_widths, set_column_widths[i]);
@@ -47,7 +56,8 @@ function Table(data) constructor {
                 }
             }
 
-            _heading.update({max_width: column_widths[i], x1: x1 + w + (column_widths[i] / 2), y1: y1, halign: halign});
+            var _heading_text = struct_exists(_heading, "loc_key") && _localize_heading ? localize(_heading.loc_key) : _heading.text;
+            _heading.update({text: _heading_text, max_width: column_widths[i], x1: x1 + w + (column_widths[i] / 2), y1: y1, halign: halign});
 
             if (_heading.h > header_h) {
                 header_h = _heading.h;
@@ -58,14 +68,13 @@ function Table(data) constructor {
     };
 
     update(data);
-	
+
     static row_method = function(_row, _row_entered) {
         if (!_row_entered) {
             return;
         }
 
         if (struct_exists(_row, "hover")) {
-            //LOGGER.debug($"click : {struct_exists(_row,"click_left")}");
             _row.hover();
         }
 
@@ -92,7 +101,7 @@ function Table(data) constructor {
         draw_set_halign(halign);
         draw_set_valign(fa_top);
         draw_set_color(colour);
-        draw_set_font(font);
+        draw_set_font(cjk_font(font));
 
         row_h = max(row_h, string_height("a") + 1);
 
@@ -122,7 +131,11 @@ function Table(data) constructor {
             } else if (is_struct(_row)) {
                 for (var d = 0; d < array_length(row_key_draw) && d < _cols; d++) {
                     var _key = row_key_draw[d];
-                    var _scale_edits = calc_text_scale_confines(_row[$ _key], column_widths[d], 0);
+                    var _value = _row[$ _key];
+                    if (localize_values && is_string(_value)) {
+                        _value = localize(_value);
+                    }
+                    var _scale_edits = calc_text_scale_confines(_value, column_widths[d], 0);
                     var _scale = min(1, _scale_edits.scale);
                     var _text = _scale_edits.text;
                     draw_text_transformed(_col_draw_x + (column_widths[d] / 2), _row_level, _text, _scale, _scale, 0);

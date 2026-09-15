@@ -1,5 +1,4 @@
 function SpecialistPointHandler() constructor {
-    static chapter_spread = calculate_full_chapter_spread;
     forge_queue = [];
     techs = [];
     apoths = [];
@@ -60,10 +59,6 @@ function SpecialistPointHandler() constructor {
             tech_locations[i] = techs[i].marine_location();
         }
 
-        if (forge_master > -1 && forge_master < total_techs) {
-            obj_controller.master_of_forge = techs[forge_master];
-        }
-
         var apothecary_string = "AP Production#";
         apothecary_string += $"Apothecaries: {apothecary_points}#";
 
@@ -105,7 +100,7 @@ function SpecialistPointHandler() constructor {
             {
                 key: "small_vehicles",
                 label: "Small Vehicle",
-            }
+            },
         ];
 
         for (var i = 0; i < array_length(_v_maintenance); i++) {
@@ -134,12 +129,12 @@ function SpecialistPointHandler() constructor {
             new_tech_heretic_spawn();
 
             if (forge_master == -1) {
-                var _tech_units = scr_role_count(obj_ini.role[100][16], "", "units");
+                var _tech_units = scr_role_count(obj_ini.player_role_data[eROLE.TECHMARINE].role, "", "units");
                 var _count = array_length(_tech_units);
                 if (_count > 1) {
                     setup_new_forge_master_popup(techs);
                 } else if (_count == 1) {
-                    _tech_units[0].update_role("Forge Master");
+                    _tech_units[0].update_role(eROLE.FORGEMASTER);
                 }
             }
 
@@ -239,7 +234,7 @@ function SpecialistPointHandler() constructor {
                     var _new_pursuasion;
                     for (var i = 0; i < array_length(techs) && heretics_persuade_chances > 0; i++) {
                         _same_location = false;
-                        var _new_pursuasion = array_random_index(techs);
+                        _new_pursuasion = array_random_index(techs);
                         //if tech is also heretic skip
                         if (array_contains(heretics, _new_pursuasion)) {
                             continue;
@@ -291,7 +286,6 @@ function SpecialistPointHandler() constructor {
                                     _noticed_heresy = true;
                                     scr_event_log("purple", $"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the Armentarium ranks");
                                     scr_alert("purple", "Tech Heresy", $"{techs[forge_master].name_role()} Has noticed signs of tech heresy amoung the Armentarium ranks");
-                                    //pip=instance_create(0,0,obj_popup);
                                 }
                             }
                         }
@@ -302,18 +296,10 @@ function SpecialistPointHandler() constructor {
                         }
                     }
                     //add check to see if tech heretic is anywhere near mechanicus forge if so maybe do stuff??
-                    /*if (_heretic_location==eLOCATION_TYPES.PLANET){
-                    if
-                }*/
                 }
                 if (array_length(techs) > array_length(heretics) && !_heritecs) {
                     if (array_length(heretics) / array_length(techs) >= 0.35) {
                         if (!irandom(9)) {
-                            /*var text_string = "You Recive an Urgent Transmision from";
-                        if (forge_master>-1){
-
-                        }*/
-
                             tech_uprising_event();
                         }
                     }
@@ -355,7 +341,7 @@ function SpecialistPointHandler() constructor {
         draw_set_color(c_gray);
         draw_rectangle(xx, yy, xx + _box_width, yy + 15, 0);
         draw_set_alpha(1);
-        draw_set_font(fnt_40k_14);
+        draw_set_font(cjk_font(fnt_40k_14));
         draw_set_color(0);
         draw_text(xx, yy, "Name");
         draw_text(xx + 141, yy, "Number");
@@ -477,12 +463,12 @@ function SpecialistPointHandler() constructor {
         if (master_craft_count > 0) {
             scr_add_item(_item.name, master_craft_count, "master_crafted");
             var numerical_string = master_craft_count == 1 ? "was" : "were";
-            quality_string = $"X{master_craft_count} {numerical_string} Completed to a Master Crafted standard";
+            quality_string = $"x{master_craft_count} {numerical_string} completed to a Master Crafted standard!";
         } else {
-            quality_string = $"all were completed to a standard STC compliant quality";
+            quality_string = $"All were completed to a standard STC compliant quality!";
         }
 
-        scr_popup("Forge Completed", $"{_item.display_name} X{_forge_order.count} construction finished {quality_string}", "", "");
+        scr_popup("Forge Completed", $"Construction of x{_forge_order.count} {_item.display_name} is finished! {quality_string}", "", "");
     };
 
     static scr_evaluate_forge_item_completion = function(_forge_order) {
@@ -495,7 +481,7 @@ function SpecialistPointHandler() constructor {
                 if (!is_vehicle) {
                     scr_forge_item(_forge_order);
                 } else {
-                    var _build_locs = [];
+                    var _loc_counts = new CountingMap();
 
                     repeat (_forge_order.count) {
                         var vehicle = scr_add_vehicle(_item.name, obj_controller.new_vehicles);
@@ -503,10 +489,17 @@ function SpecialistPointHandler() constructor {
                         obj_ini.veh_loc[vehicle[0]][vehicle[1]] = build_loc[0];
                         obj_ini.veh_wid[vehicle[0]][vehicle[1]] = build_loc[1];
                         obj_ini.veh_lid[vehicle[0]][vehicle[1]] = -1;
-                        array_push(_build_locs, $"{build_loc[0]} {build_loc[1]}");
+                        _loc_counts.add($"{build_loc[0]} {build_loc[1]}");
                     }
 
-                    scr_popup("Forge Completed", $"{_item.display_name} x{_forge_order.count} construction finished! Vehicles waiting at hanger(s) on {string_join_ext(", ", _build_locs)}", "", "");
+                    var _loc_summary = _loc_counts.get_custom_string(function(_key, _count) {
+                        return $"{_count} at {_key}\n";
+                    });
+
+                    var _company = obj_controller.new_vehicles;
+                    var _company_name = (_company >= 1 && _company <= 10) ? $"{int_to_roman(_company)} Company" : "Reserve";
+
+                    scr_popup("Forge Completed", $"Construction of x{_forge_order.count} {_item.display_name} is finished!\n\nAssigned to: {_company_name}\n\nReady at:\n{_loc_summary}", "", "");
                 }
             } else if (_item.forge_type == "research") {
                 scr_advance_research(_item.name);
@@ -517,7 +510,4 @@ function SpecialistPointHandler() constructor {
             ERROR_HANDLER.handle_exception(_exception);
         }
     };
-    /*static apothecary_points_calc(){
-
-    }*/
 }

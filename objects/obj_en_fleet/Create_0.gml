@@ -6,10 +6,10 @@ guardsmen = 0;
 home_x = 0;
 home_y = 0;
 selected = 0;
-ret = 0;
+tau_fled = 0;
 hurt = 0;
-/// @type {Asset.GMObject.obj_star}
-orbiting = 0;
+/// @type {Id.Instance.obj_star}
+orbiting = noone;
 rep = 3;
 minimum_eta = 2;
 turns_static = 0;
@@ -76,8 +76,6 @@ capital_health = 100;
 frigate_health = 100;
 escort_health = 100;
 
-alarm[8] = 1;
-
 #region save/load serialization
 
 /// Called from save function to take all object variables and convert them to a json savable format and return it
@@ -94,7 +92,8 @@ serialize = function() {
     var excluded_from_save = [
         "temp",
         "serialize",
-        "deserialize"
+        "deserialize",
+        "orbiting",
     ];
 
     copy_serializable_fields(object_fleet, save_data, excluded_from_save);
@@ -104,7 +103,8 @@ serialize = function() {
 deserialize = function(save_data) {
     var exclusions = [
         "id",
-        "cargo_data"
+        "cargo_data",
+        "orbiting",
     ]; // skip automatic setting of certain vars, handle explicitly later
 
     // Automatic var setting
@@ -116,26 +116,19 @@ deserialize = function(save_data) {
             continue;
         }
         var loaded_value = struct_get(save_data, var_name);
-        // LOGGER.debug($"en_fleet {en_fleet_instance.id}  - var: {var_name}  -  val: {loaded_value}");
         try {
-            variable_struct_set(self, var_name, loaded_value);
+            variable_instance_set(self, var_name, loaded_value);
         } catch (e) {
             LOGGER.exception("Deserialization failed", e);
         }
     }
     if (struct_exists(save_data, "cargo_data")) {
-        variable_struct_set(self, "cargo_data", save_data.cargo_data);
+        variable_instance_set(self, "cargo_data", save_data.cargo_data);
         if (fleet_has_cargo("ork_warboss")) {
             var _boss = new NewPlanetFeature(eP_FEATURES.ORKWARBOSS);
             _boss.load_json_data(cargo_data.ork_warboss);
             cargo_data.ork_warboss = _boss;
         }
-    }
-
-    if (save_data.orbiting != 0 && action == "") {
-        var nearest_star = instance_nearest(x, y, obj_star);
-        orbiting = nearest_star;
-        // LOGGER.debug($"p_fleet id {id} deserialized: {self}");
     }
 };
 

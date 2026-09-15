@@ -5,6 +5,7 @@ function scr_save_chapter(chapter_id) {
     var custom_splash = 97;
     var chap = new ChapterData();
     chap.id = chapter_id;
+    chap.points = maxpoints;
     chap.splash = custom_splash;
     chap.name = chapter_name;
     chap.flavor = "Your Chapter";
@@ -104,7 +105,7 @@ function scr_save_chapter(chapter_id) {
 
     chap.disposition = disposition;
     if (variable_instance_exists(self.id, "monastery_name")) {
-        chap.monastary_name = monastery_name;
+        chap.monastery_name = monastery_name;
     }
     chap.chapter_master = {
         name: chapter_master_name,

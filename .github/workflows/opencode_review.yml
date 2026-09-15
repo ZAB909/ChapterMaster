@@ -1,0 +1,126 @@
+name: opencode-review
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  review:
+    if: |
+      github.event.issue.pull_request
+      && startsWith(github.event.comment.body, '/review')
+      && contains(fromJson('["OWNER","MEMBER"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Get PR number
+        id: pr-number
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request_target" ]; then
+            echo "number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          else
+            echo "number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+          fi
+    
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout PR Branch
+        run: |
+          gh pr checkout ${{ steps.pr-number.outputs.number }}
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        id: pr-git
+        env:
+          GH_TOKEN: ${{ secrets.LYRA_PRS_ISSUES_PAT }}
+
+      - name: Get PR details
+        id: pr-details
+        run: |
+          gh api /repos/${{ github.repository }}/pulls/${{ steps.pr-number.outputs.number }} > pr_data.json
+          echo "title<<EOF" >> $GITHUB_OUTPUT
+          jq -r .title pr_data.json >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "base=$(jq -r .base.ref pr_data.json)" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.LYRA_PRS_ISSUES_PAT }}
+
+      - name: Install OpenCode
+        run: curl -fsSL https://opencode.ai/install | bash
+
+      - name: Run OpenCode
+        env:
+          OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
+          GH_TOKEN: ${{ secrets.LYRA_PRS_ISSUES_PAT }}
+          GITHUB_TOKEN: ${{ secrets.LYRA_PRS_ISSUES_PAT }}
+          OPENCODE_PERMISSION: '{ "external_directory": { "/home/runner/work/**": "allow", "/tmp/*": "allow" } }'
+          PR_TITLE: ${{ steps.pr-details.outputs.title }}
+          PR_SHA: ${{ steps.pr-git.outputs.sha }}
+          PR_BASE: ${{ steps.pr-details.outputs.base }}
+          PR_NUMBER: ${{ steps.pr-number.outputs.number }}
+          OPENCODE_MAIN_MODEL: ${{ vars.OPENCODE_MAIN_MODEL }}
+        run: |
+          PR_BODY=$(jq -r .body pr_data.json)
+          cat > /tmp/prompt.txt <<PROMPT_EOF
+          You are reviewing Pull Request #$PR_NUMBER: '$PR_TITLE'
+          Base branch: origin/$PR_BASE
+          Head commit: $PR_SHA
+
+          <pr-description>
+          $PR_BODY
+          </pr-description>
+
+          Guidelines:
+          - Review the code for bugs, regressions, performance issues, code quality, and readability.
+          - Suggest improvments or fixes.
+          - Check the list of changed files using: git diff --name-only origin/$PR_BASE...HEAD
+          - Read local files directly from the workspace to maintain full context.
+          - Diffs are important but make sure you read the entire file when needed to get full context.
+          - Avoid running huge unbounded diff commands into stdout.
+          - Keep comments terse and actionable. Technical substance stays. Fluff dies.
+          - When critiquing, don't be a zealot if the code is overal readable.
+
+          ### Submitting the Review
+
+          Do NOT post individual inline comments one-by-one.
+          Instead, collect all feedback and prepare a JSON payload at \`/tmp/review.json\` matching this structure:
+          \`\`\`json
+          {
+            "commit_id": "$PR_SHA",
+            "body": "<Overall review summary and verdict>",
+            "event": "COMMENT",
+            "comments": [
+              {
+                "path": "path/to/changed_file.py",
+                "line": 42,
+                "side": "RIGHT",
+                "body": "Issue description and suggested fix..."
+              }
+            ]
+          }
+          \`\`\`
+
+          Rules for \`event\`:
+          - Use "APPROVE" if the code looks great with no blockers (empty \`comments: []\` or only minor nits).
+          - Use "REQUEST_CHANGES" if there are critical bugs, security issues, or breaking changes.
+          - Use "COMMENT" for general non-blocking feedback.
+
+          Rules for \`comments\`:
+          - \`line\` MUST be a line number present in the diff (added or modified context).
+          - Only create comments for actual violations. If there are none, \`comments\` should be \`[]\`.
+          - If the code follows all guidelines, approve it with "LGTM" in the body and an empty comments array.
+
+          Once you have created \`/tmp/review.json\`, submit it in one single call:
+          \`\`\`bash
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.repository }}/pulls/$PR_NUMBER/reviews \
+            --input /tmp/review.json
+          \`\`\`
+          PROMPT_EOF
+          cat /tmp/prompt.txt | opencode run -m $OPENCODE_MAIN_MODEL --variant xhigh --agent pr_review

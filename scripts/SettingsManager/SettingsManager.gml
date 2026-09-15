@@ -11,6 +11,7 @@ function SettingsManager() constructor {
     };
     autosave = true;
     username = "";
+    language = LANG_EN;
 
     static load = function() {
         ini_open("saves.ini");
@@ -20,6 +21,13 @@ function SettingsManager() constructor {
         fullscreen = ini_read_real("Settings", "fullscreen", 1);
         autosave = ini_read_real("Settings", "autosave", true);
         username = ini_read_string("Settings", "username", "");
+        language = ini_read_string("Settings", "language", LANG_EN);
+
+        // Guard against a stale/invalid language saved in saves.ini that is no
+        // longer shipped, so the language selector always starts from a valid index.
+        if (array_get_index(global.available_languages, language) == -1) {
+            language = LANG_EN;
+        }
 
         var rect_str = ini_read_string("Settings", "window_data", "0|0|1600|900|");
         var parts = string_split(rect_str, "|");
@@ -40,6 +48,7 @@ function SettingsManager() constructor {
         ini_write_real("Settings", "fullscreen", fullscreen);
         ini_write_real("Settings", "autosave", autosave);
         ini_write_string("Settings", "username", username);
+        ini_write_string("Settings", "language", language);
         var _window_data = $"{window_rect.x}|{window_rect.y}|{window_rect.w}|{window_rect.h}|";
         ini_write_string("Settings", "window_data", _window_data);
         ini_close();
@@ -58,8 +67,15 @@ function SettingsManager() constructor {
 
     static apply_audio = function() {
         audio_master_gain(master_volume);
-        audio_group_set_gain(audiogroup_music, music_volume);
-        audio_group_set_gain(audiogroup_sfx, sfx_volume);
+
+        global.audio_manager.set_music_volume(music_volume);
+        global.audio_manager.set_sfx_volume(sfx_volume);
+    };
+
+    static apply_language = function() {
+        global.language = language;
+        global.localization_manager.load_language(language);
+        global.localization_manager.refresh_locale_globals();
     };
 
     static sync_ui = function() {

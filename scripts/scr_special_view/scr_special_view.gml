@@ -76,10 +76,10 @@ function scr_special_view(command_group) {
         //HQ units
         for (var v = 0; v < array_length(obj_ini.TTRPG[0]); v++) {
             bad = 0;
-            if (obj_ini.name[0][v] == "") {
+            var _unit = fetch_unit([0, v]);
+            if (!is_struct(_unit)) {
                 continue;
             }
-            var _unit = fetch_unit([0, v]);
             if (_unit.ship_location > -1) {
                 var ham = _unit.ship_location;
                 if (obj_ini.ship_location[ham] == "Lost") {
@@ -106,6 +106,7 @@ function scr_special_view(command_group) {
     }
 
     squads = 0;
+    var _roles = active_roles();
     //TODO unify this data with other_manage_data() method
     for (var i = 0; i < array_length(display_unit); i++) {
         onceh = 0;
@@ -156,48 +157,22 @@ function scr_special_view(command_group) {
             // Squads
             if (squads > 0) {
                 var n = 1;
-                if (squad_typ == obj_ini.role[100][15]) {
-                    n = 0;
-                }
-                if (squad_typ == obj_ini.role[100][14]) {
-                    n = 0;
-                }
-                if (squad_typ == obj_ini.role[100][17]) {
-                    n = 0;
-                }
-                if (squad_typ == obj_ini.role[100][16]) {
-                    n = 0;
-                }
-                if (squad_typ == "Codiciery") {
-                    n = 0;
-                }
-                if (squad_typ == "Lexicanum") {
-                    n = 0;
-                }
+
+                n = !is_specialist(squad_typ, SPECIALISTS_BRANCHES);
+
                 if (squad_typ == ma_role[i]) {
                     n = 0;
                 }
-                if ((squad_typ == obj_ini.role[100][eROLE.LIBRARIAN]) && (ma_role[i] == "Codiciery")) {
+
+                if ((squad_typ == obj_ini.player_role_data[eROLE.LIBRARIAN].role) && (ma_role[i] == _roles[eROLE.CODICIERY])) {
                     n = 1;
                 }
-                if ((squad_typ == "Codiciery") && (ma_role[i] == "Lexicanum")) {
+                if ((squad_typ == _roles[eROLE.CODICIERY]) && (ma_role[i] == _roles[eROLE.LEXICANUM])) {
                     n = 1;
                 }
 
-                if (squad_typ == "Master of Sanctity") {
-                    n = 1;
-                }
-                if (squad_typ == "Chief " + string(obj_ini.role[100][eROLE.LIBRARIAN])) {
-                    n = 1;
-                }
-                if (squad_typ == "Forge Master") {
-                    n = 1;
-                }
-                if (squad_typ == obj_ini.role[100][eROLE.CHAPTERMASTER]) {
-                    n = 1;
-                }
-                if (squad_typ == "Master of the Apothecarion") {
-                    n = 1;
+                if (!n) {
+                    n = is_specialist(squad_typ, SPECIALISTS_HEADS);
                 }
 
                 if (squad_members + 1 > 10) {
@@ -206,7 +181,7 @@ function scr_special_view(command_group) {
                 if ((ma_wid[i] + (ma_lid[i] / 100)) != squad_loc) {
                     n = 1;
                 }
-                if (squad_typ == obj_ini.role[100][6]) {
+                if (squad_typ == _roles[eROLE.DREADNOUGHT]) {
                     n = 2;
                 }
 

@@ -5,8 +5,6 @@ o_dist = 0;
 selected = 0;
 sel_x1 = 0;
 sel_y1 = 0;
-sel_x2 = 0;
-sel_y2 = 0;
 
 // if (x<0) then ship_id=2;
 
@@ -16,7 +14,7 @@ action_dis = 0;
 action_dir = 0;
 action_fac = 0;
 direction = 0;
-target = -50;
+target = noone;
 if (instance_exists(obj_en_ship)) {
     target = instance_nearest(x, y, obj_en_ship);
 }
@@ -59,8 +57,5 @@ weapon_ammo = array_create(SHIP_WEAPON_SLOTS, 0);
 weapon_range = array_create(SHIP_WEAPON_SLOTS, 0);
 weapon_minrange = array_create(SHIP_WEAPON_SLOTS, 0);
 
-board_co = [];
-board_id = [];
-board_location = [];
-board_raft = [];
-//alarm_set(0, 1);
+board_marine = [];
+//alarm_set(0, 1); 

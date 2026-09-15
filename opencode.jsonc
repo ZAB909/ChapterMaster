@@ -1,0 +1,22 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "pr_review": {
+      "mode": "primary",
+      "hidden": true
+    }
+  },
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "reserved": 120000
+  },
+  "formatter": false,
+  "instructions": [
+    "docs/AGENTS.md",
+    "docs/GML_REFERENCE.md",
+    "docs/CODE_STYLE.md"
+  ],
+  "snapshot": false,
+  "model": "opencode/muse-spark-1.2-contributor-free"
+}

@@ -66,10 +66,10 @@ function scr_cheatcode(argument0) {
                     break;
                 case "artifact":
                     if (cheat_arguments[0] == "1") {
-                        scr_add_artifact("random", "", 6, obj_ini.ship[0], 501);
+                        scr_add_artifact("random", "", 6, obj_ini.ship[0], 0);
                     } else {
                         repeat (real(cheat_arguments[1])) {
-                            scr_add_artifact(cheat_arguments[0], "", 6, obj_ini.ship[0], 501);
+                            scr_add_artifact(cheat_arguments[0], "", 6, obj_ini.ship[0], 0);
                         }
                     }
                     break;
@@ -117,7 +117,7 @@ function scr_cheatcode(argument0) {
                     break;
                 case "inquisarti":
                     scr_quest(0, "artifact_loan", 4, 10);
-                    var last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.ship[0], 501);
+                    var last_artifact = scr_add_artifact("good", "inquisition", 0, obj_ini.ship[0], 0);
                     break;
                 case "govmission":
                     var problem = "";
@@ -406,12 +406,16 @@ function draw_planet_debug_options() {
         if (debug) {
             debug_slate.inside_method = function() {
                 debug_options.draw();
-                if (debug_options.current_selection == 0) {
-                    draw_planet_debug_forces();
-                } else if (debug_options.current_selection == 1) {
-                    draw_planet_debug_problems();
-                } else if (debug_options.current_selection == 2) {
-                    draw_planet_debug_features();
+                switch (debug_options.current_selection) {
+                    case 0:
+                        draw_planet_debug_forces();
+                        break;
+                    case 1:
+                        draw_planet_debug_problems();
+                        break;
+                    case 2:
+                        draw_planet_debug_features();
+                        break;
                 }
             };
             debug_slate.draw();
@@ -464,7 +468,7 @@ function draw_planet_debug_features() {
         {
             e_num: eP_FEATURES.STARSHIP,
             name: "Ancient Starship",
-        }
+        },
     ];
 
     var base_y = 220;
@@ -492,6 +496,7 @@ function draw_planet_debug_problems() {
         if (scr_hit(38, _y, 337, _y + 20)) {
             tooltip_draw(mission_name_key(_keys[i]));
             if (mouse_button_clicked()) {
+                var _p_data = obj_star_select.p_data;
                 switch (_keys[i]) {
                     case "inquisitor":
                         mission_inquistion_hunt_inquisitor(target.id);
@@ -508,7 +513,12 @@ function draw_planet_debug_problems() {
                     case "mech_bionics":
                         spawn_mechanicus_mission("mech_bionics");
                         break;
-
+                    case "succession":
+                        _p_data.init_war_of_succession();
+                        break;
+                    case "fallen":
+                        _p_data.init_fallen_marines();
+                        break;
                     default:
                         scr_popup("error", "no specific debug action created please consider helping to make one", "");
                         break;
@@ -534,21 +544,21 @@ function draw_planet_debug_forces() {
         "Orks",
         "Tau",
         "Tyranids",
-        "Traitors",
-        "CSM",
+        "Chaos",
+        "Heretics",
         "Daemons",
         "Necrons",
-        "Sisters"
+        "Sisters",
     ];
     var faction_keys = [
         "p_orks",
         "p_tau",
         "p_tyranids",
-        "p_traitors",
         "p_chaos",
+        "p_traitors",
         "p_demons",
         "p_necrons",
-        "p_sisters"
+        "p_sisters",
     ];
 
     // Loop through each faction row
@@ -612,8 +622,8 @@ function system_debug_enemy_invasion() {
                     invasion_faction = eFACTION.TYRANIDS;
                     system_debug_enemy_invasion_spawn();
                 },
-            }
-        ]
+            },
+        ],
     );
 }
 
@@ -630,12 +640,10 @@ function system_debug_enemy_invasion_spawn() {
         with (obj_star) {
             if ((choose(0, 1, 1) == 1) && (owner != eFACTION.ELDAR) && (owner != 1)) {
                 /// @type {Asset.GMObject.obj_en_fleet}
-                var fleet = instance_create(x, y, obj_en_fleet);
-                fleet.owner = obj_popup.invasion_faction;
+                var fleet = create_enemy_fleet(x, y, obj_popup.invasion_faction);
                 if (obj_popup.invasion_faction == 7) {
                     fleet.sprite_index = spr_fleet_ork;
                     fleet.capital_number = 3;
-                    present_fleet[7] += 1;
                 }
                 if (obj_popup.invasion_faction == 9) {
                     if (present_fleet[1] == 0) {
@@ -645,10 +653,8 @@ function system_debug_enemy_invasion_spawn() {
                     fleet.capital_number = 3;
                     fleet.frigate_number = 6;
                     fleet.escort_number = 16;
-                    present_fleet[9] += 1;
                 }
                 fleet.image_index = 4;
-                fleet.orbiting = id;
             }
         }
         instance_destroy();
@@ -680,28 +686,22 @@ function system_debug_spawn_fleet() {
 /// @self Asset.GMObject.obj_popup
 function debug_spawn_imperium_fleet() {
     /// @type {Asset.GMObject.obj_en_fleet}
-    var fleet = instance_create(star.x, star.y, obj_en_fleet);
-    fleet.owner = eFACTION.IMPERIUM;
+    var fleet = create_enemy_fleet(star.x, star.y, eFACTION.IMPERIUM);
     fleet.sprite_index = spr_fleet_imperial;
     fleet.capital_number = 2;
     fleet.frigate_number = 5;
-    star.present_fleet[2] += 1;
     fleet.image_index = 4;
-    fleet.orbiting = id;
     instance_destroy();
 }
 
 /// @self Asset.GMObject.obj_popup
 function debug_spawn_heretic_fleet() {
     /// @type {Asset.GMObject.obj_en_fleet}
-    var fleet = instance_create(star.x, star.y, obj_en_fleet);
-    fleet.owner = eFACTION.CHAOS;
+    var fleet = create_enemy_fleet(star.x, star.y, eFACTION.CHAOS);
     fleet.sprite_index = spr_fleet_chaos;
     fleet.capital_number = 2;
     fleet.frigate_number = 5;
-    star.present_fleet[10] += 1;
     fleet.image_index = 4;
-    fleet.orbiting = id;
     instance_destroy();
 }
 
@@ -714,28 +714,22 @@ function debug_add_xenos_fleet_options() {
 /// @self Asset.GMObject.obj_popup
 function debug_spawn_ork_fleet() {
     /// @type {Asset.GMObject.obj_en_fleet}
-    var fleet = instance_create(star.x, star.y, obj_en_fleet);
-    fleet.owner = eFACTION.ORK;
+    var fleet = create_enemy_fleet(star.x, star.y, eFACTION.ORK);
     fleet.sprite_index = spr_fleet_ork;
     fleet.capital_number = 2;
     fleet.frigate_number = 5;
-    star.present_fleet[7] += 1;
     fleet.image_index = 4;
-    fleet.orbiting = id;
     instance_destroy();
 }
 
 /// @self Asset.GMObject.obj_popup
 function debug_spawn_tau_fleet() {
     /// @type {Asset.GMObject.obj_en_fleet}
-    var fleet = instance_create(star.x, star.y, obj_en_fleet);
-    fleet.owner = eFACTION.TAU;
+    var fleet = create_enemy_fleet(star.x, star.y, eFACTION.TAU);
     fleet.sprite_index = spr_fleet_tau;
     fleet.capital_number = 2;
     fleet.frigate_number = 5;
-    star.present_fleet[8] += 1;
     fleet.image_index = 4;
-    fleet.orbiting = id;
     instance_destroy();
 }
 

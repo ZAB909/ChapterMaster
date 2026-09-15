@@ -36,6 +36,7 @@ function pop_draw_return_values() {
     }
 }
 
+/// @mixin
 /// @function standard_loc_data()
 /// @category Draw Helpers
 /// @description Acts as an initializer for UI elements positions and size
@@ -48,24 +49,56 @@ function standard_loc_data() {
     self.h = 0;
 }
 
+/// @function measure_with_font(_font, _measure_func)
+/// @category Draw Helpers
+/// @description Runs _measure_func() while _font is the active draw font, then restores the
+///       previously active font. Centralises the save/set/measure/restore boilerplate shared by
+///       UI constructors that measure text dimensions under a font-swap.
+/// @param {real} _font The font to measure under.
+/// @param {Function} _measure_func The measurement logic to run while _font is active.
+/// @returns {undefined}
+function measure_with_font(_font, _measure_func) {
+    var _prev_font = draw_get_font();
+    draw_set_font(_font);
+    _measure_func();
+    draw_set_font(_prev_font);
+}
+
+/// @function localize_button_text(_value)
+/// @category Localization
+/// @description Shared localization helper for button display text. Accepts either a plain
+///       English key or a { text, variables } struct for placeholder-bearing strings. Call it
+///       from every button constructor's update() so direct str1/label assignments and future
+///       button types cannot silently skip translation. Idempotent: already-localized values
+///       (and non-keys) pass through unchanged because translate() falls back to its input.
+/// @param {string|Struct} _value Either "English text" or { text: "...", variables: [...] }.
+/// @returns {string}
+function localize_button_text(_value) {
+    if (is_struct(_value)) {
+        var _variables = struct_exists(_value, LANG_ENTRY_VARIABLES) ? _value[$ LANG_ENTRY_VARIABLES] : undefined;
+        return localize(_value[$ LANG_ENTRY_TEXT], _variables);
+    }
+    return localize(_value);
+}
+
 /// @function draw_unit_buttons(position, text, size_mod, colour, halign, font, alpha_mult, bg, bg_color)
 /// @category Draw Helpers
 /// @description Draws a styled button with text, optional background and hover effects.
-/// @param {array} position Either [x, y] or [x1, y1, x2, y2].
-/// @param {string} text Text to display.
-/// @param {array} size_mod Text scaling.
-/// @param {color} colour Text color.
-/// @param {real} _halign Text horizontal alignment.
-/// @param {font} font Font resource.
-/// @param {real} alpha_mult Alpha multiplier.
-/// @param {bool} bg Draw background rectangle.
-/// @param {color} bg_color Background color.
-/// @returns {array} [x1, y1, x2, y2] bounding box.
+/// @param {Array<Real>} position Either [x, y] or [x1, y1, x2, y2].
+/// @param {String} text Text to display.
+/// @param {Array<Real>} size_mod Text scaling.
+/// @param {Constant.Color} colour Text color.
+/// @param {Constant.HAlign} _halign Text horizontal alignment.
+/// @param {Asset.GMFont} font Font resource.
+/// @param {Real} alpha_mult Alpha multiplier.
+/// @param {Bool} bg Draw background rectangle.
+/// @param {Constant.Color} bg_color Background color.
+/// @returns {Array<Real>} [x1, y1, x2, y2] bounding box.
 function draw_unit_buttons(position, text, size_mod = [1.5, 1.5], colour = c_gray, _halign = fa_center, font = fnt_40k_14b, alpha_mult = 1, bg = false, bg_color = c_black) {
     // TODO: fix halign usage
     add_draw_return_values();
 
-    draw_set_font(font);
+    draw_set_font(cjk_font(font));
     draw_set_halign(_halign);
     draw_set_valign(fa_middle);
 
@@ -99,7 +132,12 @@ function draw_unit_buttons(position, text, size_mod = [1.5, 1.5], colour = c_gra
 
     pop_draw_return_values();
 
-    return [position[0], position[1], x2, y2];
+    return [
+        position[0],
+        position[1],
+        x2,
+        y2,
+    ];
 }
 
 /// @function list_traveler(list, cur_val, move_up_coords, move_down_coords)
@@ -150,19 +188,19 @@ function Box(data) constructor {
     standard_loc_data();
     colour = CM_GREEN_COLOR;
 
-    static update = function(data){
+    static update = function(data) {
         move_data_to_current_scope(data, true);
 
-        if (w == 0 && x2 > 0){
+        if (w == 0 && x2 > 0) {
             w = x2 - x1;
         }
-        if (h == 0 && y2 > 0){
+        if (h == 0 && y2 > 0) {
             h = y2 - y1;
         }
 
         y2 = y1 + h;
         x2 = x1 + w;
-    }
+    };
 
     update(data);
 
@@ -195,8 +233,9 @@ function ReactiveString(text_param, x1_param = 0, y1_param = 0, data = {}) const
     y1 = y1_param;
     text = text_param;
     font = fnt_40k_14;
+    font_cjk = cjk_font(font);
     add_draw_return_values();
-    draw_set_font(font);
+    draw_set_font(font_cjk);
     w = string_width(text);
     h = string_height(text);
     pop_draw_return_values();
@@ -214,30 +253,30 @@ function ReactiveString(text_param, x1_param = 0, y1_param = 0, data = {}) const
 
     static update = function(data = {}) {
         move_data_to_current_scope(data);
-        var temp_font = draw_get_font();
-        draw_set_font(font);
-        if (max_width > -1) {
-            if (!scale_text) {
-                w = string_width_ext(text, -1, max_width);
-                h = string_height_ext(text, -1, max_width);
-                x2 = x1 + w;
-                y2 = y1 + h;
+        font_cjk = cjk_font(font);
+        measure_with_font(font_cjk, function() {
+            if (max_width > -1) {
+                if (!scale_text) {
+                    w = string_width_ext(text, -1, max_width);
+                    h = string_height_ext(text, -1, max_width);
+                    x2 = x1 + w;
+                    y2 = y1 + h;
+                } else {
+                    w = max_width;
+                    var _scale_edits = calc_text_scale_confines(text, max_width, 0, allow_line_breaks);
+                    scale = _scale_edits.scale;
+                    text = _scale_edits.text;
+                    h = string_height(text) * scale;
+                    x2 = x1 + w;
+                    y2 = y1 + h;
+                }
             } else {
-                w = max_width;
-                var _scale_edits = calc_text_scale_confines(text, max_width, 0, allow_line_breaks);
-                scale = _scale_edits.scale;
-                text = _scale_edits.text;
-                h = string_height(text) * scale;
+                w = string_width(text);
+                h = string_height(text);
                 x2 = x1 + w;
                 y2 = y1 + h;
             }
-        } else {
-            w = string_width(text);
-            h = string_height(text);
-            x2 = x1 + w;
-            y2 = y1 + h;
-        }
-        draw_set_font(temp_font);
+        });
     };
 
     update(data);
@@ -248,7 +287,7 @@ function ReactiveString(text_param, x1_param = 0, y1_param = 0, data = {}) const
 
     static draw = function() {
         add_draw_return_values();
-        draw_set_font(font);
+        draw_set_font(font_cjk);
         draw_set_halign(halign);
         draw_set_valign(valign);
         draw_set_color(colour);
@@ -273,70 +312,61 @@ function ReactiveString(text_param, x1_param = 0, y1_param = 0, data = {}) const
     };
 }
 
-function ValueShifter(value_text, data) constructor{
+function ValueShifter(value_text, data = {}) constructor {
     standard_loc_data();
     string_tag = value_text;
     max_clamp = 1000;
     min_clamp = -1000;
-    reactive_string = new ReactiveString(value_text, 0, 0, {halign : fa_center});
+    reactive_string = new ReactiveString(value_text, 0, 0, {
+        halign: fa_center,
+    });
 
     current_value = 0;
     shift_value = 1;
 
-
-    draw_set_font(fnt_40k_14b);
+    draw_set_font(cjk_font(fnt_40k_14b));
     var _but_width = string_height("-") + 8;
 
     decrease_button = new UnitButtonObject({
-        label:"-", 
-        color : c_red,
-        tooltip : "click to decrease",
-        set_width : true,
-        w : _but_width
+        label: "-",
+        color: c_red,
+        tooltip: "click to decrease",
+        set_width: true,
+        w: _but_width,
     });
 
     increase_button = new UnitButtonObject({
-        label:"-", 
-        color : c_green,
-        tooltip : "click to increase",
-        set_width : true,
-        w : _but_width
+        label: "-",
+        color: c_green,
+        tooltip: "click to increase",
+        set_width: true,
+        w: _but_width,
     });
 
-    static update = function(data = {}){
+    static update = function(data = {}) {
         move_data_to_current_scope(data, true);
-        reactive_string.update({
-            x1, 
-            y1, 
-            text : $"{string_tag}:{current_value}"
-        });
+        reactive_string.update({x1, y1, text: $"{string_tag}:{current_value}"});
 
         var _react_width_diff = (reactive_string.w / 2) + 10;
-        decrease_button.update({
-            x1 : x1 - _react_width_diff - decrease_button.w, 
-            y1 : y1
-        });
-        increase_button.update({
-            x1 : x1 + _react_width_diff, 
-            y1 : y1
-        });
-    }
+        decrease_button.update({x1: x1 - _react_width_diff - decrease_button.w, y1: y1});
+        increase_button.update({x1: x1 + _react_width_diff, y1: y1});
+    };
 
-    update(data)
+    update(data);
 
-    static draw = function(){
+    static draw = function() {
         update();
         reactive_string.draw();
-        var _allow = current_value > min_clamp;
-        if (decrease_button.draw(_allow)){
+        var _allow = current_value - shift_value >= min_clamp;
+        if (decrease_button.draw(_allow)) {
             current_value -= shift_value;
         }
 
-        _allow = current_value < max_clamp;
-        if (increase_button.draw(_allow)){
+        _allow = current_value + shift_value <= max_clamp;
+        if (increase_button.draw(_allow)) {
             current_value += shift_value;
         }
-    }
+    };
 }
 
 /// @function LabeledIcon(icon, text, x1, y1, data)
@@ -361,18 +391,22 @@ function LabeledIcon(icon_param, text_param, x1_param = 0, y1_param = 0, data = 
     icon = sprite_exists(icon_param) ? icon_param : spr_none;
     icon_width = sprite_get_width(icon);
     icon_height = sprite_get_height(icon);
+    font_cjk = cjk_font(font);
+    text_width = 0;
     w = icon_width;
     h = icon_height;
     x2 = x1 + w;
     y2 = y1 + icon_height;
-	temp_font = draw_get_font();
-	draw_set_font(font);
-	text_width = string_width(text) + 2;
-	draw_set_font(temp_font);
 
     static update = function(data = {}) {
         move_data_to_current_scope(data);
+        text = localize_button_text(text);
+        tooltip = localize_button_text(tooltip);
+        font_cjk = cjk_font(font);
         if (text_position == "right") {
+            measure_with_font(font_cjk, function() {
+                text_width = string_width(text) + 2;
+            });
             w = icon_width + text_width;
             h = icon_height;
             x2 = x1 + w;
@@ -393,7 +427,7 @@ function LabeledIcon(icon_param, text_param, x1_param = 0, y1_param = 0, data = 
 
     static draw = function() {
         add_draw_return_values();
-        draw_set_font(font);
+        draw_set_font(font_cjk);
         draw_set_halign(fa_left);
         draw_set_valign(fa_top);
         draw_set_color(colour);
@@ -415,8 +449,7 @@ function LabeledIcon(icon_param, text_param, x1_param = 0, y1_param = 0, data = 
 /// @constructor
 /// @category UI
 /// @desc A clickable sprite-based button component that manages its own state and hover logic.
-/// @param {Asset.GMSprite} _sprite The default sprite to display.
-/// @param {Asset.GMSprite} _hover_sprite Optional sprite to show when hovered.
+/// @param {Struct} data Property overrides (sprite, hover_sprite, scale_x/y, alpha_*, etc.).
 /// @returns {Struct.SpriteButton}
 function SpriteButton(data) constructor {
     standard_loc_data();
@@ -425,35 +458,36 @@ function SpriteButton(data) constructor {
 
     cycle_index = false;
     draw_index = 0;
+    width = 0;
+    height = 0;
+    x1 = 0;
+    x2 = 0;
+    y1 = 0;
+    y2 = 0;
     scale_x = 1.0;
     scale_y = 1.0;
     alpha_hover = 1.0;
     alpha_idle = 0.8;
     alpha_disabled = 0.5;
 
-    sound_click = snd_click;
+    sound_click = SFX_CLICK;
     tooltip_text = "";
     tooltip_w = 300;
 
     is_hovered = false;
     is_clicked = false;
 
-    static update = function(data){
-        move_data_to_current_scope(data,true);
+    static update = function(data) {
+        move_data_to_current_scope(data, true);
         width = sprite_get_width(sprite);
         height = sprite_get_height(sprite);
         x2 = x1 + (width * scale_x);
         y2 = y1 + (height * scale_y);
-    }
-
-    update(data);
+    };
 
     /// @desc Updates interaction state and draws the button.
-    /// @param {real} _x The X position to draw at.
-    /// @param {real} _y The Y position to draw at.
     /// @param {bool} _enabled If false, interaction is disabled and the button appears faded.
     static draw = function(_enabled = true) {
-
         add_draw_return_values();
 
         is_hovered = sr_hit_struct();
@@ -464,8 +498,8 @@ function SpriteButton(data) constructor {
                 tooltip_draw(tooltip_text, tooltip_w);
             }
 
-            if (is_clicked && sound_click != undefined) {
-                audio_play_sound(sound_click, 10, false);
+            if (is_clicked && sound_click != "") {
+                global.audio_manager.play_sfx(sound_click);
             }
         }
 
@@ -476,6 +510,8 @@ function SpriteButton(data) constructor {
         draw_sprite_ext(_draw_sprite, draw_index, x1, y1, scale_x, scale_y, 0, c_white, _draw_alpha);
         pop_draw_return_values();
     };
+
+    update(data);
 }
 
 /// @function UnitButtonObject(data)
@@ -501,32 +537,35 @@ function UnitButtonObject(data = {}) constructor {
     style = "standard";
     font = fnt_40k_14b;
     set_height_width = false;
+    font_cjk = cjk_font(font);
 
     static update_loc = function() {
         if (label != "") {
-            var temp_font = draw_get_font();
-           	draw_set_font(font);
-            if (!set_width) {
-                w = string_width(label) + 10;
+            font_cjk = cjk_font(font);
+            measure_with_font(font_cjk, function() {
+                if (!set_width) {
+                    w = string_width(label) + 10;
+                    h = string_height(label) + 4;
+                } else {
+                    var _text_scale = calc_text_scale_confines(label, w, 10);
+
+                    text_scale = _text_scale.scale;
+
+                    label = _text_scale.text;
+                }
                 h = string_height(label) + 4;
-            } else {
-                var _text_scale = calc_text_scale_confines(label, w, 10);
-
-                text_scale = _text_scale.scale;
-
-                label = _text_scale.text;
-            }
-            h = string_height(label) + 4;
-            draw_set_font(temp_font);
+            });
         }
         x2 = x1 + w;
         y2 = y1 + h;
     };
-    
+
     update_loc();
 
     static update = function(data = {}) {
         move_data_to_current_scope(data);
+        label = localize_button_text(label);
+        tooltip = localize_button_text(tooltip);
         if (struct_exists(data, "label") && !struct_exists(data, "set_width")) {
             set_width = false;
             w = 0;
@@ -576,7 +615,7 @@ function UnitButtonObject(data = {}) constructor {
             var _widths = [
                 sprite_get_width(spr_pixel_button_left),
                 sprite_get_width(spr_pixel_button_middle),
-                sprite_get_width(spr_pixel_button_right)
+                sprite_get_width(spr_pixel_button_right),
             ];
 
             var height_scale = h / sprite_get_height(spr_pixel_button_left);
@@ -589,12 +628,12 @@ function UnitButtonObject(data = {}) constructor {
             draw_sprite_ext(spr_pixel_button_right, allow_click, x1 + _widths[0] + _widths[1], y1, height_scale, height_scale, 0, c_white, 1);
             var _text_position_x = x1 + _widths[0] + 2;
             _text_position_x += _widths[1] / 2;
-            draw_set_font(font);
+            draw_set_font(font_cjk);
             draw_set_halign(fa_center);
             draw_set_valign(fa_middle);
             draw_set_color(color);
 
-            draw_text_transformed(_text_position_x, y1 + h/2, label, text_scale, text_scale, 0);
+            draw_text_transformed(_text_position_x, y1 + h / 2, label, text_scale, text_scale, 0);
 
             x2 = x1 + array_sum(_widths);
             y2 = y1 + h;
@@ -602,7 +641,7 @@ function UnitButtonObject(data = {}) constructor {
                 x1,
                 y1,
                 x2,
-                y2
+                y2,
             ];
         }
 
@@ -702,7 +741,7 @@ function SliderBar(_x, _y, _w = 100, _h = 16, _limits = [0, 100], _inc = 1) cons
             xx,
             yy,
             xx + width,
-            yy + height
+            yy + height,
         ];
 
         if (point_and_click([_rect[0], _rect[1], _rect[2], _rect[3]])) {
@@ -744,11 +783,15 @@ function SliderBar(_x, _y, _w = 100, _h = 16, _limits = [0, 100], _inc = 1) cons
 /// @param {real} _y Y position.
 /// @param {real} _max_width Max width of text bar.
 /// @param {bool} _requires_input If true, input is required.
-function TextBarArea(_x, _y, _max_width = 400, _requires_input = false) constructor {
+function TextBarArea(_x, _y, _max_width = 400, _requires_input = false, data = {}) constructor {
     xx = _x;
     yy = _y;
     max_width = _max_width;
     requires_input = _requires_input;
+    tooltip = "";
+    blocked_values = [];
+    block_checks_case_insensitive = true;
+    value_allowed = true;
 
     allow_input = false;
     cooloff = 0;
@@ -757,13 +800,15 @@ function TextBarArea(_x, _y, _max_width = 400, _requires_input = false) construc
     background = new DataSlate();
     background.draw_top_piece = false;
 
+    move_data_to_current_scope(data);
+
     static render_logic = function() {
         add_draw_return_values();
-        
+
         draw_set_valign(fa_middle);
         draw_set_halign(fa_center);
         draw_set_alpha(1);
-        draw_set_font(fnt_fancy);
+        draw_set_font(cjk_font(fnt_fancy));
 
         var _display_string = $"{current_text}";
         var _text_w = string_width(_display_string);
@@ -781,7 +826,7 @@ function TextBarArea(_x, _y, _max_width = 400, _requires_input = false) construc
                 draw_text(_cursor_x, _center_y, "|");
             }
         }
-        
+
         pop_draw_return_values();
     };
 
@@ -789,10 +834,12 @@ function TextBarArea(_x, _y, _max_width = 400, _requires_input = false) construc
 
     static draw = function(_string_area) {
         add_draw_return_values();
+        if (value_allowed || !allow_input) {
+            current_text = _string_area;
+        }
+        value_allowed = true;
 
-        draw_set_font(fnt_fancy);
-
-        current_text = _string_area;
+        draw_set_font(cjk_font(fnt_fancy));
 
         if (cooloff > 0) {
             cooloff--;
@@ -811,6 +858,14 @@ function TextBarArea(_x, _y, _max_width = 400, _requires_input = false) construc
             draw_set_color(c_gray);
         } else {
             draw_set_color(requires_input ? CM_RED_COLOR : CM_GREEN_COLOR);
+            value_allowed = requires_input ? false : true;
+        }
+
+        if (array_length(blocked_values)) {
+            if (array_contains(blocked_values, block_checks_case_insensitive ? string_lower(current_text) : current_text)) {
+                draw_set_color(CM_RED_COLOR);
+                value_allowed = false;
+            }
         }
 
         var _x1 = xx - (_bar_wid / 2);
@@ -839,6 +894,10 @@ function TextBarArea(_x, _y, _max_width = 400, _requires_input = false) construc
             obj_cursor.image_index = 2;
         } else {
             obj_cursor.image_index = 0;
+        }
+
+        if (_mouse_hover && tooltip != "") {
+            tooltip_draw(tooltip);
         }
 
         background.XX = _x1;
@@ -902,7 +961,7 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
             _x,
             _y,
             _x + width,
-            _y + height
+            _y + height,
         ];
         var _is_hovering_main = scr_hit(_main_rect[0], _main_rect[1], _main_rect[2], _main_rect[3]);
 
@@ -915,7 +974,7 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
         draw_rectangle_array(_main_rect, true);
 
         // Draw Current Selection
-        draw_set_font(fnt_40k_14b);
+        draw_set_font(cjk_font(fnt_40k_14b));
         draw_set_halign(fa_left);
         draw_text(_x + 8, _y + 6, options[selected_index].label);
 
@@ -925,7 +984,7 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
 
         if (_is_hovering_main && mouse_button_clicked()) {
             is_open = !is_open;
-            audio_play_sound(snd_click, 10, false);
+            global.audio_manager.play_sfx(SFX_CLICK);
         }
 
         if (!is_open) {
@@ -956,11 +1015,11 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
             _x,
             _y + height,
             _x + width,
-            _y + height + _total_h
+            _y + height + _total_h,
         ];
 
         add_draw_return_values();
-        
+
         draw_set_alpha(0.95);
         draw_set_color(c_black);
         draw_rectangle_array(_list_rect, false);
@@ -981,7 +1040,7 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
                     selected_index = i;
                     is_open = false;
                     _selection = options[i].value;
-                    audio_play_sound(snd_click, 10, false);
+                    global.audio_manager.play_sfx(SFX_CLICK);
 
                     if (is_callable(on_change)) {
                         on_change(_selection);
@@ -990,7 +1049,7 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
             }
 
             draw_set_color(_is_hovering ? c_white : c_gray);
-            draw_set_font(fnt_40k_12);
+            draw_set_font(cjk_font(fnt_40k_12));
             draw_text(_x + 10, _oy + 4, options[i].label);
         }
 
@@ -1004,95 +1063,149 @@ function UIDropdown(_options, _width = 180, _on_change = undefined) constructor 
 /// @category UI
 /// @description Multi-option toggle group allowing multiple selections.
 /// @param {array} options_array Array of option labels.
-/// @param {string} title_param Title string.
+/// @param {string|struct} title_param Either a string (used as ReactiveString text), a struct (passed as the ReactiveString's data packet, with text set from within that struct), or omitted/other (title becomes noone).
 /// @param {struct} data Optional overrides.
 function MultiSelect(options_array, title_param, data = {}) constructor {
-    title = title_param;
     x_gap = 10;
     y_gap = 5;
     standard_loc_data();
+    add_ui_title(title_param);
+
     on_change = undefined;
     active_col = CM_GREEN_COLOR;
     inactive_col = c_gray;
     max_width = 0;
     max_height = 0;
-    /// @type {Array<Struct.ToggleButton>} 
+    /// @type {Array<Struct.ToggleButton>}
     toggles = [];
     changed = false;
-    draw_alighn = "horizontal";
+    is_horizontal = true; // If more than 2 types needed, convert to an enum
+    allow_changes = true;
+
     for (var i = 0; i < array_length(options_array); i++) {
         var _next_tog = new ToggleButton(options_array[i]);
         _next_tog.active = false;
         array_push(toggles, _next_tog);
     }
-    
+
     static update = function(data = {}) {
         move_data_to_current_scope(data);
     };
 
-    update(data)
-
-    static draw_toggle = function(index) {
-        var _cur_opt = toggles[index];
-        _cur_opt.x1 = next_draw.x1;
-        _cur_opt.y1 = next_draw.y1;
-        _cur_opt.update();
-        if (_cur_opt.clicked() && allow_changes) {
-            changed = true;
-        }
-        _cur_opt.button_color = _cur_opt.active ? active_col : inactive_col;
-        _cur_opt.draw();
-        next_draw.row_or_column_draw_count++;
-        //TODO probably set an enum up for this later
-        if (draw_alighn == "horizontal") {
-            next_draw.x1 = _cur_opt.x2 + x_gap;
-            x2 = next_draw.x1 > x2 ? next_draw.x1 : x2;
-            y2 = next_draw.y1 + _cur_opt.h;
-            if (max_width > 0) {
-                if (next_draw.x1 - x1 > max_width) {
-                    next_draw.x1 = x1;
-                    next_draw.y1 += _cur_opt.h + y_gap;
-                    next_draw.row_or_column_draw_count = 0;
-                }
-            }
-        } else {
-            next_draw.y1 = _cur_opt.y2 + y_gap;
-            y2 = next_draw.y1 > y2 ? next_draw.y1 : y2;
-            x2 = next_draw.x1 + _cur_opt.w;
-            if (max_height > 0) {
-                if (next_draw.y1 - y1 > max_height) {
-                    next_draw.y1 = y1;
-                    next_draw.x1 += _cur_opt.w + x_gap;
-                    next_draw.row_or_column_draw_count = 0;
-                }
-            }
-        }
-    };
-
-    static reset_next_draw = function() {
-        next_draw = {
-            x1: x1,
-            y1: y1,
-            row_or_column_draw_count: 0,
-        };
-    };
+    update(data);
 
     static draw = function(allow_changes_param = true) {
         changed = false;
         allow_changes = allow_changes_param;
-        has_change_method = is_callable(on_change);
+        var _has_change_method = is_callable(on_change);
 
-        reset_next_draw();
-
-        if (title != "") {
-            draw_text(x1, y1, title);
-            next_draw.y1 += string_height(title) + 10;
+        var _start_y = y1;
+        if (title != noone) {
+            // keep the title anchored to the MultiSelect's current position
+            title.x1 = x1;
+            title.y1 = y1;
+            title.update();
+            title.draw();
+            _start_y += title.h + 10;
         }
 
-        for (var i = 0; i < array_length(toggles); i++) {
-            draw_toggle(i);
+        var _count = array_length(toggles);
+
+        var _max_main = is_horizontal ? max_width : max_height;
+        var _main_gap = is_horizontal ? x_gap : y_gap;
+        var _cross_gap = is_horizontal ? y_gap : x_gap;
+        var _start_main = is_horizontal ? x1 : _start_y;
+
+        var _lines = [];
+        var _current_line = [];
+        var _cur_main = _start_main;
+        var _line_max_cross = 0;
+
+        // Pass 1: Pack items into lines (rows or columns) based on orientation boundaries
+        for (var i = 0; i < _count; i++) {
+            var _cur_opt = toggles[i];
+            _cur_opt.update();
+
+            var _opt_main = is_horizontal ? _cur_opt.w : _cur_opt.h;
+            var _opt_cross = is_horizontal ? _cur_opt.h : _cur_opt.w;
+
+            if (_max_main > 0 && (_cur_main + _opt_main - _start_main) > _max_main && array_length(_current_line) > 0) {
+                array_push(_lines, {toggles: _current_line, max_c: _line_max_cross});
+                _current_line = [];
+                _line_max_cross = 0;
+                _cur_main = _start_main;
+            }
+
+            array_push(_current_line, _cur_opt);
+            if (_opt_cross > _line_max_cross) {
+                _line_max_cross = _opt_cross;
+            }
+
+            _cur_main += _opt_main + _main_gap;
         }
-        if (changed && has_change_method) {
+
+        if (array_length(_current_line) > 0) {
+            array_push(_lines, {toggles: _current_line, max_c: _line_max_cross});
+        }
+
+        // Pass 2: Position, calculate boundaries, evaluate input, and draw
+        var _cur_cross = is_horizontal ? _start_y : x1;
+        var _total_max_main = _start_main;
+        var _lines_count = array_length(_lines);
+
+        for (var l = 0; l < _lines_count; l++) {
+            var _line = _lines[l];
+            _cur_main = _start_main;
+            var _line_toggles_count = array_length(_line.toggles);
+
+            for (var t = 0; t < _line_toggles_count; t++) {
+                var _cur_opt = _line.toggles[t];
+                var _orig_w = _cur_opt.w;
+
+                if (is_horizontal) {
+                    _cur_opt.x1 = _cur_main;
+                    _cur_opt.y1 = _cur_cross;
+                    _cur_opt.x2 = _cur_main + _cur_opt.w;
+                    _cur_opt.y2 = _cur_cross + _cur_opt.h;
+                    if (_cur_opt.x2 > _total_max_main) {
+                        _total_max_main = _cur_opt.x2;
+                    }
+
+                    _cur_main += _cur_opt.w + x_gap;
+                } else {
+                    _cur_opt.x1 = _cur_cross;
+                    _cur_opt.y1 = _cur_main;
+                    _cur_opt.w = _line.max_c;
+                    _cur_opt.x2 = _cur_cross + _cur_opt.w;
+                    _cur_opt.y2 = _cur_main + _cur_opt.h;
+                    if (_cur_opt.y2 > _total_max_main) {
+                        _total_max_main = _cur_opt.y2;
+                    }
+
+                    _cur_main += _cur_opt.h + y_gap;
+                }
+
+                if (_cur_opt.clicked() && allow_changes) {
+                    changed = true;
+                }
+
+                _cur_opt.button_color = _cur_opt.active ? active_col : inactive_col;
+                _cur_opt.draw();
+                _cur_opt.w = _orig_w;
+            }
+
+            _cur_cross += _line.max_c + _cross_gap;
+        }
+
+        if (is_horizontal) {
+            x2 = _total_max_main;
+            y2 = _cur_cross - y_gap;
+        } else {
+            x2 = _cur_cross - x_gap;
+            y2 = _total_max_main;
+        }
+
+        if (changed && _has_change_method) {
             on_change();
         }
     };
@@ -1103,23 +1216,31 @@ function MultiSelect(options_array, title_param, data = {}) constructor {
             for (var i = 0; i < array_length(toggles); i++) {
                 var _cur_opt = toggles[i];
                 _cur_opt.active = _cur_opt.str1 == _setter;
-                if (_cur_opt.str1 == _setter) {}
             }
         }
     };
 
     static deselect_all = function() {
         for (var i = 0; i < array_length(toggles); i++) {
-            var _cur_opt = toggles[i];
-            _cur_opt.active = false;
+            toggles[i].active = false;
         }
     };
 
     static select_all = function() {
-        for (var i = 0; i < array_length(toggles); i++) {
-            var _cur_opt = toggles[i];
-            _cur_opt.active = true;
+        var _all_selected = true;
+        var _count = array_length(toggles);
+
+        for (var i = 0; i < _count; i++) {
+            if (!toggles[i].active) {
+                _all_selected = false;
+                break;
+            }
         }
+
+        for (var i = 0; i < _count; i++) {
+            toggles[i].active = !_all_selected;
+        }
+
         changed = true;
     };
 
@@ -1131,8 +1252,24 @@ function MultiSelect(options_array, title_param, data = {}) constructor {
                 array_push(_selecs, _cur_opt.str1);
             }
         }
+
         return _selecs;
     };
+}
+
+/// @category UI
+/// @function add_ui_title(title_param)
+/// @description creates a reactive string as a title for ui components such as RadioSet and MultiSelect.
+function add_ui_title(title_param) {
+    // title is now either a ReactiveString instance or noone
+    title = noone;
+    if (is_string(title_param) && title_param != "") {
+        title = new ReactiveString(title_param, x1, y1);
+    } else if (is_struct(title_param)) {
+        // entire title_param struct becomes the ReactiveString's data packet;
+        // text_param is left as "" since the struct's own "text" value will set it via update()/move_data_to_current_scope
+        title = new ReactiveString("", x1, y1, title_param);
+    }
 }
 
 /// @function RadioSet(options_array, title_param, data)
@@ -1140,27 +1277,22 @@ function MultiSelect(options_array, title_param, data = {}) constructor {
 /// @category UI
 /// @description Radio button group allowing only one active selection.
 /// @param {array} options_array List of option labels.
-/// @param {string} title_param Title string.
+/// @param {string|struct} title_param Either a string (used as ReactiveString text), a struct (passed as the ReactiveString's data packet, with text set from within that struct), or omitted/other (title becomes noone).
 /// @param {struct} data Optional overrides.
 function RadioSet(options_array, title_param = "", data = {}) constructor {
     toggles = [];
     standard_loc_data();
+    add_ui_title(title_param);
+
     current_selection = 0;
-    title = title_param;
     active_col = CM_GREEN_COLOR;
     inactive_col = c_gray;
     allow_changes = true;
     x_gap = 10;
     y_gap = 5;
-    title_font = fnt_40k_14b;
-    draw_title = true;
-    if (title == "") {
-        draw_title = false;
-    }
     space_evenly = false;
     changed = false;
-    x1 = 0;
-    y1 = 0;
+
     max_width = 0; // container width; if 0, use row's natural width
     max_height = 0;
     center = false; // when true, center each row horizontally in container
@@ -1168,12 +1300,12 @@ function RadioSet(options_array, title_param = "", data = {}) constructor {
     for (var i = 0; i < array_length(options_array); i++) {
         array_push(toggles, new ToggleButton(options_array[i]));
     }
-    
+
     static update = function(data = {}) {
         move_data_to_current_scope(data);
     };
 
-    update(data)
+    update(data);
 
     static draw_option = function(_x, _y, index) {
         var _cur_opt = toggles[index];
@@ -1190,26 +1322,23 @@ function RadioSet(options_array, title_param = "", data = {}) constructor {
 
         draw_set_valign(fa_top);
         draw_set_color(active_col);
-        draw_set_font(title_font);
         draw_set_alpha(1);
 
-        var title_h = 0;
-        if (draw_title) {
-            if (max_width > 0) {
-                draw_set_halign(fa_center);
-                draw_text(x1 + max_width * 0.5, y1, title);
-            } else {
-                draw_set_halign(fa_left);
-                draw_text(x1, y1, title);
-            }
-            title_h = string_height(title) + 10;
+        var _start_y = y1;
+        if (title != noone) {
+            // keep the title anchored to the MultiSelect's current position
+            title.x1 = x1;
+            title.y1 = y1;
+            title.update();
+            title.draw();
+            _start_y += title.h + 10;
         }
 
         changed = false;
         var _start_current_selection = current_selection;
 
         var _prev_x = x1;
-        var _prev_y = y1 + title_h;
+        var _prev_y = _start_y;
 
         var row_items = []; // holds structs: { btn: <ToggleButton>, idx: <int> }
         var row_width = 0;
@@ -1295,32 +1424,36 @@ function ToggleButton(data = {}) constructor {
     text_color = c_gray;
     button_color = c_gray;
     font = fnt_40k_12;
+    font_cjk = cjk_font(font);
     style = "default";
     hover_func = undefined;
 
     //make true to run clicked() within draw sequence
     clicked_check_default = false;
-    
+
     static update = function(data = {}) {
         move_data_to_current_scope(data);
-        var temp_font = draw_get_font();
-        draw_set_font(font);
-        if (style == "default") {
-            if (w == 0) {
-                w = string_width(str1);
-                w *= 1 + (text_padding * 2);
+        str1 = localize_button_text(str1);
+        tooltip = localize_button_text(tooltip);
+        font_cjk = cjk_font(font);
+        measure_with_font(font_cjk, function() {
+            if (style == "default") {
+                if (w == 0) {
+                    w = string_width(str1);
+                    w *= 1 + (text_padding * 2);
+                }
+                if (h == 0) {
+                    h = string_height(str1);
+                    h *= 1 + (text_padding * 2);
+                }
+            } else if (style == "box") {
+                var _text_w = string_width(str1) * (1 + (text_padding * 2));
+                w = max(32, _text_w) + 12;
+                h = 32 + 4 + (string_height(str1) * (1 + (text_padding * 2)));
             }
-            if (h == 0) {
-                h = string_height(str1);
-                h *= 1 + (text_padding * 2);
-            }
-        } else if (style == "box") {
-            w = max(32, string_width(str1) * (1 + (text_padding * 2))) + 6;
-            h = 32 + (string_height(str1) * (1 + (text_padding * 2)));
-        }
+        });
         x2 = x1 + w;
         y2 = y1 + h;
-        draw_set_font(temp_font);
     };
 
     update(data);
@@ -1332,7 +1465,7 @@ function ToggleButton(data = {}) constructor {
     static clicked = function() {
         if (hover() && mouse_button_clicked()) {
             active = !active;
-            audio_play_sound(snd_click_small, 10, false);
+            global.audio_manager.play_sfx(SFX_CLICK_SMALL);
             return true;
         } else {
             return false;
@@ -1344,11 +1477,10 @@ function ToggleButton(data = {}) constructor {
             self.active = is_active;
         }
         add_draw_return_values();
-        draw_set_font(font);
+        draw_set_font(font_cjk);
         var str1_h = string_height(str1);
         var _text_padding = w * 0.03;
         var text_x = x1 + _text_padding;
-        var text_y = y1 + _text_padding;
         var total_alpha;
 
         if (text_halign == fa_center) {
@@ -1388,20 +1520,25 @@ function ToggleButton(data = {}) constructor {
         if (style == "default") {
             draw_rectangle_color_simple(x1, y1, x1 + w, y1 + h, 1, button_color, total_alpha);
             draw_set_halign(text_halign);
-            draw_set_valign(fa_top);
+            draw_set_valign(fa_middle);
+            var text_y = y1 + (h / 2);
             draw_text_color_simple(text_x, text_y, str1, text_color, total_alpha);
             draw_set_alpha(1);
             draw_set_halign(fa_left);
         } else if (style == "box") {
-            // Icon with alpha
+            var _center_x = x1 + (w / 2);
+            var _sprite_x = _center_x - 16;
+
             draw_set_halign(fa_left);
-            draw_sprite_ext(spr_creation_check, active, x1 + 2, y1, 1, 1, 0, c_white, total_alpha);
-            // Label centred below icon
-            draw_set_alpha(total_alpha);
             draw_set_valign(fa_top);
+            draw_sprite_ext(spr_creation_check, active, _sprite_x, y1, 1, 1, 0, c_white, total_alpha);
+
+            draw_set_alpha(total_alpha);
             draw_set_halign(fa_center);
-            var _label_y = y1 + 32 + 2;
-            draw_text_transformed(x1 + 18, _label_y, str1, 1, 1, 0);
+            draw_set_valign(fa_middle);
+
+            var _label_y = y1 + 32 + ((h - 32) / 2);
+            draw_text_transformed(_center_x, _label_y, str1, 1, 1, 0);
             draw_set_alpha(1);
         }
 
@@ -1433,13 +1570,19 @@ function InteractiveButton(data = {}) constructor {
     text_halign = fa_left;
     text_color = c_gray;
     button_color = c_gray;
-        
+
     static update = function(data = {}) {
         move_data_to_current_scope(data);
+        str1 = localize_button_text(str1);
+        tooltip = localize_button_text(tooltip);
+        inactive_tooltip = localize_button_text(inactive_tooltip);
+        if (struct_exists(data, "str1") && !struct_exists(data, "width")) {
+            width = 0;
+        }
         if (width == 0) {
             width = string_width(str1) + 4;
         }
-        if (height == 0) {
+        if (!struct_exists(data, "height")) {
             height = string_height(str1) + 4;
         }
         x2 = x1 + width;
@@ -1455,10 +1598,10 @@ function InteractiveButton(data = {}) constructor {
     static clicked = function() {
         if (hover() && mouse_button_clicked()) {
             if (!active) {
-                audio_play_sound(snd_error, 10, false);
+                global.audio_manager.play_sfx(SFX_ERROR);
                 return false;
             } else {
-                audio_play_sound(snd_click_small, 10, false);
+                global.audio_manager.play_sfx(SFX_CLICK_SMALL);
                 return true;
             }
         } else {
@@ -1472,7 +1615,7 @@ function InteractiveButton(data = {}) constructor {
         var text_x = x1 + text_padding;
         var text_y = y1 + text_padding;
         var total_alpha;
-        
+
         add_draw_return_values();
 
         if (text_halign == fa_center) {
@@ -1509,7 +1652,7 @@ function InteractiveButton(data = {}) constructor {
         draw_set_halign(text_halign);
         draw_set_valign(fa_top);
         draw_text_color_simple(text_x, text_y, str1, text_color, total_alpha);
-        
+
         pop_draw_return_values();
     };
 }
@@ -1591,7 +1734,7 @@ function MainMenuButton(_sprite = spr_ui_but_1, _sprite_hover = spr_ui_hov_1, _x
         draw_set_color(c_white);
         draw_set_halign(fa_center);
         draw_set_valign(fa_top);
-        draw_set_font(fnt_cul_14);
+        draw_set_font(cjk_font(fnt_cul_14));
 
         var _text_x = _x + (_final_w / 2);
         var _text_y = _y + (4 * _y_scale);

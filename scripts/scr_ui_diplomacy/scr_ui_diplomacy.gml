@@ -1,5 +1,6 @@
+/// @self Asset.GMObject.obj_controller
 function draw_character_diplomacy_base_page() {
-    obj_controller.menu_lock = true;
+    menu_lock = true;
     if (!audience && !valid_diplomacy_options()) {
         with (diplo_buttons) {
             trade.draw();
@@ -8,7 +9,7 @@ function draw_character_diplomacy_base_page() {
             alliance.draw();
             denounce.draw();
             praise.draw();
-            declare_war.draw_shutter(praise.x1, alliance.y2, "WAR", 0.4);
+            declare_war.draw_shutter(praise.x1, alliance.y2, localize("WAR"), 0.4);
         }
     } else {
         if (!valid_diplomacy_options()) {
@@ -48,14 +49,15 @@ function intro_to_diplomacy(faction_enum) {
     }
 }
 
+/// @self Asset.GMObject.obj_controller
 function exit_diplomacy_dialogue() {
-    obj_controller.menu_lock = false;
-    if (audio_is_playing(snd_blood) == true) {
-        scr_music("royal", 2000);
+    menu_lock = false;
+    if (global.audio_manager.current_context == CONTEXT_DIPLOMACY) {
+        global.audio_manager.play_playlist(CONTEXT_SECTOR, 2000);
     }
 
     var _close_diplomacy = true;
-    if ((complex_event == true) && instance_exists(obj_temp_meeting)) {
+    if (complex_event && instance_exists(obj_temp_meeting)) {
         complex_event = false;
         with (obj_temp_meeting) {
             instance_destroy();
@@ -70,12 +72,14 @@ function exit_diplomacy_dialogue() {
         cooldown = 8;
         if (trading_artifact == 2 && instance_exists(obj_ground_mission)) {
             with (obj_ground_mission) {
-                recieve_artifact_in_discussion();
+                receive_artifact_in_discussion();
             }
         }
         trading_artifact = 0;
+        with (obj_ground_mission) {
+            instance_destroy();
+        }
         with (obj_popup) {
-            obj_ground_mission.alarm[1] = 1;
             instance_destroy();
         }
     }
@@ -91,7 +95,7 @@ function exit_diplomacy_dialogue() {
         cru.placing = true;
         exit_all = 0;
         liscensing = 0;
-        if (zoomed == 0) {
+        if (!zoomed) {
             scr_zoom();
         }
     }
@@ -111,15 +115,15 @@ function exit_diplomacy_dialogue() {
         cooldown = 8;
         diplomacy = 0;
         force_goodbye = 0;
+        clear_diplo_choices();
         _close_diplomacy = false;
     }
     // No need to check for next audience
     if ((audience > 0) && instance_exists(obj_turn_end)) {
         if (complex_event == false) {
             obj_turn_end.alarm[1] = 1;
-            LOGGER.debug("next_audience");
         }
-        if (complex_event == true) {
+        if (complex_event) {
             // TODO
         }
     }
@@ -128,78 +132,119 @@ function exit_diplomacy_dialogue() {
     }
 }
 
+/// @self Asset.GMObject.obj_controller
 function draw_diplomacy_diplo_text() {
-    draw_set_font(fnt_40k_14);
+    draw_set_font(cjk_font(fnt_40k_14));
     draw_set_alpha(1);
     draw_set_color(CM_GREEN_COLOR);
     draw_set_halign(fa_left);
-    draw_text_ext(336 + 16, 209, string_hash_to_newline(string(diplo_txt)), -1, 536);
+    draw_text_ext(352, 209, string_hash_to_newline(string(diplo_txt)), -1, 536);
     draw_set_halign(fa_center);
-    draw_line(xx + 429, yy + 710, xx + 800, yy + 710);
+    draw_line(429, 710, 800, 710);
 }
 
+/// @self Asset.GMObject.obj_controller
 function set_up_diplomacy_buttons() {
     diplo_buttons = {};
     audience_data = {};
     set_up_diplomacy_persons();
     //Trade button setup
-    diplo_buttons.trade = new UnitButtonObject({x1: 400, y1: 720, label: "Trade", bind_scope: obj_controller, style: "pixel"});
+    diplo_buttons.trade = new UnitButtonObject({
+        x1: 400,
+        y1: 720,
+        label: "Trade",
+        bind_scope: id,
+        style: "pixel",
+    });
     diplo_buttons.trade.bind_method = function() {
-        if ((audience == 0) && (force_goodbye == 0)) {
-            trading = 1;
-            scr_dialogue("open_trade");
-            cooldown = 8;
-            click2 = 1;
-            trade_attempt = new TradeAttempt(diplomacy);
+        if ((obj_controller.audience == 0) && (obj_controller.force_goodbye == 0)) {
+            open_trade_screen();
         }
     };
 
     //Demand button setup
-    diplo_buttons.demand = new UnitButtonObject({x1: 600, y1: 720, label: "Demand", bind_scope: obj_controller, style: "pixel"});
+    diplo_buttons.demand = new UnitButtonObject({
+        x1: 600,
+        y1: 720,
+        label: "Demand",
+        bind_scope: id,
+        style: "pixel",
+    });
     diplo_buttons.demand.bind_method = function() {
-        if ((audience == 0) && (force_goodbye == 0)) {
-            cooldown = 8;
-            click2 = 1;
-            trading_demand = diplomacy;
+        if ((obj_controller.audience == 0) && (obj_controller.force_goodbye == 0)) {
+            obj_controller.cooldown = 8;
+            obj_controller.click2 = 1;
+            obj_controller.trading_demand = obj_controller.diplomacy;
             scr_dialogue("trading_demand");
         }
     };
 
     //Discuss button setup
-    diplo_buttons.discuss = new UnitButtonObject({x1: 800, y1: 720, label: "Discuss", tooltip: "Unfinished", bind_scope: obj_controller, style: "pixel"});
+    diplo_buttons.discuss = new UnitButtonObject({
+        x1: 800,
+        y1: 720,
+        label: "Discuss",
+        tooltip: "Unfinished",
+        bind_scope: id,
+        style: "pixel",
+    });
 
     //denounce button setup
-    diplo_buttons.denounce = new UnitButtonObject({x1: 400, y1: diplo_buttons.trade.y2, label: "Denounce", bind_scope: obj_controller, style: "pixel"});
+    diplo_buttons.denounce = new UnitButtonObject({
+        x1: 400,
+        y1: diplo_buttons.trade.y2,
+        label: "Denounce",
+        bind_scope: id,
+        style: "pixel",
+    });
 
     diplo_buttons.denounce.bind_method = function() {
-        if (diplo_last != "denounced") {
+        if (obj_controller.diplo_last != "denounced") {
             scr_dialogue("denounced");
-            cooldown = 8;
-            click2 = 1;
+            obj_controller.cooldown = 8;
+            obj_controller.click2 = 1;
         }
     };
 
-    diplo_buttons.praise = new UnitButtonObject({x1: 600, y1: diplo_buttons.trade.y2, label: "Praise", bind_scope: obj_controller, style: "pixel"});
+    diplo_buttons.praise = new UnitButtonObject({
+        x1: 600,
+        y1: diplo_buttons.trade.y2,
+        label: "Praise",
+        bind_scope: id,
+        style: "pixel",
+    });
 
     diplo_buttons.praise.bind_method = function() {
-        if (diplo_last != "praised") {
+        if (obj_controller.diplo_last != "praised") {
             scr_dialogue("praised");
-            cooldown = 8;
-            click2 = 1;
+            obj_controller.cooldown = 8;
+            obj_controller.click2 = 1;
         }
     };
 
-    diplo_buttons.alliance = new UnitButtonObject({x1: 800, y1: diplo_buttons.trade.y2, label: "Propose\nAlliance", bind_scope: obj_controller, style: "pixel"});
+    diplo_buttons.alliance = new UnitButtonObject({
+        x1: 800,
+        y1: diplo_buttons.trade.y2,
+        label: "Propose\nAlliance",
+        bind_scope: id,
+        style: "pixel",
+    });
 
     diplo_buttons.alliance.bind_method = function() {
-        if (diplo_last != "propose_alliance") {
-            cooldown = 8;
-            click2 = 1;
+        if (obj_controller.diplo_last != "propose_alliance") {
+            obj_controller.cooldown = 8;
+            obj_controller.click2 = 1;
             scr_dialogue("propose_alliance");
         }
     };
 
-    diplo_buttons.exit_button = new UnitButtonObject({x1: 818, y1: 795, label: "Exit", bind_scope: obj_controller, color: CM_RED_COLOR});
+    diplo_buttons.exit_button = new UnitButtonObject({
+        x1: 818,
+        y1: 795,
+        label: "Exit",
+        bind_scope: id,
+        color: CM_RED_COLOR,
+    });
 
     diplo_buttons.exit_button.bind_method = exit_diplomacy_dialogue;
 
@@ -207,11 +252,11 @@ function set_up_diplomacy_buttons() {
     var _war = diplo_buttons.declare_war;
     _war.XX = 640;
     _war.YY = diplo_buttons.alliance.y2;
-    _war.label = "DECLARE WAR";
-    _war.tooltip = "Unfinished";
+    _war.label = localize("DECLARE WAR");
+    _war.tooltip = localize("Unfinished");
     _war.color = CM_RED_COLOR;
     _war.cover_text = "Declare War";
-    _war.bind_scope = obj_controller;
+    _war.bind_scope = id;
 
     diplo_buttons.main_slate = new DataSlate();
     diplo_buttons.main_slate.width = 570;
@@ -244,6 +289,7 @@ function set_up_rpgcharacter_diplomacy() {
     }
 }
 
+/// @self Asset.GMObject.obj_controller
 function set_up_diplomacy_persons() {
     diplo_persons = {};
     diplo_persons.imperium = new ShutterButton();
@@ -308,7 +354,7 @@ function set_up_diplomacy_persons() {
         _eldar,
         _orks,
         _tau,
-        _chaos
+        _chaos,
     ];
 
     for (var i = 0; i < array_length(_shutters); i++) {
@@ -317,13 +363,17 @@ function set_up_diplomacy_persons() {
             management_buttons = {
                 audience: new UnitButtonObject({
                     style: "pixel",
-                    label: "Request Audience", //tooltip: "."
+                    label: "Request Audience",
                 }),
                 ignore: new UnitButtonObject({
                     style: "pixel",
-                    label: "Ignore", //tooltip: "."
+                    label: "Ignore",
                 }),
-                unignore: new UnitButtonObject({style: "pixel", label: "Unignore", tooltip: "Click here or press B to Toggle Unit Biography."}),
+                unignore: new UnitButtonObject({
+                    style: "pixel",
+                    label: "Unignore",
+                    tooltip: "Click here or press B to Toggle Unit Biography.",
+                }),
                 screen_slate: new DataSlate(),
             };
             var _screen_slate = management_buttons.screen_slate;
@@ -340,21 +390,20 @@ function set_up_diplomacy_persons() {
             inside_method = function() {
                 var yy = YY;
                 var xx = XX;
-                draw_set_font(fnt_40k_14b);
+                draw_set_font(cjk_font(fnt_40k_14b));
                 draw_set_halign(fa_left);
-                draw_text(xx + 169, yy + 35, obj_controller.faction[_faction_enum]);
-                management_buttons.screen_slate.draw_with_dimensions(xx + 5, yy + 5,);
-                draw_set_font(fnt_40k_14);
+                draw_text(xx + 169, yy + 35, localize(obj_controller.faction[_faction_enum]));
+                management_buttons.screen_slate.draw_with_dimensions(xx + 5, yy + 5);
+                draw_set_font(cjk_font(fnt_40k_14));
                 draw_set_halign(fa_right);
-                draw_text_transformed(xx + 420, yy + 20, obj_controller.faction_status[_faction_enum], 0.7, 0.7, 0);
+                draw_text_transformed(xx + 420, yy + 20, localize(obj_controller.faction_status[_faction_enum]), 0.7, 0.7, 0);
                 draw_set_halign(fa_left);
-                var txt;
-                txt = "????";
+                var txt = "????";
                 if (obj_controller.known[_faction_enum] > 0) {
-                    txt = $"{obj_controller.faction_title[_faction_enum]} {obj_controller.faction_leader[_faction_enum]}";
+                    txt = localize("{0} {1}", [localize(obj_controller.faction_title[_faction_enum]), obj_controller.faction_leader[_faction_enum]]);
                 }
                 draw_text_transformed(xx + 169, yy + 50, txt, 0.7, 0.7, 0);
-                draw_text_transformed(xx + 169, yy + 65, $"Disposition: {obj_controller.disposition[_faction_enum]}", 0.7, 0.7, 0);
+                draw_text_transformed(xx + 169, yy + 65, localize("Disposition: {0}", [obj_controller.disposition[_faction_enum]]), 0.7, 0.7, 0);
                 scr_draw_rainbow(xx + 250, yy + 66, xx + 400, yy + 76, (obj_controller.disposition[_faction_enum] / 200) + 0.5);
 
                 if (((obj_controller.known[_faction_enum] > 0.7) && (obj_controller.faction_defeated[_faction_enum] == 0)) || global.cheat_debug) {
@@ -371,11 +420,6 @@ function set_up_diplomacy_persons() {
 
                     _ignore_status.update({x1: _audience.x2 + 1, y1: yy + 85});
                     _ignore_status.draw();
-
-                    /*var fis;fis="[Request Audience]";
-			        if (turns_ignored[2]>0) then fis="                  ";
-			        if (ignore[eFACTION.IMPERIUM]<1) then draw_text_transformed(xx+189,yy+354,string(fis)+"  [Ignore]",0.7,0.7,0);
-			        if (ignore[eFACTION.IMPERIUM]>=1) then draw_text_transformed(xx+189,yy+354,string(fis)+"[Unignore]",0.7,0.7,0);*/
                 }
             };
         }
@@ -395,21 +439,21 @@ function faction_disposition_rating_string(diplomacy) {
     }
 }
 
+/// @self Asset.GMObject.obj_controller
 function scr_ui_diplomacy() {
     if (menu != eMENU.DIPLOMACY) {
         return;
     }
 
-    var xx = camera_get_view_x(view_camera[0]);
+    var xx = camera_get_view_x(view_camera[0]) + 6;
     var yy = camera_get_view_y(view_camera[0]);
     var show_stuff = false;
     var warning = 0;
 
     // This script draws all of the diplomacy stuff, up to and including trading.
 
-    xx += 6;
     draw_set_alpha(1);
-    draw_set_color(0);
+    draw_set_color(c_black);
     draw_rectangle(xx, yy, xx + 1600, yy + 900, 0);
     draw_set_alpha(0.5);
     draw_sprite(spr_rock_bg, 0, xx, yy);
@@ -417,21 +461,10 @@ function scr_ui_diplomacy() {
     if (diplomacy == 0) {
         // Main diplomacy screen
 
-        /*draw_set_color(CM_GREEN_COLOR);
-	    draw_rectangle(xx+31,yy+281,xx+438,yy+416,0);
-	    draw_rectangle(xx+31,yy+417,xx+438,yy+552,0);
-	    draw_rectangle(xx+31,yy+553,xx+438,yy+688,0);
-	    draw_rectangle(xx+31,yy+689,xx+438,yy+824,0);
-	    // 
-	    draw_rectangle(xx+451,yy+281,xx+858,yy+125,0);
-	    draw_rectangle(xx+451,yy+417,xx+858,yy+125+91,0);
-	    draw_rectangle(xx+451,yy+553,xx+858,yy+125+182,0);
-	    draw_rectangle(xx+451,yy+689,xx+858,yy+125+273,0);*/
-
         draw_set_color(CM_GREEN_COLOR);
-        draw_set_font(fnt_40k_30b);
+        draw_set_font(cjk_font(fnt_40k_30b));
         draw_set_halign(fa_center);
-        draw_text(xx + 800, yy + 74, string_hash_to_newline("Diplomacy"));
+        draw_text(xx + 800, yy + 74, string_hash_to_newline(localize("Diplomacy")));
 
         xx += 55;
         yy -= 20;
@@ -456,58 +489,21 @@ function scr_ui_diplomacy() {
         scr_image("symbol", 1, xx + 525, yy + 174, 109, 54);
         scr_image("symbol", 2, xx + 1147, yy + 174, 217, 107);
 
-        //draws chapter diplomacy
-        /*draw_rectangle(xx+451,yy+281,xx+675,yy+416,1);
-		draw_line(xx+604,yy+281,xx+604,yy+416);
-	    draw_rectangle(xx+451,yy+417,xx+675,yy+552,1);
-		draw_line(xx+604,yy+417,xx+604,yy+553);
-	    draw_rectangle(xx+451,yy+553,xx+675,yy+688,1);
-		draw_line(xx+604,yy+553,xx+604,yy+689);
-	    draw_rectangle(xx+451,yy+689,xx+675,yy+824,1);
-		draw_line(xx+604,yy+689,xx+604,yy+824);
-		*/
-
-        draw_set_font(fnt_40k_14b);
-        draw_set_halign(fa_left);
-
-        //draw faction names, etc
-        /*
-		    draw_text(xx+609,yy+285,"Chapter 1");
-		    draw_text(xx+609,yy+421,"Chapter 2");
-		    draw_text(xx+609,yy+557,"Chapter 3");
-		    draw_text(xx+609,yy+693,"Chapter 4");
-	    */
-
-        //render status, i.e. whether at war, that stuff
-        draw_set_font(fnt_40k_14);
-        draw_set_halign(fa_right);
-
-        draw_set_halign(fa_left);
-        var txt;
-
-        //draw the meet chaos button
-        draw_set_halign(fa_left);
-        draw_set_color(CM_GREEN_COLOR);
-        draw_rectangle(xx + 688, yy + 240, xx + 1028, yy + 281, 0);
-        draw_set_color(c_black);
-        draw_text_transformed(xx + 688, yy + 241, " Meet Chaos Emmissary", 0.7, 0.7, 0);
-        //color blending stuff if hovering over the meeting chaos icon
-        if (point_in_rectangle(mouse_x, mouse_y, xx + 688, yy + 240, xx + 1028, yy + 281)) {
-            draw_set_alpha(0.2);
+        if (CHAOS_EMISSARY_ENABLED) {
+            //draw the meet chaos button
+            draw_set_font(cjk_font(fnt_40k_14b));
+            draw_set_halign(fa_left);
+            draw_set_color(CM_GREEN_COLOR);
             draw_rectangle(xx + 688, yy + 240, xx + 1028, yy + 281, 0);
-            draw_set_alpha(1);
+            draw_set_color(c_black);
+            draw_text_transformed(xx + 688, yy + 241, localize("Meet Chaos Emissary"), 0.7, 0.7, 0);
+            //color blending stuff if hovering over the meeting chaos icon
+            if (point_in_rectangle(mouse_x, mouse_y, xx + 688, yy + 240, xx + 1028, yy + 281)) {
+                draw_set_alpha(0.2);
+                draw_rectangle(xx + 688, yy + 240, xx + 1028, yy + 281, 0);
+                draw_set_alpha(1);
+            }
         }
-        var x6, y6, x7, y7;
-        x6 = 0;
-        y6 = 0;
-        x7 = 0;
-        y7 = 0;
-        xx -= 55;
-        yy += 20;
-
-        #region faction talks/ignore stuff
-
-        #endregion
     }
 
     xx = camera_get_view_x(view_camera[0]);
@@ -520,23 +516,17 @@ function scr_ui_diplomacy() {
 
     if (diplomacy == -1) {
         if (!is_struct(character_diplomacy)) {
-            LOGGER.debug("no valid diplomacy target");
             diplomacy = 0;
-        } else {
-            // draw_sprite(spr_diplo_splash,diplomacy,xx+916,yy+33);
         }
     }
 
     if (diplomacy > 0) {
         // Diplomacy - Speaking
-        var daemon;
-        daemon = false;
+        var daemon = false;
         if ((diplomacy > 10) && (diplomacy < 11)) {
             daemon = true;
         }
-        // draw_sprite(spr_diplo_splash,diplomacy,xx+916,yy+33);
         if (diplomacy == 10.1) {
-            // if (diplomacy=10.1) then draw_sprite(spr_diplomacy_dae,0,xx+16,yy+43);
             daemon = true;
             scr_image("diplomacy_daemon", 0, xx + 16, yy + 43, 310, 828);
             show_stuff = false;
@@ -545,7 +535,7 @@ function scr_ui_diplomacy() {
             }
         }
 
-        if (daemon == false) {
+        if (!daemon) {
             if (diplomacy != eFACTION.ELDAR) {
                 scr_image("diplomacy/splash", diplomacy, xx + 16, yy + 43, 310, 828);
             }
@@ -562,7 +552,7 @@ function scr_ui_diplomacy() {
 
         draw_set_halign(fa_center);
         draw_set_color(CM_GREEN_COLOR);
-        draw_set_font(fnt_40k_30b);
+        draw_set_font(cjk_font(fnt_40k_30b));
 
         var _diplomacy_faction_name = "";
         var _diplomacy_faction_alligience = " (Imperium)";
@@ -576,17 +566,16 @@ function scr_ui_diplomacy() {
 
         draw_text_transformed(xx + 622, yy + 66, _diplomacy_faction_name, 1, 1, 0);
 
-        if (daemon == true) {
-            draw_text_transformed(xx + 622, yy + 104, "The Emmmisary", 0.6, 0.6, 0);
+        if (daemon) {
+            draw_text_transformed(xx + 622, yy + 104, localize("The Emmmisary"), 0.6, 0.6, 0);
             show_stuff = true;
-        } else if (daemon == false) {
-            draw_text_transformed(xx + 622, yy + 104, $"{faction_title[diplomacy]} {faction_leader[diplomacy]} {_diplomacy_faction_alligience}", 0.6, 0.6, 0);
+        } else {
+            draw_text_transformed(xx + 622, yy + 104, localize("{0} {1} {2}", [localize(faction_title[diplomacy]), faction_leader[diplomacy], localize(_diplomacy_faction_alligience)]), 0.6, 0.6, 0);
         }
 
-        draw_set_font(fnt_40k_14);
-        if (daemon == false) {
-            _disposition_rating = $"Disposition: {faction_disposition_rating_string(diplomacy)} ({disposition[diplomacy]})";
-            // draw_set_halign(fa_center);
+        draw_set_font(cjk_font(fnt_40k_14));
+        if (!daemon) {
+            _disposition_rating = localize("Disposition: {0} ({1})", [localize(faction_disposition_rating_string(diplomacy)), disposition[diplomacy]]);
             draw_text(xx + 622, yy + 144, _disposition_rating);
             scr_draw_rainbow(xx + 366, yy + 165, xx + 871, yy + 175, (disposition[diplomacy] / 200) + 0.5);
         }
@@ -598,11 +587,9 @@ function scr_ui_diplomacy() {
     }
 
     if (warning == 1 || diplomacy >= 6) {
-        var warn;
+        var warn = localize("Consorting with heretics will cause your disposition with the Imperium to plummet.");
         if (array_contains(global.xenos_factions, diplomacy)) {
-            warn = "Consorting with xenos will cause your disposition with the Imperium to lower.";
-        } else {
-            warn = "Consorting with heretics will cause your disposition with the Imperium to plummet.";
+            warn = localize("Consorting with xenos will cause your disposition with the Imperium to lower.");
         }
 
         draw_set_halign(fa_left);
@@ -612,7 +599,5 @@ function scr_ui_diplomacy() {
         draw_rectangle(mouse_x - 2, mouse_y + 20, mouse_x + 2 + string_width_ext(warn, -1, 600), mouse_y + 24 + string_height_ext(warn, -1, 600), 1);
         draw_text_ext(mouse_x, mouse_y + 22, warn, -1, 600);
     }
-
-    //scr_dialogue(diplomacy_pathway);
     basic_diplomacy_screen();
 }

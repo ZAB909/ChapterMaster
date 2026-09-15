@@ -11,15 +11,47 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
     base_colour = 0;
     title = "";
 
-    markings_options = new RadioSet([{str1: "None", font: fnt_40k_14b, tooltip: ""}, {str1: "Company", font: fnt_40k_14b, tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour"}, {str1: "Chapter", font: fnt_40k_14b, tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour"}, {str1: "Squad", font: fnt_40k_14b, tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour"}, {str1: "Role", font: fnt_40k_14b, tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour"}], "Markings");
+    markings_options = new RadioSet(
+        [
+            {
+                str1: "None",
+                font: fnt_40k_14b,
+                tooltip: "",
+            },
+            {
+                str1: "Company",
+                font: fnt_40k_14b,
+                tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour",
+            },
+            {
+                str1: "Chapter",
+                font: fnt_40k_14b,
+                tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour",
+            },
+            {
+                str1: "Squad",
+                font: fnt_40k_14b,
+                tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour",
+            },
+            {
+                str1: "Role",
+                font: fnt_40k_14b,
+                tooltip: "If selected You will be able to pick an icon or icon set after selecting a base colour",
+            },
+        ],
+        "Markings",
+    );
 
     static textures_surface = surface_create(1, 1);
 
     static texture_coords = [];
     static _texture_offset = [
         0,
-        0
+        0,
     ];
+
+    static _last_texture_set = undefined;
+    static _last_sprite_args = undefined;
 
     static create_texture_surface = function(texture_set, sprite_draw_args) {
         var texture_names = struct_get_names(texture_set);
@@ -30,9 +62,13 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
 
         _texture_offset = [
             0,
-            0
+            0,
         ];
         texture_coords = [];
+
+        if (!surface_exists(textures_surface)) {
+            textures_surface = surface_create(1, 1);
+        }
 
         surface_resize(textures_surface, total_width, sprite_draw_args.frame_height);
         surface_set_target(textures_surface);
@@ -48,10 +84,24 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
             array_push(texture_coords, [[draw_x, draw_y, draw_x + _frame_width, draw_y + _frame_height], texture_names[i]]);
             draw_x += sprite_draw_args.frame_width;
         }
+
         surface_reset_target();
+
+        _last_texture_set = texture_set;
+        _last_sprite_args = sprite_draw_args;
     };
 
     static draw_textures_surface = function(selection_method) {
+        if (!surface_exists(textures_surface)) {
+            if (is_struct(_last_texture_set) && is_struct(_last_sprite_args)) {
+                create_texture_surface(_last_texture_set, _last_sprite_args);
+            }
+
+            if (!surface_exists(textures_surface)) {
+                return;
+            }
+        }
+
         draw_set_alpha(1);
         var _tex_height = surface_get_height(textures_surface);
         draw_surface_part(textures_surface, _texture_offset[0], _texture_offset[1], min(max_width, surface_get_width(textures_surface)), _tex_height, x, y);
@@ -106,7 +156,7 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
                         box_x + (box_size * column),
                         box_y + (box_size * row),
                         box_x + (box_size * column) + box_size,
-                        box_y + (box_size * row) + box_size
+                        box_y + (box_size * row) + box_size,
                     ];
                     draw_rectangle_array(box_coords, 0);
                     draw_set_color(CM_GREEN_COLOR);
@@ -157,7 +207,7 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
                             icon: tex_data[1],
                             colour: base_colour,
                             type: markings_options.current_selection,
-                        }
+                        },
                     ];
                     if (mouse_button_clicked()) {
                         count_destroy = true;
@@ -168,7 +218,7 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
             draw_textures_surface(function(tex_data) {
                 chosen = [
                     "texture",
-                    tex_data[1]
+                    tex_data[1],
                 ];
                 if (mouse_button_clicked()) {
                     count_destroy = true;
@@ -185,7 +235,7 @@ function ColourPicker(xx, yy, max_width = 400) constructor {
             "right_pauldron",
             "left_pauldron",
             "right_leg_knee",
-            "left_leg_knee"
+            "left_leg_knee",
         ];
 
         var _valid_marking_spot = array_contains(marking_opts, title);

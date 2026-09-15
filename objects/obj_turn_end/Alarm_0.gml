@@ -2,28 +2,21 @@ try {
     instance_activate_object(obj_star);
     combating = 0;
 
-    var i;
-
-    i = 50;
-    repeat (50) {
-        i -= 1;
-
+    for (var i = 49; i >= 0; i--) {
         if ((battles <= i) && (i >= 2)) {
-            if ((battle[i] != 0) && (battle[i - 1] != 0) && (battle_world[i] == -50) && (battle_world[i - 1] > 0)) {
-                var tem1, tem2, tem3, tem4, tem5, tem6, tem7;
-                tem1 = battle[i - 1];
-                tem2 = battle_location[i - 1];
-                tem3 = battle_world[i - 1];
-                tem4 = battle_opponent[i - 1];
-                tem5 = battle_object[i - 1];
-                tem6 = battle_pobject[i - 1];
-                tem7 = battle_special[i - 1];
+            if ((battle[i] != 0) && (battle[i - 1] != 0) && (battle_world[i] == 0) && (battle_world[i - 1] > 0)) {
+                var tem1 = battle[i - 1];
+                var tem2 = battle_location[i - 1];
+                var tem3 = battle_world[i - 1];
+                var tem4 = battle_opponent[i - 1];
+                var tem5 = battle_object[i - 1];
+                var tem6 = battle_pobject[i - 1];
+                var tem7 = battle_special[i - 1];
 
                 battle[i - 1] = battle[i];
                 battle_location[i - 1] = battle_location[i];
                 battle_world[i - 1] = battle_world[i];
                 battle_opponent[i - 1] = battle_opponent[i];
-                // battle_object[i-1]=battle_object[i];
                 battle_pobject[i - 1] = battle_pobject[i];
                 battle_special[i - 1] = battle_special[i];
 
@@ -43,19 +36,15 @@ try {
     // Ground battles after
 
     if ((battles > 0) && (current_battle <= battles)) {
-        var ii, xx, yy, good;
-        ii = 0;
-        good = 0;
-
         var battle_star = find_star_by_name(battle_location[current_battle]);
 
-        if (battle_star != "none") {
+        if (battle_star != noone) {
             // trying to find the star
             obj_controller.x = battle_star.x;
             obj_controller.y = battle_star.y;
             show = current_battle;
 
-            if (battle_world[current_battle] == -50) {
+            if (battle_world[current_battle] == 0) {
                 strin[1] = string(round(battle_pobject[current_battle].capital_number));
                 strin[2] = string(round(battle_pobject[current_battle].frigate_number));
                 strin[3] = string(round(battle_pobject[current_battle].escort_number));
@@ -66,9 +55,7 @@ try {
 
                 // pull enemy ships here
 
-                var e = 1;
-                repeat (10) {
-                    e += 1;
+                for (var e = 2; e <= 11; e++) {
                     if (e == 11) {
                         e = 13;
                     }
@@ -87,32 +74,30 @@ try {
                             }
                         }
 
-                        var l1, l2;
-                        l1 = 0;
-                        l2 = 0;
+                        var _fleet_index = 0;
                         if (obj_controller.faction_status[e] != "War") {
-                            repeat (10) {
-                                l1 += 1;
-                                if ((allied_fleet[l1] == 0) && (l2 == 0)) {
-                                    l2 = l1;
+                            for (var i = 1; i <= 10; i++) {
+                                if (allied_fleet[i] == 0) {
+                                    _fleet_index = i;
+                                    break;
                                 }
                             }
-                            allied_fleet[l2] = e;
-                            acap[l2] = obj_controller.temp[1072];
-                            afri[l2] = obj_controller.temp[1073];
-                            aesc[l2] = obj_controller.temp[1074];
+                            allied_fleet[_fleet_index] = e;
+                            acap[_fleet_index] = obj_controller.temp[1072];
+                            afri[_fleet_index] = obj_controller.temp[1073];
+                            aesc[_fleet_index] = obj_controller.temp[1074];
                         }
                         if ((obj_controller.faction_status[e] == "War") || (e == 9) || (e == 13)) {
-                            repeat (10) {
-                                l1 += 1;
-                                if ((enemy_fleet[l1] == 0) && (l2 == 0)) {
-                                    l2 = l1;
+                            for (var i = 1; i <= 10; i++) {
+                                if (enemy_fleet[i] == 0) {
+                                    _fleet_index = i;
+                                    break;
                                 }
                             }
-                            enemy_fleet[l2] = e;
-                            ecap[l2] = obj_controller.temp[1072];
-                            efri[l2] = obj_controller.temp[1073];
-                            eesc[l2] = obj_controller.temp[1074];
+                            enemy_fleet[_fleet_index] = e;
+                            ecap[_fleet_index] = obj_controller.temp[1072];
+                            efri[_fleet_index] = obj_controller.temp[1073];
+                            eesc[_fleet_index] = obj_controller.temp[1074];
                         }
                     }
                 }
@@ -135,8 +120,7 @@ try {
 
                 strin[3] = "";
 
-                var tempy = 0;
-                tempy = battle_object[current_battle].p_owner[battle_world[current_battle]];
+                var tempy = battle_object[current_battle].p_owner[battle_world[current_battle]];
 
                 if ((tempy == 1) || (tempy == 2) || (tempy == 3)) {
                     var array_string = [
@@ -146,7 +130,7 @@ try {
                         "Moderately",
                         "Highly",
                         "Extremely",
-                        "Maximally"
+                        "Maximally",
                     ];
                     var battle_fortification = battle_object[current_battle].p_fortified[battle_world[current_battle]];
                     strin[3] = array_string[clamp(battle_fortification, 1, 6)];
@@ -163,6 +147,9 @@ try {
                     tempy = battle_object[current_battle].p_tyranids[battle_world[current_battle]];
                 }
                 if (battle_opponent[current_battle] == 10) {
+                    tempy = battle_object[current_battle].p_chaos[battle_world[current_battle]];
+                }
+                if (battle_opponent[current_battle] == 11) {
                     tempy = battle_object[current_battle].p_traitors[battle_world[current_battle]];
                 }
                 if (battle_opponent[current_battle] == 13) {
@@ -187,16 +174,14 @@ try {
                 if (tempy == 6) {
                     strin[4] = "Overwhelming";
                 }
-
-                // if (battle_opponent[current_battle]=2) then obj_controller.alarm[7]=1;
                 obj_controller.cooldown = 9999;
             }
 
-            if (obj_controller.zoomed == 1) {
-                with (obj_controller) {
-                    scr_zoom();
-                }
-            }
+            // if (obj_controller.zoomed == 1) {
+            //     with (obj_controller) {
+            //         scr_zoom();
+            //     }
+            // }
         }
         instance_activate_object(obj_star);
     }
@@ -211,9 +196,6 @@ try {
         }
         alarm[1] = 1;
     }
-
-    /* */
-    /*  */
 } catch (_exception) {
     ERROR_HANDLER.handle_exception(_exception);
 }

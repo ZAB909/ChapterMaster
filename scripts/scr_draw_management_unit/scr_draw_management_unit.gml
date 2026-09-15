@@ -1,17 +1,21 @@
 /// @self Asset.GMObject.obj_controller
 function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_lock = false) {
     var assignment = "none";
-    var _unit;
+    /// @type {Struct.TTRPG_stats|Array}
+    var _unit = noone;
     var string_role = "";
     var health_string = "";
     var eventing = false;
     var jailed = false;
     var impossible = !is_struct(display_unit[selected]) && !is_array(display_unit[selected]);
     var is_man = false;
+    var _loc_name = "";
+    var _loc_planet_num = "";
+    var unit_specialist = false;
     if (man[selected] == "man" && is_struct(display_unit[selected])) {
         is_man = true;
         _unit = display_unit[selected];
-        if (_unit.name() == "" || _unit.base_group == "none") {
+        if (_unit.base_group == "none") {
             return "continue";
         }
         var _active_tags = array_length(manage_tags);
@@ -32,43 +36,37 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
                 return "continue";
             }
         }
-        var unit_specialist = is_specialist(_unit.role());
-        var unit_location_string = "";
+        unit_specialist = is_specialist(_unit.role());
         if (_unit.in_jail()) {
             jailed = true;
-            unit_location_string = "=Penitorium=";
+            _loc_name = localize("=Penitorium=");
         } else {
             var unit_location = _unit.marine_location();
             string_role = _unit.name_role();
             unit_specialism_option = false;
             //TODO make static to handle
-            unit_location_string = string(ma_loc[selected]);
+            _loc_name = string(ma_loc[selected]);
             if (_unit.controllable()) {
                 if (unit_location[0] == eLOCATION_TYPES.PLANET) {
-                    unit_location_string = unit_location[2];
-                    //get roman numeral for system planet
-                    unit_location_string += scr_roman(unit_location[1]);
+                    _loc_name = unit_location[2];
+                    _loc_planet_num = scr_roman(unit_location[1]);
                 } else if (unit_location[0] == eLOCATION_TYPES.SHIP) {
-                    unit_location_string = obj_ini.ship[unit_location[1]];
+                    _loc_name = obj_ini.ship[unit_location[1]];
                 }
-            } else {
-                unit_location_string = ma_loc[selected];
             }
             assignment = _unit.assignment();
             if (assignment != "none") {
-                unit_location_string += $"({assignment})";
+                _loc_name += $"({assignment})";
             } else if ((fest_planet == 0) && (fest_sid > -1) && (fest_repeats > 0) && (ma_lid[selected] == fest_sid)) {
-                unit_location_string = "=Event=";
+                _loc_name = localize("=Event=");
                 eventing = true;
             } else if ((fest_planet == 1) && (fest_wid > 0) && (fest_repeats > 0) && (ma_wid[selected] == fest_wid) && (ma_loc[selected] == fest_star)) {
-                unit_location_string = "=Event=";
+                _loc_name = localize("=Event=");
                 eventing = true;
             }
         }
         if (draw) {
             health_string = ma_health_string[selected];
-
-            var exp_string = $"{round(ma_exp[selected])} EXP";
 
             ma_ar = "";
             ma_we1 = "";
@@ -105,18 +103,15 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
             }
         }
     } else if (man[selected] == "vehicle" && is_array(display_unit[selected]) && draw) {
-        // string_role="v "+string(managing)+"."+string(ide[selected]);
         string_role = string(ma_role[selected]);
-        unit_location_string = string(ma_loc[selected]);
+        _loc_name = string(ma_loc[selected]);
 
         if (ma_wid[selected] != 0) {
-            //numeral for vehicle planet
-            unit_location_string += scr_roman(ma_wid[selected]);
+            _loc_planet_num = scr_roman(ma_wid[selected]);
         } else if (ma_lid[selected] > -1) {
-            unit_location_string = obj_ini.ship[ma_lid[selected]];
+            _loc_name = obj_ini.ship[ma_lid[selected]];
         }
         health_string = string(round(ma_health[selected])) + "% HP";
-        exp_string = "";
         // Need abbreviations here
 
         ma_ar = "";
@@ -150,7 +145,6 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
         if (ma_wep2[selected] != "") {
             ma_we2 = gear_weapon_data("weapon", ma_wep2[selected], "abbreviation");
             ma_we2 = is_string(ma_we2) ? ma_we2 : "";
-            // temp5=string(ma_wep1[selected])+", "+string(ma_wep2[selected])+" + "+string(ma_gear[selected]);
         }
     }
 
@@ -174,16 +168,16 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
         draw_set_alpha(1);
         draw_rectangle(xx + 25, yy + 64, xx + 974, yy + 85, 1);
         if (man[selected] == "man" && is_struct(display_unit[selected])) {
-            var _unit = display_unit[selected];
+            _unit = display_unit[selected];
             var _is_rank_file = is_specialist(_unit.role(), SPECIALISTS_RANK_AND_FILE);
             if (_is_rank_file) {
                 var _role = _unit.role();
                 var _experience = _unit.experience;
 
-                var _data, valid = false;
+                var _data;
                 var _circle_coords = [
                     xx + 321,
-                    yy + 77
+                    yy + 77,
                 ];
                 var _circle_radius = 3;
                 for (var s = 0; s <= 3; s++) {
@@ -195,14 +189,14 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
                     unit_specialism_option = true;
                     var _draw_coords = [
                         _circle_coords[0] + _data.coord_offset[0],
-                        _circle_coords[1] + _data.coord_offset[1]
+                        _circle_coords[1] + _data.coord_offset[1],
                     ];
 
                     var _draw_coords_mouse = [
                         _draw_coords[0] - _circle_radius,
                         _draw_coords[1] - _circle_radius,
                         _draw_coords[0] + _circle_radius,
-                        _draw_coords[1] + _circle_radius
+                        _draw_coords[1] + _circle_radius,
                     ];
                     specialistdir = _unit.specialist_tooltips(_data.name, _data.min_exp);
 
@@ -263,7 +257,7 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
             #6680ff, // Light Blue (HSL: 210, 50%, 50%)
             #6666ff, // Blue (HSL: 240, 50%, 50%)
             #b366ff, // Purple (HSL: 270, 50%, 50%)
-            #ff66ff // Magenta (HSL: 300, 50%, 50%)
+            #ff66ff, // Magenta (HSL: 300, 50%, 50%)
         ];
         if (squad[selected] != -1) {
             var _squad_modulo = squad[selected] % array_length(squad_colours);
@@ -298,8 +292,6 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
         }
 
         draw_line(xx + 25 + 8, yy + 64, xx + 25 + 8, yy + 85);
-        // was 885
-        // 974
 
         if ((man[selected] == "man") && (ma_ar == "")) {
             draw_set_alpha(0.5);
@@ -312,15 +304,16 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
             }
         }
 
+        var exp_string = $"{localize("{0} EXP", [round(ma_exp[selected])])}";
         var hpText = [
             xx + 240 + 8,
             yy + 66,
-            string_hash_to_newline(string(health_string))
+            string_hash_to_newline(string(health_string)),
         ]; // HP
         var xpText = [
             xx + 330 + 8,
             yy + 66,
-            exp_string
+            exp_string,
         ]; // EXP
         var hpColor = c_gray;
         var xpColor = c_gray;
@@ -328,14 +321,14 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
         if (man[selected] == "man") {
             if (ma_health[selected] <= 0) {
                 hpColor = c_red;
-                array_push(health_tooltip, ["Critical Health State! Bionic augmentation is required!", [xx + 250, yy + 64, xx + 300, yy + 85]]);
+                array_push(health_tooltip, [localize("Critical Health State! Bionic augmentation is required!"), [xx + 250, yy + 64, xx + 300, yy + 85]]);
             } else if (ma_health[selected] <= 15) {
                 hpColor = c_yellow;
             }
 
             if (ma_promote[selected] > 0 && !unit_specialist && obj_controller.command_set[2] != 0) {
                 xpColor = c_yellow;
-                array_push(promotion_tooltip, ["Promotion Recommended", [xx + 335, yy + 64, xx + 385, yy + 85]]);
+                array_push(promotion_tooltip, [localize("Promotion Recommended"), [xx + 335, yy + 64, xx + 385, yy + 85]]);
             }
 
             draw_text_color(xpText[0], xpText[1], xpText[2], xpColor, xpColor, xpColor, xpColor, 1);
@@ -349,10 +342,18 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
         draw_text_transformed(xx + 27.5 + 8, yy + 66.5, string_hash_to_newline(string(string_role)), name_xr, 1, 0);
 
         // Draw current location
-        if (location_out_of_player_control(unit_location_string) || (unit_location_string == "=Penitorium=") || (assignment != "none")) {
+        if (location_out_of_player_control(_loc_name) || (_loc_name == localize("=Penitorium=")) || (assignment != "none")) {
             draw_set_alpha(0.5);
         }
-        var truncatedLocation = string_truncate(string(unit_location_string), 130); // Truncate the location string to 100 pixels
+
+        var truncatedLocation = "";
+        if (_loc_planet_num != "") {
+            var _avail = max(130 - string_width(_loc_planet_num), 0);
+            truncatedLocation = $"{string_truncate(_loc_name, _avail)} {_loc_planet_num}";
+        } else {
+            truncatedLocation = string_truncate(string(_loc_name), 130);
+        }
+
         draw_text(xx + 430 + 8, yy + 66, truncatedLocation); // LOC
         draw_set_alpha(1);
 
@@ -360,8 +361,7 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
             draw_sprite(spr_loc_icon, 2, xx + 427 + 8, yy + 66);
         } else {
             if (man[selected] == "man") {
-                c = managing <= 10 ? managing : 0;
-                var _unit = display_unit[selected];
+                _unit = display_unit[selected];
 
                 if ((ma_lid[selected] > -1) && (ma_wid[selected] == 0)) {
                     draw_sprite(spr_loc_icon, _unit.is_boarder ? 2 : 1, xx + 427 + 8, yy + 66);
@@ -439,10 +439,10 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
                         if (!array_contains(obj_controller.management_tags, _tag)) {
                             array_delete(_unit.manage_tags, t, 1);
                         } else {
-                            _tooltip += $"{_tag}\n";
+                            _tooltip += $"{localize(_tag)}\n";
                         }
                     }
-                    _tooltip += "Click to set filter to units tags";
+                    _tooltip += localize("Click to set filter to units tags");
                     tooltip_draw(_tooltip);
                 }
                 if (point_and_click(_tag_button)) {
@@ -456,7 +456,7 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
         var cols = [
             c_gray,
             c_gray,
-            881503
+            881503,
         ];
         if (man[selected] != "man") {
             var xoffset = 0;
@@ -552,7 +552,7 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
                     mouse_x,
                     mouse_y,
                     mouse_x,
-                    mouse_y
+                    mouse_y,
                 ];
                 rectangle_action = !man_sel[selected];
                 man_sel[selected] = !man_sel[selected];
@@ -595,7 +595,7 @@ function scr_draw_management_unit(selected, yy = 0, xx = 0, draw = true, click_l
     }
     if (is_man) {
         force_tool = 0;
-        if ((temp[101] == $"{_unit.role()} {_unit.name}") && ((temp[102] != _unit.armour()) || (temp[104] != _unit.gear()) || (temp[106] == _unit.mobility_item()) || (temp[108] != _unit.weapon_one()) || (temp[110] != _unit.weapon_two()) || (temp[114] == "refresh"))) {
+        if ((temp[101] == $"{_unit.role()} {_unit.name}") && ((temp[102] != _unit.armour()) || (temp[104] != _unit.gear()) || (temp[106] != _unit.mobility_item()) || (temp[108] != _unit.weapon_one()) || (temp[110] != _unit.weapon_two()))) {
             force_tool = 1;
         }
 

@@ -1,6 +1,5 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-/// @param {Asset.GMObject.obj_fleet} combat
+/// @param {Id.Instance.obj_p_fleet} fleet
+/// @param {Id.Instance.obj_fleet} combat
 function add_fleet_ships_to_combat(fleet, combat) {
     var capital_count = array_length(fleet.capital);
     var _ship_id;
@@ -53,7 +52,7 @@ function add_fleet_ships_to_combat(fleet, combat) {
     }
 }
 
-/// @param {Asset.GMObject.obj_fleet} combat
+/// @param {Id.Instance.obj_fleet} combat
 function sort_ships_into_columns(combat) {
     var col = 5;
     with (combat) {
@@ -129,7 +128,6 @@ function player_fleet_ship_spawner() {
                 hei = 160;
                 sizz = 3;
             }
-            // if (column[col]="Slaughtersong"){hei=200;sizz=3;}
             if (column[col] == "Strike Cruiser" || column[col] == "frigate") {
                 hei = 96;
                 sizz = 2;
@@ -150,7 +148,6 @@ function player_fleet_ship_spawner() {
                 temp2 += 20;
             }
 
-            // show_message(string(column_num[col])+" "+string(column[col])+" X:"+string(x2));
             for (var k = 0; k < array_length(ship_id); k++) {
                 if (ship_class[k] == column[col] || (player_ships_class(ship_id[k]) == column[col])) {
                     man = -1;
@@ -346,29 +343,26 @@ function setup_player_combat_ship() {
         armour_other = round(armour_other * 1.1);
     }
 
-    var i = 0, unit, b = 0;
+    var i = 0;
 
     for (var co = 0; co <= obj_ini.companies; co++) {
-        for (i = 0; i < array_length(obj_ini.name[co]); i++) {
-            if (obj_ini.name[co][i] == "") {
+        for (i = 0; i < array_length(obj_ini.TTRPG[co]); i++) {
+            var unit = fetch_unit([co, i]);
+            if (!is_struct(unit)) {
                 continue;
             }
-            unit = fetch_unit([co, i]);
             if (unit.ship_location == ship_id) {
                 if (unit.is_boarder && unit.hp() > (unit.max_health() / 10)) {
-                    array_push(board_co, co);
-                    array_push(board_id, i);
-                    array_push(board_location, 0);
-                    array_push(board_raft, 0);
+                    array_push(board_marine, unit);
                     boarders += 1;
                 }
                 // Loc 0: on origin ship
                 // Loc 1: in transit
                 // Loc >1: (instance_id), on enemy vessel
                 if (co == 0 && master_present == 0 && i < 100) {
-                    if (unit.role() == obj_ini.role[100][eROLE.CHAPTERMASTER] && unit.ship_location == ship_id) {
+                    if (unit.role() == obj_ini.player_role_data[eROLE.CHAPTERMASTER].role && unit.ship_location == ship_id) {
                         master_present = 1;
-                        obj_fleet.control = 1;
+                        obj_fleet.control = true;
                     }
                 }
             }

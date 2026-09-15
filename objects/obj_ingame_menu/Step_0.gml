@@ -22,11 +22,11 @@ switch (effect) {
         var _sav = instance_create_depth(0, 0, -20005, obj_saveload);
         _sav.menu = (effect == eIN_GAME_MENU_EFFECT.SAVE) ? 1 : 2;
 
-        var _b = instance_create_depth(707, 830, -20010, obj_new_button);
-        _b.button_text = "Back";
-        _b.target = eIN_GAME_MENU_EFFECT.BACK_FROM_SAVELOAD;
-        _b.scaling = 1.5;
-        _b.button_id = 1;
+        var _load_button = instance_create_depth(707, 830, -20010, obj_new_button);
+        _load_button.button_text = "Back";
+        _load_button.target = eIN_GAME_MENU_EFFECT.BACK_FROM_SAVELOAD;
+        _load_button.scaling = 1.5;
+        _load_button.button_id = 1;
         break;
 
     case eIN_GAME_MENU_EFFECT.OPTIONS:
@@ -34,12 +34,12 @@ switch (effect) {
             x -= 2000;
             y -= 2000;
         }
-        var _b = instance_create_depth(653, 664, -20010, obj_new_button);
-        _b.sprite_index = spr_ui_but_1;
-        _b.button_text = "Back";
-        _b.target = eIN_GAME_MENU_EFFECT.BACK_FROM_SETTINGS;
-        _b.scaling = 1.5;
-        _b.button_id = 1;
+        var _options_button = instance_create_depth(653, 664, -20010, obj_new_button);
+        _options_button.sprite_index = spr_ui_but_1;
+        _options_button.button_text = "Back";
+        _options_button.target = eIN_GAME_MENU_EFFECT.BACK_FROM_SETTINGS;
+        _options_button.scaling = 1.5;
+        _options_button.button_id = 1;
 
         settings = 1;
         cooldown = 8;
@@ -112,12 +112,12 @@ if (settings == 1 && mouse_button_clicked(mb_left, 0, true)) {
     var _vol_y = [
         223,
         281,
-        337
+        337,
     ];
     var _keys = [
         "master_volume",
         "sfx_volume",
-        "music_volume"
+        "music_volume",
     ];
 
     for (var i = 0; i < 3; i++) {
@@ -142,6 +142,22 @@ if (settings == 1 && mouse_button_clicked(mb_left, 0, true)) {
 
     if (scr_hit(680, 485, 712, 517, true)) {
         global.settings.autosave = !global.settings.autosave;
+        _changed = true;
+    }
+
+    // Language selector arrows
+    var _lang_prev_click = scr_hit(671, 542, 703, 574, true);
+    var _lang_next_click = scr_hit(981, 542, 1013, 574, true);
+
+    if (_lang_prev_click || _lang_next_click) {
+        var _languages = global.available_languages;
+        var _index = array_get_index(_languages, global.settings.language);
+        if (_index == -1) {
+            _index = 0;
+        }
+        var _dir = _lang_prev_click ? -1 : 1;
+        global.settings.language = _languages[(_index + _dir + array_length(_languages)) % array_length(_languages)];
+        global.settings.apply_language();
         _changed = true;
     }
 

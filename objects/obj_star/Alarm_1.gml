@@ -70,7 +70,7 @@ for (var i = 1; i <= 4; i++) {
             break;
         case "Craftworld":
             p_population[i] = irandom_range(150000, 300000);
-            p_station = 6;
+            p_station[i] = 6;
             p_max_population[i] = p_population[i];
             break;
     }
@@ -116,18 +116,21 @@ for (var i = 1; i <= 4; i++) {
         p_pdf[i] = 0;
         p_eldar[i] = 6;
         owner = eFACTION.ELDAR;
-        p_owner[1] = 6;
+        p_owner[1] = eFACTION.ELDAR;
         warp_lanes = [];
         x2 = 0;
     }
-    // p_guardsmen[i]=0;
 }
 
 for (var i = 1; i <= 4; i++) {
     p_guardsmen[i] = 0;
 }
 
-var fleet, system_fleet = 0, capital = 0, frigate = 0, escort = 0;
+var fleet;
+var system_fleet = 0;
+var capital = 0;
+var frigate = 0;
+var escort = 0;
 // Create Imperium Fleet
 if (owner == eFACTION.IMPERIUM || owner == eFACTION.ORK || owner == eFACTION.MECHANICUS) {
     for (var g = 1; g <= 4; g++) {
@@ -167,8 +170,7 @@ if (owner == eFACTION.IMPERIUM || owner == eFACTION.ORK || owner == eFACTION.MEC
 
     if (system_fleet > 0) {
         // DISABLED FOR TESTING FLEET COMBAT
-        fleet = instance_create(x, y, obj_en_fleet);
-        fleet.owner = eFACTION.IMPERIUM;
+        fleet = create_enemy_fleet(x, y, eFACTION.IMPERIUM);
 
         fleet.capital_number = capital;
         fleet.frigate_number = frigate;
@@ -252,8 +254,7 @@ if (owner == eFACTION.TAU) {
         escort = floor(random_range(5, 12));
     }
     if (system_fleet > 0) {
-        fleet = instance_create(x, y, obj_en_fleet);
-        fleet.owner = eFACTION.TAU;
+        fleet = create_enemy_fleet(x, y, eFACTION.TAU);
         // Create ships here
         fleet.sprite_index = spr_fleet_tau;
         fleet.image_speed = 0;
@@ -277,8 +278,8 @@ if (owner == eFACTION.TAU) {
     }
     for (var i = 1; i <= planets; i++) {
         if (p_tau[i] > 0) {
-            p_owner[i] = 8;
-            p_first[i] = 8;
+            p_owner[i] = eFACTION.TAU;
+            p_first[i] = eFACTION.TAU;
 
             switch (p_type[i]) {
                 case "Forge":
@@ -314,13 +315,11 @@ if (owner == eFACTION.TYRANIDS) {
                     p_tyranids[i] = choose(4, 5, 5);
                     break;
             }
-            //array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.GENE_STEALER_CULT));
         }
-        p_owner[i] = eFACTION.IMPERIUM;
     }
 }
 
-if (owner > 20) {
+if (owner == eFACTION.GENESTEALER) {
     for (var i = 1; i <= planets; i++) {
         if (p_population[i] > 0) {
             var new_cult = new NewPlanetFeature(eP_FEATURES.GENE_STEALER_CULT);
@@ -332,23 +331,22 @@ if (owner > 20) {
                 new_cult.hiding = false;
             }
         }
-        p_owner[i] = 2;
+        p_owner[i] = eFACTION.IMPERIUM;
     }
     owner = eFACTION.TYRANIDS;
 }
 
 for (var i = 1; i <= planets; i++) {
-    if ((p_owner[i] == 8) && (p_guardsmen[i] > 0)) {
+    if ((p_owner[i] == eFACTION.TAU) && (p_guardsmen[i] > 0)) {
         p_pdf[i] += p_guardsmen[i];
         p_guardsmen[i] = 0;
     }
-    if ((p_type[i] == "Shrine") && (p_owner[i] != 1) && (p_first[i] != 1)) {
-        p_owner[i] = 5;
-        p_first[i] = 5;
+    if ((p_type[i] == "Shrine") && (p_owner[i] != eFACTION.PLAYER) && (p_first[i] != eFACTION.PLAYER)) {
+        p_owner[i] = eFACTION.ECCLESIARCHY;
+        p_first[i] = eFACTION.ECCLESIARCHY;
         p_sisters[i] = 4;
-        adjust_influence(eFACTION.ECCLESIARCHY, (p_sisters[i] * 10) - irandom(5), i);
+        adjust_influence(eFACTION.ECCLESIARCHY, (p_sisters[i] * 10) - irandom(5), i, id);
     }
-    // if (p_owner[i]=3) or (p_owner[i]=5){p_feature[i]="Artifact|";}Testing ; 137
 }
 
 if ((name == "Kim Jong") && (owner == eFACTION.CHAOS)) {
@@ -362,10 +360,9 @@ if ((name == "Kim Jong") && (owner == eFACTION.CHAOS)) {
 
 obj_controller.alarm[3] = 1;
 
-var i = choose(0, 1);
-if ((i == 1) && (planets > 0)) {
+if ((choose(0, 1) == 1) && (planets > 0)) {
     var nostart = false, aa = 0;
-    i = floor(random(planets)) + 1;
+    var _ran_num = floor(random(planets)) + 1;
 
     if (instance_exists(obj_p_fleet)) {
         aa = instance_nearest(x, y, obj_p_fleet);
@@ -377,10 +374,8 @@ if ((i == 1) && (planets > 0)) {
         nostart = true;
     }
 
-    if ((array_length(p_feature[i]) == 0) && (p_owner[i] != 1) && nostart) {
+    if ((array_length(p_feature[_ran_num]) == 0) && (p_owner[_ran_num] != eFACTION.PLAYER) && nostart) {
         var ranb = 0;
-        // if (ranb=1) and (p_owner[i]!=1) and (p_owner[i]!=2) and (p_owner[i]!=3) then ranb=floor(random(4))+2;
-        //
         var goo = 0;
         if (goo == 0) {
             for (var j = 0; j < 10; j++) {
@@ -402,46 +397,46 @@ if ((i == 1) && (planets > 0)) {
                     if (goo == 0) {
                         switch (ranb) {
                             case 1:
-                                array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.SORORITAS_CATHEDRAL));
-                                if (p_heresy[i] > 10) {
-                                    p_heresy[i] -= 10;
+                                array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.SORORITAS_CATHEDRAL));
+                                if (p_heresy[_ran_num] > 10) {
+                                    p_heresy[_ran_num] -= 10;
                                 }
-                                p_sisters[i] = choose(2, 2, 3);
-                                adjust_influence(eFACTION.ECCLESIARCHY, (p_sisters[i] * 10) - irandom(3), i);
+                                p_sisters[_ran_num] = choose(2, 2, 3);
+                                adjust_influence(eFACTION.ECCLESIARCHY, (p_sisters[_ran_num] * 10) - irandom(3), _ran_num, id);
                                 goo = 1;
                                 break;
                             case 2:
-                                if ((p_type[i] != "Hive") && (p_type[i] != "Lava") && (goo == 0)) {
-                                    array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.NECRON_TOMB));
+                                if ((p_type[_ran_num] != "Hive") && (p_type[_ran_num] != "Lava") && (goo == 0)) {
+                                    array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.NECRON_TOMB));
                                     goo = 1;
                                 }
                                 break;
                             case 3:
-                                array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.ARTIFACT));
+                                array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.ARTIFACT));
                                 goo = 1;
                                 break;
                             case 4:
-                                array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.STC_FRAGMENT));
+                                array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.STC_FRAGMENT));
                                 goo = 1;
                                 break;
                             case 5:
-                                if ((p_type[i] != "Ice") && (p_type[i] != "Dead") && (p_type[i] != "Feudal")) {
+                                if ((p_type[_ran_num] != "Ice") && (p_type[_ran_num] != "Dead") && (p_type[_ran_num] != "Feudal")) {
                                     goo = 1;
-                                    array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.ANCIENT_RUINS));
+                                    array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.ANCIENT_RUINS));
                                 }
                                 break;
                             //alternative spawn for necron tomb probably needs merging with other method
                             case 6:
-                                if ((p_type[i] == "Ice") || (p_type[i] == "Dead")) {
-                                    array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.NECRON_TOMB));
+                                if ((p_type[_ran_num] == "Ice") || (p_type[_ran_num] == "Dead")) {
+                                    array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.NECRON_TOMB));
                                     goo = 1;
                                 }
                                 break;
                             case 7:
-                                if ((p_type[i] == "Dead") || (p_type[i] == "Desert")) {
+                                if ((p_type[_ran_num] == "Dead") || (p_type[_ran_num] == "Desert")) {
                                     var randum = floor(random(100)) + 1;
                                     if (randum <= 25) {
-                                        array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.CAVE_NETWORK));
+                                        array_push(p_feature[_ran_num], new NewPlanetFeature(eP_FEATURES.CAVE_NETWORK));
                                         goo = 1;
                                     }
                                 }
@@ -454,77 +449,26 @@ if ((i == 1) && (planets > 0)) {
     }
 }
 
-var hyu = 0;
+var hyu = false;
 for (var i = 1; i <= 4; i++) {
     if (p_tyranids[i] >= 5) {
         p_guardsmen[i] = 0;
         p_pdf[i] = 0;
         p_population[i] = 0;
-        hyu += 1;
-        p_owner[i] = 9;
+        hyu = true;
+        p_owner[i] = eFACTION.TYRANIDS;
     }
-    if ((p_first[i] <= 5) && (dispo[i] > -5000)) {
+    if ((p_first[i] <= eFACTION.ECCLESIARCHY) && (dispo[i] > -5000)) {
         dispo[i] = -20;
     }
 }
-if ((hyu == 0) && (owner == eFACTION.TYRANIDS)) {
+if ((!hyu) && (owner == eFACTION.TYRANIDS)) {
     owner = eFACTION.IMPERIUM;
 }
 
 scr_star_ownership(false);
 
-if (obj_controller.is_test_map == true) {
-    /*if (p_owner[1]=3) then p_feature[1]="STC Fragment|";
-    if (p_owner[2]=3) then p_feature[2]="STC Fragment|";
-    if (p_owner[3]=3) then p_feature[3]="STC Fragment|";
-    
-    
-    // Testing new guardsmen
-    p_guardsmen[1]=5000000;
-    p_tyranids[1]=4;
-    
-    p_guardsmen[2]=500000;
-    p_tyranids[2]=3;
-    
-    p_guardsmen[3]=100000;
-    p_tyranids[3]=2;
-    
-    p_orks[1]=0;p_orks[2]=0;p_orks[3]=0;*/
-}
-
-// if (obj_controller.is_test_map=true) and (p_owner[2]=1){
-
-if (p_owner[2] == 1) {
-    /*
-    p_guardsmen[2]=10000000;
-    p_pdf[2]=0;
-    obj_controller.faction_status[eFACTION.IMPERIUM]="War";
-    */
-
-    // p_type[1]="Dead";
-    // p_feature[2]="";
-
-    // p_orks[2]=3;
-    // p_feature[2]="Starship!0!|";
-
-    /*repeat(4){
-        var fleet;fleet=instance_create(x+(floor(random_range(100,200))*choose(1,-1)),y+(floor(random_range(100,200))*choose(1,-1)),obj_en_fleet);
-        fleet.owner = eFACTION.CHAOS;fleet.sprite_index=spr_fleet_chaos;fleet.orbiting=0;
-        fleet.action_x=x;fleet.action_y=y;fleet.alarm[4]=1;
-        
-        fleet.capital_number=0;
-        fleet.frigate_number=1;
-        fleet.escort_number=2;
-        
-        // Create ships here
-        fleet.image_speed=0;
-        var ii;ii=0;ii+=capital-1;ii+=round((frigate/2));ii+=round((escort/4));
-        if (ii<=1) and (capital+frigate+escort>0) then ii=1;
-        fleet.image_index=ii;
-    }*/
-}
-
-if ((obj_controller.is_test_map != true) && (p_owner[2] != 1)) {
+if (p_owner[2] != eFACTION.PLAYER) {
     for (var i = 1; i <= 4; i++) {
         p_guardsmen[i] = 0;
     }

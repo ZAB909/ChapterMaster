@@ -18,7 +18,7 @@ global.tag_recovery_values = {
     "terminator": 30,
 };
 
-function EquipmentStruct(item_data, core_type, quality_request = "none", arti_struct = -1) constructor {
+function EquipmentStruct(item_data = undefined, core_type = "", quality_request = "none", arti_struct = -1) constructor {
     type = core_type;
 
     if (is_real(arti_struct) && arti_struct > -1) {
@@ -68,7 +68,6 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
                     self[$ _struct_key] = self[$ _struct_key][$ quality];
                 }
             }
-            // _struct_key = "";
         }
     }
 
@@ -92,27 +91,158 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
         recovery_chance = clamp(recovery_chance, 0, 100);
     }
 
+    /// @desc Whether a given stat currently has a displayable value for this item
+    /// @param {string} stat The stat key
+    /// @param {string} type The item's type, used for type-specific conditions
+    /// @returns {bool} Whether the stat should be shown in the tooltip
+    static stat_display_has_value = function(stat) {
+        switch (stat) {
+            case "quality":
+                return quality != "";
+            case "armour_value":
+                return armour_value != 0;
+            case "hp_mod":
+                return hp_mod != 0;
+            case "damage_resistance_mod":
+                return damage_resistance_mod != 0;
+            case "attack":
+                return attack != 0;
+            case "spli":
+                return type == "weapon";
+            case "ranged_mod":
+                return ranged_mod != 0;
+            case "melee_mod":
+                return melee_mod != 0;
+            case "ammo":
+                return ammo != 0;
+            case "range":
+                return range > 1.1;
+            case "melee_hands":
+                return melee_hands != 0;
+            case "ranged_hands":
+                return ranged_hands != 0;
+            case "maintenance":
+                return maintenance > 0;
+        }
+        return false;
+    };
+
     // All methods and functions are bllow;
+    static stat_display_value_conversion = function(stat) {
+        switch (stat) {
+            case "description":
+                return description;
+            case "quality":
+                return quality_string_conversion(quality);
+            case "armour_value":
+                return (type == "armour") ? string(armour_value) : format_number_with_sign(armour_value);
+            case "hp_mod":
+                return string_format_percentage(hp_mod);
+            case "damage_resistance_mod":
+                return string_format_percentage(damage_resistance_mod);
+            case "attack":
+                return string(attack);
+            case "spli":
+                return string(max(1, spli));
+            case "ranged_mod":
+                return string_format_percentage(ranged_mod);
+            case "melee_mod":
+                return string_format_percentage(melee_mod);
+            case "ammo":
+                return string(ammo);
+            case "range":
+                return string(range);
+            case "melee_hands":
+                return (type == "weapon") ? string(melee_hands) : format_number_with_sign(melee_hands);
+            case "ranged_hands":
+                return (type == "weapon") ? string(ranged_hands) : format_number_with_sign(ranged_hands);
+            case "special_description":
+                return special_description;
+            case "req_exp":
+                return string(req_exp) + " " + localize("EXP");
+            case "maintenance":
+                return string(maintenance);
+        }
+        return "";
+    };
+
+    /// @desc Returns the display label for a given stat key
+    /// @param {string} stat The stat key (e.g. "hp_mod", "range", "armour_value")
+    /// @param {string} type The item's type, used for labels that differ by type
+    /// @returns {string} The localized display label, or empty string if the stat has no simple label
+    static stat_display_label_conversion = function(stat) {
+        var _label = "";
+        switch (stat) {
+            case "quality":
+                _label = "Quality";
+                break;
+            case "armour_value":
+                _label = "Armour";
+                break;
+            case "hp_mod":
+                _label = "Health Mod";
+                break;
+            case "damage_resistance_mod":
+                _label = "Damage Res";
+                break;
+            case "attack":
+                _label = "Damage";
+                break;
+            case "spli":
+                _label = "Max Kills";
+                break;
+            case "ranged_mod":
+                _label = "Ranged Mod";
+                break;
+            case "melee_mod":
+                _label = "Melee Mod";
+                break;
+            case "ammo":
+                _label = "Ammo";
+                break;
+            case "range":
+                _label = "Range";
+                break;
+            case "melee_hands":
+                _label = (type == "weapon") ? "Melee Burden" : "Melee Burden Cap";
+                break;
+            case "ranged_hands":
+                _label = (type == "weapon") ? "Ranged Burden" : "Ranged Burden Cap";
+                break;
+            case "special_properties":
+                _label = "Properties";
+                break;
+            case "tags":
+                _label = "Keywords";
+                break;
+            case "maintenance":
+                _label = "Maintenance";
+                break;
+        }
+        return localize(_label);
+    };
 
     static item_tooltip_desc_gen = function() {
         item_desc_tooltip = "";
         var stat_order;
-        var item_type = type;
         if (type == "") {
+            if (name == "") {
+                return "";
+            }
             if (struct_exists(global.gear[$ "armour"], name)) {
-                item_type = "armour";
+                type = "armour";
             } else if (struct_exists(global.gear[$ "mobility"], name)) {
-                item_type = "mobility";
+                type = "mobility";
             } else if (struct_exists(global.gear[$ "gear"], name)) {
-                item_type = "gear";
+                type = "gear";
             } else if (struct_exists(global.weapons, name)) {
-                item_type = "weapon";
+                type = "weapon";
             } else {
                 item_desc_tooltip = "Error: Item not found!";
                 return item_desc_tooltip;
             }
         }
-        switch (item_type) {
+        switch (type) {
             default:
                 stat_order = [
                     "description",
@@ -133,7 +263,7 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
                     "special_properties",
                     "req_exp",
                     "tags",
-                    "specials"
+                    "specials",
                 ];
                 break;
             case "weapon":
@@ -156,117 +286,70 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
                     "special_properties",
                     "req_exp",
                     "tags",
-                    "specials"
+                    "specials",
                 ];
                 break;
         }
 
+        // Stats with no specialised output logic - just "Label: value" (or "Label: value##" for quality)
+        var simple_stats = [
+            "quality",
+            "armour_value",
+            "hp_mod",
+            "damage_resistance_mod",
+            "attack",
+            "spli",
+            "ranged_mod",
+            "melee_mod",
+            "ammo",
+            "range",
+            "melee_hands",
+            "ranged_hands",
+            "maintenance",
+        ];
+
         for (var i = 0; i < array_length(stat_order); i++) {
-            var stat = stat_order[i];
-            switch (stat) {
+            var _stat = stat_order[i];
+
+            if (array_contains(simple_stats, _stat)) {
+                if (stat_display_has_value(_stat)) {
+                    var _terminator = (_stat == "quality") ? "##" : "#";
+                    item_desc_tooltip += $"{stat_display_label_conversion(_stat)}: {stat_display_value_conversion(_stat)}{_terminator}";
+                }
+                continue;
+            }
+
+            switch (_stat) {
                 case "description":
                     if (description != "") {
-                        item_desc_tooltip += $"{description}##";
-                    }
-                    break;
-                case "quality":
-                    if (quality != "") {
-                        item_desc_tooltip += $"Quality: {quality_string_conversion(quality)}##";
-                    }
-                    break;
-                case "armour_value":
-                    if (armour_value != 0) {
-                        if (item_type == "armour") {
-                            item_desc_tooltip += $"Armour: {armour_value}#";
-                        } else {
-                            item_desc_tooltip += $"Armour: {format_number_with_sign(armour_value)}#";
-                        }
-                    }
-                    break;
-                case "hp_mod":
-                    if (hp_mod != 0) {
-                        item_desc_tooltip += $"Health Mod: {format_number_with_sign(hp_mod)}%#";
-                    }
-                    break;
-                case "damage_resistance_mod":
-                    if (damage_resistance_mod != 0) {
-                        item_desc_tooltip += $"Damage Res: {format_number_with_sign(damage_resistance_mod)}%#";
-                    }
-                    break;
-                case "attack":
-                    if (attack != 0) {
-                        item_desc_tooltip += $"Damage: {attack}#";
-                    }
-                    break;
-                case "spli":
-                    if (item_type == "weapon") {
-                        item_desc_tooltip += $"Max Kills: {max(1, spli)}#";
-                    }
-                    break;
-                case "ranged_mod":
-                    if (ranged_mod != 0) {
-                        item_desc_tooltip += $"Ranged Mod: {format_number_with_sign(ranged_mod)}%#";
-                    }
-                    break;
-                case "melee_mod":
-                    if (melee_mod != 0) {
-                        item_desc_tooltip += $"Melee Mod: {format_number_with_sign(melee_mod)}%#";
-                    }
-                    break;
-                case "ammo":
-                    if (ammo != 0) {
-                        item_desc_tooltip += $"Ammo: {ammo}#";
-                    }
-                    break;
-                case "range":
-                    if (range > 1.1) {
-                        item_desc_tooltip += $"Range: {range}#";
-                    }
-                    break;
-                case "melee_hands":
-                    if (melee_hands != 0) {
-                        if (item_type == "weapon") {
-                            item_desc_tooltip += $"Melee Burden: {melee_hands}#";
-                        } else {
-                            item_desc_tooltip += $"Melee Burden Cap: {format_number_with_sign(melee_hands)}#";
-                        }
-                    }
-                    break;
-                case "ranged_hands":
-                    if (ranged_hands != 0) {
-                        if (item_type == "weapon") {
-                            item_desc_tooltip += $"Ranged Burden: {ranged_hands}#";
-                        } else {
-                            item_desc_tooltip += $"Ranged Burden Cap: {format_number_with_sign(ranged_hands)}#";
-                        }
+                        item_desc_tooltip += $"{localize(description)}##";
                     }
                     break;
                 case "special_properties":
                     var special_properties_array = [];
                     if (array_length(special_properties) > 0) {
                         for (var k = 0; k < array_length(special_properties); k++) {
-                            array_push(special_properties_array, special_properties[k]);
+                            array_push(special_properties_array, localize(special_properties[k]));
                         }
                     }
                     if (arp == 4) {
-                        array_push(special_properties_array, "Anti Vehicle");
+                        array_push(special_properties_array, localize("Anti Vehicle"));
                     } else if (arp == 1) {
-                        array_push(special_properties_array, "Low Penetration");
+                        array_push(special_properties_array, localize("Low Penetration"));
                     } else if (arp == 2) {
-                        array_push(special_properties_array, "Medium Penetration");
+                        array_push(special_properties_array, localize("Medium Penetration"));
                     } else if (arp == 3) {
-                        array_push(special_properties_array, "High Penetration");
+                        array_push(special_properties_array, localize("High Penetration"));
                     }
                     if (array_length(second_profiles) > 0) {
                         for (var h = 0; h < array_length(second_profiles); h++) {
                             if (string_pos("Integrated", second_profiles[h]) == 0) {
-                                var integrated_member = "Integrated " + second_profiles[h];
+                                var integrated_member = localize("Integrated {0}", [localize(second_profiles[h])]);
                                 array_push(special_properties_array, integrated_member);
                             } else {
-                                array_push(special_properties_array, second_profiles[h]);
+                                array_push(special_properties_array, localize(second_profiles[h]));
                             }
                         }
-                        //item_desc_tooltip += $"#Properties:#{special_properties_string}#"
                     }
 
                     if (is_struct(specials)) {
@@ -275,7 +358,7 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
                         for (var j = 0; j < array_length(_specials); j++) {
                             var _special = _specials[j];
                             var _special_value = specials[$ _special];
-                            _specials_string += $"{format_underscore_string(_special)} ({_special_value})";
+                            _specials_string += localize("{0} ({1})", [localize(format_underscore_string(_special)), _special_value]);
                             array_push(special_properties_array, _specials_string);
                         }
                     }
@@ -283,34 +366,29 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
                     var _array_length = array_length(special_properties_array);
                     if (_array_length > 0) {
                         var special_properties_string = array_to_string_order(special_properties_array, false, false);
-                        item_desc_tooltip += $"#Properties:#{special_properties_string}#";
+                        item_desc_tooltip += $"#{stat_display_label_conversion(_stat)}:#{special_properties_string}#";
                     }
                     break;
                 case "special_description":
                     if (special_description != "") {
-                        item_desc_tooltip += $"#{special_description}#";
+                        item_desc_tooltip += $"#{localize(special_description)}#";
                     }
                     break;
                 case "req_exp":
                     if (req_exp > 0) {
-                        item_desc_tooltip += $"#Requires {req_exp} EXP#";
+                        item_desc_tooltip += $"{localize("#Requires {0} EXP#", [req_exp])}";
                     }
                     break;
                 case "tags":
                     if (array_length(tags) > 0) {
                         var tagString = "";
                         for (var j = 0; j < array_length(tags); j++) {
-                            tagString += tags[j];
+                            tagString += localize(tags[j]);
                             if (j < array_length(tags) - 1) {
                                 tagString += ", ";
                             }
                         }
-                        item_desc_tooltip += $"#Keywords:#{tagString}#";
-                    }
-                    break;
-                case "maintenance":
-                    if (maintenance > 0) {
-                        item_desc_tooltip += $"Maintenance: {maintenance}#";
+                        item_desc_tooltip += $"#{stat_display_label_conversion(_stat)}:#{tagString}#";
                     }
                     break;
             }
@@ -318,8 +396,14 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
         return item_desc_tooltip;
     };
 
-    static has_tag = function(tag) {
-        return array_contains(tags, tag);
+    /// @desc Returns a formatted attribute string for the item
+    /// @param {string} attribute The attribute key to format (e.g. "hp_mod", "damage_resistance_mod", "armour_value")
+    /// @returns {string} The formatted attribute string, or empty string if the attribute value is 0
+    static item_attribute_string = function(attribute) {
+        if (!stat_display_has_value(attribute)) {
+            return "";
+        }
+        return $"{name}: {stat_display_value_conversion(attribute)}";
     };
 
     static special_value = function(special) {
@@ -334,6 +418,10 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
             }
         }
         return 0;
+    };
+
+    static has_tag = function(tag) {
+        return array_contains(tags, tag);
     };
 
     static has_tags = function(search_tags) {
@@ -400,6 +488,20 @@ function EquipmentStruct(item_data, core_type, quality_request = "none", arti_st
             }
         }
     };
+
+    static evaluate = function(evaluation_data) {
+        var _valid = true;
+        var _eval_count = array_length(struct_get_names(evaluation_data));
+        if (struct_exists(evaluation_data, "name")) {
+            _eval_count--;
+            var _name_check = evaluation_data.name;
+            _valid = name == _name_check;
+        }
+
+        if (_eval_count == 0) {
+            return _valid;
+        }
+    };
 }
 
 /// @param {string} search_area possible values: "any", "weapon", "gear", "armour", "mobility"
@@ -409,7 +511,7 @@ function gear_weapon_data(search_area = "any", item, wanted_data = "all", sub_cl
     gear_areas = [
         "gear",
         "armour",
-        "mobility"
+        "mobility",
     ];
     if (search_area == "any") {
         data_found = false;
@@ -503,8 +605,4 @@ function quality_color(_item_quality) {
         case "artifact":
             return #40bfbf;
     }
-}
-
-function format_number_with_sign(number) {
-    return number > 0 ? "+" + string(number) : string(number);
 }

@@ -11,150 +11,49 @@
 #macro COL_REQUISITION #2398F8
 #macro COL_FORGE_POINTS #af5a00
 
+// First candidate TTF used when a language needs CJK glyphs that the latin fonts lack.
+#macro STR_CJK_FALLBACK_FONT "fonts/simhei.ttf"
+
+// Locale codes of shipped languages.
+#macro LANG_EN "en"
+#macro LANG_ZH "zh"
+
+// Language JSON file layout under datafiles/. Path is: working_directory + LANG_FILE_DIR + <code> + LANG_FILE_EXT
+#macro LANG_FILE_DIR "/lang/"
+#macro LANG_FILE_EXT ".json"
+
+// Field keys of the { text, variables } struct used for keys with {0}, {1} placeholders in
+// localize_array()/localize_button_text()/power flavour text. Centralized so the array-entry
+// contract stays explicit across LocalizationManager, scr_buttons and scr_powers.
+#macro LANG_ENTRY_TEXT "text"
+#macro LANG_ENTRY_VARIABLES "variables"
+
 #macro MANAGE_MAN_SEE 34
 #macro MANAGE_MAN_MAX array_length(obj_controller.display_unit) + 7
 #macro LARGE_PLANET_MOD 1000000000 // Population threshold for large planet classification
 
+// Ground combat message log: per-stage frame timeout before force-advancing.
+#macro COMBAT_STAGE_TIMEOUT_FRAMES 1200
+
+// Offmap shove distance for non-combatant fleets during battle resolution; must exceed room size so they read as !in_room().
+#macro FLEET_BATTLE_DISPLACEMENT 100000
+
+// Gates the "Meet Chaos Emissary" entry point on the diplomacy screen until the Chaos Emissary is implemented.
+// TODO set to true or just remove this macro once the emissary is implemented.
+#macro CHAOS_EMISSARY_ENABLED false
+
 #macro STR_ANY_POWER_ARMOUR "Any Power Armour"
 #macro STR_ANY_TERMINATOR_ARMOUR "Any Terminator Armour"
 
-// Basic, because we don't include Artificer Armour
-global.list_basic_power_armour = ["MK7 Aquila", "MK6 Corvus", "MK5 Heresy", "MK8 Errant", "MK4 Maximus", "MK3 Iron Armour","Power Armour"];
-global.list_terminator_armour = ["Terminator Armour", "Tartaros","Cataphractii"];
-global.faction_names = ["","Your Chapter", "Imperium of Man","Adeptus Mechanicus","Inquisition","Ecclesiarchy","Eldar","Orks", "Tyranid Hive","Tau Empire","Chaos","Heretics","Genestealer Cults", "Necron Dynasties"];
-global.xenos_factions = [6,7,8,9];
-
-global.fleet_move_options = ["move", "crusade1","crusade2","crusade3", "mars_spelunk1"];
-
-global.alliance_grades = ["Hated", "Hostile","Suspicious","Uneasy","Neutral","Allies","Close Allies","Battle Brothers"];
-
 #macro SHIP_WEAPON_SLOTS 8
+#macro STANDARD_EQUIP_SLOT_COUNT 5
 
-enum eFACTION {
-    PLAYER = 1,
-    IMPERIUM,
-    MECHANICUS,
-    INQUISITION,
-    ECCLESIARCHY,
-    ELDAR,
-    ORK,
-    TAU,
-    TYRANIDS,
-    CHAOS,
-    HERETICS,
-    GENESTEALER,
-    NECRONS = 13
-}
-
-
-enum eGENDER {
-    FEMALE,
-    MALE,
-    NEUTRAL
-}
-
-function set_gender(){
-    return choose(eGENDER.FEMALE, eGENDER.MALE);
-}
-enum eROLE {
-    NONE = 0,
-    CHAPTERMASTER = 1,
-    HONOURGUARD = 2,
-    VETERAN = 3,
-    TERMINATOR = 4,
-    CAPTAIN = 5,
-    DREADNOUGHT = 6,
-    CHAMPION = 7,
-    TACTICAL = 8,
-    DEVASTATOR = 9,
-    ASSAULT = 10,
-    ANCIENT = 11,
-    SCOUT = 12,
-    CHAPLAIN = 14,
-    APOTHECARY = 15,
-    TECHMARINE = 16,
-    LIBRARIAN = 17,
-    SERGEANT = 18,
-    VETERANSERGEANT = 19,
-    LANDRAIDER = 50,
-    RHINO = 51,
-    PREDATOR = 52,
-    LANDSPEEDER = 53,
-    WHIRLWIND = 54,
-}
-enum eMENU {
-    DEFAULT = 0,
-    MANAGE = 1,
-    APOTHECARION = 11,
-    RECLUSIAM = 12,
-    LIBRARIUM = 13,
-    ARMAMENTARIUM = 14,
-    RECRUITING = 15,
-    FLEET = 16,
-    EVENT_LOG = 17,
-    DIPLOMACY = 20,
-    SETTINGS = 21,
-    COMPANY_SETTINGS = 22,
-    ROLE_SETTINGS = 23,
-    FORMATIONS_SETTINGS = 24,
-    GAME_HELP = 30,
-    SECRET_LAIR = 60
-}
-
-enum eLUCK {
-    BAD = -1,
-    NEUTRAL = 0,
-    GOOD = 1
-}
-
-enum eINQUISITION_MISSION {
-    PURGE,
-    INQUISITOR,
-    SPYRER,
-    ARTIFACT,
-    TOMB_WORLD,
-    TYRANID_ORGANISM,
-    ETHEREAL,
-    DEMON_WORLD
-}
-
-enum eEVENT {
-    //GOOD
-    SPACE_HULK,
-    PROMOTION,
-    STRANGE_BUILDING,
-    SORORITAS,
-    ROGUE_TRADER,
-    INQUISITION_MISSION,
-    INQUISITION_PLANET,
-    MECHANICUS_MISSION,
-    //NEUTRAL
-    STRANGE_BEHAVIOR,
-    FLEET_DELAY,
-    HARLEQUINS,
-    SUCCESSION_WAR,
-    RANDOM_FUN,
-    //BAD
-    WARP_STORMS,
-    ENEMY_FORCES,
-    CRUSADE,
-    ENEMY,
-    MUTATION,
-    SHIP_LOST,
-    CHAOS_INVASION,
-    NECRON_AWAKEN,
-    FALLEN,
-    //END
-    NONE
-}
-
-enum eIN_GAME_MENU_EFFECT {
-    SAVE = 11,
-    LOAD = 12,
-    OPTIONS = 13,
-    EXIT = 14,
-    RETURN = 15,
-    BACK_FROM_SAVELOAD = 18,
-    BACK_FROM_SETTINGS = 25,
-    CLOSE_SAVELOAD = 30
-}
+#macro PATH_SAVE_FILES "Save Files/save{0}.json"
+#macro PATH_AUTOSAVE_FILE "Save Files/save0.json"
+#macro PATH_CUSTOM_ICONS "Custom Files/Custom Icons/"
+#macro PATH_CHAPTER_ICONS working_directory + "/images/creation/chapters/icons/"
+#macro PATH_INCLUDED_ICONS working_directory + "/images/creation/customicons/"
+#macro PATH_LOG_DIRECTORY "Logs/"
+#macro LAST_MESSAGES_LOG "last_messages.log"
+#macro PATH_LAST_MESSAGES PATH_LOG_DIRECTORY + LAST_MESSAGES_LOG
+#macro PATH_HELP_INI "main/help.ini"

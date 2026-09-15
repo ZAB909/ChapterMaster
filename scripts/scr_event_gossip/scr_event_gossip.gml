@@ -6,7 +6,8 @@ function scr_event_gossip(argument0) {
     that = 0;
     that_type = "";
     words = "";
-    him_chaos = obj_ini.TTRPG[attend_co[argument0]][attend_id[argument0]].corruption;
+    var _unit = fetch_unit([attend_co[argument0], attend_id[argument0]]);
+    him_chaos = is_struct(_unit) ? _unit.corruption : 0;
 
     p = -1;
     repeat (101) {
@@ -24,24 +25,28 @@ function scr_event_gossip(argument0) {
         p += 1;
         gossip[p] = "past_battles";
     }
-    if (string_count("&", obj_ini.armour[attend_co[argument0]][attend_id[argument0]]) > 0) {
+
+    var _comp = attend_co[argument0];
+    var _num = attend_id[argument0];
+    var _unit = fetch_unit([_comp, _num]);
+
+    if (is_struct(_unit.armour(true))) {
         p += 1;
         gossip[p] = "artifact_armour";
     }
-    if (string_count("&", obj_ini.wep1[attend_co[argument0]][attend_id[argument0]]) > 0) {
+    if (is_struct(_unit.weapon_one(true))) {
         p += 1;
         gossip[p] = "artifact_wep";
     }
-    if (string_count("&", obj_ini.wep2[attend_co[argument0]][attend_id[argument0]]) > 0) {
+    if (is_struct(_unit.weapon_two(true))) {
         p += 1;
         gossip[p] = "artifact_wep";
     }
-    // if (string_count("&",obj_ini.gear[attend_co[argument0],attend_id[argument0]])>0){p+=1;gossip[p]="artifact_gear";}
-    if (obj_ini.mobi[attend_co[argument0]][attend_id[argument0]] == "Bike") {
+    if (_unit.mobility_item() == "Bike") {
         p += 1;
         gossip[p] = "mah_bike";
     }
-    if (obj_ini.mobi[attend_co[argument0]][attend_id[argument0]] == "Jump Pack") {
+    if (_unit.mobility_item() == "Jump Pack") {
         p += 1;
         gossip[p] = "mah_jump";
     }
@@ -171,11 +176,12 @@ function scr_event_gossip(argument0) {
     that_type = string(gossip[that]);
 
     var na, ra;
-    na = obj_ini.name[attend_co[argument0]][attend_id[argument0]];
-    ra = obj_ini.role[attend_co[argument0]][attend_id[argument0]];
+    var _unit = fetch_unit([attend_co[argument0], attend_id[argument0]]);
+    na = _unit.name();
+    ra = _unit.role();
 
     // Getting there
-    words = string(ra) + " " + string(na) + " ";
+    words = $"{ra} {na}";
 
     if (that_type == "future_battles") {
         words += choose("recounts", "retells", "tells", "speaks of") + " future glorious battles that the Chapter will partake of, in glory of " + choose("our honor", "The Emperor", "The Imperium", "Primarch") + ".";
@@ -501,7 +507,7 @@ function scr_event_gossip(argument0) {
 
         if ((blah == "captain_promote") && (cn.recent_number[gossip_recent[that]] == attend_co[argument0])) {
             rando = choose(1, 2);
-            words += "gives a cheer to " + string(cn.recent_keyword[gossip_recent[that]]) + ", for his promotion to " + string(obj_ini.role[100][5]) + ".";
+            words += "gives a cheer to " + string(cn.recent_keyword[gossip_recent[that]]) + ", for his promotion to " + string(obj_ini.player_role_data[eROLE.CAPTAIN].role) + ".";
             if (rando == 1) {
                 words += "  May he lead the company to glory!";
             }
@@ -511,7 +517,7 @@ function scr_event_gossip(argument0) {
         }
         if ((blah == "terminator_promote") && (cn.recent_number[gossip_recent[that]] == attend_co[argument0])) {
             rando = choose(1, 2);
-            words += "gives a cheer to " + string(cn.recent_keyword[gossip_recent[that]]) + ", for his promotion to " + string(obj_ini.role[100][4]) + ".";
+            words += "gives a cheer to " + string(cn.recent_keyword[gossip_recent[that]]) + ", for his promotion to " + string(obj_ini.player_role_data[eROLE.TERMINATOR].role) + ".";
             if (rando == 1) {
                 words += "  Let the enemies of man die at his feet!";
             }
@@ -521,7 +527,7 @@ function scr_event_gossip(argument0) {
         }
         if ((blah == "honor_promote") && (cn.recent_number[gossip_recent[that]] == attend_co[argument0])) {
             rando = choose(1, 2);
-            words += "gives a cheer to " + string(cn.recent_keyword[gossip_recent[that]]) + ", for his promotion to " + string(obj_ini.role[100][2]) + ".";
+            words += "gives a cheer to " + string(cn.recent_keyword[gossip_recent[that]]) + ", for his promotion to " + string(obj_ini.player_role_data[eROLE.HONOURGUARD].role) + ".";
             if (rando >= 1) {
                 words += "  Let the enemies of man die at his feet!";
             }

@@ -21,7 +21,7 @@ if (slide == 1) {
 // Play audio
 if ((slate5 == 1) || (slate6 == 1)) {
     if ((global.settings.master_volume > 0) && (global.settings.sfx_volume > 0)) {
-        audio_play_sound(snd_buzz, 0, false);
+        global.audio_manager.play_sfx(SFX_BUZZ);
     }
 }
 
@@ -142,7 +142,7 @@ if ((change_slide == 35) || (change_slide == 36) || (chapter_name == "Doom Benef
         load_to_ships = [
             2,
             0,
-            0
+            0,
         ];
         successors = 0;
         mutations = 0;
@@ -287,18 +287,7 @@ if (full_liveries == "") {
         lens_color: lens_color,
         weapon_color: weapon_color,
     };
-    livery_picker.scr_unit_draw_data();
-    livery_picker.set_default_armour(struct_cols, col_special);
-    full_liveries = array_create(21, variable_clone(livery_picker.map_colour));
-    full_liveries[eROLE.LIBRARIAN] = livery_picker.set_default_librarian(struct_cols);
-
-    full_liveries[eROLE.CHAPLAIN] = livery_picker.set_default_chaplain(struct_cols);
-
-    full_liveries[eROLE.APOTHECARY] = livery_picker.set_default_apothecary(struct_cols);
-
-    full_liveries[eROLE.TECHMARINE] = livery_picker.set_default_techmarines(struct_cols);
-    livery_picker.scr_unit_draw_data();
-    livery_picker.set_default_armour(struct_cols, col_special);
+    livery_picker.setup_full_liveries_array(struct_cols, col_special);
 }
 
 // on left mouse release, if greater than 5000 and less than 9000, set cooldown to 0

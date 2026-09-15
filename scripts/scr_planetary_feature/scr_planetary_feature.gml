@@ -123,12 +123,12 @@ function NewPlanetFeature(feature_type, other_data = {}) constructor {
             break;
         case eP_FEATURES.STC_FRAGMENT:
             player_hidden = 1;
-            Fragment_type = 0;
+            // fragment_type = 0;
             planet_display = "STC Fragment";
             break;
         case eP_FEATURES.CAVE_NETWORK:
             player_hidden = 1;
-            cave_depth = irandom(3); //allow_multiple levels of caves, option to go deeper
+            // cave_depth = irandom(3); //allow_multiple levels of caves, option to go deeper
             planet_display = "Unexplored Cave Network";
             break;
         case eP_FEATURES.SORORITAS_CATHEDRAL:
@@ -142,7 +142,7 @@ function NewPlanetFeature(feature_type, other_data = {}) constructor {
         case eP_FEATURES.ORKWARBOSS:
             player_hidden = 1;
             planet_display = "Ork Warboss";
-            Warboss = "alive";
+            // warboss_status = "alive";
             name = global.name_generator.GenerateComposite("ork", false);
             turns_static = 0;
             break;
@@ -152,7 +152,7 @@ function NewPlanetFeature(feature_type, other_data = {}) constructor {
             tier = 1;
             break;
         case eP_FEATURES.MONASTERY:
-            planet_display = "Fortress Monastary";
+            planet_display = "Fortress Monastery";
             player_hidden = 0;
             forge = 0;
             name = global.name_generator.GenerateFromSet("imperial_ship");
@@ -291,33 +291,25 @@ function awake_tomb_world(planet) {
 
 //selas a tomb world and switche off awake so will no longer spawn necrons or necron fleets
 function seal_tomb_world(planet) {
-    var awake_tomb = 0;
     var tombs = search_planet_features(planet, eP_FEATURES.NECRON_TOMB);
     if (array_length(tombs) > 0) {
         for (var tomb = 0; tomb < array_length(tombs); tomb++) {
-            awake_tomb = 1;
             planet[tombs[tomb]].awake = 0;
             planet[tombs[tomb]].sealed = 1;
             planet[tombs[tomb]].planet_display = "Sealed Necron Tomb";
-            if (awake_tomb == 1) {
-                break;
-            }
+            break;
         }
     }
 }
 
 //awakens a tomb world so necrons and necron fleets will spawn
 function awaken_tomb_world(planet) {
-    var awake_tomb = 0;
     var tombs = search_planet_features(planet, eP_FEATURES.NECRON_TOMB);
     if (array_length(tombs) > 0) {
         for (var tomb = 0; tomb < array_length(tombs); tomb++) {
             if (planet[tombs[tomb]].awake == 0) {
-                awake_tomb = 1;
                 planet[tombs[tomb]].awake = 1;
                 planet[tombs[tomb]].planet_display = "Active Necron Tomb";
-            }
-            if (awake_tomb == 1) {
                 break;
             }
         }
@@ -332,13 +324,14 @@ function scr_planetary_feature(planet_num) {
         var feat = p_feature[planet_num][f];
         if (feat.player_hidden == 1) {
             feat.player_hidden = 0;
-            var numeral_n = planet_numeral_name(planet_num);
+            var numeral_n = planet_numeral_name(planet_num, id);
+            var lop = "";
             switch (feat.f_type) {
                 case eP_FEATURES.SORORITAS_CATHEDRAL:
                     if (obj_controller.known[eFACTION.ECCLESIARCHY] == 0) {
                         obj_controller.known[eFACTION.ECCLESIARCHY] = 1;
                     }
-                    var lop = $"Sororitas Cathedral discovered on {numeral_n}.";
+                    lop = $"Sororitas Cathedral discovered on {numeral_n}.";
                     scr_alert("green", "feature", lop, x, y);
                     scr_event_log("", lop);
                     if (p_heresy[planet_num] > 10) {
@@ -348,32 +341,32 @@ function scr_planetary_feature(planet_num) {
                     goo = 1;
                     break;
                 case eP_FEATURES.NECRON_TOMB:
-                    var lop = $"Necron Tomb discovered on {numeral_n}.";
+                    lop = $"Necron Tomb discovered on {numeral_n}.";
                     scr_alert("red", "feature", lop, x, y);
                     scr_event_log("red", lop);
                     break;
                 case eP_FEATURES.ARTIFACT:
-                    var lop = $"Artifact discovered on {numeral_n}.";
+                    lop = $"Artifact discovered on {numeral_n}.";
                     scr_alert("green", "feature", lop, x, y);
                     scr_event_log("", lop);
                     break;
                 case eP_FEATURES.STC_FRAGMENT:
-                    var lop = $"STC Fragment located on {numeral_n}.";
+                    lop = $"STC Fragment located on {numeral_n}.";
                     scr_alert("green", "feature", lop, x, y);
                     scr_event_log("", lop);
                     break;
                 case eP_FEATURES.ANCIENT_RUINS:
-                    var lop = $"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}.";
+                    lop = $"A {feat.ruins_size} Ancient Ruins discovered on {string(name)} {scr_roman(planet_num)}.";
                     scr_alert("green", "feature", lop, x, y);
                     scr_event_log("", lop);
                     break;
                 case eP_FEATURES.CAVE_NETWORK:
-                    var lop = $"Extensive Cave Network discovered on {numeral_n}.";
+                    lop = $"Extensive Cave Network discovered on {numeral_n}.";
                     scr_alert("green", "feature", lop, x, y);
                     scr_event_log("", lop);
                     break;
                 case eP_FEATURES.ORKWARBOSS:
-                    var lop = $"Ork Warboss discovered on {numeral_n}.";
+                    lop = $"Ork Warboss discovered on {numeral_n}.";
                     scr_alert("red", "feature", lop, x, y);
                     scr_event_log("red", lop);
                     break;
@@ -384,7 +377,7 @@ function scr_planetary_feature(planet_num) {
 
 function create_starship_event() {
     var star = scr_random_find(2, true, "", "");
-    if (star == undefined) {
+    if (star == noone) {
         LOGGER.error("RE: couldn't find starship target");
         return false;
     } else {
@@ -408,10 +401,6 @@ function ground_mission_leave_it_function() {
 /// @self Struct.PlanetData
 function discover_artifact_popup(feature) {
     obj_controller.menu = eMENU.DEFAULT;
-    /*if ((planet_type == "Dead" || current_owner == eFACTION.PLAYER)) {
-        alarm[4] = 1;
-        exit;
-    }*/
 
     var pop = instance_create(0, 0, obj_popup);
     pop.image = "artifact";
@@ -502,8 +491,7 @@ function planet_selection_action() {
             if (mouse_distance_less(159 + (i * 41), 287, 22)) {
                 obj_controller.selecting_planet = i + 1;
                 if (p_data.planet != obj_controller.selecting_planet) {
-                    delete p_data;
-                    p_data = new PlanetData(obj_controller.selecting_planet, target);
+                    p_data = target.get_planet_data(obj_controller.selecting_planet);
                     buttons_selected = false;
                 }
 
@@ -592,14 +580,14 @@ function discover_stc_fragment_popup(techies, mechanicus_reps) {
         if (techies > 0) {
             array_push(options, {str1: "Swiftly take the STC Fragment.", choice_func: remove_stc_from_planet});
             if (mechanicus_reps == 0) {
-                pop.text = $"{_text}; what it might contain is unknown. Your {obj_ini.role[100][16]}s wish to reclaim, identify, and put it to use immediately. What is thy will?";
+                pop.text = $"{_text}; what it might contain is unknown. Your {obj_ini.player_role_data[eROLE.TECHMARINE].role}s wish to reclaim, identify, and put it to use immediately. What is thy will?";
             } else {
-                pop.text = $"{_text}. Your {obj_ini.role[100][16]}s wish to reclaim, identify, and put it to use immediately, and the Tech Priests wish to send it to the closest forge world. What is thy will?";
+                pop.text = $"{_text}. Your {obj_ini.player_role_data[eROLE.TECHMARINE].role}s wish to reclaim, identify, and put it to use immediately, and the Tech Priests wish to send it to the closest forge world. What is thy will?";
             }
         } else if (mechanicus_reps > 0) {
             pop.text = $"{_text}; what it might contain is unknown. The present Tech Priests wish to send it to Mars, and refuse to take the device off-world otherwise.";
         } else {
-            pop.text = $"{_text}; what it might contain is unknown. The ground team has no {obj_ini.role[100][16]}s or Tech Priests, so you have no choice but to leave it be or notify the Mechanicus about its location.";
+            pop.text = $"{_text}; what it might contain is unknown. The ground team has no {obj_ini.player_role_data[eROLE.TECHMARINE].role}s or Tech Priests, so you have no choice but to leave it be or notify the Mechanicus about its location.";
         }
 
         array_push(options, {str1: "Send it to the Adeptus Mechanicuss.", choice_func: send_stc_to_adeptus_mech});
@@ -629,16 +617,9 @@ function ground_forces_collect_artifact() {
     with (obj_ground_mission) {
         scr_return_ship(pdata.system.name, self, pdata.planet);
 
-        var man_size, ship_id, comp, i;
-        i = 0;
-        ship_id = 0;
-        man_size = 0;
-        comp = 0;
-        ship_id = get_valid_player_ship("", loc);
+        var ship_id = get_valid_player_ship("", loc);
 
-        var last_artifact = scr_add_artifact("random", "random", 4, loc, ship_id + 500);
-
-        var i = 0;
+        var last_artifact = scr_add_artifact("random", "random", 4, loc, ship_id);
 
         var mission = "bad";
         var mission_roll = irandom(100) + 1;
@@ -647,20 +628,18 @@ function ground_forces_collect_artifact() {
         }
         if (mission_roll <= 60) {
             mission = "good";
-        } // 135
+        }
         if (pdata.planet_type == "Dead") {
             mission = "good";
         }
-        // mission="bad";
 
-        var pop;
-        pop = instance_create(0, 0, obj_popup);
+        var pop = instance_create(0, 0, obj_popup);
         pop.image = "artifact_recovered";
         pop.title = "Artifact Recovered!";
 
         if (mission == "good") {
             pop.text = $"Your marines quickly converge upon the Artifact and remove it, before local forces have any idea of what is happening.##";
-            pop.text += $"It has been stowed away upon {loc}.  It appears to be a {obj_ini.artifact[last_artifact]} but should be brought home and identified posthaste.";
+            pop.text += $"It has been stowed away upon {loc}.  It appears to be a {fetch_artifact(last_artifact).get_type_name()} but should be brought home and identified posthaste.";
             scr_event_log("", "Artifact has been forcibly recovered.");
 
             if (pdata.planet_type != "Dead") {
@@ -669,7 +648,7 @@ function ground_forces_collect_artifact() {
                 }
                 if (pdata.current_owner == eFACTION.MECHANICUS) {
                     obj_controller.disposition[3] -= 10;
-                } // max(obj_controller.disposition/4,10)
+                }
                 if (pdata.current_owner == 4) {
                     obj_controller.disposition[4] -= max(obj_controller.disposition[4] / 4, 10);
                 }
@@ -683,7 +662,7 @@ function ground_forces_collect_artifact() {
         }
         if (mission == "bad") {
             pop.text = "Your marines converge upon the Artifact; resistance is light and easily dealt with.  After a brief firefight the Artifact is retrieved.##";
-            pop.text += $"It has been stowed away upon {loc}.  It appears to be a " + string(obj_ini.artifact[last_artifact]) + " but should be brought home and identified posthaste.";
+            pop.text += $"It has been stowed away upon {loc}.  It appears to be a " + string(fetch_artifact(last_artifact).get_type_name()) + " but should be brought home and identified posthaste.";
             scr_event_log("red", "Artifact forcibly recovered.  Collateral damage is caused.");
 
             if (pdata.current_owner == 2) {
@@ -706,12 +685,17 @@ function ground_forces_collect_artifact() {
             }
 
             if (pdata.current_owner >= 3 && pdata.current_owner <= 6) {
-                scr_audience(pdata.current_owner, "artifact_angry",);
+                scr_audience(pdata.current_owner, "artifact_angry");
             }
         }
 
         if (scr_has_adv("Tech-Scavengers")) {
-            var ex1 = "", ex1_num = 0, ex2 = "", ex2_num = 0, ex3 = "", ex3_num = 0;
+            var ex1 = "";
+            var ex1_num = 0;
+            var ex2 = "";
+            var ex2_num = 0;
+            var ex3 = "";
+            var ex3_num = 0;
 
             var stah = instance_nearest(x, y, obj_star);
 
@@ -773,6 +757,7 @@ function ground_forces_collect_artifact() {
         obj_controller.menu = 0;
         instance_destroy();
     }
+    instance_destroy();
 }
 
 function governor_negotiate_artifact() {
@@ -785,11 +770,11 @@ function governor_negotiate_artifact() {
 
             i = 0;
             plan = instance_nearest(x, y, obj_star);
-            var last_artifact = scr_add_artifact("random", "random", 4, pdata.system.name, ship_id + 500);
+            var last_artifact = scr_add_artifact("random", "random", 4, pdata.system.name, ship_id);
 
             obj_popup.image = "artifact_recovered";
             obj_popup.title = "Artifact Recovered!";
-            obj_popup.text = $"The Planetary Governor hands over the Artifact without asking for compensation.##It has been safely stowed away upon {loc}.  It appears to be a {obj_ini.artifact[last_artifact]} but should be brought home and identified posthaste.";
+            obj_popup.text = $"The Planetary Governor hands over the Artifact without asking for compensation.##It has been safely stowed away upon {loc}.  It appears to be a {fetch_artifact(last_artifact).get_type_name()} but should be brought home and identified posthaste.";
             with (obj_star_select) {
                 instance_destroy();
             }
@@ -814,7 +799,6 @@ function governor_negotiate_artifact() {
             with (obj_controller) {
                 scr_dialogue("artifact");
             }
-            instance_destroy();
             instance_destroy(obj_popup);
         }
     }
@@ -822,14 +806,6 @@ function governor_negotiate_artifact() {
 
 function remove_stc_from_planet() {
     with (obj_ground_mission) {
-        var comp, plan, i;
-        i = 0;
-        comp = 0;
-        plan = 0;
-        plan = instance_nearest(x, y, obj_star);
-
-        var mission, mission_roll;
-
         var mission = "bad";
         var mission_roll = floor(random(100)) + 1;
 
@@ -841,14 +817,12 @@ function remove_stc_from_planet() {
         }
         if (mission_roll <= 60) {
             mission = "good";
-        } // 135
+        }
         if (pdata.planet_type == "Dead") {
             mission = "good";
         }
-        // mission="bad";
 
-        var pop;
-        pop = instance_create(0, 0, obj_popup);
+        var pop = instance_create(0, 0, obj_popup);
         pop.image = "artifact_recovered";
         pop.title = "STC Recovered!";
 
@@ -861,37 +835,19 @@ function remove_stc_from_planet() {
         if (mission == "good" && pdata.origional_owner == 3 && pdata.planet_type == "Forge") {
             pop.text = "Your forces descend into the vaults of the Mechanicus Forge, bypassing sentries, automated defenses, and blast doors on the way.##";
             pop.text += "The STC Fragment has been safely recovered and stowed away.  It is ready to be decrypted or gifted at your convenience.";
-
-            /*if (pdata.planet_type!="Dead"){
-	        if (pdata.current_owner=2) then obj_controller.disposition[2]-=1;
-	        if (pdata.current_owner=eFACTION.MECHANICUS) then obj_controller.disposition[3]-=10;// max(obj_controller.disposition/4,10)
-	        if (pdata.current_owner=4) then obj_controller.disposition[4]-=max(obj_controller.disposition[4]/4,10);
-	        if (pdata.current_owner=5) then obj_controller.disposition[5]-=3;
-	        if (pdata.current_owner=8) then obj_controller.disposition[8]-=3;
-	    }*/
             scr_return_ship(pdata.system.name, self, pdata.planet);
         }
         if (mission == "bad" && pdata.origional_owner == eFACTION.MECHANICUS && pdata.planet_type == "Forge") {
-            /*pop.text="Your marines converge upon the STC Fragment; resistance is light and easily dealt with.  After a brief firefight it is retrieved.##";
-	    pop.text+="The fragment been safely stowed away, and is ready to be decrypted or gifted at your convenience.";
-
-	    */
-
             pop.image = "thallax";
             pop.text = "Your forces descend into the vaults of the Mechanicus Forge.  Sentries, automated defenses, and blast doors stand in their way.##";
             pop.text += "Half-way through the mission a small army of Praetorian Servitors and Skitarii bear down upon your men.  The Mechanicus guards seem to be upset.";
 
-            /*if (pdata.current_owner=2) then obj_controller.disposition[2]-=2;*/
             if (pdata.current_owner == eFACTION.MECHANICUS) {
                 obj_controller.disposition[3] -= 40;
             }
-            /*if (pdata.current_owner=4) then obj_controller.disposition[4]-=max(obj_controller.disposition[4]/3,20);
-	    if (pdata.current_owner=5) then obj_controller.disposition[5]-=max(obj_controller.disposition[3]/4,15);
-	    if (pdata.current_owner=6) then obj_controller.disposition[6]-=15;
-	    if (pdata.current_owner=8) then obj_controller.disposition[8]-=8;*/
 
             if (pdata.current_owner > 3 && pdata.current_owner <= 6) {
-                scr_audience(pdata.current_owner, "artifact_angry",);
+                scr_audience(pdata.current_owner, "artifact_angry");
             }
             if (pdata.current_owner == eFACTION.MECHANICUS && obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
                 scr_audience(pdata.current_owner, "declare_war", -20);
@@ -910,16 +866,14 @@ function remove_stc_from_planet() {
         }
 
         if (scr_has_adv("Tech-Scavengers")) {
-            var ex1, ex1_num, ex2, ex2_num, ex3, ex3_num;
-            ex1 = "";
-            ex1_num = 0;
-            ex2 = "";
-            ex2_num = 0;
-            ex3 = "";
-            ex3_num = 0;
+            var ex1 = "";
+            var ex1_num = 0;
+            var ex2 = "";
+            var ex2_num = 0;
+            var ex3 = "";
+            var ex3_num = 0;
 
-            var stah;
-            stah = instance_nearest(x, y, obj_star);
+            var stah = instance_nearest(x, y, obj_star);
 
             if (pdata.origional_owner == 2) {
                 ex1 = "Meltagun";
@@ -977,29 +931,21 @@ function remove_stc_from_planet() {
         clear_diplo_choices();
         obj_controller.menu = 0;
         instance_destroy();
-
-        /* */
-        /*  */
     }
     instance_destroy();
 }
 
-function recieve_artifact_in_discussion() {
+function receive_artifact_in_discussion() {
     scr_return_ship(loc, self, num);
 
-    var man_size, comp, plan, i;
-    i = 0;
-    man_size = 0;
-    comp = 0;
-    plan = 0;
     var ship_id = get_valid_player_ship("", loc);
-    plan = instance_nearest(x, y, obj_star);
-    var last_artifact = scr_add_artifact("random", "random", 4, loc, ship_id + 500);
+    var plan = instance_nearest(x, y, obj_star);
+    var last_artifact = scr_add_artifact("random", "random", 4, loc, ship_id);
 
     var pop = instance_create(0, 0, obj_popup);
     pop.image = "artifact_recovered";
     pop.title = "Artifact Recovered!";
-    pop.text = $"The Artifact has been safely stowed away upon {loc}.  It appears to be a {obj_ini.artifact[last_artifact]} but should be brought home and identified posthaste.";
+    pop.text = $"The Artifact has been safely stowed away upon {loc}.  It appears to be a {fetch_artifact(last_artifact).get_type_name()} but should be brought home and identified posthaste.";
     with (obj_star_select) {
         instance_destroy();
     }
@@ -1018,8 +964,7 @@ function recieve_artifact_in_discussion() {
 
 function send_stc_to_adeptus_mech() {
     with (obj_ground_mission) {
-        var _target_planet;
-        _target_planet = instance_nearest(x, y, obj_star);
+        var _target_planet = instance_nearest(x, y, obj_star);
         pdata.delete_feature(eP_FEATURES.STC_FRAGMENT);
 
         scr_return_ship(pdata.system.name, self, pdata.planet);
@@ -1061,7 +1006,7 @@ function send_stc_to_adeptus_mech() {
 
         if (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD) {
             with (obj_star) {
-                if ((owner == eFACTION.PLAYER) && ((p_owner[1] == 1) || (p_owner[2] == eFACTION.PLAYER))) {
+                if ((owner == eFACTION.PLAYER) && ((p_owner[1] == eFACTION.PLAYER) || (p_owner[2] == eFACTION.PLAYER))) {
                     instance_create(x, y, obj_temp2);
                 }
             }
@@ -1086,8 +1031,7 @@ function send_stc_to_adeptus_mech() {
             }
         }
 
-        var _enemy_fleet;
-        var _target = -1;
+        var _target = noone;
 
         if (instance_exists(obj_temp2)) {
             _target = nearest_star_with_ownership(obj_temp2.x, obj_temp2.y, obj_controller.diplomacy);
@@ -1096,7 +1040,7 @@ function send_stc_to_adeptus_mech() {
         } else if ((!instance_exists(obj_temp2)) && (!instance_exists(obj_temp7)) && instance_exists(obj_p_fleet) && (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD)) {
             // If player fleet is flying about then get their target for new target
             with (obj_p_fleet) {
-                var pop;
+                var pop = noone;
                 if ((capital_number > 0) && (action != "")) {
                     pop = instance_create(action_x, action_y, obj_temp2);
                     pop.action_eta = action_eta;
@@ -1109,9 +1053,7 @@ function send_stc_to_adeptus_mech() {
         }
 
         if (is_struct(_target)) {
-            _enemy_fleet = instance_create(_target.x, _target.y, obj_en_fleet);
-
-            _enemy_fleet.owner = obj_controller.diplomacy;
+            var _enemy_fleet = create_enemy_fleet(_target.x, _target.y, obj_controller.diplomacy);
             _enemy_fleet.home_x = _target.x;
             _enemy_fleet.home_y = _target.y;
             _enemy_fleet.sprite_index = spr_fleet_mechanicus;

@@ -62,16 +62,13 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
         purge = 0;
 
         if ((player_fleet > 0) && (imperial_fleet + mechanicus_fleet + inquisitor_fleet + eldar_fleet + ork_fleet + tau_fleet + heretic_fleet > 0) && (obj_controller.cooldown <= 0)) {
-            var i, x3, y3;
-            i = 0;
-            // x3=xx+46;y3=yy+252;
+            var x3, y3;
             x3 = xx + 49;
             y3 = yy + 441;
 
             var combating = 0;
 
-            repeat (7) {
-                i += 1;
+            for (var i = 1; i <= 7; i++) {
                 if ((en_fleet[i] > 0) && (mouse_x >= x3 - 24) && (mouse_y >= y3 - 24) && (mouse_x < x3 + 48) && (mouse_y < y3 + 48) && (obj_controller.cooldown <= 0)) {
                     obj_controller.cooldown = 8;
                     combating = en_fleet[i];
@@ -82,7 +79,7 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
             if (combating > 0) {
                 obj_controller.combat = combating;
 
-                var xx = false, yy = false, good = false, e1 = false, e2 = false, e3 = false;
+                var e1 = false, e2 = false, e3 = false;
 
                 var enemy_fleet = array_create(20, 0);
                 var allied_fleet = array_create(20, 0);
@@ -93,18 +90,18 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
                 var afri = array_create(20, 0);
                 var aesc = array_create(20, 0);
 
-                good = 1;
+                var good = true;
 
                 var p_fleet = get_nearest_player_fleet(x, y, true);
 
                 obj_controller.temp[1099] = target.name;
-                good = p_fleet != "none" && instance_exists(target);
+                good = p_fleet != noone && instance_exists(target);
 
                 if (good == 1) {
                     // trying to find the star
                     instance_activate_object(obj_star);
                     obj_controller.x = target.x;
-                    obj_controller.y = target.y; // show=current_battle;
+                    obj_controller.y = target.y;
 
                     strin[1] = string(p_fleet.capital_number);
                     strin[2] = string(p_fleet.frigate_number);
@@ -118,7 +115,7 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
 
                     var e = 1;
                     var khorne_count = 0;
-                    var chaos_space_marine_count = 0;
+                    var chaos_count = 0;
                     var en_capitals, en_frigates, en_escorts;
                     repeat (9) {
                         e += 1;
@@ -137,8 +134,8 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
                                     if (fleet_has_cargo("warband")) {
                                         khorne_count++;
                                     }
-                                    if (fleet_has_cargo("csm")) {
-                                        chaos_space_marine_count++;
+                                    if (fleet_has_cargo("chaos")) {
+                                        chaos_count++;
                                     }
                                 }
                             }
@@ -178,16 +175,12 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
 
                     combating = 1;
 
-                    instance_deactivate_all(true);
-                    instance_activate_object(obj_controller);
-                    instance_activate_object(obj_ini);
-                    // instance_activate_object(battle_object[current_battle]);
+                    instance_deactivate_all_safe();
                     instance_activate_object(p_fleet);
                     instance_activate_object(obj_star);
 
                     instance_create(0, 0, obj_fleet);
                     obj_fleet.star_name = target.name;
-                    //
                     obj_fleet.enemy[1] = enemy_fleet[1];
                     obj_fleet.enemy_status[1] = -1;
 
@@ -198,11 +191,11 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
                     // Plug in all of the enemies first
                     // And then plug in the allies after then with their status set to positive
 
-                    if (chaos_space_marine_count) {
-                        obj_fleet.csm_exp = 1;
+                    if (chaos_count) {
+                        obj_fleet.chaos_exp = 1;
                     }
                     if (khorne_count) {
-                        obj_fleet.csm_exp = 2;
+                        obj_fleet.chaos_exp = 2;
                     }
 
                     for (var i = 0; i < target.planets; i++) {
@@ -214,7 +207,6 @@ if (!instance_exists(obj_saveload) && !instance_exists(obj_drop_select)) {
 
                     add_fleet_ships_to_combat(p_fleet, obj_fleet);
 
-                    // instance_deactivate_object(battle_object[current_battle]);
                     instance_deactivate_object(p_fleet);
 
                     obj_controller.combat = 1;

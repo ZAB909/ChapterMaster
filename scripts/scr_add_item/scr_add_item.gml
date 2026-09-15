@@ -8,19 +8,15 @@ function scr_add_item(_item_name, _quantity = 1, _quality = "any") {
         return "no_item";
     }
 
-    static qualities = [
-        "standard",
-        "master_crafted",
-        "artifact"
-    ];
+    static qualities = global.equipment_qualities;
 
     static selections = [
         "any",
         "worst",
-        "best"
+        "best",
     ];
 
-    static allowed_qualities = new Set(qualities);
+    static allowed_qualities = new Set(global.equipment_qualities);
 
     static allowed_selection = new Set(selections);
 
@@ -163,4 +159,30 @@ function EquipmentTracker() constructor {
 
     items = [];
     item_types = {};
+}
+
+/// @param {String} quality_a
+/// @param {String} quality_b
+/// @param {String} command
+/// @return {Bool}
+function compare_qualities(quality_a, quality_b, command) {
+    var _index_a = array_get_index(global.equipment_qualities, quality_a);
+    var _index_b = array_get_index(global.equipment_qualities, quality_b);
+    if (_index_a == -1 || _index_b == -1) {
+        return false;
+    }
+    switch (command) {
+        case "inmore":
+        case "more":
+            return _index_a >= _index_b;
+        case "exmore":
+            return _index_a > _index_b;
+        case "inless":
+        case "less":
+            return _index_a <= _index_b;
+        case "exless":
+            return _index_a < _index_b;
+    }
+
+    return false;
 }

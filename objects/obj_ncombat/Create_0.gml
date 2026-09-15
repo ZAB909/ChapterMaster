@@ -3,18 +3,12 @@ if (instance_number(obj_ncombat) > 1) {
 }
 
 set_zoom_to_default();
-var co, i;
-co = -1;
-co = 0;
-i = 0;
-hue = 0;
-
-turn_count = 0;
 LOGGER.info("Ground Combat Started");
 
-audio_stop_sound(snd_royal);
-audio_play_sound(snd_battle, 0, true);
-audio_sound_gain(snd_battle, 1, 5000);
+global.audio_manager.play_playlist(CONTEXT_BATTLE, 5000);
+
+hue = 0;
+turn_count = 0;
 
 //limit on the size of the players forces allowed
 enter_pressed = 0;
@@ -28,7 +22,7 @@ click_stall_timer = 0;
 formation_set = 0;
 on_ship = false;
 alpha_strike = 0;
-Warlord = 0;
+ork_warboss = noone;
 total_battle_exp_gain = 0;
 marines_to_recover = 0;
 vehicles_to_recover = 0;
@@ -50,10 +44,9 @@ instance_activate_object(obj_cursor);
 instance_activate_object(obj_ini);
 instance_activate_object(obj_img);
 
-var i, u;
-i = 11;
-repeat (10) {
-    i -= 1; // This creates the objects to then be filled in
+var u = noone;
+for (var i = 10; i > 0; i--) {
+    // This creates the objects to then be filled in
     u = instance_create(i * 10, 240, obj_pnunit);
 }
 
@@ -62,17 +55,25 @@ instance_create(0, 0, obj_centerline);
 local_forces = 0;
 battle_loc = "";
 battle_climate = "";
+if (instance_exists(obj_star)) {
+    /// @type {Id.Instance.obj_star}
+    battle_object = instance_nearest(x, y, obj_star);
+} else {
+    battle_object = noone;
+    LOGGER.error("No obj_star instance found for combat; battle_object defaulted to noone");
+}
 battle_id = 0;
-/// @type {Asset.GMObject.obj_star} 
-battle_object = 0;
 battle_mission = "";
 battle_special = "";
 battle_data = {};
 defeat = 0;
 defeat_message = 0;
-red_thirst = 0;
 fugg = 0;
 fugg2 = 0;
+// Hard-timeout counters for stages 2/4. Unlike fugg/fugg2 these are NOT reset by the 60-frame
+// status poll in Step, so they keep accumulating during a stall and the anti-hang cap can fire.
+stage_elapsed = 0;
+stage_elapsed2 = 0;
 battle_over = 0;
 done = 0;
 
@@ -116,13 +117,13 @@ started = 0;
 charged = 0;
 
 fadein = 40;
-enemy = 0;
+enemy = undefined;
+enem = "Orks";
+enem_sing = "Ork";
 threat = 0;
 fortified = 0;
 enemy_fortified = 0;
 wall_destroyed = 0;
-enem = "Orks";
-enem_sing = "Ork";
 flank_x = 0;
 
 player_forces = 0;
@@ -134,35 +135,16 @@ enemy_forces = 0;
 enemy_max = 0;
 hulk_forces = 0;
 
-i = -1;
-messages = 0;
-messages_to_show = 24;
-messages_shown = 0;
-largest = 0;
-priority = 0;
-random_messages = 0;
 dead_enemies = 0;
 
 units_lost_counts = {};
 vehicles_lost_counts = {};
 
-repeat (70) {
-    i += 1;
-    lines[i] = "";
-    lines_color[i] = "";
-    message[i] = "";
-    message_sz[i] = 0;
-    message_priority[i] = 0;
-    dead_jim[i] = "";
-    dead_ene[i] = "";
-    dead_ene_n[i] = 0;
-
-    crunch[i] = 0;
-
-    if (i <= 10) {
-        mucra[i] = 0;
-    }
-}
+dead_jim = array_create(70, "");
+dead_ene = array_create(70, "");
+dead_ene_n = array_create(70, 0);
+crunch = array_create(70, 0);
+mucra = array_create(11, 0);
 
 post_equipment_lost = new EquipmentTracker();
 post_equipment_recovered = new EquipmentTracker();
@@ -179,7 +161,6 @@ seed_lost = 0;
 seed_harvestable = 0;
 units_saved_count = 0;
 units_saved_counts = {};
-vehicles_saved_counts = {};
 command_saved = 0;
 vehicles_saved_count = 0;
 vehicles_saved_counts = {};
@@ -188,9 +169,16 @@ final_command_deaths = 0;
 vehicle_deaths = 0;
 casualties = 0;
 dead_jims = 0;
-newline = "";
-newline_color = "";
-liness = 0;
+
+combat_log = new CombatLog(id);
+combat_log.log_font = fnt_aldrich_12;
+
+combat_debugger = new CombatDebugger(false);
+
+ctally_target = undefined;
+ctally_bounce = [];
+ctally_injure = [];
+
 world_size = 0;
 
 timer = 0;
@@ -200,8 +188,7 @@ timer_maxspeed = 1;
 timer_pause = -1;
 turns = 1;
 
-//
-
+player_unit_index = new UnitIndex([]);
 scouts = 0;
 tacticals = 0;
 veterans = 0;
@@ -218,8 +205,6 @@ champions = 0;
 important_dudes = 0;
 chaplains = 0;
 apothecaries = 0;
-sgts = 0;
-vet_sgts = 0;
 
 rhinos = 0;
 predators = 0;
@@ -227,7 +212,7 @@ land_raiders = 0;
 land_speeders = 0;
 whirlwinds = 0;
 
-big_mofo = 10;
+enemy_dudes = "";
 
 en_scouts = 0;
 en_tacticals = 0;
@@ -248,79 +233,35 @@ en_chaplains = 0;
 en_apothecaries = 0;
 
 en_big_mofo = 10;
-en_important_dudes = 0;
-
-//
 
 defending = true; // 1 is defensive
-dropping = 0; // 0 is was on ground
+dropping = false; // 0 is was on ground
 attacking = 0; // 1 means attacked from space/local
 time = floor(random(24)) + 1;
 terrain = "";
 weather = "";
 
-ambushers = 0;
-if (scr_has_adv("Ambushers")) {
-    ambushers = 1;
-}
-bolter_drilling = 0;
-if (scr_has_adv("Bolter Drilling")) {
-    bolter_drilling = 1;
-}
-enemy_eldar = 0;
-if (scr_has_adv("Enemy: Eldar")) {
-    enemy_eldar = 1;
-}
-enemy_fallen = 0;
-if (scr_has_adv("Enemy: Fallen")) {
-    enemy_fallen = 1;
-}
-enemy_orks = 0;
-if (scr_has_adv("Enemy: Orks")) {
-    enemy_orks = 1;
-}
-enemy_tau = 0;
-if (scr_has_adv("Enemy: Tau")) {
-    enemy_tau = 1;
-}
-enemy_tyranids = 0;
-if (scr_has_adv("Enemy: Tyranids")) {
-    enemy_tyranids = 1;
-}
-enemy_necrons = 0;
-if (scr_has_adv("Enemy: Necrons")) {
-    enemy_necrons = 1;
-}
-lightning = 0;
-if (scr_has_adv("Lightning Warriors")) {
-    lightning = 1;
-}
-siege = 0;
-if (scr_has_adv("Siege Masters")) {
-    siege = 1;
-}
-slow = 0;
-if (scr_has_adv("Devastator Doctrine")) {
-    slow = 1;
-}
-melee = 0;
-if (scr_has_adv("Assault Doctrine")) {
-    melee = 1;
-}
-//
-black_rage = 0;
-if (scr_has_disadv("Black Rage")) {
-    black_rage = 1;
-    red_thirst = 1;
-}
-shitty_luck = 0;
-if (scr_has_disadv("Shitty Luck")) {
-    shitty_luck = 1;
-}
-favoured_by_the_warp = 0;
-if (scr_has_adv("Favoured By The Warp")) {
-    favoured_by_the_warp = 1;
-}
+global_melee = 1;
+global_bolter = 1;
+global_attack = 1;
+global_defense = 1;
+
+ambushers = scr_has_adv("Ambushers");
+bolter_drilling = scr_has_adv("Bolter Drilling");
+enemy_eldar = scr_has_adv("Enemy: Eldar");
+enemy_fallen = scr_has_adv("Enemy: Fallen");
+enemy_orks = scr_has_adv("Enemy: Orks");
+enemy_tau = scr_has_adv("Enemy: Tau");
+enemy_tyranids = scr_has_adv("Enemy: Tyranids");
+enemy_necrons = scr_has_adv("Enemy: Necrons");
+lightning = scr_has_adv("Lightning Warriors");
+siege = scr_has_adv("Siege Masters");
+slow = scr_has_adv("Devastator Doctrine");
+melee = scr_has_adv("Assault Doctrine");
+black_rage = scr_has_disadv("Black Rage");
+red_thirst = scr_has_disadv("Black Rage") ? 1 : 0; // red_thirst is used as a counter Real so it gets the ternary init
+shitty_luck = scr_has_disadv("Shitty Luck");
+favoured_by_the_warp = scr_has_adv("Favoured By The Warp");
 
 lyman = obj_ini.lyman; // drop pod penalties
 omophagea = obj_ini.omophagea; // feast
@@ -330,82 +271,3 @@ betchers = obj_ini.betchers; // slight melee penalty
 catalepsean = obj_ini.catalepsean; // minor global attack decrease
 occulobe = obj_ini.occulobe; // penalty if morning and susceptible to flash grenades
 mucranoid = obj_ini.mucranoid; // chance to short-circuit
-//
-global_melee = 1;
-global_bolter = 1;
-global_attack = 1;
-global_defense = 1;
-//
-if ((ambushers == 1) && (ambushers == 999)) {
-    global_attack = global_attack * 1.1;
-}
-if (bolter_drilling == 1) {
-    global_bolter = global_bolter * 1.1;
-}
-if ((enemy_eldar == 1) && (enemy == 6)) {
-    global_attack = global_attack * 1.1;
-    global_defense = global_defense * 1.1;
-}
-if ((enemy_fallen == 1) && (enemy == 10)) {
-    global_attack = global_attack * 1.1;
-    global_defense = global_defense * 1.1;
-}
-if ((enemy_orks == 1) && (enemy == 7)) {
-    global_attack = global_attack * 1.1;
-    global_defense = global_defense * 1.1;
-}
-if ((enemy_tau == 1) && (enemy == 8)) {
-    global_attack = global_attack * 1.1;
-    global_defense = global_defense * 1.1;
-}
-if ((enemy_tyranids == 1) && (enemy == 9)) {
-    global_attack = global_attack * 1.1;
-    global_defense = global_defense * 1.1;
-}
-if ((enemy_necrons == 1) && (enemy == 13)) {
-    global_attack = global_attack * 1.1;
-    global_defense = global_defense * 1.1;
-}
-
-if ((siege == 1) && (enemy_fortified >= 3) && (defending == false)) {
-    global_attack = global_attack * 1.2;
-}
-
-if (slow == 1) {
-    global_attack -= 0.1;
-    global_defense += 0.2;
-}
-if (lightning == 1) {
-    global_attack += 0.2;
-    global_defense -= 0.1;
-}
-if (melee == 1) {
-    global_melee = global_melee * 1.15;
-}
-//
-if (shitty_luck == 1) {
-    global_defense = global_defense * 0.9;
-}
-if ((lyman == 1) && (dropping == 1)) {
-    global_attack = global_attack * 0.85;
-    global_defense = global_defense * 0.9;
-}
-if (ossmodula == 1) {
-    global_attack = global_attack * 0.95;
-    global_defense = global_defense * 0.95;
-}
-if (betchers == 1) {
-    global_melee = global_melee * 0.95;
-}
-if (catalepsean == 1) {
-    global_attack = global_attack * 0.95;
-}
-if (occulobe == 1) {
-    if ((time == 5) || (time == 6)) {
-        global_attack = global_attack * 0.7;
-        global_defense = global_defense * 0.8;
-    }
-}
-
-enemy_dudes = "";
-global_defense = 2 - global_defense;

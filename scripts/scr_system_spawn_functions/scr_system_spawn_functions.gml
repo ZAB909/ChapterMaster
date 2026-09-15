@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 global.planet_types = [
     "Dead",
     "Ice",
@@ -12,7 +9,7 @@ global.planet_types = [
     "Hive",
     "Forge",
     "Desert",
-    "Lava"
+    "Lava",
 ];
 
 enum ePLAYER_BASE {
@@ -23,8 +20,7 @@ enum ePLAYER_BASE {
 }
 
 function find_player_spawn_star() {
-    instance_activate_object(obj_star);
-    var _spawn_star;
+    var _chosen_star = noone;
     var _allowable = false;
     var _allowables = [
         "Temperate",
@@ -33,10 +29,11 @@ function find_player_spawn_star() {
         "Death",
         "Ice",
         "Desert",
-        "Lava"
+        "Lava",
     ];
     for (var i = 0; i < 100; i++) {
-        var y_loc, x_loc;
+        var x_loc = irandom_range(0 + (room_width / 2), room_width - (room_width / 2));
+        var y_loc = irandom_range(0 + (room_height / 2), room_height - (room_height / 2));
         if (obj_ini.homeworld_relative_loc == 0) {
             if (irandom(1)) {
                 y_loc = choose(0, room_height);
@@ -45,11 +42,8 @@ function find_player_spawn_star() {
                 x_loc = choose(0, room_width);
                 y_loc = irandom(room_height);
             }
-        } else {
-            x_loc = irandom_range(0 + (room_width / 2), room_width - (room_width / 2));
-            y_loc = irandom_range(0 + (room_height / 2), room_height - (room_height / 2));
         }
-        var _chosen_star = instance_nearest(x_loc, y_loc, obj_star);
+        _chosen_star = instance_nearest(x_loc, y_loc, obj_star);
         if (instance_exists(_chosen_star)) {
             for (var p = 0; p < array_length(_chosen_star.p_type); p++) {
                 if (array_contains(_allowables, _chosen_star.p_type[p])) {
@@ -62,11 +56,13 @@ function find_player_spawn_star() {
         }
         instance_deactivate_object(_chosen_star);
     }
-    instance_activate_object(obj_star);
-    return _chosen_star.id;
+    instance_activate_all();
+    return _chosen_star;
 }
 
-function player_home_star(home_planet) {
+/// @self Id.Instance.obj_star
+/// @param {Real} home_planet
+function player_home_planet(home_planet) {
     var _star_names = global.name_generator.name_sets.star;
     p_type[home_planet] = obj_ini.home_type;
     planet[home_planet] = 1;
@@ -75,7 +71,7 @@ function player_home_star(home_planet) {
     if (obj_ini.home_name != "random") {
         _star_names.AddUsedName(obj_ini.home_name);
         var _old_name_star = find_star_by_name(obj_ini.home_name);
-        if (_old_name_star != "none") {
+        if (_old_name_star != noone) {
             _old_name_star.name = global.name_generator.GenerateFromSet("star", false);
         }
         name = obj_ini.home_name;
@@ -83,7 +79,7 @@ function player_home_star(home_planet) {
     array_push(p_feature[home_planet], new NewPlanetFeature(eP_FEATURES.MONASTERY));
     p_owner[home_planet] = eFACTION.PLAYER;
 
-    p_first[home_planet] = 1; //monestary
+    p_first[home_planet] = eFACTION.PLAYER; //monestary
     if (obj_ini.homeworld_rule != 1) {
         dispo[home_planet] = -5000;
     }
@@ -114,10 +110,12 @@ function player_home_star(home_planet) {
 
     p_player[home_planet] = obj_ini.man_size;
 
-    var unit;
     for (var co = 0; co <= obj_ini.companies; co++) {
-        for (i = 0; i < array_length(obj_ini.name[co]); i++) {
-            unit = fetch_unit([co, i]);
+        for (var i = 0; i < array_length(obj_ini.TTRPG[co]); i++) {
+            var unit = fetch_unit([co, i]);
+            if (!is_struct(unit)) {
+                continue;
+            }
             if (unit.location_string == name) {
                 unit.planet_location = home_planet;
             }
@@ -125,23 +123,23 @@ function player_home_star(home_planet) {
     }
 }
 
+/// @param {Real} recruit_planet
 function set_player_recruit_planet(recruit_planet) {
     var _star_names = global.name_generator.name_sets.star;
     p_type[recruit_planet] = obj_ini.recruiting_type;
     if (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD && obj_ini.recruit_relative_loc == 2) {
         // Possibly a temporary fix, Fleet-based Chapters use Homeworld names for the Recruiting stars for some reason
-        var recruit_name = obj_ini.recruiting_name;
-        if (recruit_name != "random") {
-            _star_names.AddUsedName(recruit_name);
-            if (find_star_by_name(recruit_name) != "none") {
-                find_star_by_name(recruit_name).name = global.name_generator.GenerateFromSet("star", false);
+        if (obj_ini.recruiting_name != "random") {
+            _star_names.AddUsedName(obj_ini.recruiting_name);
+            if (find_star_by_name(obj_ini.recruiting_name) != noone) {
+                find_star_by_name(obj_ini.recruiting_name).name = global.name_generator.GenerateFromSet("star", false);
             }
-            name = recruit_name;
+            name = obj_ini.recruiting_name;
         }
     } else {
         if (obj_ini.home_name != "random") {
             _star_names.AddUsedName(obj_ini.home_name);
-            if (find_star_by_name(obj_ini.home_name) != "none") {
+            if (find_star_by_name(obj_ini.home_name) != noone) {
                 find_star_by_name(obj_ini.home_name).name = global.name_generator.GenerateFromSet("star", false);
             }
             name = obj_ini.home_name;
@@ -156,21 +154,33 @@ function set_player_recruit_planet(recruit_planet) {
     }
 }
 
+/// @desc Turns the chosen star into the player's home system, expanding it to the requested
+/// planet count and placing the monastery and recruiting worlds.
+/// @param {Id.Instance.obj_star} chosen_star Star to convert into the home system.
+/// @returns {Undefined}
 function set_player_homeworld_star(chosen_star) {
     with (chosen_star) {
         if (obj_ini.recruit_relative_loc == 1 && obj_ini.home_planet_count == 0) {
             obj_ini.home_planet_count++;
         }
         planets = obj_ini.home_planet_count + 1;
-        var _home_star = irandom_range(1, planets);
 
-        player_home_star(_home_star);
+        for (var _slot = 1; _slot <= planets; _slot++) {
+            if (p_owner[_slot] == eFACTION.NONE) {
+                p_owner[_slot] = eFACTION.IMPERIUM;
+                p_first[_slot] = eFACTION.IMPERIUM;
+            }
+        }
+
+        var _home_planet = irandom_range(1, planets);
+
+        player_home_planet(_home_planet);
         var _planet_types = global.planet_types;
 
         if (obj_ini.recruit_relative_loc == 1) {
             var _possible_planets = [];
             for (var i = 1; i <= planets; i++) {
-                if (i != _home_star) {
+                if (i != _home_planet) {
                     array_push(_possible_planets, i);
                     p_type[i] = array_random_element(_planet_types);
                 }
@@ -178,9 +188,9 @@ function set_player_homeworld_star(chosen_star) {
             var _recruit_star = array_random_element(_possible_planets);
             set_player_recruit_planet(_recruit_star);
         } else if (obj_ini.recruit_relative_loc == 0) {
-            array_push(p_feature[_home_star], new NewPlanetFeature(eP_FEATURES.RECRUITING_WORLD)); //recruiting world
+            array_push(p_feature[_home_planet], new NewPlanetFeature(eP_FEATURES.RECRUITING_WORLD)); //recruiting world
             for (var i = 1; i <= planets; i++) {
-                if (i != _home_star) {
+                if (i != _home_planet) {
                     p_type[i] = array_random_element(_planet_types);
                 }
             }
@@ -190,7 +200,7 @@ function set_player_homeworld_star(chosen_star) {
         } else if (obj_ini.recruit_relative_loc == 2) {
             create_recruit_system(distance_removed_star(chosen_star.x, chosen_star.y));
             for (var i = 1; i <= planets; i++) {
-                if (i != _home_star) {
+                if (i != _home_planet) {
                     p_type[i] = array_random_element(_planet_types);
                 }
             }

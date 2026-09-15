@@ -2,6 +2,7 @@
 /// @description Resets all popup option variables to empty strings
 
 enum ePOPUP_TYPE {
+    LIVERYPICK = 4,
     PROMOTION = 5,
     EQUIP = 6,
     ARTIFACT_EQUIP = 8,
@@ -76,10 +77,11 @@ function popup_default_close() {
 }
 
 /// @self Asset.GMObject.obj_popup
+/// @desc Draws the popup window selected by the instance's size and type.
+/// @returns {Undefined}
 function popup_window_draw() {
     if ((size == 0) || (size == 2)) {
         sprite_index = spr_popup_medium;
-        image_alpha = 0;
         width = sprite_width - 50;
         draw_sprite_ext(spr_popup_medium, type, ((1600 - sprite_width) / 2), ((900 - sprite_height) / 2), 1, y_scale, 0, c_white, 1);
         if (image != "") {
@@ -88,7 +90,6 @@ function popup_window_draw() {
         }
     } else if (size == 1) {
         sprite_index = spr_popup_small;
-        image_alpha = 0;
         width = sprite_width - 10;
         draw_sprite_ext(spr_popup_small, type, ((1600 - sprite_width) / 2), ((900 - sprite_height) / 2), 1, y_scale, 0, c_white, 1);
         if (image != "") {
@@ -98,7 +99,6 @@ function popup_window_draw() {
     } else if (size == 3) {
         var draw_y_scale = y_scale;
         sprite_index = spr_popup_large;
-        image_alpha = 0;
         width = sprite_width - 50;
         if (image == "debug") {
             y_scale_mod = 1.5;
@@ -152,10 +152,9 @@ function replace_options(option, if_empty = false, use_default_option = true) {
 
 function evaluate_popup_option(opt) {
     var _allow = true;
+    var _requirements = {};
     if (struct_exists(opt, "requires")) {
-        var _requirements = opt.requires;
-    } else {
-        return true;
+        _requirements = opt.requires;
     }
 
     if (struct_exists(_requirements, "req")) {
@@ -202,7 +201,7 @@ function draw_popup_options() {
                 _opt_string = _opt.str1;
             }
 
-            var _opt_string = $"{i + 1}. {_opt_string}";
+            _opt_string = $"{i + 1}. {_opt_string}";
             var _string_x = x1 + 25.5;
             var _string_y = y1 + 20 + sz;
 
@@ -224,8 +223,25 @@ function draw_popup_options() {
                     press = i;
                     if (_is_struct && struct_exists(_opt, "choice_func")) {
                         if (is_callable(_opt.choice_func)) {
+                            var _newest_popup = noone;
+                            with (obj_popup) {
+                                if (id > _newest_popup) {
+                                    _newest_popup = id;
+                                }
+                            }
                             script_execute(_opt.choice_func);
                             press = -1;
+                            if (instance_exists(id)) {
+                                var _replaced = false;
+                                with (obj_popup) {
+                                    if (id > _newest_popup) {
+                                        _replaced = true;
+                                    }
+                                }
+                                if (_replaced) {
+                                    instance_destroy();
+                                }
+                            }
                         }
                     }
                 }
@@ -258,7 +274,7 @@ function draw_popup_options() {
 
 /// @self Asset.GMObject.obj_popup
 function calculate_equipment_needs() {
-    var i = 0, rall = "", all_good = 0;
+    var all_good = 0;
 
     req_armour = "";
     req_armour_num = 0;
@@ -276,12 +292,9 @@ function calculate_equipment_needs() {
     req_wep2_num = 0;
     have_wep2_num = 0;
 
-    rall = role_name[target_role];
+    var _targ_role = role_name[target_role];
 
-    /*if (rall=obj_ini.role[100][14]) and (global.chapter_name!="Space Wolves") and (global.chapter_name!="Iron Hands"){
-        req_armour="";req_armour_num=0;req_wep1="";req_wep1_num=0;req_wep2="";req_wep2_num=0;req_mobi="";req_mobi_num=0;
-    }*/
-    if (rall == "Codiciery") {
+    if (role_compare(_targ_role, eROLE.CODICIERY)) {
         req_armour = "";
         req_armour_num = 0;
         req_wep1 = "";
@@ -290,9 +303,9 @@ function calculate_equipment_needs() {
         req_wep2_num = 0;
         req_mobi = "";
         req_mobi_num = 0;
-        req_gear = obj_ini.gear[100][17];
+        req_gear = obj_ini.player_role_data[eROLE.LIBRARIAN].gear;
         req_gear_num = units;
-    } else if (rall == "Lexicanum") {
+    } else if (role_compare(_targ_role, eROLE.LEXICANUM)) {
         req_armour = "";
         req_armour_num = 0;
         req_wep1 = "";
@@ -301,44 +314,38 @@ function calculate_equipment_needs() {
         req_wep2_num = 0;
         req_mobi = "";
         req_mobi_num = 0;
-    } else if (rall == obj_ini.role[100][11]) {
+    } else if (role_compare(_targ_role, eROLE.ANCIENT)) {
         req_armour = STR_ANY_POWER_ARMOUR;
         req_armour_num = units;
         req_wep2 = "Company Standard";
         req_wep2_num = units;
     } else {
-        for (var i = 2; i < 20; i++) {
-            if (obj_ini.role[100][i] == rall) {
-                req_armour = obj_ini.armour[100][i];
+        for (var i = 1; i < array_length(obj_ini.player_role_data); i++) {
+            var _role = obj_ini.player_role_data[i];
+            if (_role.role == _targ_role) {
+                req_armour = _role.armour;
                 req_armour_num = units;
-                req_wep1 = obj_ini.wep1[100][i];
+                req_wep1 = _role.wep1;
                 req_wep1_num = units;
-                req_wep2 = obj_ini.wep2[100][i];
+                req_wep2 = _role.wep2;
                 req_wep2_num = units;
-                req_mobi = obj_ini.mobi[100][i];
+                req_mobi = _role.mobi;
                 req_mobi_num = units;
-                req_gear = obj_ini.gear[100][i];
+                req_gear = _role.gear;
                 req_gear_num = units;
                 break;
             }
         }
     }
 
-    if (rall == obj_ini.role[100][6]) {
+    var _dread_role = obj_ini.player_role_data[eROLE.DREADNOUGHT];
+    if (role_compare(_targ_role, eROLE.DREADNOUGHT)) {
         req_armour = "Dreadnought";
         req_armour_num = units;
-        req_wep1 = obj_ini.wep1[100][6];
+        req_wep1 = _dread_role.wep1;
         req_wep1_num = units;
-        req_wep2 = obj_ini.wep2[100][6];
+        req_wep2 = _dread_role.wep2;
         req_wep2_num = units;
-    }
-    if (rall == $"Venerable {obj_ini.role[100][6]}") {
-        req_armour = "";
-        req_armour_num = 0;
-        req_wep1 = "";
-        req_wep1_num = 0;
-        req_wep2 = "";
-        req_wep2_num = 0;
     }
 
     var unit_armour;
@@ -380,19 +387,17 @@ function calculate_equipment_needs() {
                 }
             }
         }
-
-        // if (n_wep1=n_wep2) and ((o_wep1!=n_wep1) or (o_wep2!=n_wep2)){have_wep1_num-=1;have_wep2_num-=1;}
     } // End Repeat
 
     // This checks to see if there is any more in the armoury
     if (req_armour == STR_ANY_POWER_ARMOUR) {
         var _armour_list = global.list_basic_power_armour;
-        for (i = 0; i < array_length(_armour_list); i++) {
+        for (var i = 0; i < array_length(_armour_list); i++) {
             have_armour_num += scr_item_count(_armour_list[i]);
         }
     } else if (req_armour == STR_ANY_TERMINATOR_ARMOUR) {
         var _armour_list = global.list_terminator_armour;
-        for (i = 0; i < array_length(_armour_list); i++) {
+        for (var i = 0; i < array_length(_armour_list); i++) {
             have_armour_num += scr_item_count(_armour_list[i]);
         }
     } else if (req_armour == "Dreadnought") {
@@ -584,7 +589,7 @@ function allow_governor_successor() {
         _text_last = "Regrettably he has a dim view of your chapter";
     }
     if (randa >= 95) {
-        _newdisp = max(p_data.player_disposition, 60 + choose(1, 2, 3, 4, 5, 6) * 3);
+        var _newdisp = max(p_data.player_disposition, 60 + choose(1, 2, 3, 4, 5, 6) * 3);
         p_data.set_player_disposition(_newdisp);
         _text_last = "Fortunately you already have good relations with the new governor";
     }

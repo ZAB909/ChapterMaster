@@ -1,4 +1,6 @@
 /// @self Asset.GMObject.obj_ncombat
+/// @desc Resolves Necron Tomb combat and resumes or completes the mission.
+/// @returns {Undefined}
 function necron_tomb_raid_post_battle_sequence() {
     if (!string_count("wake", battle_special)) {
         if (defeat == 1) {
@@ -6,14 +8,18 @@ function necron_tomb_raid_post_battle_sequence() {
             obj_controller.cooldown = 10;
             obj_turn_end.alarm[1] = 4;
         } else if (defeat == 0) {
-            battle_data.mission_stage += 1;
             obj_controller.combat = 0;
             var pip = instance_create(0, 0, obj_popup);
             pip.pop_data = battle_data;
 
             with (pip) {
                 necron_tomb_mission_start();
-                necron_tomb_mission_sequence();
+                var _completed = advance_necron_tomb_mission();
+                if (_completed) {
+                    keyboard_clear(vk_enter);
+                } else {
+                    text = "The last of the attackers is cut down.  Your marines regroup in the tunnel and ready themselves to press deeper into the complex.\n\n" + text;
+                }
                 number = pop_data.number;
             }
         }
@@ -30,7 +36,7 @@ function necron_tomb_raid_post_battle_sequence() {
         }
 
         var _star_obj = find_star_by_name(battle_loc);
-        if (_star_obj != "none") {
+        if (_star_obj != noone) {
             with (_star_obj) {
                 var planet = obj_ncombat.battle_id;
                 if (remove_planet_problem(planet, "necron")) {
@@ -61,7 +67,7 @@ function protect_raiders_battle_aftermath() {
     // title / text / image / speshul
     var cur_star = battle_object;
     var planet = battle_id;
-    var _planet = new PlanetData(planet, cur_star);
+    var _planet = cur_star.get_planet_data(planet);
     var _planet_string = _planet.name();
     _planet.remove_problem("protect_raiders");
     if (!defeat) {
@@ -88,11 +94,11 @@ function hunt_fallen_battle_aftermath() {
             var tixt = "The Fallen on " + battle_object[current_battle].name;
             tixt += scr_roman(battle_world[current_battle]);
             scr_event_log("", $"Mission Succesful: {tixt} have been captured or purged.");
-            tixt += $" have been captured or purged.  They shall be brought to the Chapter {obj_ini.role[100][14]}s posthaste, in order to account for their sins.  ";
+            tixt += $" have been captured or purged.  They shall be brought to the Chapter {obj_ini.player_role_data[eROLE.CHAPLAIN].role}s posthaste, in order to account for their sins.  ";
             var _tex_options = [
                 "Suffering is the beginning to penance.",
                 "Their screams shall be the harbringer of their contrition.",
-                "The shame they inflicted upon us shall be written in their flesh."
+                "The shame they inflicted upon us shall be written in their flesh.",
             ];
             tixt += _tex_options[choose(0, 0, 1, 2)];
             scr_popup("Hunt the Fallen Completed", tixt, "fallen", "");
@@ -122,13 +128,13 @@ function space_hulk_explore_battle_aftermath() {
         } else if (hulk_treasure == 2) {
             // Artifact
             //TODO this will eeroniously put artifacts in the wrong place but will resolve crashes
-            var last_artifact = scr_add_artifact("random", "random", 4, loc, shi + 500);
+            var last_artifact = scr_add_artifact("random", "random", 4, loc, shi);
             var i = 0;
 
             var pop = instance_create(0, 0, obj_popup);
             pop.image = "space_hulk_done";
             pop.title = "Space Hulk: Artifact";
-            pop.text = $"An Artifact has been retrieved from the Space Hulk and stowed upon {loc}.  It appears to be a {obj_ini.artifact[last_artifact]} but should be brought home and identified posthaste.";
+            pop.text = $"An Artifact has been retrieved from the Space Hulk and stowed upon {loc}.  It appears to be a {fetch_artifact(last_artifact).get_type_name()} but should be brought home and identified posthaste.";
             scr_event_log("", "Artifact recovered from the Space Hulk.");
         } else if (hulk_treasure == 3) {
             // STC

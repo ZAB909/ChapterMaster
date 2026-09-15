@@ -2,18 +2,8 @@ if ((global.load >= 0) || instance_exists(obj_saveload)) {
     exit;
 }
 
-if ((action != "") && (orbiting != 0)) {
-    if (instance_exists(orbiting)) {
-        if (variable_instance_exists(orbiting, "present_fleet")) {
-            orbiting.present_fleet[owner] -= 1;
-            orbiting = 0;
-        } else {
-            orbiting = instance_nearest(x, y, obj_star);
-            var cur_owner_fleet = orbiting.present_fleet[owner];
-            orbiting.present_fleet[owner] = cur_owner_fleet > 0 ? cur_owner_fleet - 1 : cur_owner_fleet == 0;
-            orbiting = 0;
-        }
-    }
+if ((action != "") && instance_exists(orbiting)) {
+    fleet_unregister_from_star(id);
 }
 
 if (capital_number < 0) {
@@ -30,8 +20,16 @@ if ((owner != eFACTION.INQUISITION) && (capital_number + frigate_number + escort
     instance_destroy();
 }
 
-if ((owner == eFACTION.TAU) && (x < 0) || (y < 0)) {
+if ((owner == eFACTION.TAU) && ((x < 0) || (y < 0))) {
     instance_destroy();
+}
+
+// Garbage-collect stationary fleets leaked off-map (e.g. an exception between a coordinate displacement and its restore).
+// Fleets in transit may legitimately be off-map.
+if ((action == "") && !in_room()) {
+    LOGGER.error($"Destroying stranded off-map fleet: owner {owner} at ({x}, {y})");
+    instance_destroy();
+    exit;
 }
 
 if ((target > 0) && instance_exists(target)) {
@@ -45,8 +43,7 @@ if (ii_check == 0) {
     ii_check = 10;
 
     if ((owner != eFACTION.ELDAR) && (owner != eFACTION.INQUISITION)) {
-        var ii = 0;
-        ii += capital_number;
+        var ii = capital_number;
         ii += round((frigate_number / 2));
         ii += round((escort_number / 4));
         if (ii <= 1) {
@@ -56,9 +53,7 @@ if (ii_check == 0) {
         image_index = min(image_index, 9);
     }
     if (owner == eFACTION.ELDAR) {
-        var ii;
-        ii = 0;
-        ii += capital_number;
+        var ii = capital_number;
         ii += round((frigate_number / 2));
         ii += round((escort_number / 4));
         if (ii <= 1) {
@@ -75,8 +70,7 @@ if (ii_check == 0) {
 if (owner == eFACTION.TYRANIDS) {
     image_alpha = 0;
     if (instance_exists(obj_p_fleet)) {
-        var bundy;
-        bundy = instance_nearest(x, y, obj_p_fleet);
+        var bundy = instance_nearest(x, y, obj_p_fleet);
         if ((bundy.action == "") && (self.action == "") && (point_distance(bundy.x, bundy.y, x, y) < 90) && (bundy.x > x) && (bundy.y < y)) {
             image_alpha = 1;
         }
@@ -89,7 +83,6 @@ if (owner == eFACTION.TYRANIDS) {
 if ((owner == eFACTION.TAU) && (action_spd != 32)) {
     action_spd = 32;
 }
-// if (owner = eFACTION.TAU) and (image_index>1)
 if (owner == eFACTION.MECHANICUS) {
     if (action != "") {
         direction = point_direction(x, y, action_x, action_y);
@@ -103,19 +96,16 @@ if ((owner == eFACTION.ELDAR) && (trade_goods != "") && (action == "move")) {
 if ((owner == eFACTION.TAU) && (action == "") && (obj_controller.tau_messenger >= 30) && (frigate_number > 0) && (escort_number + capital_number > 0)) {
     obj_controller.tau_messenger = 0;
 
-    var fleet, good, stir, xx, yy;
-    stir = 0;
-    xx = 0;
-    yy = 0;
-    good = 0;
+    var stir = 0;
+    var xx = 0;
+    var yy = 0;
+    var good = 0;
 
-    fleet = instance_nearest(x, y, obj_star);
-    fleet.tau_fleets += 1;
-    fleet.present_fleets += 1;
+    var fleet = instance_nearest(x, y, obj_star);
+    obj_controller.tau_fleets += 1;
     instance_deactivate_object(fleet);
 
-    fleet = instance_create(x, y, obj_en_fleet);
-    fleet.owner = eFACTION.TAU;
+    fleet = create_enemy_fleet(x, y, eFACTION.TAU);
     fleet.action_spd = 32;
     fleet.frigate_number = 1;
     fleet.sprite_index = spr_fleet_tau;

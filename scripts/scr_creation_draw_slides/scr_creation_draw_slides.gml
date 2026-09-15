@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 enum eCREATION_SLIDES {
     CHAPTERSELECT = 1,
     CHAPTERTRAITS = 2,
@@ -14,17 +11,17 @@ enum eCREATION_SLIDES {
 /// @self Asset.GMObject.obj_creation
 function draw_chapter_select() {
     draw_set_color(CM_GREEN_COLOR);
-    draw_set_font(fnt_40k_30b);
+    draw_set_font(cjk_font(fnt_40k_30b));
     draw_set_halign(fa_center);
-    draw_text(800, 80, string_hash_to_newline("Select Chapter"));
+    draw_text(800, 80, localize("Select Chapter"));
 
-    draw_set_font(fnt_40k_30b);
+    draw_set_font(cjk_font(fnt_40k_30b));
     draw_set_halign(fa_left);
 
-    draw_text_transformed(440, founding_y, "Founding Chapters", 0.75, 0.75, 0);
-    draw_text_transformed(440, successor_y, "Existing Chapters", 0.75, 0.75, 0);
-    draw_text_transformed(440, custom_y, "Custom Chapters", 0.75, 0.75, 0);
-    draw_text_transformed(440, other_y, "Other", 0.75, 0.75, 0);
+    draw_text_transformed(440, founding_y, localize("Founding Chapters"), 0.75, 0.75, 0);
+    draw_text_transformed(440, successor_y, localize("Existing Chapters"), 0.75, 0.75, 0);
+    draw_text_transformed(440, custom_y, localize("Custom Chapters"), 0.75, 0.75, 0);
+    draw_text_transformed(440, other_y, localize("Other"), 0.75, 0.75, 0);
 
     /// @localvar grid object to keep track of where to draw icon boxes
     var grid = {
@@ -72,11 +69,9 @@ function draw_chapter_select() {
         },
     };
 
-    /** * Founding Chapters */
-    var i, new_hover, tool;
-    i = 1;
-    new_hover = highlight;
-    tool = 0;
+    //* Founding Chapters *//
+    var i = 1;
+    var tool = 0;
     for (var c = 0; c < array_length(founding_chapters); c++) {
         var chap = founding_chapters[c];
         i = chap.id;
@@ -109,19 +104,15 @@ function draw_chapter_select() {
                         goto_slide = 2;
                         chapter_string = chapter_name;
                         setup_chapter_trait_select();
-                    } else {
-                        // Chapter is borked
-                    }
+                    } // Chapter is borked
                 }
             }
         }
-        // grid.x1 += icon_gap_x;
     }
 
-    /** * Successor Chapters */
+    //* Successor Chapters *//
     grid.new_section(successor_y);
 
-    new_hover = highlight;
     for (var c = 0; c < array_length(successor_chapters); c++) {
         var chap = successor_chapters[c];
         i = chap.id;
@@ -154,17 +145,14 @@ function draw_chapter_select() {
                         goto_slide = 2;
                         chapter_string = chapter_name;
                         setup_chapter_trait_select();
-                    } else {
-                        // borked
-                    }
+                    } // borked
                 }
             }
         }
     }
 
-    /** * Saved Custom Chapters */
+    //* Saved Custom Chapters *//
     grid.new_section(custom_y);
-    new_hover = highlight;
     for (var c = 0; c < array_length(custom_chapters); c++) {
         var chap = custom_chapters[c];
         i = chap.id;
@@ -175,9 +163,8 @@ function draw_chapter_select() {
         if (chap.loaded == false) {
             draw_sprite_stretched(global.chapter_icons_map[? "custom_white"], 0, grid.x1, grid.y1, grid.w, grid.h);
         } else {
-            var spr = -1;
-            spr = scr_load_chapter_icon(chap.icon_name);
-            if (spr == -1) {
+            var spr = scr_load_chapter_icon(chap.icon_name);
+            if (is_undefined(spr)) {
                 draw_sprite_stretched(global.chapter_icons_map[? "unknown"], 0, grid.x1, grid.y1, grid.w, grid.h);
             } else {
                 draw_sprite_stretched(spr, 0, grid.x1, grid.y1, grid.w, grid.h);
@@ -220,17 +207,15 @@ function draw_chapter_select() {
         }
     }
 
-    /** * Other Chapters */
+    //* Other Chapters *//
     grid.new_section(other_y);
 
-    new_hover = highlight;
     for (var c = 0; c < array_length(other_chapters); c++) {
         var chap = other_chapters[c];
         i = chap.id;
 
         grid.new_cell();
         draw_sprite(spr_creation_icon, 0, grid.x1, grid.y1);
-        // draw_sprite_stretched(spr_icon,i,x2,y2,48,48);
         draw_sprite_stretched(global.chapter_icons_map[? chap.icon_name], 0, grid.x1, grid.y1, grid.w, grid.h);
 
         // Hover
@@ -251,19 +236,13 @@ function draw_chapter_select() {
                 if (!chap.disabled) {
                     if (scr_chapter_new(chapter_name)) {
                         scr_load_chapter_icon(chap.icon_name, true);
-                        // global.chapter_icon_sprite = obj_img.image_cache[$ "creation/chapters/icons"][chap.icon_name];
-                        // global.chapter_icon_frame = 0;
-                        // global.chapter_icon_path = $"creation/chapters/icons";
-                        // global.chapter_icon_filename = chap.icon_name;
                         global.chapter_id = chap.id;
                         custom = eCHAPTER_TYPE.PREMADE;
                         change_slide = 1;
                         goto_slide = 2;
                         chapter_string = chapter_name;
                         setup_chapter_trait_select();
-                    } else {
-                        // borked
-                    }
+                    } // borked
                 }
             }
         }
@@ -335,7 +314,6 @@ function draw_chapter_select() {
     if ((tool == 0) && (highlighting > 0)) {
         highlighting -= 1;
     }
-    // if (new_hover=0) then highlight=0;
 
     if (((highlight > 0) && (highlighting > 0)) || ((change_slide > 0) && (goto_slide != 1))) {
         draw_set_alpha(min(slate4 / 30, highlighting / 30));
@@ -351,7 +329,6 @@ function draw_chapter_select() {
         }
         if (highlight <= array_length(all_chapters)) {
             var splash_chapter = all_chapters[highlight];
-            //LOGGER.debug($"highlight {highlight} splash chapter {splash_chapter.id} splash icon {splash_chapter.splash}");
             scr_image("creation/chapters/splash", splash_chapter.splash, 0, 68, 374, 713);
         }
 
@@ -370,42 +347,63 @@ function draw_chapter_select() {
         }
 
         draw_set_alpha(1);
-        draw_set_color(0);
+        draw_set_color(c_black);
         draw_set_halign(fa_left);
 
         if (highlight <= array_length(all_chapters)) {
             var chap = all_chapters[highlight];
-            tooltip = chap.name;
+            tooltip = localize(chap.name);
             if (chap.progenitor != 0 && chap.progenitor < 10) {
-                tooltip += "  - Progenitor: " + all_chapters[chap.progenitor].name;
+                tooltip += "  - " + localize("Progenitor: {0}", [localize(all_chapters[chap.progenitor].name)]);
             }
-            tooltip2 = chap.tooltip;
+            tooltip2 = localize(chap.tooltip);
         }
         if (highlight == 1001) {
-            tooltip = "Custom";
+            tooltip = localize("Custom");
         }
         if (highlight == 1002) {
-            tooltip = "Randomize";
+            tooltip = localize("Randomize");
         }
         if (highlight == 1001) {
-            tooltip2 = "Create your own customized Chapter, deciding the origins, strength, and weaknesses.  Custom Chapters are weaker than Founding Chapters.";
+            tooltip2 = localize("Create your own customized Chapter, deciding the origins, strength, and weaknesses.  Custom Chapters are weaker than Founding Chapters.");
         }
         if (highlight == 1002) {
-            tooltip2 = "Randomly generate a Chapter to play.  The origins, strength, and weaknesses are all random.  Random Chapters are normally weaker than Founding Chapters. ";
+            tooltip2 = localize("Randomly generate a Chapter to play.  The origins, strength, and weaknesses are all random.  Random Chapters are normally weaker than Founding Chapters. ");
         }
     }
 }
 
 /// @self Asset.GMObject.obj_creation
 function setup_chapter_trait_select() {
-    chapter_type_radio = new RadioSet([{str1: "Homeworld", font: fnt_40k_14b, tooltip: "Homeworld\nYour chapter has a homeworld that they base on.  Contained upon it is a massive Fortress Monastery, which provides high levels of defense and automated weapons."}, {str1: "Fleet Based", font: fnt_40k_14b, tooltip: "Fleet Based\nRather than a homeworld your chapter begins near their recruiting world.  The fleet includes a Battle Barge, which serves as a mobile base, and powerful ship."}, {str1: "Penitent", font: fnt_40k_14b, tooltip: "Penitent\nAs with Fleet Based, but you must crusade and fight until your penitence meter runs out.  Note that recruiting is disabled until then."}], "Chapter Type", {x1: 445, y1: 211, max_width: 1125 - 445, center: true});
+    chapter_type_radio = new RadioSet([
+        {
+            str1: localize("Homeworld"),
+            font: fnt_40k_14b,
+            tooltip: localize("Homeworld\nYour Chapter has a homeworld that they base on.  Contained upon it is a massive Fortress Monastery, which provides high levels of defense and automated weapons."),
+        },
+        {
+            str1: localize("Fleet Based"),
+            font: fnt_40k_14b,
+            tooltip: localize("Fleet Based\nRather than a homeworld, your Chapter begins near their recruiting world.  The fleet includes a Battle Barge, which serves as a mobile base, and powerful ship."),
+        },
+        {
+            str1: localize("Penitent"),
+            font: fnt_40k_14b,
+            tooltip: localize("Penitent\nAs with Fleet Based, but you must crusade and fight until your penitence meter runs out.  Note that recruiting is disabled until then."),
+        },
+    ], localize("Chapter Type"), {
+        x1: 445,
+        y1: 211,
+        max_width: 1125 - 445,
+        center: true,
+    });
     chapter_type_radio.current_selection = fleet_type - 1;
 }
 
 /// @self Asset.GMObject.obj_creation
 function draw_chapter_trait_select() {
     draw_set_color(CM_GREEN_COLOR);
-    draw_set_font(fnt_40k_30b);
+    draw_set_font(cjk_font(fnt_40k_30b));
     draw_set_halign(fa_center);
 
     obj_cursor.image_index = 0;
@@ -439,22 +437,17 @@ function draw_chapter_trait_select() {
     }
 
     draw_set_color(CM_GREEN_COLOR);
-    draw_text_transformed(800, 120, string_hash_to_newline("Points: " + string(points) + "/" + string(maxpoints)), 0.6, 0.6, 0);
+    draw_text_transformed(800, 120, string_hash_to_newline(localize("Points: {0}/{1}", [points, maxpoints])), 0.6, 0.6, 0);
 
     obj_cursor.image_index = 0;
     if ((custom != eCHAPTER_TYPE.PREMADE) && (restarted == 0)) {
-        if (scr_hit(436, 74, 436 + 128, 74 + 128) && (popup == "")) {
+        if (scr_hit(436, 74, 564, 202) && (popup == "")) {
             obj_cursor.image_index = 1;
             if (mouse_button_clicked()) {
                 popup = "icons";
             }
         }
     }
-
-    /*if (custom!=eCHAPTER_TYPE.PREMADE) and (restarted=0){
-        draw_sprite_stretched(spr_creation_arrow,0,550,160,32,32);
-        draw_sprite_stretched(spr_creation_arrow,1,597,160,32,32);
-    }*/
 
     draw_set_color(CM_GREEN_COLOR);
     draw_line(445, 200, 1125, 200);
@@ -465,6 +458,7 @@ function draw_chapter_trait_select() {
         if (custom != eCHAPTER_TYPE.CUSTOM) {
             draw_set_alpha(0.5);
         }
+        chapter_type_radio.allow_changes = custom == eCHAPTER_TYPE.CUSTOM;
         chapter_type_radio.draw();
         fleet_type = chapter_type_radio.current_selection + 1;
 
@@ -473,76 +467,37 @@ function draw_chapter_trait_select() {
         draw_line(445, 291, 1125, 291);
 
         draw_set_halign(fa_center);
-        draw_text_transformed(800, 301, "Chapter Stats", 0.6, 0.6, 0);
+        draw_text_transformed(800, 301, localize("Chapter Stats"), 0.6, 0.6, 0);
         draw_set_halign(fa_left);
 
-        var _strength_ratings = [
-            "",
-            "Decimated",
-            "Reduced",
-            "Reduced",
-            "Reduced",
-            "Average",
-            "Above Average",
-            "Above Average",
-            "Considerable",
-            "Considerable",
-            "Overwhelming"
-        ];
-        var _cooperation_ratings = [
-            "",
-            "Antagonistic",
-            "Uncooperative",
-            "Uncooperative",
-            "Uncooperative",
-            "Neutral",
-            "Trusted",
-            "Trusted",
-            "Trusted",
-            "Trusted",
-            "Exemplary"
-        ];
-        var _geneseed_ratings = [
-            "",
-            "Abnormal",
-            "Horrible",
-            "Horrible",
-            "Bad",
-            "Bad",
-            "Mediocre",
-            "Mediocre",
-            "Good",
-            "Good",
-            "Perfect"
-        ];
-        draw_text_transformed(505, 332, $"Strength: {_strength_ratings[strength]} ({strength})", 0.5, 0.5, 0);
-        draw_text_transformed(505, 387, $"Cooperation: {_cooperation_ratings[cooperation]}  ({cooperation})", 0.5, 0.5, 0);
-        draw_text_transformed(505, 442, $"Gene-Seed Purity: {_geneseed_ratings[purity]} ({purity})", 0.5, 0.5, 0);
-        draw_text_transformed(505, 497, $"Gene-Seed Stability: ({stability}%)", 0.5, 0.5, 0);
+        draw_text_transformed(505, 332, localize("Strength: {0} ({1})", [global.chapter_strength_ratings[strength], string(strength)]), 0.5, 0.5, 0);
+        draw_text_transformed(505, 387, localize("Cooperation: {0}  ({1})", [global.chapter_cooperation_ratings[cooperation], string(cooperation)]), 0.5, 0.5, 0);
+        draw_text_transformed(505, 442, localize("Gene-Seed Purity: {0} ({1})", [global.chapter_geneseed_ratings[purity], string(purity)]), 0.5, 0.5, 0);
+        draw_text_transformed(505, 497, localize("Gene-Seed Stability: ({0}%)", [string(stability)]), 0.5, 0.5, 0);
 
         var arrow_buttons_controls = [
             strength,
             cooperation,
             purity,
-            stability
+            stability,
         ];
         var score_costs = [
             10,
             10,
             10,
-            1
+            1,
         ];
         var scores_max = [
             10,
             10,
             10,
-            99
+            99,
         ];
         var scores_min = [
             1,
             1,
             1,
-            1
+            1,
         ];
         var click_change = keyboard_check(vk_control) ? 10 : 1;
         if (custom == eCHAPTER_TYPE.CUSTOM) {
@@ -550,8 +505,8 @@ function draw_chapter_trait_select() {
                 draw_sprite_stretched(spr_arrow, 0, 436, 325 + (i * 55), 32, 32);
                 if (scr_hit(436, 325 + (i * 55), 436 + sprite_get_width(spr_arrow), 357 + (i * 55))) {
                     obj_cursor.image_index = 1;
-                    tooltip = "Decrease";
-                    tooltip2 = "(Hold Ctrl to decrease by 10)";
+                    tooltip = localize("Decrease");
+                    tooltip2 = localize("(Hold Ctrl to decrease by 10)");
                     if (mouse_button_clicked() && (arrow_buttons_controls[i] - click_change) >= scores_min[i]) {
                         arrow_buttons_controls[i] -= click_change;
                         points -= score_costs[i] * click_change;
@@ -560,8 +515,8 @@ function draw_chapter_trait_select() {
                 draw_sprite_stretched(spr_arrow, 1, 470, 325 + (i * 55), 32, 32);
                 if (scr_hit(470, 325 + (i * 55), 470 + sprite_get_width(spr_arrow), 357 + (i * 55))) {
                     obj_cursor.image_index = 1;
-                    tooltip = "Increase";
-                    tooltip2 = "(Hold Ctrl to increase by 10)";
+                    tooltip = localize("Increase");
+                    tooltip2 = localize("(Hold Ctrl to increase by 10)");
                     if (mouse_button_clicked() && (arrow_buttons_controls[i] + click_change) <= scores_max[i] && (points + (score_costs[i] * click_change) <= maxpoints)) {
                         arrow_buttons_controls[i] += click_change;
                         points += score_costs[i] * click_change;
@@ -576,20 +531,20 @@ function draw_chapter_trait_select() {
         stability = arrow_buttons_controls[3];
 
         if (scr_hit(505, 325, 800, 357)) {
-            tooltip = "Strength";
-            tooltip2 = "How many marines your chapter has. \nFor every score below five a company will be removed; conversely, each score higher grants 50 additional astartes.";
+            tooltip = localize("Strength");
+            tooltip2 = localize("How many Space Marines your Chapter has. \nFor every score below five a company will be removed; conversely, each score higher grants 50 additional Astartes.");
         }
         if (scr_hit(505, 380, 800, 412)) {
-            tooltip = "Cooperation";
-            tooltip2 = "How diplomatic your chapter is. \nA low score will lower starting dispositions of Imperial factions and make disposition increases less likely to occur.";
+            tooltip = localize("Cooperation");
+            tooltip2 = localize("How diplomatic your Chapter is. \nA low score will lower starting dispositions of Imperial factions and make disposition increases less likely to occur.");
         }
         if (scr_hit(505, 435, 800, 467)) {
-            tooltip = "Gene-Seed Purity";
-            tooltip2 = "How many inherent mutations your gene-seed has. \nEach score below ten means one mutations will need to be chosen.";
+            tooltip = localize("Gene-Seed Purity");
+            tooltip2 = localize("How many inherent mutations your gene-seed has. \nEach score below ten requires one mutation to be chosen.");
         }
         if (scr_hit(505, 490, 800, 522)) {
-            tooltip = "Gene-Seed Stability";
-            tooltip2 = "How easily new mutations and corruption can occur with your chapter's gene seed. \nAffects the amount of random mutations your existing marines have, and the amount new aspirants get after the implantation is finished.";
+            tooltip = localize("Gene-Seed Stability");
+            tooltip2 = localize("How easily new mutations and corruption can occur with your Chapter's gene-seed. \nAffects the amount of random mutations your existing Space Marines have, and the amount new Aspirants get after the implantation is finished.");
         }
     }
 
@@ -607,16 +562,16 @@ function draw_chapter_trait_select() {
 
         draw_set_alpha(1);
         if (scr_hit(436, 564, 631, 583)) {
-            tooltip = "Chapter Advantages";
-            tooltip2 = "Advantages cost points, and improve the performance of your chapter in a specific domain. You can only have 1 trait of the same category, shown in brackets.";
+            tooltip = localize("Chapter Advantages");
+            tooltip2 = localize("Advantages cost points, and improve the performance of your Chapter in a specific domain. You can only have one trait of the same category, shown in brackets.");
         }
         if (scr_hit(810, 564, 1030, 583)) {
-            tooltip = "Chapter Disadvantages";
-            tooltip2 = "Disadvantages grant additional points, and penalize the performance of your chapter. You can only have 1 trait of the same category, shown in brackets.";
+            tooltip = localize("Chapter Disadvantages");
+            tooltip2 = localize("Disadvantages grant additional points, and penalize the performance of your Chapter. You can only have one trait of the same category, shown in brackets.");
         }
     } else if (popup == "icons") {
         draw_set_alpha(1);
-        draw_set_color(0);
+        draw_set_color(c_black);
         draw_rectangle(450, 206, 1144, 711, 0);
 
         draw_set_color(CM_GREEN_COLOR);
@@ -624,19 +579,18 @@ function draw_chapter_trait_select() {
         draw_line(445, 728, 1125, 728);
         draw_line(445, 729, 1125, 729);
 
-        draw_set_font(fnt_40k_30b);
+        draw_set_font(cjk_font(fnt_40k_30b));
         draw_set_halign(fa_center);
-        draw_text_transformed(800, 211, "Select an Icon", 0.6, 0.6, 0);
-        draw_text_transformed(800, 687, "Cancel", 0.6, 0.6, 0);
+        draw_text_transformed(800, 211, localize("Select an Icon"), 0.6, 0.6, 0);
+        draw_text_transformed(800, 687, localize("Cancel"), 0.6, 0.6, 0);
 
-        var cw, ch;
-        cw = string_width("Cancel") * 0.6;
-        ch = string_height("Cancel") * 0.6;
+        var cw = string_width(localize("Cancel")) * 0.6;
+        var ch = string_height(localize("Cancel")) * 0.6;
 
         if (scr_hit(800, 687, 800 + cw, 687 + ch)) {
             draw_set_color(c_white);
             draw_set_alpha(0.25);
-            draw_text_transformed(800, 687, string_hash_to_newline("Cancel"), 0.6, 0.6, 0);
+            draw_text_transformed(800, 687, localize("Cancel"), 0.6, 0.6, 0);
             draw_set_color(CM_GREEN_COLOR);
             draw_set_alpha(1);
 
@@ -645,7 +599,7 @@ function draw_chapter_trait_select() {
             }
         }
 
-        draw_set_font(fnt_40k_14b);
+        draw_set_font(cjk_font(fnt_40k_14b));
         draw_set_halign(fa_left);
 
         var icons_per_row = 6; // how many icons per row
@@ -676,7 +630,7 @@ function draw_chapter_trait_select() {
             if (scr_hit(real_x3, real_y3, real_x3 + 96, real_y3 + 96)) {
                 gpu_set_blendmode(bm_add);
                 draw_set_alpha(0.25);
-                draw_set_color(16119285);
+                draw_set_color(#F5F5F5);
                 draw_rectangle(x3, y3, x3 + 96, y3 + 96, false);
                 gpu_set_blendmode(bm_normal);
                 draw_set_alpha(1);
@@ -710,9 +664,8 @@ function draw_chapter_trait_select() {
 
 /// @self Asset.GMObject.obj_creation
 function draw_chapter_homeworld_select() {
-    var yar = 0;
     draw_set_color(CM_GREEN_COLOR);
-    draw_set_font(fnt_40k_30b);
+    draw_set_font(cjk_font(fnt_40k_30b));
     draw_set_halign(fa_center);
 
     tooltip = "";
@@ -721,7 +674,6 @@ function draw_chapter_homeworld_select() {
 
     draw_text(800, 80, chapter_name);
 
-    draw_set_color(CM_GREEN_COLOR);
     draw_rectangle(445, 200, 1125, 202, 0);
 
     scr_creation_home_planet_create();
@@ -729,19 +681,24 @@ function draw_chapter_homeworld_select() {
     left_data_slate.inside_method = function() {
         if (!buttons.complex_homeworld.active) {
             var trial_data = scr_trial_data();
-            draw_text_transformed(160, 90, "Aspirant Trial", 0.6, 0.6, 0);
+            var _trial_label = localize("Aspirant Trial");
+            draw_text_transformed(160, 90, _trial_label, 0.6, 0.6, 0);
 
             if (custom == eCHAPTER_TYPE.CUSTOM) {
-                draw_sprite_stretched(spr_creation_arrow, 0, 40, 90, 32, 32);
-                if (point_and_click([40, 90, 40 + 32, 90 + 32])) {
+                var _trial_label_w = string_width(_trial_label) * 0.6;
+                var _arrow_size = 32;
+                var _side_gap = 10;
+                var _left_x = 160 - (_trial_label_w / 2) - _side_gap - _arrow_size;
+                var _right_x = 160 + (_trial_label_w / 2) + _side_gap;
+                draw_sprite_stretched(spr_creation_arrow, 0, _left_x, 90, _arrow_size, _arrow_size);
+                if (point_and_click([_left_x, 90, _left_x + _arrow_size, 90 + _arrow_size])) {
                     aspirant_trial++;
                     if (aspirant_trial >= array_length(trial_data)) {
                         aspirant_trial = 0;
                     }
                 }
-                var _right_x = 72 + string_length("Aspirant Trial") + 10;
-                draw_sprite_stretched(spr_creation_arrow, 1, _right_x, 90, 32, 32);
-                if (point_and_click([_right_x, 90, _right_x + 32, 90 + 32])) {
+                draw_sprite_stretched(spr_creation_arrow, 1, _right_x, 90, _arrow_size, _arrow_size);
+                if (point_and_click([_right_x, 90, _right_x + _arrow_size, 90 + _arrow_size])) {
                     aspirant_trial--;
                     if (aspirant_trial < 0) {
                         aspirant_trial = array_length(trial_data) - 1;
@@ -753,19 +710,18 @@ function draw_chapter_homeworld_select() {
 
             draw_text_transformed(160, 110, current_trial.name, 0.5, 0.5, 0);
 
-            var asp_info;
-            asp_info = scr_compile_trial_bonus_string(current_trial);
+            var asp_info = scr_compile_trial_bonus_string(current_trial);
 
             draw_set_halign(fa_center);
 
             draw_text_ext_transformed(160, 150, asp_info, -1, left_data_slate.width - 20, 0.4, 0.4, 0);
 
             if (scr_hit(50, 480, 950, 510)) {
-                tooltip = "Aspirant Trial";
-                tooltip2 = "A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training (This can be changed once in game but the chosen trial here will effect the spawn characteristics of your starting marines).";
+                tooltip = localize("Aspirant Trial");
+                tooltip2 = localize("A special challenge is needed for Aspirants to be judged worthy of becoming Astartes.  After completing the Trial they then become a Neophyte, beginning implantation and training.  (This can be changed once in game, but the chosen trial here will affect the spawn characteristics of your starting Space Marines).");
             }
         } else {
-            draw_set_font(fnt_40k_30b);
+            draw_set_font(cjk_font(fnt_40k_30b));
             var _spawn_radio = buttons.home_spawn_loc_options;
             var _max_width = left_data_slate.width - 100;
             _spawn_radio.update({x1: 70, y1: 60, max_width: _max_width, allow_changes: custom});

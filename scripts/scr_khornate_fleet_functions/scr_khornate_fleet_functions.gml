@@ -1,45 +1,41 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+/// @self Id.Instance.obj_en_fleet
 function khorne_fleet_cargo() {
     //This handles khorne fleets killing planet popultions moving planet and then choosing a new target ot chase
     warband = cargo_data.warband;
-    var _is_orbiting = is_orbiting();
-    if (_is_orbiting && (action == "")) {
+    if (action == "" && instance_exists(orbiting)) {
         _orb = orbiting;
         if (_orb.present_fleet[1] + _orb.present_fleet[2] + _orb.present_fleet[3] + _orb.present_fleet[6] + _orb.present_fleet[7] + _orb.present_fleet[9] + _orb.present_fleet[13] == 0) {
-            var ii = 0, good = 0, part = 0, find_new_planet = false;
+            var good = 0;
+            var find_new_planet = false;
 
             // No forces already landed
             var _fleet = self;
 
             with (_orb) {
-                repeat (planets) {
-                    ii += 1;
-                    if (planet_feature_bool(p_feature[ii], eP_FEATURES.CHAOSWARBAND) == 1) {
+                for (var i = 1; i <= planets; i++) {
+                    if (planet_feature_bool(p_feature[i], eP_FEATURES.CHAOSWARBAND) == 1) {
                         good -= 1;
 
-                        if (planet_imperium_ground_total(ii) <= 0) {
-                            if (p_population[ii] > p_max_population[ii] / 20) {
-                                p_population[ii] = round(p_population[ii] / 2);
-                                if (p_population[ii] <= p_max_population[ii] / 20) {
+                        if (planet_imperium_ground_total(i) <= 0) {
+                            if (p_population[i] > p_max_population[i] / 20) {
+                                p_population[i] = round(p_population[i] / 2);
+                                if (p_population[i] <= p_max_population[i] / 20) {
                                     find_new_planet = true;
                                 }
                             }
-                        } else if (p_population[ii] <= p_max_population[ii] / 20) {
+                        } else if (p_population[i] <= p_max_population[i] / 20) {
                             find_new_planet = true;
                         }
                     }
                 }
                 // Next planet; rembark the chaos forces
                 if (find_new_planet == true) {
-                    ii = 0;
                     find_new_planet = false;
-                    repeat (planets) {
-                        ii += 1;
-                        if (planet_feature_bool(p_feature[ii], eP_FEATURES.CHAOSWARBAND) == 1) {
-                            p_chaos[ii] = 0;
-                            p_traitors[ii] = max(4, p_traitors[ii] + 1);
-                            delete_features(p_feature[ii], eP_FEATURES.CHAOSWARBAND);
+                    for (var i = 1; i <= planets; i++) {
+                        if (planet_feature_bool(p_feature[i], eP_FEATURES.CHAOSWARBAND) == 1) {
+                            p_chaos[i] = 0;
+                            p_traitors[i] = max(4, p_traitors[i] + 1);
+                            delete_features(p_feature[i], eP_FEATURES.CHAOSWARBAND);
                             find_new_planet = true;
                         }
                     }
@@ -48,24 +44,22 @@ function khorne_fleet_cargo() {
 
             // No forces landed
             if ((good == 0) || (find_new_planet == true)) {
-                ii = 0;
                 var landing_planet = 0;
                 with (_orb) {
-                    repeat (planets) {
-                        ii += 1;
+                    for (var i = 1; i <= planets; i++) {
                         if (landing_planet == 0) {
-                            if ((planet_imperium_ground_total(ii) > 0) && (p_population[ii] > p_max_population[ii] / 20)) {
-                                array_push(p_feature[ii], new NewPlanetFeature(eP_FEATURES.CHAOSWARBAND));
-                                landing_planet = ii;
-                                p_chaos[ii] = 6;
+                            if ((planet_imperium_ground_total(i) > 0) && (p_population[i] > p_max_population[i] / 20)) {
+                                array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.CHAOSWARBAND));
+                                landing_planet = i;
+                                p_chaos[i] = 6;
                                 break;
                             } // Forces landed
                         }
                         if (landing_planet == 0) {
-                            if ((p_player[ii] > 0) && (p_population[ii] > p_max_population[ii] / 20)) {
-                                landing_planet = ii;
-                                p_chaos[ii] = 6;
-                                array_push(p_feature[ii], new NewPlanetFeature(eP_FEATURES.CHAOSWARBAND));
+                            if ((p_player[i] > 0) && (p_population[i] > p_max_population[i] / 20)) {
+                                landing_planet = i;
+                                p_chaos[i] = 6;
+                                array_push(p_feature[i], new NewPlanetFeature(eP_FEATURES.CHAOSWARBAND));
                                 break;
                             } // Forces landed
                         }
@@ -74,7 +68,6 @@ function khorne_fleet_cargo() {
 
                 if ((landing_planet == 0) && (trade_goods != "khorne_warband_landing_force")) {
                     // Nothing to see here, continue to next star*/
-                    ii = 0;
 
                     with (_orb) {
                         instance_deactivate_object(id);
@@ -109,21 +102,18 @@ function khorne_fleet_cargo() {
                         }
                     }
 
-                    var nx, ny, n2, yy2, ndir, next_star;
-                    next_star = 0;
-                    ndir = point_direction(x, y, home_x, home_y);
-                    nx = x + lengthdir_x(250, ndir);
-                    ny = y + lengthdir_y(250, ndir);
-                    n2 = x + lengthdir_x(450, ndir);
-                    yy2 = y + lengthdir_y(450, ndir);
+                    var ndir = point_direction(x, y, home_x, home_y);
+                    var nx = x + lengthdir_x(250, ndir);
+                    var ny = y + lengthdir_y(250, ndir);
+                    var n2 = x + lengthdir_x(450, ndir);
+                    var yy2 = y + lengthdir_y(450, ndir);
 
                     if (!point_in_rectangle(n2, yy2, 50, 50, room_width, room_height)) {
                         trade_goods = "khorne_warband_landing_force";
-                        // show_message("khorne_warband_landing_force");
                     }
 
                     if (trade_goods != "khorne_warband_landing_force") {
-                        next_star = instance_nearest(nx, ny, obj_star);
+                        var next_star = instance_nearest(nx, ny, obj_star);
                         action_x = next_star.x;
                         action_y = next_star.y;
                         action = "";
@@ -151,7 +141,7 @@ function khorne_fleet_cargo() {
                         if (player_stars > 0) {
                             var pee1 = instance_nearest(x, y, obj_star);
                             instance_activate_object(obj_star);
-                            next_star = distance_removed_star(pee1.x, pee1.y, choose(1, 1, 2));
+                            var next_star = distance_removed_star(pee1.x, pee1.y, choose(1, 1, 2));
                             action_x = next_star.x;
                             action_y = next_star.y;
                             action = "";
@@ -167,10 +157,10 @@ function khorne_fleet_cargo() {
                         }
                         var chase_fleet = get_nearest_player_fleet(nearest_x, nearest_y);
 
-                        if ((chase_fleet != "none") && (action == "")) {
+                        if ((chase_fleet != noone) && (action == "")) {
                             var intercept_time = fleet_intercept_time_calculate(chase_fleet);
                             if (chase_fleet.action != "") {
-                                if (intercept_time <= chase_fleet.eta) {
+                                if (intercept_time <= chase_fleet.action_eta) {
                                     target = chase_fleet;
                                     chase_fleet_target_set(target);
                                     target_chosen = true;
@@ -195,7 +185,7 @@ function khorne_fleet_cargo() {
                             if (player_stars > 0) {
                                 var nearest_star = instance_nearest(x, y, obj_star);
                                 instance_activate_object(obj_star);
-                                if (chase_fleet == "none") {
+                                if (chase_fleet == noone) {
                                     action_x = nearest_star.x;
                                     action_y = nearest_star.y;
                                     set_fleet_movement();
@@ -224,9 +214,8 @@ function khorne_fleet_cargo() {
 }
 
 function spawn_chaos_fleet_at_system(system) {
-    var _new_fleet = instance_create(system.x, system.y, obj_en_fleet);
+    var _new_fleet = create_enemy_fleet(system.x, system.y, eFACTION.CHAOS);
     with (_new_fleet) {
-        owner = eFACTION.CHAOS;
         sprite_index = spr_fleet_chaos;
         image_index = 9;
     }
@@ -238,12 +227,12 @@ function spawn_chaos_warlord() {
         scr_audience(eFACTION.CHAOS, "intro", 0, "", 0, 2);
         fdir = terra_direction + choose(-90, 90);
         fdir += floor(random_range(-35, 35));
-        var len, width, height, t, c, s;
-        width = room_width;
-        height = room_height;
-        t = degtorad(fdir);
-        c = abs(cos(t));
-        s = abs(sin(t));
+        var len = 0;
+        var width = room_width;
+        var height = room_height;
+        var t = degtorad(fdir);
+        var c = abs(cos(t));
+        var s = abs(sin(t));
         if (c * height > s * width) {
             len = (width / 2) / c;
         } else {
@@ -252,9 +241,8 @@ function spawn_chaos_warlord() {
         ox = width / 2 + lengthdir_x(len, fdir);
         oy = height / 2 + lengthdir_y(len, fdir);
 
-        var nfleet = instance_create(ox, oy, obj_en_fleet);
+        var nfleet = create_enemy_fleet(ox, oy, eFACTION.CHAOS);
         with (nfleet) {
-            owner = eFACTION.CHAOS;
             sprite_index = spr_fleet_chaos;
             image_index = 9;
             home_x = x + lengthdir_x(5000, point_direction(x, y, room_width / 2, room_height / 2));
@@ -264,13 +252,11 @@ function spawn_chaos_warlord() {
             frigate_number = 20;
             escort_number = 40;
         }
-        var rep, filtered_array, candidate_systems;
-        candidate_systems = [];
+        var candidate_systems = [];
         with (obj_star) {
-            rep = 0;
             ya = false;
             //should probably get turned into its own helper if used multiple times
-            filtered_array = array_filter(p_owner, function(val, idx) {
+            var filtered_array = array_filter(p_owner, function(val, idx) {
                 return scr_is_planet_owned_by_allies(self, idx);
             });
             if (array_length(filtered_array)) {
@@ -297,12 +283,13 @@ function spawn_chaos_warlord() {
         var tix = $"Chaos Lord {faction_leader[eFACTION.CHAOS]} continues his Black Crusade into Sector {obj_ini.sector_name}.";
         scr_alert("purple", "lol", tix, nfleet.x, nfleet.y);
         scr_event_log("purple", tix, fleet_target.name);
-        scr_popup("Black Crusade", "A Black Crusade led by the Chaos Lord {faction_leader[eFACTION.CHAOS]} has arrived in {obj_ini.sector_name}.  His forces have already carved a bloody path through many sectors and yours is next.  {faction_leader[eFACTION.CHAOS]} also seems to be set on killing you.  The Black Crusade's current target is system {fleet_target.name}.", "", "");
+        scr_popup("Black Crusade", $"A Black Crusade led by the Chaos Lord {faction_leader[eFACTION.CHAOS]} has arrived in {obj_ini.sector_name}.  His forces have already carved a bloody path through many sectors and yours is next.  {faction_leader[eFACTION.CHAOS]} also seems to be set on killing you.  The Black Crusade's current target is system {fleet_target.name}.", "", "");
         // title / text / image / speshul
     }
 }
 
 //TODO make this make sense
+/// @self Id.Instance.obj_en_fleet
 function destroy_khorne_fleet() {
     var chaos_lord_killed = false;
     with (instance_nearest(x, y, obj_star)) {

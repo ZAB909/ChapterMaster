@@ -1,16 +1,15 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+/// @self Struct.TTRPG_stats
 function scr_unit_detail_text() {
     var unit_data_string = "";
     var is_astartes = false;
-    var is_superior = array_contains([obj_ini.role[100][18], obj_ini.role[100][19]], role());
+    var is_superior = array_contains([obj_ini.player_role_data[eROLE.SERGEANT].role, obj_ini.player_role_data[eROLE.VETERANSERGEANT].role], role());
     var unit_name = name();
     var unit_role = role();
     var body_augmentations = {
         mutations: [],
         bionics: [
             [],
-            []
+            [],
         ],
     };
     var body_bionics = get_body_data("bionic");
@@ -46,11 +45,11 @@ function scr_unit_detail_text() {
     // Age and ascension date
     unit_data_string += "\n";
     if (base_group == "astartes") {
-        var ascension_date = marine_ascension;
-        if (ascension_date == 0) {
-            ascension_date = "unknown";
+        var _ascension_date = string(marine_ascension);
+        if (_ascension_date == "0") {
+            _ascension_date = "unknown";
         }
-        unit_data_string += $"{round(age())} years old. Ascended to an Astartes in the {ascension_date} year.";
+        unit_data_string += $"{round(age())} years old. Ascended to an Astartes in the {_ascension_date} year.";
         if (struct_exists(spawn_data, "recruit_data")) {
             var recruit_data = spawn_data.recruit_data;
             unit_data_string += "\n";
@@ -79,7 +78,7 @@ function scr_unit_detail_text() {
 
     // Psyker text
     unit_data_string += $"Has an Assignment rating of {_psionic_assignment} ({psionic}) ";
-    var is_lib = array_contains(["Lexicanum", "Codiciery", obj_ini.role[100][17]], role()) || role() == obj_ini.role[100][eROLE.CHAPTERMASTER];
+    var is_lib = array_contains(["Lexicanum", "Codiciery", obj_ini.player_role_data[eROLE.LIBRARIAN].role], role()) || role() == obj_ini.player_role_data[eROLE.CHAPTERMASTER].role;
     if (psionic < -6) {
         unit_data_string += ", so inert in the Warp as to actually exhibit negative psychic influence upon others.";
     } else if (psionic < 0) {
@@ -182,7 +181,7 @@ function scr_unit_detail_text() {
                         mutation_string += "Suffers from a faulty Ossmodula, and takes longer to heal from injuries.";
                         break;
                     case "zygote":
-                        mutation_string += "One of his Zygotes is faulty or missing.";
+                        mutation_string += "One of his Zygotes is faulty or missing, and therefore will produce no extra gene seed other than the one implanted.";
                         break;
                     case "betchers":
                         mutation_string += "Missing his Betchers Gland and therefore cannot spit acid.";
@@ -284,9 +283,6 @@ function scr_unit_detail_text() {
         unit_data_string += "\n\n";
         for (var i = 0; i < array_length(traits); i++) {
             unit_data_string += string(global.trait_list[$ traits[i]].flavour_text + ".\n", unit_name);
-            // if (struct_exists(global.trait_list[$ traits[i]], "effect")){
-            // 	unit_data_string += $" ({global.trait_list[$ traits[i]].effect})";
-            // }
         }
     }
     return unit_data_string;

@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function system_guard_total() {
     var total = 0;
     for (var i = 1; i <= planets; i++) {
@@ -8,8 +6,8 @@ function system_guard_total() {
     return total;
 }
 
-function planet_imperial_base_enemies(planet, star = "none") {
-    if (star == "none") {
+function planet_imperial_base_enemies(planet, star = noone) {
+    if (star == noone) {
         return p_orks[planet] + p_tau[planet] + p_chaos[planet] + p_traitors[planet] + p_tyranids[planet] + p_necrons[planet];
     } else {
         with (star) {
@@ -44,7 +42,10 @@ function guard_find_planet_with_most_enemy_forces(system, current_planet = 0) {
         _next_planet = 0;
     }
 
-    return [_next_planet, current_planet];
+    return [
+        _next_planet,
+        current_planet,
+    ];
 }
 
 function ensure_no_planet_negatives(planet) {
@@ -89,7 +90,7 @@ function planet_forces_array(planet) {
         p_chaos[planet],
         p_traitors[planet],
         p_tyranids[planet],
-        p_necrons[planet]
+        p_necrons[planet],
     ];
     return force_array;
 }

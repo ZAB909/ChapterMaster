@@ -1,10 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-// function set_warp_point_data(){
-// 	warp_point_hover = true;
-// }
-// Main menu movement
-
 function in_camera_view(rect) {
     var x1 = camera_get_view_x(view_camera[0]);
     var y1 = camera_get_view_y(view_camera[0]);
@@ -13,14 +6,15 @@ function in_camera_view(rect) {
     return rectangle_in_rectangle(rect[0], rect[1], rect[2], rect[3], x1, y1, w, h);
 }
 
+/// @self Id.Instance.obj_controller
 function main_map_move_keys() {
     var view_w = camera_get_view_width(view_camera[0]);
     var view_h = camera_get_view_height(view_camera[0]);
     var x_limits = 0;
     var y_limits = 0;
-    if (((menu == 0) && (formating == 0)) || instance_exists(obj_fleet)) {
-        var spd = 12 * obj_controller.scale_mod, keyb = ""; // player move speed on campaign map
-        if (!instances_exist_any([obj_ingame_menu, obj_ncombat]) || instance_exists(obj_fleet)) {
+    if (((menu == eMENU.DEFAULT || menu == eMENU.TURN_END) && formating == 0) || instance_exists(obj_fleet)) {
+        var spd = 12 * obj_controller.scale_mod; // player move speed on campaign map
+        if (!instances_exist_any([obj_ingame_menu, obj_ncombat])) {
             if (keyboard_check(vk_shift)) {
                 spd *= 3;
             } // shift down, increase speed
@@ -61,30 +55,29 @@ function scr_map_scale() {
 function draw_warp_lanes() {
     static routes = [];
     static current_seed = global.game_seed;
+
+    var line_width = 2 * obj_controller.scale_mod;
+    var line_alpha = 0.4;
+
     if (array_length(routes) == 0 || current_seed != global.game_seed) {
         current_seed = global.game_seed;
         routes = [];
         var star_degrade_list = [];
         var total_stars = instance_number(obj_star);
-        var cur_star, this_star, connection, i, check_star;
-        for (i = 0; i < total_stars; i++) {
+        for (var i = 0; i < total_stars; i++) {
             array_push(star_degrade_list, i);
         }
-        for (i = 0; i < total_stars; i++) {
-            cur_star = instance_find(obj_star, star_degrade_list[i]);
+        for (var i = 0; i < total_stars; i++) {
+            var cur_star = instance_find(obj_star, star_degrade_list[i]);
             var this_star = cur_star.id;
-            var in_view = true;
 
-            //var in_view = in_camera_view(star_box_shape(this_star));
-            //if (!in_view) then  in_view = zoomed;
             if (array_length(cur_star.warp_lanes) > 0) {
                 for (var s = 0; s < total_stars; s++) {
                     if (s == i) {
                         continue;
                     }
-                    check_star = instance_find(obj_star, star_degrade_list[s]);
-                    //if (!in_view && !in_camera_view(star_box_shape(check_star))) then continue;
-                    connection = determine_warp_join(check_star.id, this_star);
+                    var check_star = instance_find(obj_star, star_degrade_list[s]);
+                    var connection = determine_warp_join(check_star.id, this_star);
                     if (connection) {
                         array_push(routes, [[check_star.x, check_star.y, this_star.x, this_star.y], connection]);
                     }
@@ -101,8 +94,6 @@ function draw_warp_lanes() {
     if (warp_image == 58) {
         warp_image = 0;
     }
-    // if (!warp_point_hover) then hover_time=0;
-    // warp_point_hover = false;
     for (var i = 0; i < array_length(routes); i++) {
         draw_set_color(c_gray);
         route = routes[i];
@@ -110,24 +101,21 @@ function draw_warp_lanes() {
         var route_coords = route[0];
 
         if (route[1] < 4) {
-            draw_line(route_coords[0], route_coords[1], route_coords[2], route_coords[3]);
+            draw_set_alpha(line_alpha);
+            draw_line_width(route_coords[0], route_coords[1], route_coords[2], route_coords[3], line_width);
+            draw_set_alpha(1);
         } else if (route[1] == 4) {
             draw_set_color(c_yellow);
             //TODO abstract code as a ratio distance function
-            //static debug_c = 0;
             var direction_x = route_coords[2] - route_coords[0];
             var direction_y = route_coords[3] - route_coords[1];
             var forward = direction_x >= 0 ? 1 : -1;
             var downward = direction_y >= 0 ? 1 : -1;
-            //var grade = direction_x/direction_y;
             var total_dist = 80;
             var pythag_dist = sqr(total_dist);
             var sum = (direction_x * forward) + (direction_y * downward);
             var x_ratio = direction_x * forward / sum;
             var y_ratio = direction_y * downward / sum;
-            /*if (debug_c<100){
-				LOGGER.debug($"{x_ratio},{forward},{y_ratio},{downward}");
-			}*/
             var dist_x = sqrt(pythag_dist * x_ratio) * forward;
             var dist_y = sqrt(pythag_dist * y_ratio) * downward;
 
@@ -135,7 +123,9 @@ function draw_warp_lanes() {
             var warp_height = sprite_get_height(spr_warp_storm) * 0.75;
 
             for (var s = 0; s < route[1]; s++) {
-                draw_line(route_coords[0], route_coords[1], route_coords[0] + dist_x, route_coords[1] + dist_y);
+                draw_set_alpha(line_alpha);
+                draw_line_width(route_coords[0], route_coords[1], route_coords[0] + dist_x, route_coords[1] + dist_y, line_width);
+                draw_set_alpha(1);
             }
 
             draw_sprite_centered(spr_warp_storm, warp_image + i, route_coords[0] + dist_x, route_coords[1] + dist_y, 0.75, 0.75, 0, c_white, 1);
@@ -144,7 +134,7 @@ function draw_warp_lanes() {
                 route_coords[0] + dist_x - (warp_width / 2),
                 route_coords[1] + dist_y - (warp_height / 2),
                 route_coords[0] + dist_x + (warp_width / 2),
-                route_coords[1] + dist_y + (warp_height / 2)
+                route_coords[1] + dist_y + (warp_height / 2),
             ];
 
             var _allow_tooltips = !instance_exists(obj_star_select);
@@ -167,27 +157,21 @@ function draw_warp_lanes() {
 
                 if (!star_overlap) {
                     var to = instance_nearest(route_coords[2], route_coords[3], obj_star);
-                    // warp_point_hover = true;
 
                     if (_allow_tooltips) {
                         tooltip_draw(string(warp_route_tooltip, to.name));
                     }
 
-                    /* if (array_equals(hover_loc,[route_coords[0] ,route_coords[1]])){
-					 	hover_time++;
-					 } else {
-					 	hover_loc = [route_coords[0] ,route_coords[1]];
-					 	hover_time = 0;
-					 }*/
-
-                    if (mouse_check_button_pressed(mb_left) && keyboard_check(vk_shift) /* || (instance_exists(obj_fleet_select) && hover_time>=30) */) {
+                    if (mouse_check_button_pressed(mb_left) && keyboard_check(vk_shift)) {
                         set_map_pan_to_loc(to);
                     }
                 }
             }
 
             for (var s = 0; s < route[1]; s++) {
-                draw_line(route_coords[2] + s, route_coords[3] + s, (route_coords[2] - dist_x + s), (route_coords[3] + s - dist_y));
+                draw_set_alpha(line_alpha);
+                draw_line_width(route_coords[2] + s, route_coords[3] + s, (route_coords[2] - dist_x + s), (route_coords[3] + s - dist_y), line_width);
+                draw_set_alpha(1);
             }
             draw_sprite_centered(spr_warp_storm, warp_image + i, (route_coords[2] - dist_x), (route_coords[3] - dist_y), 0.75, 0.75, 0, c_white, 1);
 
@@ -195,7 +179,7 @@ function draw_warp_lanes() {
                 (route_coords[2] - dist_x) - (warp_width / 2),
                 (route_coords[3] - dist_y) - (warp_height / 2),
                 (route_coords[2] - dist_x) + (warp_width / 2),
-                (route_coords[3] - dist_y) + (warp_height / 2)
+                (route_coords[3] - dist_y) + (warp_height / 2),
             ];
             if (scr_hit(hit_box)) {
                 var star_overlap = false;
@@ -207,25 +191,16 @@ function draw_warp_lanes() {
                 }
                 if (!star_overlap) {
                     var to = instance_nearest(route_coords[0], route_coords[1], obj_star);
-                    // warp_point_hover = true;
 
                     if (_allow_tooltips) {
                         tooltip_draw(string(warp_route_tooltip, to.name));
                     }
 
-                    // if (array_equals(hover_loc,[route_coords[2] ,route_coords[3]])){
-                    // 	hover_time++;
-                    // } else {
-                    // 	hover_loc = [route_coords[2] ,route_coords[3]];
-                    // 	hover_time = 0;
-                    // }
-
-                    if (mouse_check_button_pressed(mb_left) && keyboard_check(vk_shift) /*  || (instance_exists(obj_fleet_select) && hover_time>=30) */) {
+                    if (mouse_check_button_pressed(mb_left) && keyboard_check(vk_shift)) {
                         set_map_pan_to_loc(to);
                     }
                 }
             }
-            //debug_c++;
         }
     }
 }
@@ -276,7 +251,7 @@ function create_complex_star_routes(player_star) {
         east,
         west,
         south,
-        central
+        central,
     ];
     // here is where we set up the warp hubs
     var WarpHub, set, join_set, total_joins;
@@ -302,9 +277,9 @@ function create_complex_star_routes(player_star) {
             continue;
         }
         if (player_hub_overide) {
-            for (var i = 0; i < array_length(set); i++) {
-                if (set[i] == player_star) {
-                    WarpHub = set[i];
+            for (var j = 0; j < array_length(set); j++) {
+                if (set[j] == player_star) {
+                    WarpHub = set[j];
                     break;
                 }
             }
@@ -321,10 +296,6 @@ function create_complex_star_routes(player_star) {
             if (s == i || set_count == 0) {
                 continue;
             }
-            /*//if (irandom(1)) then continue;
-			for (var i=0;i<array_length(full_loci[s])i++){
-				//if !(irandom(2)) then
-			}*/
             join_star = array_random_element(join_set);
             array_push(WarpHub.warp_lanes, [join_star.name, 4]);
             total_joins++;
@@ -340,33 +311,33 @@ function set_map_pan_to_loc(target) {
     with (obj_controller) {
         location_viewer.travel_target = [
             target.x,
-            target.y
+            target.y,
         ];
         location_viewer.travel_increments = [
             (target.x - x) / 15,
-            (target.y - y) / 15
+            (target.y - y) / 15,
         ];
         location_viewer.travel_time = 0;
     }
 }
 
-/*function ration_distance(){
-
-}*/
-function star_box_shape(star = "none") {
+function star_box_shape(star = noone) {
     var scale = obj_controller.map_scale;
-    if (star == "none") {
-        return [x - (60 * scale), y + (5 * scale), x + 60 * scale, y - 40 * scale];
+    if (star == noone) {
+        return [
+            x - (60 * scale),
+            y + (5 * scale),
+            x + 60 * scale,
+            y - 40 * scale,
+        ];
     } else {
         with (star) {
-            return [x - (60 * scale), y + (5 * scale), x + 60 * scale, y - 40 * scale];
+            return [
+                x - (60 * scale),
+                y + (5 * scale),
+                x + 60 * scale,
+                y - 40 * scale,
+            ];
         }
     }
-}
-
-function draw_sprite_centered(sprite, subimg, x, y, xscale, yscale, rot, col, alpha) {
-    draw_set_halign(fa_left);
-    var width = (sprite_get_width(sprite) * xscale) / 2;
-    var height = (sprite_get_height(sprite) * yscale) / 2;
-    draw_sprite_ext(sprite, subimg, x, y, xscale, yscale, rot, col, alpha);
 }

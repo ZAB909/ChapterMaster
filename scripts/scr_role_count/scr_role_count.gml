@@ -1,11 +1,8 @@
 function scr_role_count(target_role, search_location = "", return_type = "count") {
     // Take a guess
-
-    var com, count, coom, units = [], unit, match;
-
-    count = 0;
-    com = 0;
-    coom = -999;
+    var units = [];
+    var count = 0;
+    var coom = -999;
 
     if (is_string(search_location)) {
         if (search_location == "0") {
@@ -36,28 +33,29 @@ function scr_role_count(target_role, search_location = "", return_type = "count"
     }
 
     if (coom >= 0) {
-        com = coom;
-        for (var i = 0; i < array_length(obj_ini.TTRPG[com]); i++) {
-            unit = obj_ini.TTRPG[com][i];
-            if (unit.name() == "") {
+        for (var i = 0; i < array_length(obj_ini.TTRPG[coom]); i++) {
+            var unit = fetch_unit([coom, i]);
+            if (!is_struct(unit) || unit.name() == "") {
                 continue;
             }
-            if ((unit.role() == target_role) && (obj_ini.god[com][i] < 10)) {
+            if ((unit.role() == target_role) && (obj_ini.TTRPG[coom][i].god_status < 10)) {
                 count += 1;
                 if (return_type == "units") {
-                    array_push(units, obj_ini.TTRPG[com][i]);
+                    var _u = fetch_unit([coom, i]);
+                    if (is_struct(_u)) {
+                        array_push(units, _u);
+                    }
                 }
             }
         }
-        com += 1;
     }
 
     if (coom < 0) {
         for (var com = 0; com <= obj_ini.companies; com++) {
             for (var i = 0; i < array_length(obj_ini.TTRPG[com]); i++) {
-                match = false;
-                unit = fetch_unit([com, i]);
-                if (unit.name() == "") {
+                var match = false;
+                var unit = fetch_unit([com, i]);
+                if (!is_struct(unit) || unit.name() == "") {
                     continue;
                 }
                 if ((unit.role() == target_role) && (search_location == "")) {

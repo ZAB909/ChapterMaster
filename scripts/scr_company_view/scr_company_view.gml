@@ -42,12 +42,17 @@ function reset_manage_arrays() {
 }
 
 function find_company_open_slot(target_company) {
-    good = -1;
-    for (var i = 0; i < array_length(obj_ini.name[target_company]); i++) {
-        if ((obj_ini.name[target_company][i] == "") || (obj_ini.role[target_company][i] == "")) {
+    var good = -1;
+    var _company_length = array_length(obj_ini.TTRPG[target_company]);
+    for (var i = 0; i < _company_length; i++) {
+        if (is_undefined(obj_ini.TTRPG[target_company][i])) {
             good = i;
             break;
         }
+    }
+    if (good == -1) {
+        array_push(obj_ini.TTRPG[target_company], undefined);
+        good = _company_length;
     }
     return good;
 }
@@ -138,12 +143,9 @@ function scr_company_view(company) {
         show_error(error_message, true);
     }
 
-    var mans, squads, squad_type, squad_loc, squad_members, unit, unit_loc;
-    mans = 0;
-    squads = 0;
-    squad_type = "";
-    squad_loc = 0;
-    squad_members = 0;
+    var unit;
+    var unit_loc;
+    var mans = 0;
     reset_manage_arrays();
     sel_uni = array_create(20, "");
     sel_veh = array_create(20, "");
@@ -151,12 +153,12 @@ function scr_company_view(company) {
     sel_uni[1] = "Command";
 
     // Processing marines
-    var company_length = array_length(obj_ini.TTRPG[company]);
+    var _company_length = company_length(company);
 
-    for (var v = 0; v < company_length; v++) {
+    for (var v = 0; v < _company_length; v++) {
         unit = fetch_unit([company, v]);
 
-        if (unit.name() != "") {
+        if (is_struct(unit)) {
             unit_loc = unit.marine_location();
 
             // Check if unit is on a lost ship
@@ -166,7 +168,8 @@ function scr_company_view(company) {
 
             mans += 1;
             add_man_to_manage_arrays(unit);
-            var go = 0, op = 0;
+            var go = 0;
+            var op = 0;
             if (!unit.IsSpecialist()) {
                 for (var j = 0; j < 20; j++) {
                     if (sel_uni[j] == "" && op == 0) {
@@ -201,7 +204,8 @@ function scr_company_view(company) {
         add_vehicle_to_manage_arrays([company, i]);
 
         // Select All Vehicle Setup
-        var go = 0, op = 0;
+        var go = 0;
+        var op = 0;
         for (var p = 0; p < 20; p++) {
             if (sel_veh[p] == "" && op == 0) {
                 op = p;
@@ -222,13 +226,12 @@ function scr_company_view(company) {
 
 /// @description Manages unit data, including squad assignments, promotions, and location-based grouping.
 function other_manage_data() {
-    var _mans, _bad, _squads, _squad_type, _squad_loc, _squad_members, _unit, _unit_loc;
-    _mans = 0;
-    _bad = 0;
-    _squads = 0;
-    _squad_type = "";
-    _squad_loc = 0;
-    _squad_members = 0;
+    var _unit;
+    var _unit_loc;
+    var _squads = 0;
+    var _squad_type = "";
+    var _squad_loc = 0;
+    var _squad_members = 0;
     for (var v = 0; v < array_length(display_unit); v++) {
         if (!is_struct(display_unit[v])) {
             continue;
@@ -252,16 +255,16 @@ function other_manage_data() {
                 if (is_specialist(_squad_type, SPECIALISTS_HEADS)) {
                     n = 1;
                 }
-                if ((_squad_type == obj_ini.role[100][6]) && (_squad_type != ma_role[v]) && (_squad_type != "Venerable " + string(ma_role[v]))) {
+                if ((_squad_type == obj_ini.player_role_data[eROLE.DREADNOUGHT].role) && (_squad_type != ma_role[v])) {
                     n = 2;
                 }
-                if ((_squad_type == obj_ini.role[100][6]) && (ma_role[v] == obj_ini.role[100][6])) {
+                if ((_squad_type == obj_ini.player_role_data[eROLE.DREADNOUGHT].role) && (ma_role[v] == obj_ini.player_role_data[eROLE.DREADNOUGHT].role)) {
                     n = 0;
                 }
-                if ((_squad_type == obj_ini.role[100][6]) && (ma_role[v] == "Venerable " + string(obj_ini.role[100][6]))) {
+                if (_squad_type == obj_ini.player_role_data[eROLE.DREADNOUGHT].role) {
                     n = 0;
                 }
-                if ((_squad_type == "Venerable " + string(obj_ini.role[100][6])) && (ma_role[v] == obj_ini.role[100][6])) {
+                if (ma_role[v] == obj_ini.player_role_data[eROLE.DREADNOUGHT].role) {
                     n = 0;
                 }
                 if (_squad_loc[0] == eLOCATION_TYPES.SHIP) {
@@ -315,15 +318,15 @@ function other_manage_data() {
             _squad_loc = _unit_loc;
         }
 
-        if ((ma_role[v] == obj_ini.role[100][3]) || (ma_role[v] == obj_ini.role[100][4])) {
+        if ((ma_role[v] == obj_ini.player_role_data[eROLE.VETERAN].role) || (ma_role[v] == obj_ini.player_role_data[eROLE.TERMINATOR].role)) {
             if ((_unit.company == 1) && (ma_exp[v] >= 140)) {
                 ma_promote[v] = 1;
             }
-        } else if ((_unit.role() == obj_ini.role[100][6]) && (ma_exp[v] >= 400)) {
+        } else if ((_unit.role() == obj_ini.player_role_data[eROLE.DREADNOUGHT].role) && (ma_exp[v] >= 400)) {
             ma_promote[v] = 1;
-        } else if ((_unit.role() == obj_ini.role[100][15]) || (ma_role[v] == obj_ini.role[100][14])) {
+        } else if ((_unit.role() == obj_ini.player_role_data[eROLE.APOTHECARY].role) || (ma_role[v] == obj_ini.player_role_data[eROLE.CHAPLAIN].role)) {
             ma_promote[v] = 1;
-        } else if (_unit.role() == obj_ini.role[100][16]) {
+        } else if (_unit.role() == obj_ini.player_role_data[eROLE.TECHMARINE].role) {
             ma_promote[v] = 1;
         }
 
@@ -348,7 +351,7 @@ function other_manage_data() {
                 45,
                 35,
                 25,
-                0
+                0,
             ];
             var _promotion_limit = _company_promotion_limits[_target_company];
             if (_unit.experience >= _promotion_limit && _promotion_limit > 0) {
@@ -363,7 +366,6 @@ function other_manage_data() {
 }
 
 function filter_and_sort_company(type, specific) {
-    var i, j, limit;
     function switchy(a, b) {
         var tempman = man[a];
         var tempide = ide[a];
@@ -426,28 +428,22 @@ function filter_and_sort_company(type, specific) {
         squad[b] = temp_squad;
     }
     if (type == "stat") {
-        var swapped;
         with (obj_controller) {
-            for (i = 0; i < array_length(display_unit); i++) {
-                //if (man[i] != "man") continue;
-                swapped = false;
-                limit = array_length(display_unit) - i;
-                for (j = 0; j < limit - 1; j++) {
+            for (var i = 0; i < array_length(display_unit); i++) {
+                var limit = array_length(display_unit) - i;
+                for (var j = 0; j < limit - 1; j++) {
                     if (man[j] != "man") {
                         if (man[j + 1] == "man") {
                             switchy(j, j + 1);
-                            swapped = true;
                         }
                     } else {
                         if (man[j + 1] == "man") {
                             if (display_unit[j][$ specific] < display_unit[j + 1][$ specific]) {
                                 switchy(j, j + 1);
-                                swapped = true;
                             }
                         }
                     }
                 }
-                //if (swapped == false) then break;
             }
         }
     }
@@ -487,7 +483,6 @@ function switch_view_company(new_view) {
 }
 
 function company_manage_actions() {
-    var onceh = 0;
     var xx = camera_get_view_x(view_camera[0]);
     var yy = camera_get_view_y(view_camera[0]);
 
@@ -503,16 +498,39 @@ function company_manage_actions() {
         view_squad = false;
         unit_profile = false;
     }
+    var _change = false;
+    var _change_value = 0;
+
+    //TODO attatch these to OOP constructs
     // Previous company
-    if (point_and_click([xx + 424, yy + 80, xx + 496, yy + 128]) || (keyboard_check_pressed(ord(string("N"))) && allow_shortcuts)) {
-        var new_view = managing == 1 ? 15 : managing - 1;
-        switch_view_company(new_view);
+
+    var _back_check = keyboard_check_pressed(ord(string("N"))) && allow_shortcuts;
+    var _forward_check =  keyboard_check_pressed(ord(string("M"))) && allow_shortcuts;
+    if (point_and_click([xx + 424, yy + 80, xx + 496, yy + 128]) || _back_check) {
+        _change = true;
+        _change_value = -1;
     }
 
     // Next company
-    if (point_and_click([xx + 1105, yy + 80, xx + 1178, yy + 128]) || (keyboard_check_pressed(ord(string("M"))) && allow_shortcuts)) {
-        var new_view = managing == 15 ? 1 : managing + 1;
-        switch_view_company(new_view);
+    if (point_and_click([xx + 1105, yy + 80, xx + 1178, yy + 128]) || _forward_check) {
+        _change = true;
+        _change_value = 1;
+    }
+
+    if (_change){
+        var _new_view = managing + _change_value;
+        if (scr_has_adv_any(["Spiritual Healers","Tech-Cult Religion"])){
+            if (_new_view == 14){
+                _new_view += _change_value;
+            }
+        }
+        if (_new_view > 15){
+            _new_view = 1;
+        }
+        if (_new_view == 0){
+            _new_view = 15;
+        }
+        switch_view_company(_new_view);
     }
 }
 

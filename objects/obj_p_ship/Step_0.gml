@@ -4,6 +4,27 @@ if (obj_fleet.start != 5) {
     exit;
 }
 
+if (mouse_check_button_pressed(mb_right) && (selected == 1) && (!instance_exists(obj_circular)) && obj_fleet.control) {
+    var stahp = 0;
+    var xx = camera_get_view_x(view_camera[0]);
+    var yy = camera_get_view_y(view_camera[0]);
+
+    if (obj_controller.zoomed == 0) {
+        if (point_in_rectangle(mouse_x, mouse_y, xx + 12, yy + 436, xx + 48, yy + 480)) {
+            stahp = 1;
+        }
+    } else if (obj_controller.zoomed == 1) {
+        if (point_in_rectangle(mouse_x, mouse_y, xx + 24, yy + 872, xx + 90, yy + 960)) {
+            stahp = 1;
+        }
+    }
+
+    if (stahp == 0) {
+        paction = "";
+        instance_create(20, 20, obj_circular);
+    }
+}
+
 var dist;
 
 if ((shields > 0) && (shields < maxshields)) {
@@ -18,10 +39,10 @@ if (board_cooldown >= 0) {
 
 if (instance_exists(target)) {
     if (((target.x < 3) && (target.y < 3)) || (target.hp < 0)) {
-        target = -50;
+        target = noone;
     }
 }
-if ((!instance_exists(target)) || (target == -50)) {
+if ((!instance_exists(target)) || (target == noone)) {
     with (obj_en_ship) {
         if (((x < 3) && (y < 3)) || (hp <= 0)) {
             instance_deactivate_object(id);
@@ -156,9 +177,8 @@ if ((hp > 0) && instance_exists(target)) {
     }
 
     // STC Bonuses
-    var speed_up, speed_down;
-    speed_up = 0.005;
-    speed_down = 0.025;
+    var speed_up = 0.005;
+    var speed_down = 0.025;
     if (obj_controller.stc_bonus[6] == 3) {
         speed_up = 0.008;
         speed_down = 0.037;
@@ -216,7 +236,6 @@ if ((hp > 0) && instance_exists(target)) {
     }
     if ((paction == "move") || (paction == "attack_move")) {
         direction = turn_towards_point(direction, x, y, target_x, target_y, ts / 2);
-        var dist;
         dist = point_distance(x, y, target_x, target_y);
         if (y > target_y) {
             direction = turn_towards_point(direction, x, y, target_x, target_y, ts);
@@ -252,22 +271,15 @@ if ((hp > 0) && instance_exists(target)) {
         turret_cool -= 1;
     }
 
-    var bull, targe, rdir, dirr, dist, xx, yy, ok;
-    targe = 0;
-    rdir = 0;
-    dirr = "";
-    dist = 9999;
-    xx = x;
-    yy = y;
-
     if ((turrets > 0) && instance_exists(obj_en_in) && (turret_cool == 0)) {
-        targe = instance_nearest(x, y, obj_en_in);
+        dist = 9999;
+        var targe = instance_nearest(x, y, obj_en_in);
         if (instance_exists(targe)) {
             dist = point_distance(x, y, targe.x, targe.y);
         }
 
         if ((dist > 64) && (dist < 300)) {
-            bull = instance_create(x, y, obj_p_round);
+            var bull = instance_create(x, y, obj_p_round);
             bull.direction = point_direction(x, y, targe.x, targe.y);
             bull.speed = 20;
             bull.dam = 3;
@@ -277,21 +289,17 @@ if ((hp > 0) && instance_exists(target)) {
             bull.direction += choose(random(3), 1 * -random(3));
         }
     }
-    targe = 0;
-    rdir = 0;
-    dirr = "";
-    dist = 9999;
+    var rdir = 0;
 
-    xx = lengthdir_x(64, direction + 90);
-    yy = lengthdir_y(64, direction + 90);
+    var xx = lengthdir_x(64, direction + 90);
+    var yy = lengthdir_y(64, direction + 90);
 
-    var front, right, left, rear;
-    front = 0;
-    right = 0;
-    left = 0;
-    rear = 0;
+    var front = 0;
+    var right = 0;
+    var left = 0;
 
-    targe = instance_nearest(xx, yy, obj_en_ship);
+    var bull = noone;
+    var targe = instance_nearest(xx, yy, obj_en_ship);
     if (instance_exists(targe)) {
         rdir = point_direction(x, y, target.x, target.y);
         if ((rdir > 45) && (rdir <= 135) && (targe != target)) {
@@ -306,13 +314,10 @@ if ((hp > 0) && instance_exists(target)) {
             front = 1;
         }
 
-        var f = 0, facing = "", ammo = 0, range = 0, wep = "", dam = 0;
+        var facing = "", ammo = 0, range = 0, wep = "", dam = 0;
 
         for (var gg = 1; gg < array_length(weapon); gg++) {
-            // if (cooldown[gg]>0) then cooldown[gg]-=1;
-
-            ok = 0;
-            f += 1;
+            var ok = 0;
             facing = "";
             ammo = 0;
             range = 0;
@@ -351,13 +356,10 @@ if ((hp > 0) && instance_exists(target)) {
                 dist = point_distance(x, y, targe.x, targe.y);
 
                 if ((ok == 2) && (dist < (range + max(sprite_get_width(sprite_index), sprite_get_height(sprite_index))))) {
-                    //if (ammo>0) and (ammo<500) then ammo-=1;
                     weapon_ammo[gg] = ammo;
                     cooldown[gg] = weapon_cooldown[gg];
                     wep = weapon[gg];
                     dam = weapon_dam[gg];
-
-                    // if (f=3) and (ship_id=2) then show_message("ammo: "+string(ammo)+" | range: "+string(range));
 
                     if (ammo < 0) {
                         ok = 0;
@@ -427,14 +429,10 @@ if ((hp > 0) && instance_exists(target)) {
     }
 }
 
-/* */
-
 //Deploy boarding craft logic
 if (instance_exists(obj_en_ship) && (boarders > 0) && (board_cooldown <= 0) && ((board_capital == true) || (board_frigate == true))) {
-    var eh = 0, te = 0;
-    repeat (2) {
-        eh += 1;
-        te = 0;
+    for (var eh = 1; eh <= 2; eh++) {
+        var te = 0;
         if ((eh == 1) && (board_capital == true)) {
             if (instance_exists(obj_en_capital)) {
                 te = instance_nearest(x, y, obj_en_capital);
@@ -452,6 +450,3 @@ if (instance_exists(obj_en_ship) && (boarders > 0) && (board_cooldown <= 0) && (
         }
     }
 }
-
-/* */
-/*  */

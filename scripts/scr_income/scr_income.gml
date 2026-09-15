@@ -1,9 +1,9 @@
+/// @self Asset.GMObject.obj_controller
 function scr_income() {
     // Determines income
 
     income_base = 32;
     income_tribute = 0;
-    income_controlled_planets = 0;
     if (obj_ini.fleet_type != ePLAYER_BASE.HOME_WORLD) {
         income_base = 40;
     }
@@ -20,15 +20,15 @@ function scr_income() {
         obj_controller.income_fleet -= escort_number / 10;
     }
     if (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD) {
-        obj_controller.income_fleet = round(obj_controller.income_fleet / 2);
+        income_fleet = round(income_fleet / 2);
     }
 
     income_forge = 0;
     income_agri = 0;
     income_training = 0;
 
-    if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
-        var _chapter_tech_count = scr_role_count(obj_ini.role[100][eROLE.TECHMARINE], "");
+    if (faction_status[eFACTION.MECHANICUS] != "War") {
+        var _chapter_tech_count = scr_role_count(obj_ini.player_role_data[eROLE.TECHMARINE].role, "");
         if (_chapter_tech_count >= ((disposition[3] / 2) + 5)) {
             training_techmarine = 0;
         }
@@ -117,13 +117,11 @@ function scr_income() {
 
     if (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD) {
         with (obj_star) {
-            if (planet_feature_bool(p_feature[1], eP_FEATURES.MONASTERY) == 1) {
-                obj_controller.income += 10;
-                instance_create(x, y, obj_temp1);
-            }
-            if (planet_feature_bool(p_feature[2], eP_FEATURES.MONASTERY) == 1) {
-                obj_controller.income += 10;
-                instance_create(x, y, obj_temp1);
+            for (var i = 1; i <= planets; i++) {
+                if (planet_feature_bool(p_feature[i], eP_FEATURES.MONASTERY)) {
+                    obj_controller.income_home += 10;
+                    instance_create(x, y, obj_temp1);
+                }
             }
             if (owner == eFACTION.TAU) {
                 obj_controller.tau_stars += 1;
@@ -135,12 +133,8 @@ function scr_income() {
     if (obj_ini.fleet_type != ePLAYER_BASE.HOME_WORLD) {
         with (obj_p_fleet) {
             if ((action == "") && (capital_number > 0)) {
-                var mine;
-                mine = instance_nearest(x, y, obj_star);
-                var i;
-                i = 0;
-                repeat (4) {
-                    i += 1;
+                var mine = instance_nearest(x, y, obj_star);
+                for (var i = 1; i <= 4; i++) {
                     if ((mine.p_owner[i] == eFACTION.IMPERIUM) || (mine.p_owner[i] == eFACTION.MECHANICUS)) {
                         if ((mine.p_type[i] == "Desert") || (mine.p_type[i] == "Temperate")) {
                             obj_controller.income_home += 2 * capital_number;
@@ -155,13 +149,9 @@ function scr_income() {
     }
 
     with (obj_star) {
-        var o;
-        o = 0;
-        repeat (4) {
-            o += 1;
+        for (var o = 1; o <= planets; o++) {
             if (dispo[o] >= 100) {
-                if (planet_feature_bool(p_feature[1], eP_FEATURES.MONASTERY) == 0) {
-                    obj_controller.income_controlled_planets += 1;
+                if (planet_feature_bool(p_feature[o], eP_FEATURES.MONASTERY) == 0) {
                     obj_controller.income_tribute += 1;
                     if (p_type[o] == "Feudal") {
                         obj_controller.income_tribute += 1;
@@ -177,6 +167,6 @@ function scr_income() {
         }
     }
 
-    obj_controller.alarm[4] = 10;
+    alarm[4] = 10;
     // This tells the controller to give moolah if it is the end of the turn
 }

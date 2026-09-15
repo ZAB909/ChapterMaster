@@ -5,7 +5,7 @@ global.psy_disciplines_starting = [
     "biomancy",
     "pyromancy",
     "telekinesis",
-    "rune_magic"
+    "rune_magic",
 ];
 
 #macro PSY_PERILS_CHANCE_MIN 1
@@ -20,8 +20,8 @@ global.psy_disciplines_starting = [
 #macro PSY_CAST_DIFFICULTY_MIN 1
 #macro PSY_CAST_DIFFICULTY_BASE 40
 
-global.disciplines_data = json_to_gamemaker(working_directory + "\\data\\psychic_disciplines.json", json_parse);
-global.powers_data = json_to_gamemaker(working_directory + "\\data\\psychic_powers.json", json_parse);
+global.disciplines_data = json_to_gamemaker(working_directory + "/data/psychic_disciplines.json", json_parse);
+global.powers_data = json_to_gamemaker(working_directory + "/data/psychic_powers.json", json_parse);
 
 /// @param {Struct.TTRPG_stats} unit
 function generate_marine_powers_description_string(unit) {
@@ -58,15 +58,18 @@ function generate_marine_powers_description_string(unit) {
 
 /// @desc Psychic powers execution mess. Called in the scope of obj_pnunit.
 /// @param {real} caster_id - ID of the caster in the player column from obj_pnunit.
+/// @param {Struct} [_psy_log] - Per-formation accumulator for attack casts. When provided, ordinary
+///        attack casts fold into a per-power summary (see flush_psychic_summary) instead of logging
+///        one line each. Leader kills, failed casts and Perils still log individually.
 /// @self Asset.GMObject.obj_pnunit
-function scr_powers(caster_id) {
+function scr_powers(caster_id, _psy_log = undefined) {
     // Gather unit data
     /// @type {Struct.TTRPG_stats}
     var _unit = unit_struct[caster_id];
     if (!is_struct(_unit)) {
         exit;
     }
-    if (_unit.name() == "") {
+    if (!instance_exists(obj_enunit)) {
         exit;
     }
 
@@ -82,7 +85,6 @@ function scr_powers(caster_id) {
 
     // Prepare the battlelog variables
     var _battle_log_message = "";
-    var _battle_log_priority = 0;
     var _cast_flavour_text = "";
     var _casualties_flavour_text = "";
 
@@ -130,7 +132,7 @@ function scr_powers(caster_id) {
     } else {
         _cast_flavour_text = $"{_unit.name_role()} failed to cast {_power_name}!";
         _battle_log_message = _cast_flavour_text;
-        add_battle_log_message(_battle_log_message, 999, 137);
+        add_battle_log_message(_battle_log_message, eMSG_COLOR.WHITE);
     }
 
     //* Buff powers casting code
@@ -190,8 +192,7 @@ function scr_powers(caster_id) {
                 _marine_index = _target_data.index;
                 _marine_column = _target_data.column;
                 if (_marine_index != -1) {
-                    marine_attack[_marine_index] += 1.5 * _total_psychic_amplification;
-                    marine_defense[_marine_index] -= 0.15 * _total_psychic_amplification;
+                    marine_attack[_marine_index][0] *= 1.5 * _total_psychic_amplification;
                 }
             }
         } else if (_power_id == "regenerate") {
@@ -207,7 +208,7 @@ function scr_powers(caster_id) {
         }
 
         _battle_log_message = _cast_flavour_text + _power_flavour_text;
-        add_battle_log_message(_battle_log_message, 999, 135);
+        add_battle_log_message(_battle_log_message, eMSG_COLOR.AQUA);
     } else if (_power_type == "attack" && _cast_successful) {
         //* Attack power casting
         //TODO: separate the code bellow into a separate function;
@@ -297,18 +298,18 @@ function scr_powers(caster_id) {
                 compress_enemy_array(_target_data.column);
                 destroy_empty_column(_target_data.column);
 
-                // Log battle message to combat feed
-                _battle_log_message = _cast_flavour_text + _power_flavour_text + _casualties_flavour_text;
-                if (_casualties == 0) {
-                    _battle_log_priority = _final_damage / 50; // Just to have some priority here, as they don't have the usual "shots fired"
+                // Battle log: the enemy leader dying always earns its own callout; every other
+                // attack cast folds into a per-power summary emitted at the end of the casting
+                // phase (flush_psychic_summary), so a wall of Librarians becomes one line.
+                // (We're always inside the _casualties > 0 branch here.)
+                var _is_leader = (obj_ncombat.enemy <= 10) && ((_target_unit_name == "Leader") || (_target_unit_name == obj_controller.faction_leader[obj_ncombat.enemy]));
+
+                if (is_struct(_psy_log) && !_is_leader) {
+                    accumulate_psychic_cast(_psy_log, _power_name, _power_flavour_text, _target_unit_name, _destruction_verb, _target_is_vehicle, _casualties);
                 } else {
-                    if (_target_is_vehicle) {
-                        _battle_log_priority = _casualties * 12; // Vehicles are more juicy
-                    } else {
-                        _battle_log_priority = _casualties * 3; // More casualties = higher priority messages
-                    }
+                    _battle_log_message = _cast_flavour_text + _power_flavour_text + _casualties_flavour_text;
+                    add_battle_log_message(_battle_log_message, eMSG_COLOR.AQUA);
                 }
-                add_battle_log_message(_battle_log_message, _battle_log_priority, 134);
             }
         }
     }
@@ -326,10 +327,46 @@ function scr_powers(caster_id) {
         check_dead_marines(_unit, caster_id);
 
         _battle_log_message = _cast_flavour_text + _power_flavour_text;
-        add_battle_log_message(_battle_log_message, 999, 137);
+        add_battle_log_message(_battle_log_message, eMSG_COLOR.RED);
     }
+}
 
-    display_battle_log_message();
+/// @desc Folds one attack-power cast into the per-formation psychic summary, keyed by power + target,
+///       so many identical Librarian casts collapse into a single battle-log line.
+/// @param {Struct} _psy_log The accumulator struct (one per formation casting phase).
+function accumulate_psychic_cast(_psy_log, _power_name, _power_flavour, _target_name, _verb, _is_vehicle, _kills) {
+    var _key = _power_name + "|" + _target_name;
+    if (!variable_struct_exists(_psy_log, _key)) {
+        _psy_log[$ _key] = {
+            power: _power_name,
+            flavour: _power_flavour,
+            target: _target_name,
+            verb: _verb,
+            vehicle: _is_vehicle,
+            casts: 0,
+            kills: 0,
+        };
+    }
+    var _entry = _psy_log[$ _key];
+    _entry.casts += 1;
+    _entry.kills += _kills;
+}
+
+/// @desc Emits one battle-log line per power+target accumulated during a formation's casting phase.
+///       Mirrors scr_powers' own concatenation so spacing matches the individual-cast lines.
+/// @param {Struct} _psy_log The accumulator filled by accumulate_psychic_cast.
+function flush_psychic_summary(_psy_log) {
+    if (!is_struct(_psy_log)) {
+        return;
+    }
+    var _keys = variable_struct_get_names(_psy_log);
+    for (var i = 0; i < array_length(_keys); i++) {
+        var _e = _psy_log[$ _keys[i]];
+        var _cast_word = (_e.casts == 1) ? "casting" : "castings";
+        var _kills_word = (_e.kills == 1) ? $"a {_e.target} is {_e.verb}" : $"{_e.kills} {_e.target} are {_e.verb}";
+        var _message = $"{_e.casts} {_cast_word} of '{_e.power}'{_e.flavour} {_kills_word}.";
+        add_battle_log_message(_message, eMSG_COLOR.AQUA);
+    }
 }
 
 /// @desc Function to get requested data from the disciplines_data structure. Returns The requested data, or undefined if not found.
@@ -338,13 +375,14 @@ function scr_powers(caster_id) {
 function get_discipline_data(_discipline_name, _data_name) {
     // Check if the power exists in the global.disciplines_data
     if (struct_exists(global.disciplines_data, _discipline_name)) {
+        var _data_content = {};
         var _discipline_object = global.disciplines_data[$ _discipline_name];
         // Check if the data exists for that power
         if (struct_exists(_discipline_object, _data_name)) {
-            var _data_content = _discipline_object[$ _data_name];
+            _data_content = _discipline_object[$ _data_name];
         } else {
             _discipline_object = global.disciplines_data[$ "example"];
-            var _data_content = _discipline_object[$ _data_name];
+            _data_content = _discipline_object[$ _data_name];
         }
         return _data_content;
     } else {
@@ -360,16 +398,17 @@ function get_discipline_data(_discipline_name, _data_name) {
 function get_power_data(_power_id, _data_name = "") {
     // Check if the power exists in the global.powers_data
     if (struct_exists(global.powers_data, _power_id)) {
+        var _data_content = {};
         var _power_object = global.powers_data[$ _power_id];
 
         // Check if the data exists for that power
         if (_data_name == "") {
             return _power_object;
         } else if (struct_exists(_power_object, _data_name)) {
-            var _data_content = _power_object[$ _data_name];
+            _data_content = _power_object[$ _data_name];
         } else {
             _power_object = global.powers_data[$ "example"];
-            var _data_content = _power_object[$ _data_name];
+            _data_content = _power_object[$ _data_name];
         }
 
         if (_data_name == "flavour_text") {
@@ -402,10 +441,10 @@ function get_flavour_text(_flavour_text_data) {
             var _conditions_satisfied = power_conditions_check(_text_option[$ "conditions"]);
 
             if (_conditions_satisfied) {
-                _flavour_text = array_concat(_flavour_text, _text_option[$ "text"]);
+                _flavour_text = array_concat(_flavour_text, _text_option[$ LANG_ENTRY_TEXT]);
             }
         } else {
-            _flavour_text = array_concat(_flavour_text, _text_option[$ "text"]);
+            _flavour_text = array_concat(_flavour_text, _text_option[$ LANG_ENTRY_TEXT]);
         }
     }
 
@@ -479,7 +518,7 @@ function power_conditions_check(conditions_array) {
 
 /// @self Asset.GMObject.obj_creation
 function player_select_powers() {
-    if (race[100][17] != 0) {
+    if (player_role_data[eROLE.LIBRARIAN].available_to_player) {
         var _starting_powers = global.psy_disciplines_starting;
         var _discipline_index = array_get_index(_starting_powers, discipline);
         if (_discipline_index == -1) {
@@ -610,7 +649,7 @@ function process_tome_mechanics(_unit, _unit_id) {
             // Apply corruption based on perils chance
             if (_result.perils_chance > 0) {
                 if ((_tome_roll > 90) && (_result.perils_chance > 0)) {
-                    _unit.corruption += roll_dice_unit(1, 6, "low", _unit);
+                    _unit.corruption += roll_dice_unit(_unit, 1, 6, "low");
                 }
             }
         }
@@ -726,7 +765,7 @@ function select_psychic_power(_unit) {
     // Flip anti-vehicle powers into smite;
     var _power_target_type = get_power_data(_power_id, "target_type");
     if (_power_target_type == "enemy_vehicle") {
-        if (obj_enunit.veh < 1 || obj_ncombat.enemy == 9) {
+        if (obj_enunit.veh < 1 || obj_ncombat.enemy == eFACTION.TYRANIDS) {
             _power_id = "smite";
         }
     }

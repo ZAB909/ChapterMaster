@@ -8,14 +8,14 @@ function scr_check_equip(search_item, system, planet_or_ship_id, remove_item) {
 
     var man_c = 0, man_i = 0, have = 0, unit, marine_present;
 
-    for (var c = 0; c <= 10; c++) {
-        for (var i = 1; i <= 500; i++) {
-            if (obj_ini.name[c][i] == "") {
-                continue;
-            }
+    for (var c = 0; c <= obj_ini.companies; c++) {
+        for (var i = 0; i < array_length(obj_ini.TTRPG[c]); i++) {
             marine_present = false;
             if (!instance_exists(obj_ncombat)) {
                 unit = fetch_unit([c, i]);
+                if (!is_struct(unit)) {
+                    continue;
+                }
                 if ((system != "") && (planet_or_ship_id > 0)) {
                     if (unit.is_at_location(system, planet_or_ship_id, -1)) {
                         marine_present = true;

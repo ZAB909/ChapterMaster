@@ -1,95 +1,91 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function imperial_navy_fleet_construction() {
     // ** Check number of navy fleets **
 
     var new_navy_fleets = get_imperial_navy_fleets();
     //delete navy fleets if more than required
     var navy_fleet_count = array_length(new_navy_fleets);
-    var cur_fleet;
-    if (navy_fleet_count>target_navy_number) {
-        for (var i = 0;i < navy_fleet_count; i++){
-            cur_fleet = new_navy_fleets[i];
-            if (cur_fleet.guardsmen_unloaded){
+    if (navy_fleet_count > target_navy_number) {
+        for (var i = 0; i < navy_fleet_count; i++) {
+            var cur_fleet = new_navy_fleets[i];
+            if (cur_fleet.guardsmen_unloaded) {
                 continue;
             } else {
                 instance_destroy(cur_fleet);
                 navy_fleet_count--;
                 array_delete(new_navy_fleets, i, 1);
                 i--;
-                if (navy_fleet_count <= target_navy_number){
+                if (navy_fleet_count <= target_navy_number) {
                     break;
                 }
             }
-        } 
+        }
 
         //if system needs more navy fleets get forge world to make some
     } else if (navy_fleet_count < target_navy_number) {
-        //TODO make standadised system for collating active forge worlds as we  do this a lot       
+        //TODO make standadised system for collating active forge worlds as we  do this a lot
         var _forge_systems = get_imperium_forge_systems();
 
-        if (array_length(_forge_systems) == 0 && obj_controller.faction_status[eFACTION.IMPERIUM] != "War"){
+        if (array_length(_forge_systems) == 0 && obj_controller.faction_status[eFACTION.IMPERIUM] != "War") {
             scr_alert("red", "forge_world", "No active uncontested forge worlds imperial navy unable to rebuild at speed");
         }
 
-        for (var i=array_length(_forge_systems)-1;i>=0;i--){
+        for (var i = array_length(_forge_systems) - 1; i >= 0; i--) {
             var _sys = _forge_systems[i];
-            var good=true;
-            for(var o = 1; o <= _sys.planets; o++) {
-                
-                if (_sys.p_type[o] == "Forge"){
-                    var _nearest = instance_nearest(_sys.x,_sys.y,obj_en_fleet)
-                    if (_nearest.x == _sys.x && _nearest.y == _sys.y && _nearest.navy){
-                        good=false;
+            var good = true;
+            for (var o = 1; o <= _sys.planets; o++) {
+                if (_sys.p_type[o] == "Forge") {
+                    var _nearest = instance_nearest(_sys.x, _sys.y, obj_en_fleet);
+                    if (_nearest.x == _sys.x && _nearest.y == _sys.y && _nearest.navy) {
+                        good = false;
                         break;
-                    }                   
+                    }
                 }
             }
 
-            if (!good){
-                array_delete(_forge_systems,i,1);
+            if (!good) {
+                array_delete(_forge_systems, i, 1);
             }
         }
-    // After initial navy fleet construction fleet growth is handled in obj_en_fleet.alarm_5
-        if (array_length(_forge_systems)){
-            var construction_forge;
-            construction_forge = array_random_element(_forge_systems);
-            build_new_navy_fleet(construction_forge)
+        // After initial navy fleet construction fleet growth is handled in obj_en_fleet.alarm_5
+        if (array_length(_forge_systems)) {
+            var construction_forge = array_random_element(_forge_systems);
+            build_new_navy_fleet(construction_forge);
         }
     }
 }
 
-function get_imperium_forge_systems(){
+function get_imperium_forge_systems() {
     var _forge_systems = [];
-    with(obj_star){
-        var good=false;
-        for(var o=1; o<=planets; o++) {
-            if (p_type[o]=="Forge") 
-                and (p_owner[o]==eFACTION.MECHANICUS) 
-                and (p_orks[o]+p_tau[o]+p_tyranids[o]+p_chaos[o]+p_traitors[o]+p_necrons[o]==0) {
-                    
-                    var enemy_fleets = [
-                        eFACTION.ORK,
-                        eFACTION.TAU,
-                        eFACTION.TYRANIDS,
-                        eFACTION.CHAOS,
-                        eFACTION.NECRONS
-                    ]
-                
-                    var enemy_fleet_count = array_reduce(enemy_fleets, function(prev, curr) {
-                        return prev + present_fleet[curr]
-                    }, 0);
+    with (obj_star) {
+        var good = false;
+        for (var o = 1; o <= planets; o++) {
+            if ((p_type[o] == "Forge") && (p_owner[o] == eFACTION.MECHANICUS) && (p_orks[o] + p_tau[o] + p_tyranids[o] + p_chaos[o] + p_traitors[o] + p_necrons[o] == 0)) {
+                var enemy_fleets = [
+                    eFACTION.ORK,
+                    eFACTION.TAU,
+                    eFACTION.TYRANIDS,
+                    eFACTION.CHAOS,
+                    eFACTION.NECRONS,
+                ];
 
-                    good = enemy_fleet_count<=0;
+                var enemy_fleet_count = array_reduce(
+                    enemy_fleets,
+                    function(prev, curr) {
+                        return prev + instance_nearest(x, y, obj_star).present_fleet[curr];
+                    },
+                    0,
+                );
+
+                good = enemy_fleet_count <= 0;
             }
-            if (good){
+            if (good) {
                 break;
             }
         }
-        if (good){
-            good = x<=room_width && y<=room_height;
+        if (good) {
+            good = x <= room_width && y <= room_height;
         }
-        if (good){
+        if (good) {
             array_push(_forge_systems, id);
         }
     }
@@ -104,7 +100,7 @@ function build_planet_defence_fleets() {
             var _imperial_fleet_defence_score = capital_number + (frigate_number / 2) + (escort_number / 4);
             obj_controller.imp_ships += _imperial_fleet_defence_score;
             //log this to prevent double work later figuring out if a planet has an orbiting defence fleet
-            if (!navy && action == "" && is_orbiting()) {
+            if (!navy && action == "" && instance_exists(orbiting)) {
                 _defence_fleet_log[$ orbiting.name] = _imperial_fleet_defence_score;
             }
         }
@@ -122,8 +118,8 @@ function build_planet_defence_fleets() {
         }
         var _system_value = 0;
         for (var i = 0; i <= planets; i++) {
-            var _owner_imperial = p_owner[i] < 5 && p_owner[i] > 1;
-            _imperial_planet_count += _owner_imperial;
+            var _owner_imperial = p_owner[i] < eFACTION.ECCLESIARCHY && p_owner[i] > eFACTION.PLAYER;
+            _imperial_planet_count += real(_owner_imperial);
             if (p_type[i] == "Forge") {
                 continue;
             }
@@ -186,16 +182,15 @@ function build_planet_defence_fleets() {
         var forge = array_random_element(_mechanicus_worlds);
         var _current_imperial_fleet = scr_orbiting_fleet(eFACTION.IMPERIUM, forge);
         var _defence_fleet = false;
-        if (_current_imperial_fleet != "none") {
+        if (_current_imperial_fleet != noone) {
             if (!_current_imperial_fleet.navy) {
                 _defence_fleet = true;
             }
         } else {
-            var _current_imperial_fleet = instance_create(forge.x, forge.y, obj_en_fleet);
+            _current_imperial_fleet = create_enemy_fleet(forge.x, forge.y, eFACTION.IMPERIUM);
             _defence_fleet = true;
             with (_current_imperial_fleet) {
                 navy = false;
-                owner = eFACTION.IMPERIUM;
                 choose_fleet_sprite_image();
             }
         }
@@ -213,13 +208,13 @@ function build_planet_defence_fleets() {
                     break;
             }
             var _thirds = ceil(array_length(_value_hierarchy) / 3);
-            var _nearest = false;
+            var _nearest = noone;
             var _distance = 10000000;
             for (var i = 0; i < _thirds; i++) {
                 var _sys = _value_hierarchy[i];
                 var _sys_distance = point_distance(forge.x, forge.y, _sys[0].x, _sys[0].y);
                 if (_sys_distance < _distance) {
-                    _nearest = _sys[0].id;
+                    _nearest = _sys[0];
                     _distance = _sys_distance;
                 }
             }

@@ -3,16 +3,31 @@ function Roster() constructor {
     selected_units = [];
     full_roster = {};
     selected_roster = {};
+    /// @type {Array<Struct.ToggleButton>}
     ships = [];
     roster_location = "";
     roster_planet = 0;
     roster_string = "";
+    /// @type {Array<Struct.ToggleButton>}
     squad_buttons = [];
+    /// @type {Array<Struct.ToggleButton>}
     company_buttons = [];
     roster_local_string = "";
-    local_button = new ToggleButton({str1: "Local Forces", text_halign: fa_center, text_color: CM_GREEN_COLOR, button_color: CM_GREEN_COLOR, active: false});
+    local_button = new ToggleButton({
+        str1: "Local Forces",
+        text_halign: fa_center,
+        text_color: CM_GREEN_COLOR,
+        button_color: CM_GREEN_COLOR,
+        active: false,
+    });
 
-    select_all_ships = new UnitButtonObject({x1: 700, y1: 299, label: "All Ships", text_color: CM_GREEN_COLOR, button_color: CM_GREEN_COLOR});
+    select_all_ships = new UnitButtonObject({
+        x1: 700,
+        y1: 299,
+        label: "All Ships",
+        text_color: CM_GREEN_COLOR,
+        button_color: CM_GREEN_COLOR,
+    });
 
     static only_locals = function() {
         for (var i = 0; i < array_length(ships); i++) {
@@ -103,7 +118,7 @@ function Roster() constructor {
                     continue;
                 }
                 if (_unit.squad_type() != "none") {
-                    var _valid_type = array_contains(_valid_squad_types, _unit.squad_type());
+                    _valid_type = array_contains(_valid_squad_types, _unit.squad_type());
                 } else {
                     var _armour_data = _unit.get_armour_data();
                     if (is_struct(_armour_data)) {
@@ -151,9 +166,9 @@ function Roster() constructor {
         format_roster_string();
     };
 
-    static selected_count = function(){
+    static selected_count = function() {
         return array_length(selected_units);
-    }
+    };
 
     static new_squad_button = function(display, squad_id) {
         var _button = new ToggleButton();
@@ -165,13 +180,16 @@ function Roster() constructor {
         _button.text_halign = fa_center;
         _button.text_color = CM_GREEN_COLOR;
         _button.button_color = CM_GREEN_COLOR;
-        _button.width = string_width(display) + 10;
+        _button.w = string_width(display) + 10;
         _button.active = true;
         _button.squad = squad_id;
         array_push(squad_buttons, _button);
     };
 
-    ship_multi_selector = new MultiSelect([], "", {draw_alighn: "vertical", max_height: 200});
+    ship_multi_selector = new MultiSelect([], "", {
+        is_horizontal: false,
+        max_height: 160,
+    });
 
     static new_ship_button = function(display, ship_id) {
         var _button = new ToggleButton();
@@ -225,7 +243,7 @@ function Roster() constructor {
 
         roster_local_string += "\n";
         roster_local_string += "Remaining\n";
-        var _roster_types = struct_get_names(possible_local_roster);
+        _roster_types = struct_get_names(possible_local_roster);
         for (var i = 0; i < array_length(_roster_types); i++) {
             var _roster_type_name = _roster_types[i];
             var _roster_type_count = possible_local_roster[$ _roster_type_name];
@@ -243,7 +261,7 @@ function Roster() constructor {
         _button.text_halign = fa_center;
         _button.text_color = CM_GREEN_COLOR;
         _button.button_color = CM_GREEN_COLOR;
-        _button.width = string_width(display) + 10;
+        _button.w = string_width(display) + 10;
         _button.active = true;
         _button.vehic_id = vehicle_type;
         array_push(vehicle_buttons, _button);
@@ -255,10 +273,10 @@ function Roster() constructor {
         var _company_present = false;
         for (var co = 0; co <= obj_ini.companies; co++) {
             _company_present = false;
-            for (var i = 0; i < array_length(obj_ini.role[co]); i++) {
+            for (var i = 0; i < array_length(obj_ini.TTRPG[co]); i++) {
                 var _allow = false;
                 var _unit = fetch_unit([co, i]);
-                if (_unit.name() == "" || _unit.role() == "") {
+                if (!is_struct(_unit)) {
                     continue;
                 }
                 if (_unit.hp() <= 0 || _unit.in_jail()) {
@@ -340,7 +358,7 @@ function Roster() constructor {
             _button.text_halign = fa_center;
             _button.text_color = _col;
             _button.button_color = _col;
-            _button.width = string_width(_display) + 10;
+            _button.w = max(30, string_width(_display) + 10);
             _button.active = _company_present;
             _button.company_id = co;
             _button.company_present = _company_present;
@@ -369,13 +387,11 @@ function Roster() constructor {
         var size_count = 0;
         var _limit = obj_ncombat.man_size_limit;
         var _has_limit = _limit > 0;
-        var _add;
-        var _unit, _size;
         for (var i = 0; i < array_length(selected_units); i++) {
             if (_has_limit && _limit == size_count) {
                 break;
             }
-            _add = true;
+            var _add = true;
 
             if (is_struct(selected_units[i])) {
                 var _unit = selected_units[i];
@@ -504,10 +520,9 @@ function add_unit_to_battle(unit, meeting, is_local) {
     var man_size = 1;
 
     //Same as co/company and v, but with extra comprovations in case of a meeting (meeting?)
-    var _role = obj_ini.role[100];
-    var cooh, va;
-    cooh = 0;
-    va = 0;
+    var _role = active_roles();
+    var cooh = 0;
+    var va = 0;
     var v = unit.marine_number;
     var company = unit.company;
     if (!meeting) {
@@ -529,54 +544,43 @@ function add_unit_to_battle(unit, meeting, is_local) {
         new_combat.player_starting_dudes++;
     }
 
-    if (_unit_role == obj_ini.role[100][18]) {
+    if (_unit_role == _role[eROLE.SERGEANT]) {
         col = obj_controller.bat_tactical_column; //sergeants
-        new_combat.sgts++;
     } else if (_unit_role == _role[19]) {
         col = obj_controller.bat_veteran_column;
-        new_combat.vet_sgts++;
     }
     if (_unit_role == _role[12]) {
         //scouts
         col = obj_controller.bat_scout_column;
         new_combat.scouts++;
-    } else if (array_contains([obj_ini.role[100][8], $"{_role[15]} Aspirant", $"{_role[14]} Aspirant"], _unit_role)) {
+    } else if (array_contains([_role[eROLE.TACTICAL], _role[eROLE.CHAPLAINASPIRANT], _role[eROLE.APOTHECARYASPIRANT]], _unit_role)) {
         col = obj_controller.bat_tactical_column; //tactical_marines
-        new_combat.tacticals++;
     } else if (_unit_role == _role[3]) {
         //veterans and veteran sergeants
         col = obj_controller.bat_veteran_column;
-        new_combat.veterans++;
     } else if (_unit_role == _role[9]) {
         //devastators
         col = obj_controller.bat_devastator_column;
-        new_combat.devastators++;
     } else if (_unit_role == _role[10]) {
         //assualt marines
         col = obj_controller.bat_assault_column;
-        new_combat.assaults++;
 
         //librarium roles
     } else if (unit.IsSpecialist(SPECIALISTS_LIBRARIANS, true)) {
         col = obj_controller.bat_librarian_column; //librarium
-        new_combat.librarians++;
         moov = 1;
     } else if (_unit_role == _role[16]) {
         //techmarines
         col = obj_controller.bat_techmarine_column;
-        new_combat.techmarines++;
         moov = 2;
     } else if (_unit_role == _role[2]) {
         //honour guard
         col = obj_controller.bat_honor_column;
-        new_combat.honors++;
     } else if (unit.IsSpecialist(SPECIALISTS_DREADNOUGHTS)) {
         col = obj_controller.bat_dreadnought_column; //dreadnoughts
-        new_combat.dreadnoughts++;
-    } else if (_unit_role == obj_ini.role[100][4]) {
+    } else if (_unit_role == obj_ini.player_role_data[eROLE.TERMINATOR].role) {
         //terminators
         col = obj_controller.bat_terminator_column;
-        new_combat.terminators++;
     }
 
     if (moov > 0) {
@@ -587,26 +591,17 @@ function add_unit_to_battle(unit, meeting, is_local) {
             if (company == 10) {
                 col = obj_controller.bat_scout_column;
             }
-            if (obj_ini.mobi[cooh][va] == "Jump Pack") {
+
+            //TODO update to check item tag for jup
+            if (unit.mobility_item() == "Jump Pack") {
                 col = obj_controller.bat_assault_column;
             }
         }
     }
 
-    if ((_unit_role == _role[15]) || (_unit_role == _role[14]) || unit.IsSpecialist(SPECIALISTS_TRAINEES)) {
-        if (_unit_role == string(_role[14]) + " Aspirant") {
+    if ((_unit_role == _role[eROLE.APOTHECARY]) || (_unit_role == _role[eROLE.CHAPLAIN]) || unit.IsSpecialist(SPECIALISTS_TRAINEES)) {
+        if (_unit_role == _role[eROLE.CHAPLAINASPIRANT]) {
             col = obj_controller.bat_tactical_column;
-            new_combat.tacticals++;
-        }
-
-        if (_unit_role == _role[15]) {
-            new_combat.apothecaries++;
-        }
-        if (_unit_role == _role[14]) {
-            new_combat.chaplains++;
-            if (new_combat.big_mofo > 5) {
-                new_combat.big_mofo = 5;
-            }
         }
 
         col = obj_controller.bat_tactical_column;
@@ -620,41 +615,21 @@ function add_unit_to_battle(unit, meeting, is_local) {
         }
     }
 
-    if ((_unit_role == _role[5]) || (_unit_role == _role[11]) || (_unit_role == _role[7])) {
-        if (_unit_role == _role[5]) {
-            new_combat.captains++;
-            if (new_combat.big_mofo > 5) {
-                new_combat.big_mofo = 5;
-            }
-        }
-        if (_unit_role == _role[11]) {
-            new_combat.standard_bearers++;
-        }
-        if (_unit_role == _role[7]) {
-            new_combat.champions++;
-        }
-
-        //if (company = 1) {
-        //    col = obj_controller.bat_veteran_column;
-        //    if (obj_ini.armour[cooh][va] = "Terminator Armour") then col = obj_controller.bat_terminator_column;
-        //    if (obj_ini.armour[cooh][va] = "Tartaros Armour") then col = obj_controller.bat_terminator_column;
-        //}
+    if ((_unit_role == _role[eROLE.CAPTAIN]) || (_unit_role == _role[11]) || (_unit_role == _role[7])) {
         if (company >= 2) {
             col = obj_controller.bat_tactical_column;
         }
         if (company == 10) {
             col = obj_controller.bat_scout_column;
         }
-        if (obj_ini.mobi[cooh][va] == "Jump Pack") {
+        if (unit.mobility_item() == "Jump Pack") {
             col = obj_controller.bat_assault_column;
         }
     }
 
-    if (_unit_role == obj_ini.role[100][eROLE.CHAPTERMASTER]) {
+    if (_unit_role == obj_ini.player_role_data[eROLE.CHAPTERMASTER].role) {
         col = obj_controller.bat_command_column;
-        new_combat.important_dudes++;
-        new_combat.big_mofo = 1;
-        if (string_count("0", obj_ini.spe[cooh][va]) > 0) {
+        if (string_count("0", unit.specials) > 0) {
             new_combat.chapter_master_psyker = 1;
         } else {
             new_combat.chapter_master_psyker = 0;
@@ -662,13 +637,6 @@ function add_unit_to_battle(unit, meeting, is_local) {
     }
     if (unit.IsSpecialist(SPECIALISTS_HEADS)) {
         col = obj_controller.bat_command_column;
-        new_combat.important_dudes++;
-    }
-    if (new_combat.big_mofo > 2) {
-        new_combat.big_mofo = 2;
-    }
-    if (new_combat.big_mofo > 3) {
-        new_combat.big_mofo = 3;
     }
     if (unit.squad != "none") {
         var squad = unit.get_squad();
@@ -713,6 +681,7 @@ function add_unit_to_battle(unit, meeting, is_local) {
 
     targ = instance_nearest(col * 10, 240, obj_pnunit);
 
+    obj_ncombat.player_unit_index.add_to_index([unit]);
     with (targ) {
         scr_add_unit_to_roster(unit, is_local);
     }

@@ -1,11 +1,6 @@
 if (!instance_exists(obj_popup)) {
     if (cd < 1) {
         if (click_stall_timer < 1) {
-            // with(ob_ennt){shomesge(string(dudes[1])+"|"+string(dudes_num[1])+"|"+string(men+medi)+"|"+string(dudes_hp[1]));}
-
-            // 135;
-            // instance_activate_object(obj_cursor);
-
             if (enemy_forces <= 0) {
                 // Combat for whatever reason sometimes bugs out when there are no enemies, so if enter is pressed 6 times at this state it will set started to 2
                 enter_pressed++;
@@ -29,17 +24,13 @@ if (!instance_exists(obj_popup)) {
                 click_stall_timer = 15;
             }
 
-            // if (done>=1) then exit;
-
             if (turn_count >= 50 || enter_pressed > 5) {
                 started = 2;
             }
             if ((started == 2) || (started == 4)) {
                 instance_activate_object(obj_pnunit);
                 instance_activate_object(obj_enunit);
-                // started=3;alarm[5]=3;obj_pnunit.alarm[4]=1;obj_pnunit.alarm[5]=2;obj_enunit.alarm[1]=3;
                 started = 3;
-                // obj_pnunit.alarm[4]=2;obj_pnunit.alarm[5]=3;obj_enunit.alarm[1]=1;
                 var _quad_factor = 10;
                 total_battle_exp_gain = _quad_factor * sqr(threat);
                 if (instance_exists(obj_enunit)) {
@@ -52,10 +43,13 @@ if (!instance_exists(obj_popup)) {
 
                 fack = 1;
 
-                newline = "------------------------------------------------------------------------------";
-                scr_newtext();
-                newline = "------------------------------------------------------------------------------";
-                scr_newtext();
+                var _newline = "";
+                var _newline_color = eMSG_COLOR.DEFAULT;
+
+                _newline = "------------------------------------------------------------------------------";
+                combat_log.push(_newline, _newline_color);
+                _newline = "------------------------------------------------------------------------------";
+                combat_log.push(_newline, _newline_color);
             }
 
             if ((fadein < 0) && (fadein > -100) && (started == 0)) {
@@ -65,9 +59,6 @@ if (!instance_exists(obj_popup)) {
                 timer_stage = 1;
                 timer = 100;
 
-                if (enemy == 30) {
-                    timer_stage = 3;
-                }
                 if (battle_special == "ship_demon") {
                     timer_stage = 3;
                 }
@@ -84,6 +75,7 @@ if (!instance_exists(obj_popup)) {
             }
 
             if ((timer_stage == 1) || (timer_stage == 5)) {
+                combat_debugger.add(eCOMBAT_CATEGORY.SYSTEM, $"=== Player Turn start (turn {turn_count}) ===");
                 if (global_perils > 0) {
                     global_perils -= 1;
                 }
@@ -94,14 +86,12 @@ if (!instance_exists(obj_popup)) {
 
                 four_show = 0;
                 click_stall_timer = 15;
-                // if (battle_over!=1) then alarm[8]=15;
 
                 if (enemy != 6) {
                     if (instance_exists(obj_enunit)) {
                         obj_enunit.alarm[1] = 1;
                     }
                     set_up_player_blocks_turn();
-                    // alarm[9]=5;
                 } else if (enemy == 6) {
                     if (instance_exists(obj_enunit)) {
                         obj_enunit.alarm[1] = 2;
@@ -116,6 +106,7 @@ if (!instance_exists(obj_popup)) {
                 reset_combat_message_arrays();
                 timer_stage = 2;
             } else if (timer_stage == 3) {
+                combat_debugger.add(eCOMBAT_CATEGORY.SYSTEM, $"=== Enemy Turn start (turn {turn_count}) ===");
                 if (battle_over != 1) {
                     alarm[8] = 15;
                 }
@@ -143,7 +134,6 @@ if (!instance_exists(obj_popup)) {
                     if (instance_exists(obj_enunit)) {
                         obj_enunit.alarm[1] = 1;
                     }
-                    // alarm[9]=5;
                     reset_combat_message_arrays();
                 }
             }

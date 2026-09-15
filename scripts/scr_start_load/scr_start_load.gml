@@ -4,7 +4,6 @@ function scr_start_load(fleet, load_from_star, load_options) {
 
     // this distributes the marines and vehicles to the correct ships if the chapter is fleet-based or a home-based chapter
 
-    var _unit, _comp, _marine, total_vehic_size;
     var total_distribute_squads = [
         [],
         [],
@@ -13,7 +12,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
         [],
         [],
         [],
-        []
+        [],
     ];
 
     var escort_load = load_options[0];
@@ -26,10 +25,10 @@ function scr_start_load(fleet, load_from_star, load_options) {
         escort_load = 1;
     }
     var comp_has_units = [];
-    for (_comp = 0; _comp < 10; _comp++) {
+    for (var _comp = 0; _comp < 10; _comp++) {
         comp_has_units[_comp] = false;
-        for (_unit = 0; _unit < 20; _unit++) {
-            if (obj_ini.name[_comp][_unit] != "") {
+        for (var _unit = 0; _unit < company_length(_comp); _unit++) {
+            if (is_struct(fetch_unit([_comp, _unit]))) {
                 comp_has_units[_comp] = true;
                 break;
             }
@@ -70,7 +69,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
         "Predator",
         "Land Speeder",
         "Land Raider",
-        "Whirlwind"
+        "Whirlwind",
     ];
     function load_vehicles(_companies, _equip, _ship, size) {
         obj_ini.veh_wid[_companies][_equip] = 0;
@@ -78,33 +77,26 @@ function scr_start_load(fleet, load_from_star, load_options) {
         obj_ini.veh_loc[_companies][_equip] = obj_ini.ship_location[_ship];
         obj_ini.ship_carrying[_ship] += size;
     }
-    var ship_size, _companies_loaded;
-    _company_size = 0;
-    var ship = 0;
-    //ship_size = obj_ini.ship_size[ship];
-    _companies_loaded = 1;
-    var ship_return = 1;
-    var ship_has_space = true;
 
     //loop through companies. try and load whole company onto single ship else spread company across largest ships with remaining space
     var ship_loop_start = 0;
-    for (_comp = 0; _comp < 10; _comp++) {
+    for (var _comp = 0; _comp < 10; _comp++) {
         if ((split_vets == 1 && _comp == 1) || (!comp_has_units[_comp])) {
             continue;
         }
         if (ship_loop_start >= array_length(obj_ini.ship_carrying)) {
             ship_loop_start = array_length(obj_ini.ship_carrying);
         }
-        total_vehic_size = 0;
+        var total_vehic_size = 0;
         var _company_size = 0;
         var company_loader = []; //array of companies marines
         var company_vehicle = []; //array of companies vehicles
         var ship_fit = true;
 
-        for (_unit = 0; _unit < (array_length(obj_ini.role[_comp]) - 1); _unit++) {
-            _marine = fetch_unit([_comp, _unit]);
+        for (var _unit = 0; _unit < company_length(_comp); _unit++) {
+            var _marine = fetch_unit([_comp, _unit]);
             // check if marine exists
-            if (_marine.name() != "") {
+            if (is_struct(_marine)) {
                 //calculate marine space
                 var marine_size = _marine.get_unit_size();
                 _company_size += marine_size;
@@ -118,8 +110,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
                 var _squad = company_squad_dist[squad];
                 var _members = _squad.members;
                 for (var squad_member = 0; squad_member < array_length(_members); squad_member++) {
-                    squaddy = _members[squad_member];
-                    _marine = fetch_unit(squaddy);
+                    var _marine = _members[squad_member];
                     var marine_size = _marine.get_unit_size();
                     _company_size += marine_size;
                     array_push(company_loader, _marine);
@@ -128,7 +119,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
         }
 
         //fetch company vehicles
-        for (_unit = 1; _unit < array_length(obj_ini.veh_role[_comp]); _unit++) {
+        for (var _unit = 0; _unit < array_length(obj_ini.veh_role[_comp]); _unit++) {
             if (array_contains(_vehicles, obj_ini.veh_role[_comp][_unit])) {
                 var _vehic_size = scr_unit_size(false, obj_ini.veh_role[_comp][_unit], false, false);
                 total_vehic_size += _vehic_size;
@@ -142,7 +133,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
         }
         //if entire company won't fit on ship test to see if there is any ship in the fleet the company will fit on;
         if (ship_fit == false) {
-            for (ship_loop = ship_loop_start; ship_loop < array_length(obj_ini.ship_carrying); ship_loop++) {
+            for (var ship_loop = ship_loop_start; ship_loop < array_length(obj_ini.ship_carrying); ship_loop++) {
                 if ((escort_load == 2) && (obj_ini.ship_capacity[ship_loop] < 250)) {
                     continue;
                 }
@@ -161,7 +152,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
                 }
             }
             if (!ship_fit) {
-                for (ship_loop = 1; ship_loop < ship_loop_start; ship_loop++) {
+                for (var ship_loop = 1; ship_loop < ship_loop_start; ship_loop++) {
                     if ((escort_load == 2) && (obj_ini.ship_capacity[ship_loop] < 250)) {
                         continue;
                     }
@@ -181,7 +172,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
             }
             if (!ship_fit) {
                 //see if all troops can be grouped together
-                for (ship_loop = ship_loop_start; ship_loop < array_length(obj_ini.ship_carrying); ship_loop++) {
+                for (var ship_loop = ship_loop_start; ship_loop < array_length(obj_ini.ship_carrying); ship_loop++) {
                     if ((escort_load == 2) && (obj_ini.ship_capacity[ship_loop] < 250)) {
                         continue;
                     }
@@ -196,7 +187,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
                     }
                 }
                 if (!ship_fit) {
-                    for (ship_loop = 1; ship_loop < ship_loop_start; ship_loop++) {
+                    for (var ship_loop = 1; ship_loop < ship_loop_start; ship_loop++) {
                         if ((escort_load == 2) && (obj_ini.ship_capacity[ship_loop] < 250)) {
                             continue;
                         }
@@ -218,7 +209,6 @@ function scr_start_load(fleet, load_from_star, load_options) {
                         continue;
                     }
                     if (obj_ini.ship_carrying[ship_loop] < obj_ini.ship_capacity[ship_loop]) {
-                        ship_has_space = true;
                         // new arrays that will contain troops that didn't get loaded
                         var comp_edit = [];
                         var veh_edit = [];
@@ -230,9 +220,6 @@ function scr_start_load(fleet, load_from_star, load_options) {
                                 } else {
                                     array_push(comp_edit, company_loader[m]);
                                 }
-                                if (obj_ini.ship_carrying[ship_loop] == obj_ini.ship_capacity[ship_loop]) {
-                                    ship_has_space = false;
-                                }
                             }
                         }
                         for (var m = 0; m < array_length(company_vehicle); m++) {
@@ -240,9 +227,6 @@ function scr_start_load(fleet, load_from_star, load_options) {
                                 load_vehicles(company_vehicle[m][0], company_vehicle[m][1], ship_loop, company_vehicle[m][2]);
                             } else {
                                 array_push(veh_edit, company_vehicle[m]);
-                            }
-                            if (obj_ini.ship_carrying[ship_loop] == obj_ini.ship_capacity[ship_loop]) {
-                                ship_has_space = false;
                             }
                         }
                         company_loader = comp_edit;
@@ -275,9 +259,7 @@ function scr_start_load(fleet, load_from_star, load_options) {
                     array_push(_empty_ships, i);
                 } else {
                     var _star = array_pop(_imperial_stars);
-                    _new_fleet = instance_create(_star.x, _star.y, obj_p_fleet);
-                    _new_fleet.owner = eFACTION.PLAYER;
-                    add_ship_to_fleet(i, _new_fleet);
+                    var _new_fleet = create_player_fleet(_star.x, _star.y, [i]);
                     array_push(_fleets, _new_fleet);
                 }
             }

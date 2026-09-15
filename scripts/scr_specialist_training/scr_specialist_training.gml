@@ -1,29 +1,31 @@
 /// @self Struct.TTRPG_stats
+/// @param {String} specialist
+/// @param {Real} req_exp
 function specialistfunct(specialist, req_exp) {
     var spec_tips = [
-        string("{0} Potential", obj_ini.role[100][16]),
-        string("{0} Potential", obj_ini.role[100][15]),
-        string("{0} Potential", obj_ini.role[100][14]),
-        string("{0} Potential", obj_ini.role[100][17]),
-        string("{0} Applicant", obj_ini.role[100][16]),
-        string("{0} Applicant", obj_ini.role[100][15]),
-        string("{0} Applicant", obj_ini.role[100][14]),
-        string("{0} Applicant", obj_ini.role[100][17]),
-        string("Promote to Marine")
+        string("{0} Potential", obj_ini.player_role_data[eROLE.TECHMARINE].role),
+        string("{0} Potential", obj_ini.player_role_data[eROLE.APOTHECARY].role),
+        string("{0} Potential", obj_ini.player_role_data[eROLE.CHAPLAIN].role),
+        string("{0} Potential", obj_ini.player_role_data[eROLE.LIBRARIAN].role),
+        string("{0} Applicant", obj_ini.player_role_data[eROLE.TECHMARINE].role),
+        string("{0} Applicant", obj_ini.player_role_data[eROLE.APOTHECARY].role),
+        string("{0} Applicant", obj_ini.player_role_data[eROLE.CHAPLAIN].role),
+        string("{0} Applicant", obj_ini.player_role_data[eROLE.LIBRARIAN].role),
+        string("Promote to Marine"),
     ];
 
     var colors;
     var tips_list = [
         0,
         0,
-        spec_tips[8]
+        spec_tips[8],
     ];
     var spec_tip;
     switch (specialist) {
         case "Techmarine":
             colors = [
                 c_dkgray,
-                c_red
+                c_red,
             ];
             tips_list[0] = spec_tips[0];
             tips_list[1] = spec_tips[4];
@@ -34,7 +36,7 @@ function specialistfunct(specialist, req_exp) {
         case "Librarian":
             colors = [
                 c_white,
-                c_aqua
+                c_aqua,
             ];
             tips_list[0] = spec_tips[3];
             tips_list[1] = spec_tips[7];
@@ -45,7 +47,7 @@ function specialistfunct(specialist, req_exp) {
         case "Chaplain":
             colors = [
                 c_black,
-                c_yellow
+                c_yellow,
             ];
             tips_list[0] = spec_tips[2];
             tips_list[1] = spec_tips[6];
@@ -56,7 +58,7 @@ function specialistfunct(specialist, req_exp) {
         case "Apothecary":
             colors = [
                 c_red,
-                c_white
+                c_white,
             ];
             tips_list[0] = spec_tips[1];
             tips_list[1] = spec_tips[5];
@@ -66,7 +68,7 @@ function specialistfunct(specialist, req_exp) {
             break;
     }
 
-    if (role() == obj_ini.role[100][12]) {
+    if (role() == obj_ini.player_role_data[eROLE.SCOUT].role) {
         colors[0] = c_fuchsia;
     }
 
@@ -75,7 +77,7 @@ function specialistfunct(specialist, req_exp) {
     }
 
     if (experience >= req_exp) {
-        if (!(role() == obj_ini.role[100][12])) {
+        if (!(role() == obj_ini.player_role_data[eROLE.SCOUT].role)) {
             spec_tip = tips_list[1];
         } else {
             spec_tip = tips_list[2];
@@ -84,7 +86,10 @@ function specialistfunct(specialist, req_exp) {
         spec_tip = tips_list[0];
     }
 
-    return {spec_tip: spec_tip, colors: colors};
+    return {
+        spec_tip: spec_tip,
+        colors: colors,
+    };
 }
 
 // Function: spec_data_set(specialist)
@@ -92,6 +97,7 @@ function specialistfunct(specialist, req_exp) {
 // Parameters:
 //   specialist - Integer index (0: Techmarine, 1: Librarian, 2: Chaplain, 3: Apothecary)
 // Returns: Array containing company and position of selected marine, or "none" if no suitable marine found
+/// @param {Real} specialist
 function spec_data_set(specialist) {
     var _data = obj_controller.spec_train_data[specialist];
     var _search = {
@@ -105,14 +111,16 @@ function spec_data_set(specialist) {
 
     var random_marine = scr_random_marine(
         // TODO LOW SEARCH_OPTIONAL // Make this function handle optional search_params
-        [obj_ini.role[100][8], obj_ini.role[100][18], obj_ini.role[100][10], obj_ini.role[100][9]],
+        [obj_ini.player_role_data[eROLE.TACTICAL].role, obj_ini.player_role_data[eROLE.SERGEANT].role, obj_ini.player_role_data[eROLE.ASSAULT].role, obj_ini.player_role_data[eROLE.DEVASTATOR].role],
         _data.min_exp,
-        _search
+        _search,
     );
     return random_marine;
 }
 
 /// @self Asset.GMObject.obj_controller
+/// @desc Runs one turn of apothecary training: accrues recruitment points, then graduates a waiting aspirant or recruits a new one.
+/// @returns {Undefined}
 function apothecary_training() {
     // ** Training **
     // * Apothecary *
@@ -120,77 +128,54 @@ function apothecary_training() {
     var training_points_values = global.apothecary_training_tiers;
     apothecary_recruit_points += training_points_values[training_apothecary];
 
-    var novice_type = string("{0} Aspirant", obj_ini.role[100][15]);
+    var _apoth_role = obj_ini.player_role_data[eROLE.APOTHECARY];
+    var _novice_type = obj_ini.player_role_data[eROLE.APOTHECARYASPIRANT].role;
+
     if (training_apothecary > 0) {
-        recruit_count = scr_role_count(novice_type, "");
+        /// @type {Array<Struct.TTRPG_stats>}
+        var _aspirants = scr_role_count(_novice_type, "", "units");
+        recruit_count = array_length(_aspirants);
 
         if (apothecary_recruit_points >= 48) {
             if (recruit_count > 0) {
-                var random_marine = scr_random_marine(novice_type, 0);
-                // show_message(marine_position);
-                // show_message(obj_ini.role[0,marine_position]);
-                if (random_marine != "none") {
-                    marine_position = random_marine[1];
-                    marine_company = random_marine[0];
-                    apothecary_recruit_points -= 48;
-                    /// @type {Struct.TTRPG_stats}
-                    var unit = fetch_unit(random_marine);
-                    scr_alert("green", "recruitment", unit.name_role() + " has finished training.", 0, 0);
-                    unit.update_role(obj_ini.role[100][15]);
-                    unit.role_tag = [
-                        0,
-                        0,
-                        0,
-                        0
-                    ];
-                    unit.add_exp(10);
+                /// @type {Struct.TTRPG_stats}
+                var _unit = _aspirants[irandom(recruit_count - 1)];
 
-                    var _warn = "";
-                    if (unit.update_weapon_one(obj_ini.wep1[100][15]) == "no_items") {
-                        _warn += $", {obj_ini.wep1[100][15]}";
-                    }
-                    if (unit.update_weapon_two(obj_ini.wep2[100][15]) == "no_items") {
-                        _warn += $", {obj_ini.wep2[100][15]}";
-                    }
-                    if (unit.update_gear(obj_ini.gear[100][15]) == "no_items") {
-                        _warn += $", {obj_ini.gear[100][15]}";
-                    }
+                apothecary_recruit_points -= 48;
+                scr_alert("green", "recruitment", _unit.name_role() + " has finished training.", 0, 0);
+                _unit.update_role(_apoth_role.role);
+                _unit.role_tag = [
+                    0,
+                    0,
+                    0,
+                    0,
+                ];
+                _unit.add_exp(10);
 
-                    if (_warn != "") {
-                        _warn += ".";
-                        scr_alert("red", "recruitment", "Not enough equipment: " + string(_warn), 0, 0);
-                    }
+                var _warn = "";
+                var _outcome = _unit.alter_equipment(_apoth_role, true, true);
 
-                    with (obj_ini) {
-                        scr_company_order(0);
-                    }
+                if (!_outcome.success) {
+                    scr_alert("red", "recruitment", $"{_outcome.description}!", 0, 0);
                 }
             } else {
                 apothecary_recruit_points = 0;
             }
         } else if ((apothecary_recruit_points >= 4) && (recruit_count == 0)) {
             var random_marine = spec_data_set(eROLE_TAG.Apothecary);
-            if (random_marine != "none") {
-                var marine_position = random_marine[1];
-                var marine_company = random_marine[0];
-                // This gets the last open slot for company 0
-                var open_slot = find_company_open_slot(0);
-                if (open_slot != -1) {
-                    scr_move_unit_info(marine_company, 0, marine_position, open_slot);
-                    var unit = fetch_unit([0, open_slot]);
-                    unit.update_role(novice_type);
-                    unit.update_gear("");
-                    unit.update_mobility_item("");
-                    scr_alert("green", "recruitment", unit.name_role() + " begins training.", 0, 0);
-                    with (obj_ini) {
-                        scr_company_order(marine_company);
-                        scr_company_order(0);
-                    }
-                }
-            } else {
+            if (random_marine == "none") {
                 training_apothecary = 0;
-                scr_alert("red", "recruitment", $"No marines available for {obj_ini.role[100][eROLE.APOTHECARY]} training", 0, 0);
+                scr_alert("red", "recruitment", $"No marines available for {obj_ini.player_role_data[eROLE.APOTHECARY].role} training", 0, 0);
+                return;
             }
+            var _unit = fetch_unit(random_marine);
+            // This gets the last open slot for company 0
+            _unit.move_to_company(0);
+
+            _unit.update_role(_novice_type);
+            _unit.update_gear("");
+            _unit.update_mobility_item("");
+            scr_alert("green", "recruitment", _unit.name_role() + " begins training.", 0, 0);
         }
     }
 }
@@ -199,76 +184,66 @@ function apothecary_training() {
 function chaplain_training() {
     // * Chaplain training *
     // TODO add functionality for Space Wolves and Iron Hands
+    if (scr_has_adv_any(["Tech-Cult Religion", "Spiritual Healers"])) {
+        exit;
+    }
     var recruit_count = 0;
     var training_points_values = global.chaplain_training_tiers;
-    if ((global.chapter_name != "Space Wolves") && (global.chapter_name != "Iron Hands")) {
-        chaplain_points += training_points_values[training_chaplain];
-        var novice_type = string("{0} Aspirant", obj_ini.role[100][14]);
+    chaplain_points += training_points_values[training_chaplain];
+    var _novice_type = obj_ini.player_role_data[eROLE.CHAPLAINASPIRANT].role;
 
-        if (training_chaplain > 0) {
-            recruit_count = scr_role_count(novice_type, "");
-            if (chaplain_points >= 48) {
-                if (recruit_count > 0) {
-                    var random_marine = scr_random_marine(novice_type, 0);
-                    if (random_marine != "none") {
-                        marine_position = random_marine[1];
-                        var unit = fetch_unit(random_marine);
-                        scr_alert("green", "recruitment", unit.name_role() + " has finished training.", 0, 0);
-                        chaplain_points -= 48;
-                        unit.update_role(obj_ini.role[100][14]);
-                        unit.role_tag = [
-                            0,
-                            0,
-                            0,
-                            0
-                        ];
-                        unit.add_exp(10);
-                        chaplain_aspirant = 0;
-                        var _warn = "";
-                        if (unit.update_weapon_one(obj_ini.wep1[100][14]) == "no_items") {
-                            _warn += $", {obj_ini.wep1[100][14]}";
-                        }
-                        if (unit.update_weapon_two(obj_ini.wep2[100][14]) == "no_items") {
-                            _warn += $", {obj_ini.wep2[100][14]}";
-                        }
-                        if (unit.update_gear(obj_ini.gear[100][14]) == "no_items") {
-                            _warn += $", {obj_ini.gear[100][14]}";
-                        }
+    if (training_chaplain > 0) {
+        recruit_count = scr_role_count(_novice_type, "");
+        if (chaplain_points >= 48) {
+            if (recruit_count > 0) {
+                var random_marine = scr_random_marine(_novice_type, 0);
+                if (random_marine == "none") {
+                    return;
+                }
+                var _chap_role = obj_ini.player_role_data[eROLE.CHAPLAIN];
+                var _unit = fetch_unit(random_marine);
 
-                        if (_warn != "") {
-                            _warn += ".";
-                            scr_alert("red", "recruitment", "Not enough equipment: " + string(_warn), 0, 0);
-                        }
-                        with (obj_ini) {
-                            scr_company_order(0);
-                        }
-                    }
-                } else {
-                    chaplain_points = 0;
+                scr_alert("green", "recruitment", _unit.name_role() + " has finished training.", 0, 0);
+                chaplain_points -= 48;
+                _unit.update_role(_chap_role.role);
+                _unit.role_tag = [
+                    0,
+                    0,
+                    0,
+                    0,
+                ];
+                _unit.add_exp(10);
+                chaplain_aspirant = 0;
+                var _warn = "";
+                var _outcome = _unit.alter_equipment(_chap_role, true, true);
+
+                if (!_outcome.success) {
+                    scr_alert("red", "recruitment", $"{_outcome.description}!", 0, 0);
                 }
-            } else if ((chaplain_points >= 4) && (recruit_count == 0)) {
-                var random_marine = spec_data_set(eROLE_TAG.Chaplain);
-                if (random_marine != "none") {
-                    var marine_position = random_marine[1];
-                    var marine_company = random_marine[0];
-                    var open_slot = find_company_open_slot(0);
-                    if (open_slot != -1) {
-                        chaplain_aspirant = 1;
-                        scr_move_unit_info(marine_company, 0, marine_position, open_slot);
-                        var unit = fetch_unit([0, open_slot]);
-                        unit.update_role(novice_type);
-                        unit.update_gear("");
-                        unit.update_mobility_item("");
-                        scr_alert("green", "recruitment", unit.name_role() + " begins training.", 0, 0);
-                        with (obj_ini) {
-                            scr_company_order(marine_company);
-                            scr_company_order(0);
-                        }
-                    }
-                } else {
-                    training_chaplain = 0;
-                    scr_alert("red", "recruitment", $"No remaining {obj_ini.role[100][eROLE.CHAPLAIN]} applicant marines for training", 0, 0);
+            } else {
+                chaplain_points = 0;
+            }
+        } else if ((chaplain_points >= 4) && (recruit_count == 0)) {
+            var random_marine = spec_data_set(eROLE_TAG.Chaplain);
+            if (random_marine != "none") {
+                var _unit = fetch_unit(random_marine);
+                if (!is_struct(_unit)) {
+                    return;
                 }
+
+                _unit.move_to_company(0);
+
+                chaplain_aspirant = 1;
+                _unit.update_role(_novice_type);
+                _unit.update_gear("");
+                _unit.update_mobility_item("");
+                scr_alert("green", "recruitment", $"{_unit.name_role()} begins training.", 0, 0);
+                with (obj_ini) {
+                    scr_company_order(0);
+                }
+            } else {
+                training_chaplain = 0;
+                scr_alert("red", "recruitment", $"No remaining {obj_ini.player_role_data[eROLE.CHAPLAIN].role} applicant marines for training", 0, 0);
             }
         }
     }
@@ -282,31 +257,29 @@ function librarian_training() {
     psyker_points += training_points_values[training_psyker];
 
     var goal = 48;
-    var novice_type = string("{0} Aspirant", obj_ini.role[100][17]);
+    var _novice_type = obj_ini.player_role_data[eROLE.LIBRARIANASPIRANT].role;
 
     if (training_psyker > 0) {
-        recruit_count = scr_role_count(novice_type, "");
+        recruit_count = scr_role_count(_novice_type, "");
         if (psyker_points >= goal) {
             if (recruit_count > 0) {
-                marine_position = 0;
-                var random_marine = scr_random_marine(novice_type, 0, {"stat": [["psionic", 2, "more"]]});
-                if (random_marine != "none") {
-                    var unit = fetch_unit(random_marine);
-                    psyker_points -= goal;
-                    psyker_aspirant = 0;
-
-                    scr_alert("green", "recruitment", unit.name_role() + " has finished training.", 0, 0);
-                    unit.update_role("Lexicanum");
-                    unit.role_tag = [
-                        0,
-                        0,
-                        0,
-                        0
-                    ];
-                    with (obj_ini) {
-                        scr_company_order(0);
-                    }
+                var random_marine = scr_random_marine(_novice_type, 0, {"stat": [["psionic", 2, "more"]]});
+                if (random_marine == "none") {
+                    return;
                 }
+                var _unit = fetch_unit(random_marine);
+
+                psyker_points -= goal;
+                psyker_aspirant = 0;
+
+                scr_alert("green", "recruitment", _unit.name_role() + " has finished training.", 0, 0);
+                _unit.update_role(eROLE.LEXICANUM);
+                _unit.role_tag = [
+                    0,
+                    0,
+                    0,
+                    0,
+                ];
             } else {
                 psyker_points = 0;
             }
@@ -317,24 +290,16 @@ function librarian_training() {
                 scr_alert("red", "recruitment", "No remaining warp sensitive marines for training", 0, 0);
             } else if (random_marine != "none") {
                 // This gets the last open slot for company 0
-                var marine_position = random_marine[1];
-                var marine_company = random_marine[0];
-                var open_slot = find_company_open_slot(0);
-                if (open_slot != -1) {
-                    scr_move_unit_info(marine_company, 0, marine_position, open_slot);
-                    var unit = fetch_unit([0, open_slot]);
-                    unit.update_role(novice_type);
-                    unit.update_powers();
-                    psyker_aspirant = 1;
+                var _unit = fetch_unit(random_marine);
+                _unit.move_to_company(0);
 
-                    unit.update_gear("");
-                    unit.update_mobility_item("");
-                    scr_alert("green", "recruitment", unit.name_role() + " begins training.", 0, 0);
-                    with (obj_ini) {
-                        scr_company_order(marine_company);
-                        scr_company_order(0);
-                    }
-                }
+                _unit.update_role(_novice_type);
+                _unit.update_powers();
+                psyker_aspirant = 1;
+
+                _unit.alter_equipment({gear: "", mobi: ""});
+                _unit.update_mobility_item("");
+                scr_alert("green", "recruitment", _unit.name_role() + " begins training.", 0, 0);
             }
         }
     }
@@ -351,77 +316,74 @@ function techmarine_training() {
         4,
         6,
         10,
-        14
+        14,
     ];
+
+    var _tech_role = obj_ini.player_role_data[eROLE.TECHMARINE];
+
     tech_points += training_points_values[training_techmarine];
-    var novice_type = string("{0} Aspirant", obj_ini.role[100][16]);
+    var _novice_type = obj_ini.player_role_data[eROLE.TECHMARINEASPIRANT].role;
     if (training_techmarine > 0) {
-        recruit_count = scr_role_count(novice_type, "");
+        recruit_count = scr_role_count(_novice_type, "");
+        var _threshold = 252;
 
         if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
-            var _threshold = 360;
-        } else {
-            var _threshold = 252;
+            _threshold = 360;
         }
 
         if (tech_points >= _threshold) {
             if (recruit_count > 0) {
-                var random_marine = scr_random_marine(novice_type, 0);
-                if (random_marine != "none") {
-                    var unit = fetch_unit(random_marine);
-                    tech_points -= _threshold;
+                var random_marine = scr_random_marine(_novice_type, 0);
+                if (random_marine == "none") {
+                    return;
+                }
+                var _unit = fetch_unit(random_marine);
+                if (!is_struct(_unit)) {
+                    return;
+                }
+                tech_points -= _threshold;
 
-                    unit.update_role(obj_ini.role[100][16]);
-                    unit.role_tag = [
-                        0,
-                        0,
-                        0,
-                        0
-                    ];
-                    unit.add_exp(30);
+                _unit.update_role(_tech_role.role);
+                _unit.role_tag = [
+                    0,
+                    0,
+                    0,
+                    0,
+                ];
+                _unit.add_exp(30);
 
-                    unit.religion = "cult_mechanicus";
-                    if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
-                        unit.add_trait("mars_trained");
-                        scr_alert("green", "recruitment", $"{unit.name()} returns from Mars, a {unit.role()}.", 0, 0);
-                    } else {
-                        unit.add_trait("chapter_trained_tech");
-                        scr_alert("green", "recruitment", $"{unit.name_role()} has finished training.", 0, 0);
-                    }
+                _unit.religion = "cult_mechanicus";
+                if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
+                    _unit.add_trait("mars_trained");
+                    _unit.alter_equipment(_tech_role, false, true);
+                    scr_alert("green", "recruitment", $"{_unit.name()} returns from Mars, a {_unit.role()}.", 0, 0);
+                } else {
+                    _unit.add_trait("chapter_trained_tech");
+                    scr_alert("green", "recruitment", $"{_unit.name_role()} has finished training.", 0, 0);
 
-                    var _warn = "";
-                    if (unit.update_weapon_one(obj_ini.wep1[100][16]) == "no_items") {
-                        _warn += $", {obj_ini.wep1[100][16]}";
-                    }
-                    if (unit.update_weapon_two(obj_ini.wep2[100][16]) == "no_items") {
-                        _warn += $", {obj_ini.wep2[100][16]}";
-                    }
-                    if (unit.update_gear(obj_ini.gear[100][16]) == "no_items") {
-                        _warn += $", {obj_ini.gear[100][16]}";
-                    }
+                    var _outcome = _unit.alter_equipment(_tech_role, true, true);
 
-                    if (_warn != "") {
-                        _warn += ".";
-                        scr_alert("red", "recruitment", "Not enough equipment: " + string(_warn), 0, 0);
+                    if (!_outcome.success) {
+                        scr_alert("red", "recruitment", $"{_outcome.description}!", 0, 0);
                     }
+                }
 
-                    if (unit.location_string == "Terra") {
-                        unit.allocate_unit_to_fresh_spawn("default");
-                    }
+                if (_unit.location_string == "Terra") {
+                    _unit.allocate_unit_to_fresh_spawn("default");
+                }
 
-                    var extra_bio = 0;
-                    if (global.chapter_name != "Iron Hands" || !unit.has_trait("flesh_is_weak")) {
-                        extra_bio = unit.bionics < 4 ? choose(1, 2, 3) : 1;
-                    } else {
-                        extra_bio = choose(4, 5, 6);
-                    }
-                    repeat (extra_bio) {
-                        unit.add_bionics();
-                    }
-                    // 135 ; probably also want to increase the p_player by 1 just because
-                    with (obj_ini) {
-                        scr_company_order(0);
-                    }
+                var extra_bio = 0;
+                if (global.chapter_name != "Iron Hands" || !_unit.has_trait("flesh_is_weak")) {
+                    extra_bio = _unit.bionics < 4 ? choose(1, 2, 3) : 1;
+                } else {
+                    extra_bio = choose(4, 5, 6);
+                }
+                repeat (extra_bio) {
+                    _unit.add_bionics();
+                }
+                // 135 ; probably also want to increase the p_player by 1 just because
+                with (obj_ini) {
+                    scr_company_order(0);
                 }
             } else {
                 tech_points = 0;
@@ -429,42 +391,33 @@ function techmarine_training() {
         } else if ((tech_points >= 4) && (recruit_count == 0)) {
             var random_marine = spec_data_set(eROLE_TAG.Techmarine);
             if (random_marine != "none") {
-                var marine_position = random_marine[1];
-                var marine_company = random_marine[0];
-                // This gets the last open slot for company 0
-                var open_slot = find_company_open_slot(0);
-                if (open_slot != -1) {
-                    scr_move_unit_info(marine_company, 0, marine_position, open_slot);
-                    var unit = fetch_unit([0, open_slot]);
-                    unit.update_role(novice_type);
+                var _unit = fetch_unit(random_marine);
+                if (!is_struct(_unit)) {
+                    return;
+                }
+                _unit.move_to_company(0);
+                _unit.update_role(_novice_type);
 
-                    // Remove from ship
-                    if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
-                        if (unit.ship_location > -1) {
-                            var man_size = unit.get_unit_size();
-                            obj_ini.ship_carrying[unit.ship_location] -= man_size;
-                        }
-                        unit.location_string = "Terra";
-                        unit.planet_location = 4;
-                        unit.ship_location = -1;
+                // Remove from ship
+                if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
+                    if (_unit.ship_location > -1) {
+                        var man_size = _unit.get_unit_size();
+                        obj_ini.ship_carrying[_unit.ship_location] -= man_size;
                     }
-                    unit.update_weapon_one("");
-                    unit.update_weapon_two("");
-                    unit.update_gear("");
-                    unit.update_mobility_item("");
-                    if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
-                        scr_alert("green", "recruitment", $"{unit.name_role()} journeys to Mars.", 0, 0);
-                    } else {
-                        scr_alert("green", "recruitment", $"{unit.name_role()} begins training.", 0, 0);
-                    }
-                    with (obj_ini) {
-                        scr_company_order(marine_company);
-                        scr_company_order(0);
-                    }
+                    _unit.location_string = "Terra";
+                    _unit.planet_location = 4;
+                    _unit.ship_location = -1;
+                }
+                _unit.alter_equipment({wep1: "", wep2: "", armour: "", gear: "", mobi: ""});
+
+                if (obj_controller.faction_status[eFACTION.MECHANICUS] != "War") {
+                    scr_alert("green", "recruitment", $"{_unit.name_role()} journeys to Mars.", 0, 0);
+                } else {
+                    scr_alert("green", "recruitment", $"{_unit.name_role()} begins training.", 0, 0);
                 }
             } else {
                 training_techmarine = 0;
-                scr_alert("red", "recruitment", $"No marines with sufficient technology aptitude for {obj_ini.role[100][eROLE.TECHMARINE]} training", 0, 0);
+                scr_alert("red", "recruitment", $"No marines with sufficient technology aptitude for {_tech_role.role} training", 0, 0);
             }
         }
     }

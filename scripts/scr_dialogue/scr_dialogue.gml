@@ -1,6 +1,6 @@
 function initialize_dialogue() {
     global.dialogue = {};
-    global.dialogue.sisters = json_to_gamemaker(working_directory + "\\data\\dialogue\\sisters.json", json_parse);
+    global.dialogue.sisters = json_to_gamemaker(working_directory + "/data/dialogue/sisters.json", json_parse);
 }
 
 function interpret_diag_string(string_data, data) {
@@ -26,7 +26,7 @@ function interpret_diag_string(string_data, data) {
 
         // Relationship-based dialogue
         if (struct_exists(string_data, "relationship")) {
-            var _string = string_data.relationship[$ data.relationship];
+            _string = string_data.relationship[$ data.relationship];
             if (is_string(_string)) {
                 return string_interpolate_from_struct(_string, data);
             } else {
@@ -112,7 +112,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
             repeat (obj_temp_meeting.dudes) {
                 ii += 1;
                 if (mos == false) {
-                    if (obj_ini.role[obj_temp_meeting.co[ii]][obj_temp_meeting.ide[ii]] == "Master of Sanctity") {
+                    if (fetch_unit([obj_temp_meeting.co[ii], obj_temp_meeting.ide[ii]]).role() == "Master of Sanctity") {
                         mos = true;
                     }
                 }
@@ -168,7 +168,9 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
         // MoS cuts in
         if (diplo_keyphrase == "cs_meeting_m1") {
             diplomacy = -5.2;
-            diplo_text = $"[[{obj_ini.name[0][3]} hisses your name over a private vox channel.]]\n";
+            var _head = get_department_head(eCHAPTER_DEPARTMENTS.CHAP);
+            var _who = is_struct(_head) ? $"{_head.name_role()} hisses your name" : "Your name is hissed";
+            diplo_text = $"[[{_who} over a private vox channel.]]\n";
             diplo_text += "My lord!  What are we doing here, treating with this monster of the Traitor Legions? The very existence of the Archenemy is a threat to everything the Chapter stands for, and we endanger our immortal souls just being here. You know this! I demand to know your intentions! And I warn you, I will not hesitate to do what I must, for the good of the Chapter and the Imperium.";
 
             var _goto = "cs_meeting_m2";
@@ -178,24 +180,28 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
 
             // Option4 here if all the right conditions are met
             var born = false;
-            for (var ii = 1; i <= 200; i++) {
-                if ((obj_ini.role[0][ii] == obj_ini.role[100][eROLE.CHAPTERMASTER]) && (string_count("$", obj_ini.spe[0][ii]) > 0)) {
+            for (var i = 0; i < array_length(obj_ini.TTRPG[0]); i++) {
+                var _unit = fetch_unit([0, i]);
+                if ((_unit.role() == obj_ini.player_role_data[eROLE.CHAPTERMASTER].role) && (string_count("$", _unit.specials) > 0)) {
                     born = true;
                 }
             }
 
-            if ((obj_ini.TTRPG[0][3].corruption >= 50) && (born == true)) {
+            var _ms = fetch_unit([0, 3]);
+            if (is_struct(_ms) && _ms.corruption >= 50 && born) {
                 add_diplomacy_option({option_text: "Right now I need my Master of Sanctity at my side, trusting that his Chapter Master is doing what is best, what is necessary for the Chapter, during this dangerous moment. All will be made clear in time, I promise you brother. This is the right path.", goto: "cs_meeting_m3"});
             }
         }
         if (diplo_keyphrase == "cs_meeting_m2") {
+            var _head = get_department_head(eCHAPTER_DEPARTMENTS.CHAP);
             event_log = $"The {global.chapter_name} Master of Sanctity takes a stand against you.";
             scr_event_log("purple", event_log); // scr_alert("purple","lol",string(tix),0,0);
-            diplo_text = "You have besmirched the honor of our chapter this day, and I will not forget it /my lord Chapter Master/.\n[[" + string(obj_ini.name[0][3]) + " strides forward and his shout erupts from his external vox speakers with a boom that shatters the silence in the room.]]\nWe will not stand idly by and bandy words with heretic scum! To me my brothers! Slay these traitors in the name of our Emperor!";
+            diplo_text = $"You have besmirched the honor of our chapter this day, and I will not forget it /my lord Chapter Master/.\n[[{head.name_role()} strides forward and his shout erupts from his external vox speakers with a boom that shatters the silence in the room.]]\nWe will not stand idly by and bandy words with heretic scum! To me my brothers! Slay these traitors in the name of our Emperor!";
             add_diplomacy_option({option_text: "[Continue]", goto: "cs_meeting9"});
         }
         if (diplo_keyphrase == "cs_meeting_m3") {
-            diplo_text = "[[" + string(obj_ini.name[0][3]) + " is silent for a moment, before giving you an imperceptible nod.]]\nI stand with you, Lord " + string(obj_ini.master_name) + ". Let us face this together.";
+            var _head = get_department_head(eCHAPTER_DEPARTMENTS.CHAP);
+            diplo_text = $"[[{_head.name_role()} is silent for a moment, before giving you an imperceptible nod.]]\nI stand with you, Lord " + string(obj_ini.master_name) + ". Let us face this together.";
             add_diplomacy_option({option_text: "[Continue]", goto: "cs_meeting20"});
             obj_controller.useful_info += "CRMOS|";
         }
@@ -216,15 +222,19 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
 
             diplo_text = $"[[{obj_controller.faction_leader[eFACTION.CHAOS]} turns to you, his voice even and calm]]\n\nHere is the first step you must take, to prove you’ve truly left the Imperium behind. Kill him. Kill your loyal brothers.\n[[His Chaos Terminators raise their weapons as one and point them at you. Somewhere behind them a daemon cackles.]]\nChoose now or be obliterated.";
 
+            var _name = "";
             var _master_of_sanct = fetch_unit([0, 3]);
+            if (is_struct(_master_of_sanct)) {
+                _name = _master_of_sanct.name();
+            }
 
-            var _string = $"Stand with me my brothers! Fight for the future of your Chapter, and slay {_master_of_sanct.name()}!  [Battle loyalist  {global.chapter_name}";
+            var _string = $"Stand with me my brothers! Fight for the future of your Chapter, and slay {_name}!  [Battle loyalist  {global.chapter_name}";
             add_diplomacy_option({option_text: _string, goto: "cs_meeting_battle1", goto: "cs_meeting_battle1"});
 
-            var _string = $"{global.chapter_name}, I order you to hold your fire! {_master_of_sanct.name()}, if you doubt my leadership then let it be decided by single combat! [Duel your Master of Sanctity]";
+            _string = $"{global.chapter_name}, I order you to hold your fire! {_name}, if you doubt my leadership then let it be decided by single combat! [Duel your Master of Sanctity]";
             add_diplomacy_option({option_text: _string, goto: "cs_meeting_battle2"});
 
-            var _string = $"I deny you {obj_controller.faction_leader[eFACTION.CHAOS]}.  And now I shall destroy you.  For the Emperor! [Attack Chaos forces]";
+            _string = $"I deny you {obj_controller.faction_leader[eFACTION.CHAOS]}.  And now I shall destroy you.  For the Emperor! [Attack Chaos forces]";
             add_diplomacy_option({option_text: _string, goto: "cs_meeting_battle5"});
         }
 
@@ -331,7 +341,6 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
         if (diplo_keyphrase == "cs_meeting137") {
             diplo_text = $"When enough of your warriors have embraced Chaos, assemble them together in one place and then speak with me, and I will show you the beginning of the Eightfold Path. Now, begone.\n[[As you leave he calls out to you one more time.]]\nAnd {obj_ini.master_name}, I expect action within a few years. My patience, unlike Chaos, is not infinite.";
             complex_event = true;
-            current_eventing = "";
             force_goodbye = 1;
             faction_status[eFACTION.CHAOS] = "Antagonism";
 
@@ -341,19 +350,20 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
             }
 
             var born = false;
-            for (var ii = 1; ii < 200; ii++) {
-                if (obj_ini.role[0][ii] == obj_ini.role[100][eROLE.CHAPTERMASTER]) {
-                    fetch_unit([0, ii]).corruption += floor(random_range(30, 50));
+            for (var ii = 0; ii < array_length(obj_ini.TTRPG[0]); ii++) {
+                var _unit = fetch_unit([0, ii]);
+                if (_unit.role() == obj_ini.player_role_data[eROLE.CHAPTERMASTER].role) {
+                    _unit.corruption += floor(random_range(30, 50));
                 }
             }
             obj_controller.chaos_rating += 1;
 
             // Casket, Chalice, Tome
             if (obj_ini.fleet_type == ePLAYER_BASE.HOME_WORLD) {
-                scr_add_artifact("chaos_gift", "", 0, obj_ini.home_name, 2);
+                scr_add_artifact("chaos_gift", "", 0, obj_ini.home_name, -1);
             }
             if (obj_ini.fleet_type != ePLAYER_BASE.HOME_WORLD) {
-                scr_add_artifact("chaos_gift", "", 0, obj_ini.ship[0], 501);
+                scr_add_artifact("chaos_gift", "", 0, obj_ini.ship[0], 0);
             }
         }
         if (string_count("cs_meeting_battle", diplo_keyphrase) > 0) {
@@ -368,7 +378,8 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                 instance_destroy();
             }
             var _found = false;
-            var _star, _planet;
+            var _star = noone;
+            var _planet = noone;
             with (obj_star) {
                 if (has_problem_star("meeting") > 0 && has_problem_star("meeting") > 0) {
                     _found = true;
@@ -379,16 +390,18 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
             }
             if (!_found) {
                 var _master = fetch_unit([0, 0]);
+                if (!is_struct(_master)) {
+                    exit;
+                }
                 if (_master.planet_location > 0) {
                     var _master_star = find_star_by_name(_master.location_string);
-                    if (_master_star != "none") {
+                    if (_master_star != noone) {
                         _found = true;
                         _planet = _master.planet_location;
                         _star = _master_star;
                     }
                 }
             }
-            // show_message(string(instance_number(obj_ground_mission)));
 
             if (_found) {
                 instance_create(0, 0, obj_ncombat);
@@ -403,27 +416,27 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                 obj_ncombat.local_forces = 0;
 
                 if (diplo_keyphrase == "cs_meeting_battle1") {
-                    obj_ncombat.enemy = 1;
+                    obj_ncombat.enemy = eFACTION.PLAYER;
                     obj_ncombat.threat = 2;
                 }
                 if (diplo_keyphrase == "cs_meeting_battle2") {
-                    obj_ncombat.enemy = 1;
+                    obj_ncombat.enemy = eFACTION.PLAYER;
                     obj_ncombat.threat = 1;
                 }
                 if (diplo_keyphrase == "cs_meeting_battle5") {
-                    obj_ncombat.enemy = 10;
+                    obj_ncombat.enemy = eFACTION.CHAOS;
                     obj_ncombat.threat = 3;
                 }
                 if (diplo_keyphrase == "cs_meeting_battle6") {
-                    obj_ncombat.enemy = 10;
+                    obj_ncombat.enemy = eFACTION.CHAOS;
                     obj_ncombat.threat = 3;
                 }
                 if (diplo_keyphrase == "cs_meeting_battle7") {
-                    obj_ncombat.enemy = 1;
+                    obj_ncombat.enemy = eFACTION.PLAYER;
                     obj_ncombat.threat = 2;
                 }
 
-                if ((obj_ncombat.enemy == 10) && (obj_controller.faction_defeated[10] == 0)) {
+                if ((obj_ncombat.enemy == eFACTION.CHAOS) && (obj_controller.faction_defeated[10] == 0)) {
                     obj_ncombat.leader = 1;
 
                     with (obj_star) {
@@ -439,9 +452,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                 }
                 scr_civil_roster(obj_ncombat.battle_loc, obj_ncombat.battle_id, true);
 
-                instance_deactivate_all(true);
-                instance_activate_object(obj_controller);
-                instance_activate_object(obj_ini);
+                instance_deactivate_all_safe();
                 instance_activate_object(obj_temp_meeting);
                 instance_activate_object(obj_ncombat);
                 instance_activate_object(obj_centerline);
@@ -804,7 +815,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                         $"[{faction_leader[eFACTION.INQUISITION]} lets out an amused, extremely confident chuckle.]",
                         "Your soul will be mine.",
                         "Do not trifle with me, worm.",
-                        "I have travelled the stars for millennia.  Worlds have burned at my command, countless souls damned.  The ground trembles with every step.  Now I sit here and listen to you.  Where did it all go so wrong?"
+                        "I have travelled the stars for millennia.  Worlds have burned at my command, countless souls damned.  The ground trembles with every step.  Now I sit here and listen to you.  Where did it all go so wrong?",
                     ];
                     diplo_text = array_random_element(_diag_opts);
 
@@ -1611,8 +1622,8 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
             }
             if (diplo_keyphrase == "artifact") {
                 if (rela != "hostile") {
-                    add_diplomacy_option({option_text: "Propose a trade for the Artifact."});
-                    add_diplomacy_option({option_text: "Leave it be; Exit.", is_exit: true});
+                    add_diplomacy_option({option_text: "Propose a trade for the Artifact.", choice_func: open_trade_screen});
+                    add_diplomacy_option({option_text: "Leave it be; Exit.", choice_func: leave_artifact_negotiation, is_exit: true});
                     diplo_text = "The Adeptus Mechanicus is aware of the Artifact.  Do not concern yourself with that which is rightly within our territory.";
                 }
                 if (rela == "hostile") {
@@ -2009,8 +2020,8 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                 diplo_text = "Make me an offer and I shall consider it, both for its value and its potential heresy.";
             }
             if (diplo_keyphrase == "artifact") {
-                add_diplomacy_option({option_text: "Propose a trade for the Artifact."});
-                add_diplomacy_option({option_text: "Leave it be; Exit."});
+                add_diplomacy_option({option_text: "Propose a trade for the Artifact.", choice_func: open_trade_screen});
+                add_diplomacy_option({option_text: "Leave it be; Exit.", choice_func: leave_artifact_negotiation, is_exit: true});
                 diplo_text = "The Inquisition is, of course, aware of the artifact in question. What, precisely, are you offering for it?";
             }
             if (diplo_keyphrase == "artifact_thanks") {
@@ -2379,8 +2390,8 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
             }
 
             if (diplo_keyphrase == "artifact") {
-                add_diplomacy_option({option_text: create_dialogue_string(_diag_set, "propose_arti_trade", _diag_data)});
-                add_diplomacy_option({option_text: create_dialogue_string(_diag_set, "leave_it", _diag_data)});
+                add_diplomacy_option({option_text: create_dialogue_string(_diag_set, "propose_arti_trade", _diag_data), choice_func: open_trade_screen});
+                add_diplomacy_option({option_text: create_dialogue_string(_diag_set, "leave_it", _diag_data), choice_func: leave_artifact_negotiation, is_exit: true});
             }
 
             if (diplo_keyphrase == "artifact_daemon") {
@@ -2911,21 +2922,12 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                 if (rando == 5) {
                     obj_controller.useful_info += "CM|";
 
-                    var him_c = 0, him_i = 0, him_num = 0, him_cor = 0, split = "";
+                    var _unit = scr_max_marine("chaos");
 
-                    split = scr_max_marine("chaos");
-
-                    explode_script(split, "|");
-                    him_c = real(explode[0]);
-                    him_i = real(explode[1]);
-                    him_num = string(explode[2]);
-                    him_cor = real(explode[3]);
-
-                    if (him_cor == 0) {
+                    if (_unit.company == 0) {
                         diplo_text = "I have looked into the strands of fate, with your chapter, and found that the future is not suspect for any of your men.  None of them have their minds poisoned by the taint of chaos.";
-                    }
-                    if (him_cor > 0) {
-                        diplo_text = "I have looked into the strands of fate, with your chapter.  Your 'battle brother' " + string(him_num) + " has a clouded, dark future- it is advised you watch him carefully.";
+                    } else if (_unit.company > 0) {
+                        diplo_text = $"I have looked into the strands of fate, with your chapter.  Your 'battle brother' {_unit.name_role()} has a clouded, dark future- it is advised you watch him carefully.";
                     }
                 }
                 // * Next random event *
@@ -2988,7 +2990,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                     instance_destroy();
                                 }
                                 with (obj_star) {
-                                    for (var i = 1; i <= 4; i++) {
+                                    for (var j = 1; j <= 4; j++) {
                                         if (planet_feature_bool(p_feature[1], eP_FEATURES.WARLORD10) == 1) {
                                             instance_create(x, y, obj_temp5);
                                         }
@@ -2998,9 +3000,9 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                     var you, nuum, plan = 0;
                                     you = instance_nearest(obj_temp5.x, obj_temp5.y, obj_star);
                                     nuum = you.name;
-                                    for (var i = 1; i <= you.planets; i++) {
+                                    for (var j = 1; j <= you.planets; j++) {
                                         if (planet_feature_bool(you.p_feature[1], eP_FEATURES.WARLORD10) == 1) {
-                                            plan = i;
+                                            plan = j;
                                         }
                                     }
                                     found = 1;
@@ -3023,7 +3025,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                 instance_destroy();
                             }
                             with (obj_star) {
-                                for (var i = 1; i <= 4; i++) {
+                                for (var j = 1; j <= 4; j++) {
                                     if (planet_feature_bool(p_feature[1], eP_FEATURES.ORKWARBOSS) == 1) {
                                         instance_create(x, y, obj_temp5);
                                     }
@@ -3033,9 +3035,9 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                 var you, nuum, plan = 0;
                                 you = instance_nearest(obj_temp5.x, obj_temp5.y, obj_star);
                                 nuum = you.name;
-                                for (var i = 1; i <= you.planets; i++) {
+                                for (var j = 1; j <= you.planets; j++) {
                                     if (planet_feature_bool(you.p_feature[1], eP_FEATURES.ORKWARBOSS) == 1) {
-                                        plan = i;
+                                        plan = j;
                                     }
                                 }
                                 if (you.p_orks[plan] < 6) {
@@ -3101,7 +3103,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                 }
                                 var that, good = 0;
                                 that = instance_nearest(random(room_width), random(room_height), obj_star);
-                                for (var i = 0; i < 5; i++) {
+                                for (var index = 0; index < 5; index++) {
                                     if (good == 0) {
                                         with (that) {
                                             var j = 0, onceh = 0;
@@ -3113,7 +3115,7 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                             }
                                             if (onceh != 0) {
                                                 array_push(p_feature[onceh], new NewPlanetFeature(eP_FEATURES.WEBWAY));
-                                                obj_controller.temp[90] = planet_numeral_name(onceh);
+                                                obj_controller.temp[90] = planet_numeral_name(onceh, that);
                                             }
                                         }
                                     }
@@ -3167,14 +3169,14 @@ function scr_dialogue(diplo_keyphrase, data = {}) {
                                         with (that) {
                                             var onceh = 0;
                                             for (var k = 0; k < 10; k++) {
-                                                var i = floor(random(planets)) + 1;
-                                                if ((array_length(p_feature[i]) == 0) && (onceh == 0)) {
-                                                    onceh = i;
+                                                var l = floor(random(planets)) + 1;
+                                                if ((array_length(p_feature[l]) == 0) && (onceh == 0)) {
+                                                    onceh = l;
                                                 }
                                             }
                                             if (onceh != 0) {
                                                 array_push(p_feature[onceh], new NewPlanetFeature(eP_FEATURES.WEBWAY));
-                                                obj_controller.temp[90] = planet_numeral_name(onceh);
+                                                obj_controller.temp[90] = planet_numeral_name(onceh, that);
                                             }
                                         }
                                     }

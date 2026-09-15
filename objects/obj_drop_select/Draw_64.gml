@@ -8,8 +8,8 @@ try {
     draw_set_font(fnt_40k_14b);
     draw_set_color(CM_GREEN_COLOR);
 
-    w = 660;
-    h = 520;
+    w = 720;
+    h = 580;
     // Center of the screen
     //setup
     var _x_center = (display_get_gui_width() / 2) - (w / 2);
@@ -17,7 +17,7 @@ try {
     //draw main_slate
     if (purge != eDROP_TYPE.PURGESELECT && (local_content_slate.XX <= _x_center - local_content_slate.width)) {
         main_slate.inside_method = drop_select_draw;
-        main_slate.draw(_x_center, _y_center, (660 / 860), (520 / 850));
+        main_slate.draw(_x_center, _y_center, (w / 860), (h / 850));
     }
 
     //left hand slate
@@ -26,10 +26,12 @@ try {
         var _yy = local_content_slate.YY + 40;
         var _width = local_content_slate.width;
         var _heigth = local_content_slate.height;
+
         if (purge == 0) {
             draw_set_halign(fa_left);
             draw_text_ext(_xx + 15, _yy, roster.roster_local_string, -1, local_content_slate.width - 40);
         }
+
         if (purge != eDROP_TYPE.RAIDATTACK) {
             if (purge == eDROP_TYPE.PURGESELECT) {
                 draw_set_halign(fa_center);
@@ -39,13 +41,7 @@ try {
                     instance_destroy();
                 }
             }
-            var _xx = local_content_slate.XX;
 
-            /*if (instance_exists(p_target)) {
-                if (p_target.p_type[planet_number] = "Shrine") then nup = true;
-            }
-            */
-            // 89,31
             draw_set_halign(fa_left);
             for (var i = 0; i < array_length(purge_options); i++) {
                 var _purge_button = purge_options[i];
@@ -61,6 +57,7 @@ try {
     };
 
     draw_set_halign(fa_center);
+
     if (purge == eDROP_TYPE.RAIDATTACK) {
         local_content_slate.draw(_x_center - local_content_slate.width, _y_center, (300 / 860), (520 / 850));
     } else if (purge == 1) {
@@ -73,6 +70,7 @@ try {
             local_content_slate.draw(local_content_slate.XX, _y_center, (300 / 860), (520 / 850));
         }
     }
+
     roster_slate.inside_method = function() {
         var _xx = roster_slate.XX + (roster_slate.width / 2);
         var _yy = roster_slate.YY + 40;
@@ -83,7 +81,7 @@ try {
         } else if (purge > eDROP_TYPE.PURGESELECT) {
             draw_text_ext(_xx, _yy, "Purge Insight", -1, roster_slate.width - 40);
             _yy += 30;
-            var hers, influ, poppy;
+            var poppy = "0";
             var hers = p_target.p_heresy[planet_number] + p_target.p_heresy_secret[planet_number];
             var influ = p_target.p_influence[planet_number];
             if (p_target.p_large[planet_number] == 1) {
@@ -104,11 +102,13 @@ try {
             }
         }
     };
+
     var _draw_x = _x_center + main_slate.width;
     var _draw_y = _y_center;
+
     if (purge > eDROP_TYPE.PURGESELECT) {
-        if (roster_slate.XX < _x_center + 660) {
-            var _draw_x = min(roster_slate.XX + 15, _x_center + 660);
+        if (roster_slate.XX < _x_center + w) {
+            _draw_x = min(roster_slate.XX + 15, _x_center + w);
         } else {
             _draw_x = roster_slate.XX;
         }

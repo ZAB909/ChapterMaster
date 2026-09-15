@@ -6,17 +6,23 @@ function fetch_marine_components_to_memory() {
                 if (struct_exists(_element, "overides")) {
                     var _override_areas = struct_get_names(_element.overides);
                     for (var i = 0; i < array_length(_override_areas); i++) {
-                        sprite_prefetch(_element.overides[$ _override_areas[i]]);
+                        var _override_val = _element.overides[$ _override_areas[i]];
+                        if (is_struct(_override_val)) {
+                            if (struct_exists(_override_val, "sprite") && sprite_exists(_override_val.sprite)) {
+                                sprite_prefetch(_override_val.sprite);
+                            }
+                        } else if (sprite_exists(_override_val)) {
+                            sprite_prefetch(_override_val);
+                        }
                     }
                 }
             }
             if (struct_exists(_element, "shadows")) {
                 sprite_prefetch(_element.shadows);
             }
-        }
-        catch (_exception) {
+        } catch (_exception) {
             // Sprite prefetch failure logged but non-fatal
-            show_debug_message($"Sprite prefetch failed for element at index {_index}: {_exception}");
+            LOGGER.debug($"Sprite prefetch failed for element at index {_index}: {_exception}");
         }
     });
 }
@@ -27,12 +33,110 @@ function ColourItem(_xx, _yy) constructor {
     yy = _yy;
     data_slate = new DataSlate();
 
-    static swap_role_set = function(type_start, type_end) {
-        var _full_livs = obj_creation.full_liveries;
-        var _comp_livs = obj_creation.company_liveries;
+    static active_role_liveries = function(){
+        return active_game_ini().full_liveries;
+    }
+
+    static active_company_liveries = function(){
+        return active_game_ini().company_liveries;
+    }
+
+    static spawn_struct_cols = function(){
+        var _names = ["main_color", "secondary_color", "main_trim" ,"right_pauldron" ,"left_pauldron" , "lens_color" ,"weapon_color"]
+        var _structure = {};
+        var _obj = active_game_ini();
+
+        for (var i=0;i<array_length(_names);i++){
+            _structure[$ _names[i]] = variable_instance_exists(_obj, _names[i]) ? variable_instance_get(_obj, _names[i]) : 0;
+        }
+
+        return _structure;
+    }
+
+    static populate_truncated_liveries_array = function(struct_cols = undefined, col_special = 0){
+        var _struct_cols = is_undefined(struct_cols) ? spawn_struct_cols() : struct_cols;
+        var _liveries = active_role_liveries();
+        var _start_length = array_length(_liveries);
+        if (_start_length < eROLE.MARINEEND){
+            map_colour = variable_clone(_liveries[0]);
+            for (var i = array_length(_liveries);i<eROLE.MARINEEND;i++){
+                switch(i){
+                    case eROLE.LIBRARIAN:
+                        array_push(_liveries, set_default_librarian(_struct_cols))
+                        break;
+                    case eROLE.CHAPLAIN:
+                        array_push(_liveries, set_default_chaplain(_struct_cols))
+                        break;
+                    case eROLE.APOTHECARY:
+                        array_push(_liveries, set_default_apothecary(_struct_cols))
+                        break;
+                    case eROLE.TECHMARINE:
+                        array_push(_liveries, set_default_techmarines(_struct_cols))
+                        break;
+                    default:
+                        array_push(_liveries , variable_clone(map_colour));
+                        break;
+                }
+            } 
+            for (var i=0;i<array_length(base_specs);i++){
+                role_set = base_specs[i];
+                colour_specialists();
+            }
+        }
+        for (var i = 0;i<eROLE.MARINEEND;i++){
+            if (!is_struct(_liveries[i])){
+                _liveries[i] = set_default_armour(_struct_cols, col_special);
+            }
+        }
+
+        active_game_ini().full_liveries = _liveries; 
+    }
+
+    static colour_specialists = function(){
+        var _full_livs = active_role_liveries();
+        var _role_change_set = [];
+        switch(role_set){
+            case eROLE.LIBRARIAN:
+                _role_change_set = lib_roles;
+                break;
+            case eROLE.CHAPLAIN:
+                _role_change_set = chap_roles;
+                break;
+            case eROLE.APOTHECARY:
+                _role_change_set = apoth_roles;
+                break;
+            case eROLE.TECHMARINE:
+                _role_change_set = tech_roles;
+                break;
+        }
+
+        for (var i = 0; i < array_length(_role_change_set);i++){
+            var _role = _role_change_set[i];
+            if (_role == role_set || _full_livs[_role].is_changed){
+                continue;
+            }
+            _full_livs[_role] = variable_clone(_full_livs[role_set]);
+            _full_livs[_role].is_changed = false;
+        }
+    }
+
+    static base_specs = [
+        eROLE.LIBRARIAN,
+        eROLE.CHAPLAIN,
+        eROLE.APOTHECARY,
+        eROLE.TECHMARINE,    
+    ]
+
+    static swap_role_set = function(type_start, type_end, override_role_val = noone) {
+        var _full_livs = active_role_liveries();
+        var _comp_livs = active_company_liveries();
         switch (type_start) {
             case 1:
                 _full_livs[role_set] = variable_clone(map_colour);
+                var _specs = base_specs;
+                if (array_contains(_specs,role_set)){
+                    colour_specialists();
+                }
                 break;
             case 0:
                 _full_livs[0] = variable_clone(map_colour);
@@ -44,7 +148,11 @@ function ColourItem(_xx, _yy) constructor {
 
         switch (type_end) {
             case 1:
-                role_set = obj_creation.roles_radio.selection_val("role_id");
+                if (instance_exists(obj_creation) && override_role_val == noone){
+                    role_set = obj_creation.roles_radio.selection_val("role_id");
+                } else if(override_role_val != noone){
+                    role_set = override_role_val;
+                }
                 role_set = role_set == noone ? 0 : role_set;
                 map_colour = variable_clone(_full_livs[role_set]);
                 break;
@@ -53,7 +161,9 @@ function ColourItem(_xx, _yy) constructor {
                 map_colour = variable_clone(_full_livs[0]);
                 break;
             case 2:
-                role_set = obj_creation.buttons.company_liveries_choice.current_selection;
+                if (instance_exists(obj_creation)){
+                    role_set = obj_creation.buttons.company_liveries_choice.current_selection;
+                }
                 if (role_set == -1) {
                     role_set = 1;
                 }
@@ -109,67 +219,67 @@ function ColourItem(_xx, _yy) constructor {
             103,
             165,
             148,
-            217
+            217,
         ],
         left_leg_upper: [
             83,
             107,
             119,
-            134
+            134,
         ],
         left_leg_knee: [
             105,
             138,
             126,
-            159
+            159,
         ],
         right_leg_lower: [
             15,
             165,
             57,
-            218
+            218,
         ],
         right_leg_upper: [
             43,
             107,
             73,
-            139
+            139,
         ],
         right_leg_knee: [
             35,
             138,
             58,
-            160
+            160,
         ],
         metallic_trim: [
             70,
             53,
             100,
-            70
+            70,
         ],
         right_trim: [
             -100,
             31,
             string_width("R Trim"),
-            string_height("R Trim")
+            string_height("R Trim"),
         ],
         left_trim: [
             -150,
             31,
             string_width("L Trim"),
-            string_height("L Trim")
+            string_height("L Trim"),
         ],
         left_chest: [
             84,
             72,
             108,
-            92
+            92,
         ],
         right_chest: [
             50,
             73,
             82,
-            103
+            103,
         ],
         left_thorax: 0,
         right_thorax: 0,
@@ -179,85 +289,85 @@ function ColourItem(_xx, _yy) constructor {
             114,
             31,
             150,
-            67
+            67,
         ],
         right_pauldron: [
             19,
             31,
             43,
-            71
+            71,
         ],
         left_head: [
             81,
             15,
             94,
-            30
+            30,
         ],
         right_head: [
             68,
             15,
             81,
-            31
+            31,
         ],
         left_muzzle: [
             82,
             32,
             90,
-            42
+            42,
         ],
         right_muzzle: [
             73,
             32,
             82,
-            42
+            42,
         ],
         eye_lense: [
             40,
             -20,
             string_width("Lense"),
-            string_height("Lense")
+            string_height("Lense"),
         ],
         left_arm: [
             119,
             67,
             146,
-            105
+            105,
         ],
         left_hand: [
             128,
             109,
             146,
-            123
+            123,
         ],
         right_arm: [
             19,
             67,
             34,
-            106
+            106,
         ],
         right_hand: [
             18,
             109,
             33,
-            134
+            134,
         ],
         right_backpack: [
             32,
             17,
             60,
-            38
+            38,
         ],
         left_backpack: [
             97,
             17,
             130,
-            38
+            38,
         ],
         company_marks: [
             30,
             40,
             string_width("Company Marks"),
-            string_height("Company Marks")
+            string_height("Company Marks"),
         ],
     };
 
@@ -303,32 +413,32 @@ function ColourItem(_xx, _yy) constructor {
     static lower_left = [
         "left_leg_lower",
         "left_leg_upper",
-        "left_leg_knee"
+        "left_leg_knee",
     ];
 
     static lower_right = [
         "right_leg_lower",
         "right_leg_upper",
-        "right_leg_knee"
+        "right_leg_knee",
     ];
 
     static upper_left = [
         "left_chest",
         "left_arm",
         "left_hand",
-        "left_backpack"
+        "left_backpack",
     ];
 
     static chest = [
         "left_chest",
-        "right_chest"
+        "right_chest",
     ];
 
     static upper_right = [
         "right_chest",
         "right_arm",
         "right_hand",
-        "right_backpack"
+        "right_backpack",
     ];
 
     static legs = [
@@ -337,25 +447,25 @@ function ColourItem(_xx, _yy) constructor {
         "left_leg_knee",
         "right_leg_lower",
         "right_leg_upper",
-        "right_leg_knee"
+        "right_leg_knee",
     ];
 
     static head_set = [
         "left_head",
         "right_head",
         "left_muzzle",
-        "right_muzzle"
+        "right_muzzle",
     ];
 
     static backpack = [
         "right_backpack",
-        "left_backpack"
+        "left_backpack",
     ];
 
     static trim_all = [
         "right_trim",
         "left_trim",
-        "metallic_trim"
+        "metallic_trim",
     ];
 
     static full_body = array_join(lower_left, lower_right, upper_left, chest, upper_right, head_set);
@@ -365,6 +475,61 @@ function ColourItem(_xx, _yy) constructor {
             map_colour[$ pattern[i]] = col;
         }
     };
+
+    static lib_roles = [
+        eROLE.CODICIERY,
+        eROLE.LEXICANUM,
+        eROLE.LIBRARIAN,
+        eROLE.LIBRARIANASPIRANT,
+        eROLE.CHIEFLIBRARIAN,
+    ]
+
+    static chap_roles = [
+        eROLE.CHAPLAIN,
+        eROLE.MASTERCHAPLAIN,
+        eROLE.CHAPLAINASPIRANT,
+    ];
+
+    static apoth_roles = [
+        eROLE.MASTERAPOTHECARY,
+        eROLE.APOTHECARY,
+        eROLE.APOTHECARYASPIRANT,
+    ];
+
+    static tech_roles = [
+        eROLE.FORGEMASTER,
+        eROLE.TECHMARINE,
+        eROLE.TECHMARINEASPIRANT,
+    ];
+
+    static setup_full_liveries_array = function(main_colours, armour_style){
+        scr_unit_draw_data();
+        set_default_armour(main_colours, armour_style);
+        var _full_liveries = array_create(eROLE.MARINEEND, variable_clone(map_colour));
+
+        var _role_groups = [
+            [lib_roles, set_default_librarian],
+            [chap_roles, set_default_chaplain],
+            [apoth_roles, set_default_apothecary],
+            [tech_roles, set_default_techmarines]
+        ];
+
+        for (var i = 0; i < array_length(_role_groups); i++) {
+            var _roles = _role_groups[i][0];
+            var _setter = _role_groups[i][1];
+            for (var j = 0; j < array_length(_roles); j++) {
+                _full_liveries[_roles[j]] = variable_clone(_setter(main_colours));
+            }
+        }               
+
+        scr_unit_draw_data();
+        set_default_armour(main_colours, armour_style);
+        if (instance_exists(obj_creation)){
+            obj_creation.full_liveries = _full_liveries;
+        } else {
+            obj_ini.full_liveries = _full_liveries;
+        }
+    }
 
     static set_default_armour = function(struct_cols, armour_style = 0) {
         map_colour.right_pauldron = struct_cols.right_pauldron;
@@ -443,13 +608,13 @@ function ColourItem(_xx, _yy) constructor {
     };
 
     colour_pick = false;
-    dummy_marine = false;
-    dummy_image = false;
+    dummy_marine = undefined;
+    dummy_image = undefined;
 
     static reset_image = function() {
         if (is_struct(dummy_image)) {
             delete dummy_image;
-            dummy_image = false;
+            dummy_image = undefined;
         }
     };
 
@@ -470,7 +635,7 @@ function ColourItem(_xx, _yy) constructor {
                         map_colour[$ colour_return[0]] = colour_return[1];
                         colour_return = [
                             hover_pos,
-                            map_colour[$ hover_pos]
+                            map_colour[$ hover_pos],
                         ];
                         map_colour[$ hover_pos] = 0;
                         reset_image();
@@ -478,7 +643,7 @@ function ColourItem(_xx, _yy) constructor {
                 } else {
                     colour_return = [
                         hover_pos,
-                        map_colour[$ hover_pos]
+                        map_colour[$ hover_pos],
                     ];
                     map_colour[$ hover_pos] = 0;
                     reset_image();
@@ -524,7 +689,7 @@ function ColourItem(_xx, _yy) constructor {
                                 break;
                         }
                         delete dummy_image;
-                        dummy_image = false;
+                        dummy_image = undefined;
                     }
                 }
             }
@@ -554,8 +719,7 @@ function ColourItem(_xx, _yy) constructor {
             }
             image_location_maps.company_marks = move_location_relative(draw_unit_buttons([xx - 30, yy - 40], "Company Marks"), -xx, -yy);
 
-            //draw_sprite(sprite_index, 0, x, y);
-            if (dummy_marine == false) {
+            if (dummy_marine ?? true) {
                 dummy_marine = new DummyMarine();
             }
             if (!is_struct(dummy_image)) {

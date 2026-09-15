@@ -59,11 +59,7 @@ if (save_part == 1) {
 
 if (load_part == 6) {
     txt = "Praise to the Machine God";
-    if (global.restart > 0) {
-        txt = "Praise be to the Emperor";
-    }
     with (obj_controller) {
-        // LOGGER.debug($"load section 5");
         scr_load(5, global.load);
     }
     trickle = 2;
@@ -71,12 +67,7 @@ if (load_part == 6) {
 
 if (load_part == 5) {
     txt = "Sacred Anointing of Oil";
-    if (global.restart > 0) {
-        txt = "Speed Dialing Howling Banshee";
-    }
-
     with (obj_controller) {
-        // LOGGER.debug($"load section 4");
         scr_load(4, global.load);
     }
     trickle = 2;
@@ -85,11 +76,7 @@ if (load_part == 5) {
 
 if (load_part == 4) {
     txt = "Astartes Registry";
-    if (global.restart > 0) {
-        txt = "Donning Power Armour";
-    }
     with (obj_controller) {
-        // LOGGER.debug($"load section 3");
         scr_load(3, global.load);
     }
     trickle = 2;
@@ -98,11 +85,7 @@ if (load_part == 4) {
 
 if (load_part == 3) {
     txt = "Charting Sector";
-    if (global.restart > 0) {
-        txt = "Rousing the Machine Spirit";
-    }
     with (obj_controller) {
-        // LOGGER.debug($"load section 2");
         scr_load(2, global.load);
     }
     trickle = 2;
@@ -111,11 +94,7 @@ if (load_part == 3) {
 
 if (load_part == 2) {
     txt = "Finding Servo Skulls";
-    if (global.restart > 0) {
-        txt = "Turtle Waxing Scalp";
-    }
     with (obj_controller) {
-        // LOGGER.debug($"load section 1");
         scr_load(1, global.load);
     }
     trickle = 2;

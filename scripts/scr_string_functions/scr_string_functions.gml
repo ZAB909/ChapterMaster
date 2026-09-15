@@ -19,6 +19,8 @@ function string_upper_first(_string) {
 }
 
 function string_gender(gender = -1) {
+    var _string = "";
+
     if (gender == -1) {
         gender = set_gender();
     }
@@ -148,7 +150,7 @@ function integer_to_words(_integer, _capitalize_first = false, _ordinal = false)
             "sixth",
             "seventh",
             "eighth",
-            "ninth"
+            "ninth",
         ];
         _teens = [
             "tenth",
@@ -160,7 +162,7 @@ function integer_to_words(_integer, _capitalize_first = false, _ordinal = false)
             "sixteenth",
             "seventeenth",
             "eighteenth",
-            "nineteenth"
+            "nineteenth",
         ];
         _tens = [
             "",
@@ -172,13 +174,13 @@ function integer_to_words(_integer, _capitalize_first = false, _ordinal = false)
             "sixtieth",
             "seventieth",
             "eightieth",
-            "ninetieth"
+            "ninetieth",
         ];
         _thousands = [
             "",
             "thousandth",
             "millionth",
-            "billionth"
+            "billionth",
         ];
     } else {
         _ones = [
@@ -191,7 +193,7 @@ function integer_to_words(_integer, _capitalize_first = false, _ordinal = false)
             "six",
             "seven",
             "eight",
-            "nine"
+            "nine",
         ];
         _teens = [
             "ten",
@@ -203,7 +205,7 @@ function integer_to_words(_integer, _capitalize_first = false, _ordinal = false)
             "sixteen",
             "seventeen",
             "eighteen",
-            "nineteen"
+            "nineteen",
         ];
         _tens = [
             "",
@@ -215,13 +217,13 @@ function integer_to_words(_integer, _capitalize_first = false, _ordinal = false)
             "sixty",
             "seventy",
             "eighty",
-            "ninety"
+            "ninety",
         ];
         _thousands = [
             "",
             "thousand",
             "million",
-            "billion"
+            "billion",
         ];
     }
 
@@ -322,7 +324,7 @@ function scr_convert_company_to_string(company_num, possessive = false, flavour 
         "th",
         "th",
         "th",
-        "th"
+        "th",
     ];
     var _flavours = [
         "Veteran",
@@ -334,7 +336,7 @@ function scr_convert_company_to_string(company_num, possessive = false, flavour 
         "Reserve",
         "Reserve",
         "Reserve",
-        "Scout"
+        "Scout",
     ];
     var _str_company = possessive ? "Company's" : "Company";
 
@@ -403,7 +405,9 @@ function format_underscore_string(input_string) {
 function base64_encode_advanced(input_string) {
     var _buffer = buffer_create(1, buffer_grow, 1);
     buffer_write(_buffer, buffer_string, input_string);
-    var _encoded_string = buffer_base64_encode(_buffer, 0, buffer_get_size(_buffer));
+    // Encode only the string bytes: buffer_string appends a NUL terminator,
+    // which buffer_get_size would otherwise include in the encoded output.
+    var _encoded_string = buffer_base64_encode(_buffer, 0, string_byte_length(input_string));
     buffer_delete(_buffer);
 
     return _encoded_string;
@@ -467,4 +471,46 @@ function string_interpolate_from_struct(interpolate_string, data) {
 
 function string_contains(_substring, _string) {
     return string_count(_substring, _string) > 0;
+}
+
+/// @desc Joins an array of strings into an Oxford-comma list: "A", "A and B", or "A, B, and C".
+/// @param {Array} _items Array of strings to join.
+/// @returns {string}
+function string_join_oxford_comma(_items) {
+    var _n = array_length(_items);
+    if (_n == 0) {
+        return "";
+    }
+    var _list = _items[0];
+    for (var i = 1; i < _n; i++) {
+        if (i == _n - 1) {
+            _list += (_n > 2 ? ", and " : " and ") + _items[i];
+        } else {
+            _list += ", " + _items[i];
+        }
+    }
+    return _list;
+}
+
+/// @desc Formats text as a code block.
+/// @param {string} _message The message to format.
+/// @param {string} _language (Optional) Code language prefix to add into the codeblock.
+/// @returns {string} The formatted string.
+function format_codeblock(_message, _language = "") {
+    return string_length(_message) > 0 ? $"```{_language}\n{_message}\n```" : "";
+}
+
+/// @desc Converts to string and adds a 0 at the start, if input is less than 10.
+/// @param {real} _time - Usually hours, minutes or seconds.
+/// @returns {string}
+function format_time(_time) {
+    return (_time < 10) ? $"0{_time}" : string(_time);
+}
+
+function format_number_with_sign(number) {
+    return number > 0 ? "+" + string(number) : string(number);
+}
+
+function string_format_percentage(number) {
+    return format_number_with_sign(number) + "%";
 }

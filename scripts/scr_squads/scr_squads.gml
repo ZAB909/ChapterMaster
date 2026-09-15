@@ -60,15 +60,6 @@ function SquadEquipmentSorting(squad, from_armoury = true, to_armoury = true) co
         }
     };
 
-    //TODO we proobably have amcaro or soomethinng for this somewhere
-    static load_out_areas = [
-        "wep1",
-        "wep2",
-        "armour",
-        "gear",
-        "mobi"
-    ];
-
     static structure_role_optional_loadout = function(optional_data) {
         optional_load = variable_clone(optional_data); //create a fulfillment object for optional loadouts
 
@@ -218,8 +209,8 @@ function SquadEquipmentSorting(squad, from_armoury = true, to_armoury = true) co
         }
 
         ignore_units = [];
-        for (var i = 0; i < array_length(load_out_areas); i++) {
-            current_load_slot = load_out_areas[i];
+        for (var i = 0; i < 5; i++) {
+            current_load_slot = global.unit_equip_slots[i];
             equip_loudouts_specific_equip_slot();
         }
     };
@@ -234,17 +225,13 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
     nickname = "";
     assignment = "none";
     class = [];
-    squad_leader = "";
+    squad_leader = undefined;
     type_data = {};
     base = "tactical";
     formation_place = "";
     formation_options = [];
     uid = scr_uuid_generate();
     allow_bulk_swap = true;
-
-    if (squad_type != undefined) {
-        change_type(squad_type);
-    }
 
     //TODO introduce loyalty hits from long periods of exile from hierarchy nodes
     // nodes will be captains chapter masters and other senior staff
@@ -286,6 +273,10 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
         add_type_data(obj_ini.squad_types[$ type].type_data);
     };
 
+    if (squad_type != undefined) {
+        change_type(squad_type);
+    }
+
     static find_squad_unit_types = function() {
         //find out what type of units squad consists of
         var fill_squad = obj_ini.squad_types[$ type];
@@ -305,58 +296,42 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
         return squad_unit_types;
     };
 
-    static get_squad_structs = function(as_UnitGroup) {
-        var _struct_array = [];
-        for (var i = array_length(members) - 1; i >= 0; i--) {
-            _unit = fetch_unit(members[i]);
-            if (_unit.name() == "") {
-                array_delete(members, i, 1);
-                continue;
-            } else {
-                array_push(_struct_array, _unit);
-            }
-        }
-        return _struct_array;
-    };
-
     // for creating a new sergeant from existing squad members
     static new_sergeant = function(veteran = false) {
         var exp_unit = "";
         var _unit;
-        var highest_exp = 0;
+        var _highest_exp = 0;
         var member_length = array_length(members);
         for (var i = 0; i < member_length; i++) {
-            _unit = fetch_unit(members[i]);
-            if (_unit.name() == "") {
+            _unit = members[i];
+            if (!is_struct(_unit)) {
                 array_delete(members, i, 1);
                 member_length--;
                 i--;
                 continue;
             }
-            if (_unit.experience > highest_exp) {
-                highest_exp = _unit.experience;
+            if (_unit.experience > _highest_exp) {
+                _highest_exp = _unit.experience;
                 exp_unit = _unit;
             }
         }
         if ((array_length(members) > 0) && is_struct(exp_unit)) {
-            if (exp_unit.name() != "") {
-                var new_role;
-                if (veteran == true) {
-                    new_role = obj_ini.role[100][19];
-                } else {
-                    new_role = obj_ini.role[100][18];
-                }
-                exp_unit.update_role(new_role);
-                if (irandom(1) == 0) {
-                    exp_unit.add_trait("lead_example");
-                }
+            var new_role;
+            if (veteran == true) {
+                new_role = obj_ini.player_role_data[eROLE.VETERANSERGEANT].role;
+            } else {
+                new_role = obj_ini.player_role_data[eROLE.SERGEANT].role;
+            }
+            exp_unit.update_role(new_role);
+            if (irandom(1) == 0) {
+                exp_unit.add_trait("lead_example");
             }
         }
     };
 
-    static kill_members = function() {
+    static kill_members = function(recover_equipment = true, recover_gene = true) {
         for (var i = 0; i < array_length(members); i++) {
-            scr_kill_unit(members[i][0], members[i][1]);
+            members[i].kill(recover_equipment, recover_gene);
         }
         members = [];
     };
@@ -386,10 +361,6 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
         for (var i = member_length - 1; i >= 0; i--) {
             //checks squad member is still valid
             _unit = fetch_member(i);
-            if (_unit.name() == "") {
-                array_delete(members, i, 1);
-                continue;
-            }
             if (struct_exists(squad_fulfilment, _unit.role())) {
                 squad_fulfilment[$ _unit.role()]++;
             } else {
@@ -410,7 +381,7 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
             if (fill_from != undefined) {
                 while (fill_from.has_role(_wanted_unit_role) && _squad_role_current < _max_role_count) {
                     var _new_member = fill_from.pop_role_member(_wanted_unit_role);
-                    add_member(_new_member.company, _new_member.marine_number);
+                    add_member(_new_member);
                     squad_fulfilment[$ _wanted_unit_role]++;
                     _squad_role_current = squad_fulfilment[$ _wanted_unit_role];
                     _new_member.squad = uid;
@@ -427,7 +398,7 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
                 required[$ _wanted_unit_role] = _min_role_allowed - _squad_role_current;
             }
         }
-        var _sarge = obj_ini.role[100][eROLE.SERGEANT];
+        var _sarge = obj_ini.player_role_data[eROLE.SERGEANT].role;
         if (struct_exists(required, _sarge)) {
             if (required[$ _sarge] > 0) {
                 new_sergeant();
@@ -435,7 +406,7 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
             }
         }
         //find a new veteran sergeant
-        var _vet_sarge = obj_ini.role[100][eROLE.VETERANSERGEANT];
+        var _vet_sarge = obj_ini.player_role_data[eROLE.VETERANSERGEANT].role;
         if (struct_exists(required, _vet_sarge)) {
             if (required[$ _vet_sarge] > 0) {
                 new_sergeant(true);
@@ -464,19 +435,18 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
     };
 
     static fetch_member = function(index) {
-        return fetch_unit(members[index]);
+        return members[index];
     };
 
     static fetch_members = function() {
         return collect_role_group("all", "", false, {"company": base_company, "squad": uid, "max_wanted": array_length(members)});
     };
 
-    static add_member = function(comp, unit_number) {
-        if (is_struct(comp)) {
-            unit_number = comp.marine_number;
-            comp = comp.company;
+    static add_member = function(_unit) {
+        if (!is_struct(_unit)) {
+            return;
         }
-        array_push(members, [comp, unit_number]);
+        array_push(members, _unit);
         life_members++;
     };
 
@@ -501,11 +471,19 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
     };
 
     //function for loading in squad save data
-    static load_json_data = function(data) {
-        var names = variable_struct_get_names(data);
-        for (var i = 0; i < array_length(names); i++) {
-            variable_struct_set(self, names[i], variable_struct_get(data, names[i]));
+    static load = function(data) {
+        move_data_to_current_scope(data);
+        obj_ini.squads[$ uid] = self;
+        for (var s = 0; s < array_length(members); s++) {
+            members[s] = fetch_unit_uid(members[s]);
         }
+
+        for (var s = array_length(members) - 1; s >= 0; s--) {
+            if (!is_struct(members[s])) {
+                array_delete(members, s, 1);
+            }
+        }
+        determine_leader();
     };
 
     //this dermine the relative coherency of a squad on the basis that a squad needs to more or less be all together in order ot undertake squad actions
@@ -524,8 +502,8 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
         var planet_side = false;
         var exact_loc = false;
         for (var i = 0; i < member_length; i++) {
-            _unit = fetch_unit(members[i]);
-            if (_unit.name() == "") {
+            _unit = members[i];
+            if (!is_struct(_unit)) {
                 array_delete(members, i, 1);
                 member_length--;
                 i--;
@@ -560,25 +538,32 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
         }
         var final_loc_status = "";
         if (!same_system) {
-            final_loc_status = "Scattered";
+            final_loc_status = localize("Scattered");
         } else if (same_loc_type) {
             if (loc_type == eLOCATION_TYPES.SHIP) {
                 if (exact_loc) {
-                    final_loc_status = $"aboard {obj_ini.ship[loc_id]}";
+                    final_loc_status = localize("aboard {0}", [obj_ini.ship[loc_id]]);
                 } else if (in_orbit) {
-                    final_loc_status = $"various ships orbiting {system}";
+                    final_loc_status = localize("various ships orbiting {0}", [system]);
                 }
             } else if (loc_type == eLOCATION_TYPES.PLANET) {
                 if (exact_loc) {
                     final_loc_status = $"{system} {scr_roman_numerals()[loc_id - 1]}";
                 } else if (planet_side) {
-                    final_loc_status = $"various planets in {system}";
+                    final_loc_status = localize("various planets in {0}", [system]);
                 }
             }
         } else {
-            final_loc_status = $"system {system}";
+            final_loc_status = localize("system {0}", [system]);
         }
-        return {text: final_loc_status, system: system, same_system: same_system, exact_loc: exact_loc, planet_side: planet_side, in_orbit: in_orbit};
+        return {
+            text: final_loc_status,
+            system: system,
+            same_system: same_system,
+            exact_loc: exact_loc,
+            planet_side: planet_side,
+            in_orbit: in_orbit,
+        };
         //returns all the squad coherency data
     };
 
@@ -586,25 +571,18 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
     //this means the highest ranking dude in a squad will always be the squad leader
     //failing that the highest experience dude
     static determine_leader = function() {
-        var _unit;
         var member_length = array_length(members);
         var hierarchy = role_hierarchy();
         var leader_hier_pos = array_length(hierarchy);
-        var leader = "none", _unit;
-        var highest_exp = 0;
-        for (var i = 0; i < member_length; i++) {
-            _unit = fetch_unit(members[i]);
-            if (_unit.name() == "") {
+        var _leader = undefined;
+        for (var i = member_length - 1; i >= 0; i--) {
+            var _unit = members[i];
+            if (!is_struct(_unit)) {
                 array_delete(members, i, 1);
-                member_length--;
-                i--;
                 continue;
             } else {
-                if (leader == "none") {
-                    leader = [
-                        _unit.company,
-                        _unit.marine_number
-                    ];
+                if (!is_struct(_leader)) {
+                    _leader = _unit;
                     for (var r = 0; r < array_length(hierarchy); r++) {
                         if (hierarchy[r] == _unit.role()) {
                             leader_hier_pos = r;
@@ -612,69 +590,61 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
                         }
                     }
                 } else if (leader_hier_pos < array_length(hierarchy) && hierarchy[leader_hier_pos] == _unit.role()) {
-                    var _leader = fetch_unit(leader);
                     if (_leader.experience < _unit.experience) {
-                        leader = [
-                            _unit.company,
-                            _unit.marine_number
-                        ];
+                        _leader = _unit;
                     }
                 } else {
                     for (var r = 0; r < leader_hier_pos; r++) {
                         if (hierarchy[r] == _unit.role()) {
                             leader_hier_pos = r;
-                            leader = [
-                                _unit.company,
-                                _unit.marine_number
-                            ];
+                            _leader = _unit;
                             break;
                         }
                     }
                 }
             }
         }
-        squad_leader = leader;
-        return leader;
+        squad_leader = _leader;
+        return _leader;
     };
 
     static change_sgt = function(new_sgt) {
-        sgt = determine_leader();
-        var remove_sgt;
-        if (sgt != "none") {
-            remove_sgt = fetch_unit(sgt);
-            if (remove_sgt.IsSpecialist(SPECIALISTS_SQUAD_LEADERS)) {
-                var replace_role = remove_sgt.role();
-                remove_sgt.update_role(new_sgt.role());
-                //TODO centralise loyalty changes for role changes in the update_role method
-                remove_sgt.alter_loyalty(-10);
-                new_sgt.update_role(replace_role);
-                new_sgt.alter_loyalty(10);
-            }
+        var _remove_sgt = determine_leader();
+        if (!is_struct(_remove_sgt)) {
+            return;
         }
+        var replace_role = _remove_sgt.role();
+        if (_remove_sgt.IsSpecialist(SPECIALISTS_SQUAD_LEADERS)) {
+            _remove_sgt.update_role(new_sgt.role());
+            //TODO centralise loyalty changes for role changes in the update_role method
+            _remove_sgt.alter_loyalty(-10);
+        }
+
+        new_sgt.update_role(replace_role);
+        new_sgt.alter_loyalty(10);
     };
 
     static set_location = function(loc, lid, wid) {
         var member_length = array_length(members);
         var member_location;
-        var system = "none";
+        var system = noone;
         with (obj_star) {
             if (name == loc) {
                 system = self;
                 break;
             }
         }
-        if (system == "none") {
+        if (system == noone) {
             return "invalid system";
         }
         member_loop(set_member_loc, {loc: loc, lid: lid, wid: wid, system: system});
     };
 
     static member_loop = function(member_func, data_pack) {
-        var _unit;
         member_length = array_length(members);
         for (var i = 0; i < member_length; i++) {
-            _unit = fetch_unit(members[i]);
-            if (_unit.name() == "") {
+            var _unit = members[i];
+            if (!is_struct(_unit)) {
                 array_delete(members, i, 1);
                 member_length--;
                 i--;
@@ -710,14 +680,13 @@ function UnitSquad(squad_type = undefined, company = 0) constructor {
 // creates the origional distribution of squads accross the chapter
 // lots of room for customisation of different chapters here
 
-function get_compay_squad_arrangement(company){
+function get_compay_squad_arrangement(company) {
     var _comp_datas = obj_ini.chapter_squad_arrangement.companies;
     for (var i = 0; i < array_length(_comp_datas); i++) {
-        if (_comp_datas[i].company == company){
+        if (_comp_datas[i].company == company) {
             return _comp_datas[i];
         }
     }
-
 }
 
 function ProportionalSquadEditor(data) constructor {
@@ -743,37 +712,36 @@ function ProportionalSquadEditor(data) constructor {
                 }
             }
         }
-    }
+    };
 }
 
-
-function RequireSquadEditor(data) constructor{
+function RequireSquadEditor(data) constructor {
     move_data_to_current_scope(data);
-    
+
     deleted = false;
-    static draw = function(){
+
+    static draw = function() {
         box.draw();
-        min_val_shift.update({
-            max_clamp : max_val_shift.current_value
-        });
+        min_val_shift.update({max_clamp: max_val_shift.current_value});
         min_val_shift.draw();
         max_val_shift.draw();
         squad_title.draw();
         required_squad.min_count = max(min_val_shift.current_value, 1);
         required_squad.max_count = max_val_shift.current_value;
-        if (delete_button.draw()){
-            for (var i=0;i<array_length(arrangement);i++){
-                var _squad = arrangement[i]
-                if (struct_exists(_squad, "require") && _squad.require == true){
-                    if (required_squad.squad == _squad.squad){
+        if (delete_button.draw()) {
+            for (var i = 0; i < array_length(arrangement); i++) {
+                var _squad = arrangement[i];
+                if (struct_exists(_squad, "require") && _squad.require == true) {
+                    if (required_squad.squad == _squad.squad) {
                         array_delete(arrangement, i, 1);
                         break;
                     }
                 }
-            }            
+            }
         }
-    }
+    };
 }
+
 function SquadArrangementEditor(company) constructor {
     self.company = company;
     arrangement = get_compay_squad_arrangement(company).squads;
@@ -785,23 +753,23 @@ function SquadArrangementEditor(company) constructor {
     static column_w = 200;
 
     required_editor_box = new Box({
-        x1 : 100,
-        w  : column_w,
-        y1 : y_top,
-        h  : 1000,
+        x1: 100,
+        w: column_w,
+        y1: y_top,
+        h: 1000,
     });
 
     static required_picker_x = function() {
-        return required_editor_box.x2 + column_gap; 
-    }
+        return required_editor_box.x2 + column_gap;
+    };
 
-    static proportional_editor_x  = function() {
+    static proportional_editor_x = function() {
         return required_picker_x() + column_w + column_gap;
-    }
+    };
 
-    static proportional_picker_x  = function() {
+    static proportional_picker_x = function() {
         return proportional_editor_x() + column_w + column_gap;
-    }
+    };
 
     required_types = [];
     required_y = y_top;
@@ -814,14 +782,14 @@ function SquadArrangementEditor(company) constructor {
     proportional_picker_options = [];
 
     static get_squads_not_in_arrangement = function(require_filter, picker_x, picker_start_y) {
-        var _available  = [];
+        var _available = [];
         var _squad_keys = struct_get_names(squads);
-        var _py         = picker_start_y;
+        var _py = picker_start_y;
         for (var i = 0; i < array_length(_squad_keys); i++) {
             var _key = _squad_keys[i];
             var _already_present = false;
             for (var j = 0; j < array_length(arrangement); j++) {
-                var _arr_squad  = arrangement[j];
+                var _arr_squad = arrangement[j];
                 var _is_required = struct_exists(_arr_squad, "require") && _arr_squad.require == true;
                 if (_arr_squad.squad == _key && _is_required == require_filter) {
                     _already_present = true;
@@ -831,20 +799,20 @@ function SquadArrangementEditor(company) constructor {
             if (!_already_present) {
                 var _squad_data = squads[$ _key];
                 var _btn = new UnitButtonObject({
-                    style : "pixel",
-                    label : _squad_data.type_data.display_data,
-                    tooltip : $"add {_key} as a {require_filter ? "required" : "proportional"} squad",
-                    set_width : true,
-                    x1 : picker_x,
-                    y1 : _py,
-                    w : column_w,
+                    style: "pixel",
+                    label: _squad_data.type_data.display_data,
+                    tooltip: $"add {_key} as a {require_filter ? "required" : "proportional"} squad",
+                    set_width: true,
+                    x1: picker_x,
+                    y1: _py,
+                    w: column_w,
                 });
                 _py += _btn.h + 4;
-                array_push(_available, { key : _key, btn : _btn });
+                array_push(_available, {key: _key, btn: _btn});
             }
         }
         return _available;
-    }
+    };
 
     static add_new_required_type = function(required_squad) {
         var _squad_data = squads[$ required_squad.squad];
@@ -852,49 +820,40 @@ function SquadArrangementEditor(company) constructor {
         var _cx = required_editor_box.x1 + (required_editor_box.w / 2);
 
         var box = new Box({
-            x1 : required_editor_box.x1,
-            y1 : required_y,
-            w  : required_editor_box.w,
-            h  : 80,
+            x1: required_editor_box.x1,
+            y1: required_y,
+            w: required_editor_box.w,
+            h: 80,
         });
 
-        var squad_title = new ReactiveString(
-            _squad_display,
-            _cx,
-            required_y + 5,
-            { halign : fa_center }
-        );
+        var squad_title = new ReactiveString(_squad_display, _cx, required_y + 5, {
+            halign: fa_center,
+        });
 
-        var max_val_shift = new ValueShifter(
-            "max",
-            {
-                current_value : required_squad.max_count,
-                x1 : _cx,
-                y1 : required_y + 25,
-                max_clamp : 50,
-                min_clamp : 1,
-            }
-        );
+        var max_val_shift = new ValueShifter("max", {
+            current_value: required_squad.max_count,
+            x1: _cx,
+            y1: required_y + 25,
+            max_clamp: 50,
+            min_clamp: 1,
+        });
 
-        var min_val_shift = new ValueShifter(
-            "min",
-            {
-                current_value : required_squad.min_count,
-                x1 : _cx,
-                y1 : required_y + 55,
-                min_clamp : 1,
-                max_clamp : 50,
-            }
-        );
+        var min_val_shift = new ValueShifter("min", {
+            current_value: required_squad.min_count,
+            x1: _cx,
+            y1: required_y + 55,
+            min_clamp: 1,
+            max_clamp: 50,
+        });
 
         var delete_button = new UnitButtonObject({
-            style : "pixel",
-            label : "remove squad",
-            tooltip : $"remove {_squad_display} from required squads",
-            set_width : true,
-            x1 : required_editor_box.x1,
-            y1 : box.y2,
-            w : required_editor_box.w,
+            style: "pixel",
+            label: "remove squad",
+            tooltip: $"remove {_squad_display} from required squads",
+            set_width: true,
+            x1: required_editor_box.x1,
+            y1: box.y2,
+            w: required_editor_box.w,
         });
 
         var _edit = new RequireSquadEditor({
@@ -908,7 +867,7 @@ function SquadArrangementEditor(company) constructor {
 
         array_push(required_types, _edit);
         required_y = delete_button.y2 + 10;
-    }
+    };
 
     static add_new_proportional_type = function(required_squad) {
         var _squad_data = squads[$ required_squad.squad];
@@ -917,38 +876,32 @@ function SquadArrangementEditor(company) constructor {
         var _cx = _px + (column_w / 2);
 
         var box = new Box({
-            x1 : _px,
-            y1 : proportional_y,
-            w : column_w,
-            h : 50,
+            x1: _px,
+            y1: proportional_y,
+            w: column_w,
+            h: 50,
         });
 
-        var squad_title = new ReactiveString(
-            _squad_display,
-            _cx,
-            proportional_y + 5,
-            { halign : fa_center }
-        );
+        var squad_title = new ReactiveString(_squad_display, _cx, proportional_y + 5, {
+            halign: fa_center,
+        });
 
-        var proportion_val_shift = new ValueShifter(
-            "proportion",
-            {
-                current_value : required_squad.proportion,
-                x1 : _cx,
-                y1 : proportional_y + 25,
-                min_clamp : 1,
-                max_clamp : 50,
-            }
-        );
+        var proportion_val_shift = new ValueShifter("proportion", {
+            current_value: required_squad.proportion,
+            x1: _cx,
+            y1: proportional_y + 25,
+            min_clamp: 1,
+            max_clamp: 50,
+        });
 
         var delete_button = new UnitButtonObject({
-            style : "pixel",
-            label : "remove squad",
-            tooltip : $"remove {_squad_display} from proportional squads",
-            set_width : true,
-            x1 : _px,
-            y1 : box.y2,
-            w : column_w,
+            style: "pixel",
+            label: "remove squad",
+            tooltip: $"remove {_squad_display} from proportional squads",
+            set_width: true,
+            x1: _px,
+            y1: box.y2,
+            w: column_w,
         });
 
         var _edit = new ProportionalSquadEditor({
@@ -962,47 +915,47 @@ function SquadArrangementEditor(company) constructor {
 
         array_push(proportional_types, _edit);
         proportional_y = delete_button.y2 + 10;
-    }
+    };
 
     // --- reset ---
 
     static reset_required_squads = function() {
         required_types = [];
-        required_y     = y_top;
+        required_y = y_top;
         for (var i = 0; i < array_length(arrangement); i++) {
             var _squad = arrangement[i];
             if (struct_exists(_squad, "require") && _squad.require == true) {
                 add_new_required_type(_squad);
             }
         }
-    }
+    };
 
     static reset_proportional_squads = function() {
         proportional_types = [];
-        proportional_y     = y_top;
+        proportional_y = y_top;
         for (var i = 0; i < array_length(arrangement); i++) {
             var _squad = arrangement[i];
             if (!struct_exists(_squad, "require") || _squad.require != true) {
                 add_new_proportional_type(_squad);
             }
         }
-    }
+    };
 
     // --- picker openers ---
 
     static open_required_picker = function() {
-        required_picker_options = get_squads_not_in_arrangement(true,  required_picker_x(),     add_required_button.y2 + 4);
+        required_picker_options = get_squads_not_in_arrangement(true, required_picker_x(), add_required_button.y2 + 4);
         showing_required_picker = true;
         showing_proportional_picker = false;
         proportional_picker_options = [];
-    }
+    };
 
     static open_proportional_picker = function() {
         proportional_picker_options = get_squads_not_in_arrangement(false, proportional_picker_x(), add_proportional_button.y2 + 4);
         showing_proportional_picker = true;
         showing_required_picker = false;
         required_picker_options = [];
-    }
+    };
 
     // --- picker drawers ---
 
@@ -1010,70 +963,56 @@ function SquadArrangementEditor(company) constructor {
         for (var i = 0; i < array_length(required_picker_options); i++) {
             var _option = required_picker_options[i];
             if (_option.btn.draw()) {
-                array_push(arrangement, {
-                    squad     : _option.key,
-                    min_count : 1,
-                    max_count : 1,
-                    require   : true,
-                });
+                array_push(arrangement, {squad: _option.key, min_count: 1, max_count: 1, require: true});
                 showing_required_picker = false;
                 required_picker_options = [];
                 reset_required_squads();
             }
         }
-    }
+    };
 
     static draw_proportional_picker = function() {
         for (var i = 0; i < array_length(proportional_picker_options); i++) {
             var _option = proportional_picker_options[i];
             if (_option.btn.draw()) {
-                array_push(arrangement, {
-                    squad      : _option.key,
-                    proportion : 1,
-                });
+                array_push(arrangement, {squad: _option.key, proportion: 1});
                 showing_proportional_picker = false;
                 proportional_picker_options = [];
                 reset_proportional_squads();
             }
         }
-    }
+    };
 
     // --- labels ---
 
-    required_string = new ReactiveString(
-        "Required Squads",
-        required_editor_box.x1,
-        y_top - 30,
-        { tooltip : "Required Squads will always get filled and created first" }
-    )
+    required_string = new ReactiveString("Required Squads", required_editor_box.x1, y_top - 30, {
+        tooltip: "Required Squads will always get filled and created first",
+    });
 
-    proportional_string = new ReactiveString(
-        "Proportional Squads",
-        proportional_editor_x(),
-        y_top - 30,
-        { tooltip : "Proportional Squads will be built proportionally to other proportional squads — e.g. if Tactical is 1 and Bikers is 2, the system will make 2 Biker squads for every 1 Tactical squad" }
-    )
+    proportional_string = new ReactiveString("Proportional Squads", proportional_editor_x(), y_top - 30, {
+        tooltip: "Proportional Squads will be built proportionally to other proportional squads — e.g. if Tactical is 1 and Bikers is 2, the system will make 2 Biker squads for every 1 Tactical squad",
+    });
 
     // --- add buttons (top of their picker column, y tracks below last editor on reset) ---
 
     add_required_button = new UnitButtonObject({
-        style : "pixel",
-        label : "add required squad",
-        tooltip : "add a new required squad to this company",
-        set_width : true,
-        x1 : required_picker_x(),
-        y1 : y_top,
-        w : column_w,
+        style: "pixel",
+        label: "add required squad",
+        tooltip: "add a new required squad to this company",
+        set_width: true,
+        x1: required_picker_x(),
+        y1: y_top,
+        w: column_w,
     });
 
     add_proportional_button = new UnitButtonObject({
-        style : "pixel",
-        label : "add proportional squad",
-        tooltip : "add a new proportional squad to this company",
-        set_width : true,
-        x1 : proportional_picker_x(),
-        y1 : y_top,
-        w : column_w,
+        style: "pixel",
+        label: "add proportional squad",
+        tooltip: "add a new proportional squad to this company",
+        set_width: true,
+        x1: proportional_picker_x(),
+        y1: y_top,
+        w: column_w,
     });
 
     reset_required_squads();
@@ -1082,7 +1021,7 @@ function SquadArrangementEditor(company) constructor {
     // --- draw ---
 
     static draw = function() {
-        var _reset_required_structs     = false;
+        var _reset_required_structs = false;
         var _reset_proportional_structs = false;
 
         required_string.draw();
@@ -1121,7 +1060,7 @@ function SquadArrangementEditor(company) constructor {
         if (_reset_proportional_structs) {
             reset_proportional_squads();
         }
-    }
+    };
 }
 
 function game_start_squads() {

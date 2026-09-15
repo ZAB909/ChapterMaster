@@ -9,10 +9,10 @@ hp = 9999;
 boarders = 0;
 boarders_dead = 0;
 boarding = false;
-firstest = 0;
 apothecary = 0;
 apothecary_had = 0;
 experience = 0;
+occupants = [];
 
 action = "goto";
 

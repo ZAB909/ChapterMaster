@@ -20,94 +20,62 @@ function draw_popup_transfer() {
 }
 
 function transfer_marines() {
-    var mahreens = 0, w = 0, god = 0, vehi = 0, god2 = 0;
+    var vehi = 0;
 
-    mahreens = find_company_open_slot(target_comp);
+    var mahreens = find_company_open_slot(target_comp);
 
-    for (w = 1; w < 101; w++) {
+    for (var w = 1; w < 101; w++) {
         // Gets the number of vehicles in the target company
-        if (god2 == 0 && obj_ini.veh_role[target_comp][w] == "") {
-            god2 = 1;
+        if (obj_ini.veh_role[target_comp][w] == "") {
             vehi = w;
             break;
         }
     }
 
+    units_to_move = new UnitGroup([]);
+
     // The MAHREENS and TARGET/FROM seems to check out
-    var unit, move_squad, move_members, moveable, squad;
-    for (w = 0; w < array_length(obj_controller.display_unit); w++) {
-        if (obj_controller.man_sel[w] == 1) {
-            if (obj_controller.man[w] == "man" && is_struct(obj_controller.display_unit[w])) {
-                moveable = true;
-                unit = obj_controller.display_unit[w];
-                if (unit.squad != "none") {
-                    // this evaluates if you are tryin to move a whole squad and if so moves teh squad to a new company
-                    var move_squad = unit.squad;
-                    squad = fetch_squad(move_squad);
-                    move_members = squad.members;
-                    for (var mem = 0; mem < array_length(move_members); mem++) {
-                        //check all members have been selected and are in the same company
-                        if (w + mem < array_length(obj_controller.display_unit)) {
-                            if (!is_struct(obj_controller.display_unit[w + mem])) {
-                                continue;
-                            }
-                            if (obj_controller.man_sel[w + mem] != 1 || obj_controller.display_unit[w + mem].squad != move_squad) {
-                                moveable = false;
-                                break;
-                            }
-                        } else {
-                            moveable = false;
-                            break;
-                        }
-                    }
-                    //move squad
-                    if (moveable) {
-                        for (var mem = 0; mem < array_length(move_members); mem++) {
-                            obj_controller.man_sel[w + mem] = 0;
-                            var member_unit = fetch_unit(move_members[mem]);
-                            scr_move_unit_info(member_unit.company, target_comp, member_unit.marine_number, mahreens, false);
-                            var _unit = fetch_unit([target_comp, mahreens]);
-                            _unit.squad = move_squad;
-                            squad.members[mem][0] = target_comp;
-                            squad.members[mem][1] = mahreens;
-                            mahreens++;
-                        }
-                        squad.base_company = target_comp;
-                    }
-                } else {
-                    moveable = false;
-                }
-                //move individual
-                if (!moveable) {
-                    scr_move_unit_info(unit.company, target_comp, unit.marine_number, mahreens, true);
-                    mahreens++;
-                }
-                var check = 0;
-            } else if (obj_controller.man[w] == "vehicle" && is_array(obj_controller.display_unit[w])) {
-                // This seems to execute the correct number of times
-                var check = 0;
-                var veh_data = obj_controller.display_unit[w];
-                // Check if the target company is within the allowed range
-                if ((target_comp >= 1) && (target_comp <= 10)) {
-                    obj_ini.veh_race[target_comp][vehi] = obj_ini.veh_race[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_loc[target_comp][vehi] = obj_ini.veh_loc[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_role[target_comp][vehi] = obj_ini.veh_role[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_wep1[target_comp][vehi] = obj_ini.veh_wep1[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_wep2[target_comp][vehi] = obj_ini.veh_wep2[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_wep3[target_comp][vehi] = obj_ini.veh_wep3[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_upgrade[target_comp][vehi] = obj_ini.veh_upgrade[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_acc[target_comp][vehi] = obj_ini.veh_acc[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_hp[target_comp][vehi] = obj_ini.veh_hp[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_chaos[target_comp][vehi] = obj_ini.veh_chaos[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_pilots[target_comp][vehi] = 0;
-                    obj_ini.veh_lid[target_comp][vehi] = obj_ini.veh_lid[veh_data[0]][veh_data[1]];
-                    obj_ini.veh_wid[target_comp][vehi] = obj_ini.veh_wid[veh_data[0]][veh_data[1]];
+    for (var w = 0; w < array_length(obj_controller.display_unit); w++) {
+        if (!obj_controller.man_sel[w]) {
+            continue;
+        }
+        var _unit = obj_controller.display_unit[w];
 
-                    destroy_vehicle(veh_data[0], veh_data[1]);
+        if (obj_controller.man[w] == "man" && is_struct(_unit)) {
+            units_to_move.push(_unit);
+        } else if (obj_controller.man[w] == "vehicle" && is_array(_unit)) {
+            // This seems to execute the correct number of times
+            var veh_data = _unit;
+            // Check if the target company is within the allowed range
+            if ((target_comp >= 1) && (target_comp <= 10)) {
+                obj_ini.veh_race[target_comp][vehi] = obj_ini.veh_race[veh_data[0]][veh_data[1]];
+                obj_ini.veh_loc[target_comp][vehi] = obj_ini.veh_loc[veh_data[0]][veh_data[1]];
+                obj_ini.veh_role[target_comp][vehi] = obj_ini.veh_role[veh_data[0]][veh_data[1]];
+                obj_ini.veh_wep1[target_comp][vehi] = obj_ini.veh_wep1[veh_data[0]][veh_data[1]];
+                obj_ini.veh_wep2[target_comp][vehi] = obj_ini.veh_wep2[veh_data[0]][veh_data[1]];
+                obj_ini.veh_wep3[target_comp][vehi] = obj_ini.veh_wep3[veh_data[0]][veh_data[1]];
+                obj_ini.veh_upgrade[target_comp][vehi] = obj_ini.veh_upgrade[veh_data[0]][veh_data[1]];
+                obj_ini.veh_acc[target_comp][vehi] = obj_ini.veh_acc[veh_data[0]][veh_data[1]];
+                obj_ini.veh_hp[target_comp][vehi] = obj_ini.veh_hp[veh_data[0]][veh_data[1]];
+                obj_ini.veh_chaos[target_comp][vehi] = obj_ini.veh_chaos[veh_data[0]][veh_data[1]];
+                obj_ini.veh_lid[target_comp][vehi] = obj_ini.veh_lid[veh_data[0]][veh_data[1]];
+                obj_ini.veh_wid[target_comp][vehi] = obj_ini.veh_wid[veh_data[0]][veh_data[1]];
 
-                    vehi++;
-                }
+                destroy_vehicle(veh_data[0], veh_data[1]);
+
+                vehi++;
             }
+        }
+    }
+
+    units_to_move.move_to_company(target_comp);
+
+    obj_ini.selected_company = company;
+    obj_ini.temp_target_company = target_comp;
+    with (obj_ini) {
+        for (var co = 0; co <= obj_ini.companies; co++) {
+            scr_company_order(co);
+            scr_vehicle_order(co);
         }
     }
 
@@ -116,14 +84,6 @@ function transfer_marines() {
     if (obj_controller.managing > 0) {
         with (obj_controller) {
             scr_management(1);
-        }
-    }
-    obj_ini.selected_company = company;
-    obj_ini.temp_target_company = target_comp;
-    with (obj_ini) {
-        for (var co = 0; co < 11; co++) {
-            scr_company_order(co);
-            scr_vehicle_order(co);
         }
     }
 
@@ -173,7 +133,7 @@ function set_up_transfer_popup() {
 
             var _type = man[f];
             var _role = ma_role[f];
-        
+
             if (_first) {
                 if (_type == "man") {
                     _first = false;
@@ -183,7 +143,7 @@ function set_up_transfer_popup() {
                     _selected_role = _role;
                 }
             }
-        
+
             if (_type == "man") {
                 _min_exp = min(_min_exp, ma_exp[f]);
                 _marine_count += 1;
@@ -219,11 +179,28 @@ function set_up_transfer_popup() {
             unit_role = _selected_role;
             units = _marine_count + _vehicle_count;
             min_exp = _min_exp;
-            cancel_button = new UnitButtonObject({x1: 1061, y1: 491, style: "pixel", label: "Cancel"});
-            main_slate = new DataSlate({style: "decorated", XX: 1006, YY: 143, set_width: true, width: 571, height: 350});
+            cancel_button = new UnitButtonObject({
+                x1: 1061,
+                y1: 491,
+                style: "pixel",
+                label: "Cancel",
+            });
+            main_slate = new DataSlate({
+                style: "decorated",
+                XX: 1006,
+                YY: 143,
+                set_width: true,
+                width: 571,
+                height: 350,
+            });
             target_comp = 0; // HQ button is selected from the start, this is needed so it actually works without deselection;
             target_company_radio(min_exp);
-            transfer_button = new UnitButtonObject({x1: 1450, y1: 491, style: "pixel", label: "Transfer"});
+            transfer_button = new UnitButtonObject({
+                x1: 1450,
+                y1: 491,
+                style: "pixel",
+                label: "Transfer",
+            });
         }
     }
 }

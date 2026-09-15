@@ -1,6 +1,7 @@
 function scr_load(save_part, save_id) {
     var t1 = get_timer();
     var filename = string(PATH_SAVE_FILES, save_id);
+    var json_game_save = {};
     if (save_id == 0) {
         filename = string(PATH_AUTOSAVE_FILE);
         LOGGER.info("Loading from Autosave");
@@ -9,7 +10,7 @@ function scr_load(save_part, save_id) {
         var _gamesave_buffer = buffer_load(filename);
         var _gamesave_string = buffer_read(_gamesave_buffer, buffer_string);
         buffer_delete(_gamesave_buffer);
-        var json_game_save = json_parse(_gamesave_string);
+        json_game_save = json_parse(_gamesave_string);
     }
 
     if (!struct_exists(obj_saveload.GameSave, "Save")) {
@@ -19,11 +20,11 @@ function scr_load(save_part, save_id) {
     if ((save_part == 1) || (save_part == 0)) {
         LOGGER.info("Loading GLOBALS");
         // Globals
-        var globals = obj_saveload.GameSave.Save;
-        scr_load_chapter_icon(globals.icon_name, true);
-        global.chapter_name = globals.chapter_name;
-        global.custom = globals.custom;
-        global.game_seed = globals.game_seed;
+        var _globals = obj_saveload.GameSave.Save;
+        scr_load_chapter_icon(_globals.icon_name, true);
+        global.chapter_name = _globals.chapter_name;
+        global.custom = _globals.custom;
+        global.game_seed = _globals.game_seed;
     }
 
     if ((save_part == 2) || (save_part == 0)) {
@@ -63,7 +64,7 @@ function scr_load(save_part, save_id) {
                 "point_breakdown",
                 "apothecary_points",
                 "forge_points",
-                "chapter_master_data"
+                "chapter_master_data",
             ]; // skip automatic setting of certain vars, handle explicitly later
 
             // Automatic var setting
@@ -75,9 +76,8 @@ function scr_load(save_part, save_id) {
                     continue;
                 }
                 var loaded_value = struct_get(save_data, var_name);
-                // LOGGER.debug($"obj_controller var: {var_name}  -  val: {loaded_value}");
                 try {
-                    variable_struct_set(obj_controller, var_name, loaded_value);
+                    variable_instance_set(obj_controller, var_name, loaded_value);
                 } catch (e) {
                     LOGGER.debug(e);
                 }
@@ -91,7 +91,7 @@ function scr_load(save_part, save_id) {
                     variable_struct_set(specialist_point_handler, prop, variable_struct_get(save_data, prop));
                 }
             }
-            chapter_master = new scr_chapter_master();
+            chapter_master = new ChapterMaster();
             if (struct_exists(save_data, "chapter_master_data")) {
                 var _data = variable_struct_get(save_data, "chapter_master_data");
                 with (chapter_master) {
@@ -105,7 +105,10 @@ function scr_load(save_part, save_id) {
             scr_shader_initialize();
             armamentarium = new Armamentarium(self);
 
-            global.star_name_colors[1] = make_color_rgb(body_colour_replace[0], body_colour_replace[1], body_colour_replace[2]);
+            global.star_name_colors[1] = make_color_rgb(col_r[main_color], col_g[main_color], col_b[main_color]);
+        }
+        with (obj_controller) {
+            sanitize_stored_formation_ids();
         }
         LOGGER.info("CONTROLLER loaded");
     }
@@ -136,6 +139,9 @@ function scr_load(save_part, save_id) {
         }
         LOGGER.info("ENEMY FLEET OBJECTS loaded");
 
+        // All fleets exist now so recalculate star presence for player and enemy fleets together.
+        recalculate_fleet_presence();
+
         LOGGER.info("Loading EVENT LOG");
         if (!instance_exists(obj_event_log)) {
             instance_create(0, 0, obj_event_log);
@@ -149,7 +155,6 @@ function scr_load(save_part, save_id) {
         global.load = -1;
         scr_image("force", -50, 0, 0, 0, 0);
         LOGGER.info("Loading completed");
-        // room_goto(rm_game);
     }
 
     var t2 = get_timer();

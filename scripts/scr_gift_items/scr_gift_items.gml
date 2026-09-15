@@ -6,7 +6,8 @@ function draw_gift_items_popup() {
 
     var inq_hide = 0;
     if (subtype == 0) {
-        if (array_contains(obj_ini.artifact_tags[obj_controller.menu_artifact], "inq")) {
+        var _gift_draw_arti = fetch_artifact(obj_controller.menu_artifact);
+        if (_gift_draw_arti.has_tag("inq")) {
             if (array_contains(obj_controller.quest, "artifact_loan")) {
                 inq_hide = 1;
             }
@@ -44,24 +45,14 @@ function draw_gift_items_popup() {
 }
 
 function gift_artifact(give_to, known = true) {
-    if (known) {
-        var arti_index = obj_controller.menu_artifact;
-    } else {
+    if (!known) {
         obj_controller.menu_artifact = scr_add_artifact("random", "minor");
     }
 
     var arti_index = obj_controller.menu_artifact;
-
-    var artifact_struct = obj_ini.artifact_struct[arti_index];
-    var cur_tags = obj_ini.artifact_tags[arti_index];
-
-    // obj_controller.artifacts-=1; // this is done by delete_artifact() that is run later;
+    var artifact_struct = fetch_artifact(arti_index);
 
     obj_controller.cooldown = 10;
-    if (obj_controller.menu_artifact > obj_controller.artifacts) {
-        obj_controller.menu_artifact = obj_controller.artifacts;
-    }
-
     scr_toggle_diplomacy();
     obj_controller.diplomacy = give_to;
     obj_controller.force_goodbye = -1;
@@ -73,7 +64,7 @@ function gift_artifact(give_to, known = true) {
 
     var inq_hide = 0;
 
-    if (array_contains(obj_ini.artifact_tags[obj_controller.menu_artifact], "inq")) {
+    if (artifact_struct.has_tag("inq")) {
         if (array_contains(obj_controller.quest, "artifact_loan")) {
             inq_hide = 1;
         }
@@ -112,7 +103,7 @@ function gift_artifact(give_to, known = true) {
                         add_event({e_id: "imperium_daemon", duration: 1});
                         with (obj_star) {
                             for (var i = 1; i <= planets; i++) {
-                                if (p_owner[i] == 2) {
+                                if (p_owner[i] == eFACTION.IMPERIUM) {
                                     p_heresy[i] += choose(30, 40, 50, 60);
                                 }
                             }
@@ -121,7 +112,7 @@ function gift_artifact(give_to, known = true) {
                     if (is_chaos) {
                         with (obj_star) {
                             for (var i = 1; i <= planets; i++) {
-                                if ((p_owner[i] == 2) && (p_heresy[i] > 0)) {
+                                if ((p_owner[i] == eFACTION.IMPERIUM) && (p_heresy[i] > 0)) {
                                     p_heresy[i] += 10;
                                 }
                             }
@@ -132,7 +123,7 @@ function gift_artifact(give_to, known = true) {
                     if (is_daemon) {
                         with (obj_star) {
                             for (var i = 1; i <= planets; i++) {
-                                if (p_owner[i] == 8) {
+                                if (p_owner[i] == eFACTION.TAU) {
                                     p_heresy[i] += 40;
                                 }
                             }
@@ -173,7 +164,7 @@ function gift_artifact(give_to, known = true) {
         }
 
         daemon_arts(give_to, is_chaos, is_daemon);
-        var tagmod = artifact_struct.artifact_faction_value(give_to);
+        var tagmod = artifact_struct.get_faction_value(give_to);
 
         alter_disposition(give_to, 2 + specialmod + tagmod);
     }
@@ -194,7 +185,7 @@ function are_giftable_factions() {
         eFACTION.INQUISITION,
         eFACTION.ECCLESIARCHY,
         eFACTION.ELDAR,
-        eFACTION.TAU
+        eFACTION.TAU,
     ];
     for (var i = 0; i < array_length(giftable_factions); i++) {
         var gift_faction = giftable_factions[i];
@@ -210,20 +201,31 @@ function setup_gift_popup() {
         var pop = instance_create(0, 0, obj_popup);
         pop.type = 9;
         with (pop) {
-            cancel_button = new UnitButtonObject({x1: 700, y1: 370, style: "pixel", label: "Cancel"});
+            cancel_button = new UnitButtonObject({
+                x1: 700,
+                y1: 370,
+                style: "pixel",
+                label: "Cancel",
+            });
 
             fac_buttons = [];
 
+            var _y1 = 131;
             for (var i = 2; i <= 8; i++) {
                 if (i == 7) {
                     continue;
                 }
-                var _y1 = 131;
-                if (i > 2) {
-                    var _y1 = _last_y;
-                }
-                var _fac_but = new UnitButtonObject({x1: 660, w: 147, set_width: true, y1: _y1, style: "pixel", label: obj_controller.faction[i], faction: i, tooltip: $"Disposition : {obj_controller.disposition[i]}"});
-                var _last_y = _fac_but.y2;
+                var _fac_but = new UnitButtonObject({
+                    x1: 660,
+                    w: 147,
+                    set_width: true,
+                    y1: _y1,
+                    style: "pixel",
+                    label: obj_controller.faction[i],
+                    faction: i,
+                    tooltip: $"Disposition : {obj_controller.disposition[i]}",
+                });
+                _y1 = _fac_but.y2;
                 array_push(fac_buttons, _fac_but);
             }
         }
@@ -243,10 +245,9 @@ function setup_gift_stc_popup() {
 }
 
 function gift_stc_fragment() {
-    var r1, r2, cn;
-    r2 = 0;
-    cn = obj_controller;
-    r1 = floor(random(cn.stc_wargear_un + cn.stc_vehicles_un + cn.stc_ships_un)) + 1;
+    var r2 = 0;
+    var cn = obj_controller;
+    var r1 = floor(random(cn.stc_wargear_un + cn.stc_vehicles_un + cn.stc_ships_un)) + 1;
 
     if ((r1 < cn.stc_wargear_un) && (cn.stc_wargear_un > 0)) {
         r2 = 1;
@@ -301,8 +302,7 @@ function gift_stc_fragment() {
     scr_toggle_diplomacy();
     obj_controller.diplomacy = giveto;
     obj_controller.force_goodbye = -1;
-    var the;
-    the = "";
+    var the = "";
     if ((giveto != eFACTION.ORK) && (giveto != eFACTION.CHAOS)) {
         the = "the ";
     }

@@ -108,7 +108,7 @@
             45,
             4
         ],
-        "base_group": "skitarii",
+        "base_group": "eldar",
         "charisma": [
             20,
             2
@@ -152,7 +152,7 @@
         "wisdom": [
             50,
             3
-        ]
+        ],
     },
     "flash_git": {
         "ballistic_skill": [

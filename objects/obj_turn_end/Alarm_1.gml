@@ -1,15 +1,11 @@
-var _is_audience = false;
 if (array_length(audience_stack) > 0) {
     var current_audience = audience_stack[0];
-    _is_audience = true;
-}
 
-if (_is_audience) {
-    with (obj_controller) {
-        if (zoomed == 1) {
-            scr_zoom();
-        }
-    }
+    // with (obj_controller) {
+    //     if (zoomed == 1) {
+    //         scr_zoom();
+    //     }
+    // }
 
     LOGGER.debug(current_audience);
 
@@ -21,7 +17,7 @@ if (_is_audience) {
     obj_controller.audience_data = current_audience.audience_data;
 
     if ((obj_controller.diplomacy == 10) && (obj_controller.faction_gender[10] == 2)) {
-        scr_music("blood", 60);
+        global.audio_manager.play_playlist(CONTEXT_DIPLOMACY, 60);
     }
 
     if (string_count("intro", current_audience.topic) > 0) {
@@ -41,82 +37,60 @@ if (_is_audience) {
     exit;
 }
 
-// if (current_audience<=audiences) then alarm[1]=5;
+current_popup += 1;
 
-if (!_is_audience) {
-    current_popup += 1;
-
-    if (popup[current_popup] != 0) {
-        var pip;
-        pip = instance_create(0, 0, obj_popup);
-        pip.title = popup_type[current_popup];
-        pip.text = popup_text[current_popup];
-        pip.image = popup_image[current_popup];
-        if (is_struct(popup_special[current_popup])) {
-            pip.pop_data = popup_special[current_popup];
-            if (struct_exists(pip.pop_data, "options")) {
-                pip.add_option(pip.pop_data.options);
-            }
-        } else {
-            if ((popup_special[current_popup] != "") && (pip.image == "inquisition") && (popup_special[current_popup] != "1") && (popup_special[current_popup] != "2") && (pip.image != "tech_build") && (popup_special[current_popup] != "contraband") && (string_count("mech_", popup_special[current_popup]) == 0) && (string_count("meeting", popup_special[current_popup]) == 0)) {
-                explode_script(popup_special[current_popup], "|");
-                pip.mission = string(explode[0]);
-                pip.loc = string(explode[1]);
-                pip.planet = real(explode[2]);
-                pip.estimate = real(explode[3]);
-            }
-            if (string_count("target_marine", popup_special[current_popup]) > 0) {
-                var aa;
-                explode_script(popup_special[current_popup], "|");
-                aa = string(explode[0]);
-                pip.ma_name = string(explode[1]);
-                pip.ma_co = real(explode[2]);
-                pip.ma_id = real(explode[3]);
-            }
-            if (string_count("mech_", popup_special[current_popup]) > 0) {
-                explode_script(popup_special[current_popup], "|");
-                pip.mission = string(explode[0]);
-                pip.loc = string(explode[1]);
-                // "mech_raider!0!|"+string(you2.name));        "mech_bionics!0!|"+string(you2.name));
-            }
-            if (string_count("meeting_", popup_special[current_popup]) > 0) {
-                pip.mission = popup_special[current_popup];
-            }
-            if (popup_special[current_popup] == "contraband") {
-                pip.loc = "contraband";
-            }
-            if (popup_special[current_popup] == "1") {
-                pip.planet = 1;
-            }
-            if (popup_special[current_popup] == "2") {
-                pip.planet = 2;
-            }
+if (current_popup <= popups) {
+    var pip = instance_create(0, 0, obj_popup);
+    pip.title = popup_type[current_popup];
+    pip.text = popup_text[current_popup];
+    pip.image = popup_image[current_popup];
+    if (is_struct(popup_special[current_popup])) {
+        pip.pop_data = popup_special[current_popup];
+        if (struct_exists(pip.pop_data, "options")) {
+            pip.add_option(pip.pop_data.options);
         }
-        pip.number = 1;
-    }
-    if ((current_popup > popups) || (popup[1] == 0)) {
-        if (popups_end == 0) {
-            popups_end = 1;
+    } else {
+        if ((popup_special[current_popup] != "") && (pip.image == "inquisition") && (popup_special[current_popup] != "1") && (popup_special[current_popup] != "2") && (pip.image != "tech_build") && (popup_special[current_popup] != "contraband") && (string_count("mech_", popup_special[current_popup]) == 0) && (string_count("meeting", popup_special[current_popup]) == 0)) {
+            explode_script(popup_special[current_popup], "|");
+            pip.mission = string(explode[0]);
+            pip.loc = string(explode[1]);
+            pip.planet = real(explode[2]);
+            pip.estimate = real(explode[3]);
         }
-        // obj_controller.x=first_x;
-        // obj_controller.y=first_y;
-        // instance_destroy();
+        if (string_count("target_marine", popup_special[current_popup]) > 0) {
+            explode_script(popup_special[current_popup], "|");
+            var aa = string(explode[0]);
+            pip.ma_name = string(explode[1]);
+            pip.ma_co = real(explode[2]);
+            pip.ma_id = real(explode[3]);
+        }
+        if (string_count("mech_", popup_special[current_popup]) > 0) {
+            explode_script(popup_special[current_popup], "|");
+            pip.mission = string(explode[0]);
+            pip.loc = string(explode[1]);
+        }
+        if (string_count("meeting_", popup_special[current_popup]) > 0) {
+            pip.mission = popup_special[current_popup];
+        }
+        if (popup_special[current_popup] == "contraband") {
+            pip.loc = "contraband";
+        }
+        if (popup_special[current_popup] == "1") {
+            pip.planet = 1;
+        }
+        if (popup_special[current_popup] == "2") {
+            pip.planet = 2;
+        }
     }
-
-    // obj_controller.x=first_x;
-    // obj_controller.y=first_y;
-    // instance_destroy();
+    pip.number = 1;
+}
+if ((current_popup > popups) || (popups == 0)) {
+    if (popups_end == 0) {
+        popups_end = 1;
+    }
 }
 
-// if (current_popup>popups) or (popup[1]=0) then popups_end=1;
-
 if (popups_end == 1) {
-    /*if (popups=0){
-        obj_controller.x=first_x;
-        obj_controller.y=first_y;
-        instance_destroy();
-    }*/
-
     obj_controller.x = first_x;
     obj_controller.y = first_y;
 
@@ -124,19 +98,5 @@ if (popups_end == 1) {
     obj_controller.menu = 0;
     combating = 0;
 
-    with (obj_controller) {
-        year_fraction += 84;
-        if (year_fraction > 999) {
-            year += 1;
-            year_fraction = 0;
-        }
-        if (year >= 1000) {
-            millenium += 1;
-            year -= 1000;
-        }
-        // menu=0;
-    }
+    obj_ini.sector_handler.increment_date();
 }
-
-/* */
-/*  */
