@@ -490,7 +490,7 @@ function ChapterGameData(data = {}) constructor {
         var _final_disp_val =  alter_value + obj_controller.disposition[faction];
         if (_final_disp_val > 100){
             alter_value -= _final_disp_val - 100;
-        } else if (_final_disp_val < 0){
+        } else if (_final_disp_val < -100){
             alter_value += (_final_disp_val * -1);
         }
         return alter_value;

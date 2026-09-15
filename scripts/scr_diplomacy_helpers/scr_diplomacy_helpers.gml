@@ -50,7 +50,7 @@ function alter_disposition(faction, alter_value, return_string = false) {
     }
 }
 
-function alter_dispositions(alterations, return_strings) {
+function alter_dispositions(alterations, return_strings = false) {
     var _string;
     var _strings = [];
     for (var i = 0; i < array_length(alterations); i++) {
