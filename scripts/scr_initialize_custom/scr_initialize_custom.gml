@@ -1189,7 +1189,7 @@ function scr_initialize_custom() {
         apothecary += 5;
     }
 
-    if (!player_role_data[eROLE.CHAPLAIN].available_to_player){
+    if (!player_role_data[eROLE.CHAPLAIN].available_to_player) {
         chaplains = 0;
     }
 
